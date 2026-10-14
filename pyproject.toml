@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dexagent"
+version = "0.1.0"
+description = "Contact-grounded action interfaces for UR5e and Tesollo DG5F-S"
+requires-python = ">=3.12"
+dependencies = ["numpy>=2", "scipy>=1.12", "pydantic>=2.8,<3"]
+
+[tool.setuptools.packages.find]
+include = ["dexagent*", "dextrain*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP", "B"]

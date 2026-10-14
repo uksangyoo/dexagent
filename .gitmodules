@@ -1,0 +1,6 @@
+[submodule "tesollo_model"]
+	path = tesollo_model
+	url = https://github.com/tesollodelto/tesollo_model.git
+[submodule "IsaacLab"]
+	path = IsaacLab
+	url = https://github.com/isaac-sim/IsaacLab.git

@@ -1,0 +1,1126 @@
+{
+  "kind": "static_asset_audit_not_manipulation_results",
+  "revisions": {
+    "IsaacLab": "bad20159e0f53c03528780c788bbd91e5ed41196",
+    "tesollo_model": "dc8e11d5378b224ca770b99a46e29b12f681bb64",
+    "graph-as-policy": "93e929c9a1668cacba2e8be604e99a7538abbee9"
+  },
+  "models": [
+    {
+      "file": "tesollo_model/dg5fs/dg5fs_15dof_left.urdf",
+      "sha256": "0d65465f9615472eceb035be0beb33aed0f2b3f34d708dc021d4811b6a95d396",
+      "links": 21,
+      "active_joints": 15,
+      "mimic_joints": 0,
+      "roots": [
+        "link_base"
+      ],
+      "authored_mass_kg": 0.9768180112585394,
+      "joint_limits": [
+        {
+          "name": "joint_1_1",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_2",
+          "lower": "0",
+          "upper": "2.670353755551324",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_1",
+          "lower": "-0.2617993877991494",
+          "upper": "0.8377580409572782",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_2",
+          "lower": "0",
+          "upper": "2.199114857512855",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_1",
+          "lower": "-0.7330382858376184",
+          "upper": "0.5759586531581288",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_2",
+          "lower": "0",
+          "upper": "2.2689280275926285",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_1",
+          "lower": "-0.8377580409572782",
+          "upper": "0.20943951023931956",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_2",
+          "lower": "0",
+          "upper": "2.2165681500327987",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_1",
+          "lower": "-1.0471975511965976",
+          "upper": "0",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_2",
+          "lower": "-1.5707963267948966",
+          "upper": "0.6457718232379019",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        }
+      ],
+      "mesh_reference_count": 42,
+      "missing_meshes_with_local_resolution": [],
+      "mjcf_actuator_count": 0,
+      "mjcf_sensor_count": 0
+    },
+    {
+      "file": "tesollo_model/dg5fs/dg5fs_15dof_left_w_mount.urdf",
+      "sha256": "011c1db7965f1ac86ee960678d57892e58e35038672a771c6a4dc6b5797b477d",
+      "links": 22,
+      "active_joints": 15,
+      "mimic_joints": 0,
+      "roots": [
+        "link_mount"
+      ],
+      "authored_mass_kg": 1.0882009195082083,
+      "joint_limits": [
+        {
+          "name": "joint_1_1",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_2",
+          "lower": "0",
+          "upper": "2.670353755551324",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_1",
+          "lower": "-0.2617993877991494",
+          "upper": "0.8377580409572782",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_2",
+          "lower": "0",
+          "upper": "2.199114857512855",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_1",
+          "lower": "-0.7330382858376184",
+          "upper": "0.5759586531581288",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_2",
+          "lower": "0",
+          "upper": "2.2689280275926285",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_1",
+          "lower": "-0.8377580409572782",
+          "upper": "0.20943951023931956",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_2",
+          "lower": "0",
+          "upper": "2.2165681500327987",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_1",
+          "lower": "-1.0471975511965976",
+          "upper": "0",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_2",
+          "lower": "-1.5707963267948966",
+          "upper": "0.6457718232379019",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        }
+      ],
+      "mesh_reference_count": 44,
+      "missing_meshes_with_local_resolution": [],
+      "mjcf_actuator_count": 0,
+      "mjcf_sensor_count": 0
+    },
+    {
+      "file": "tesollo_model/dg5fs/dg5fs_15dof_right.urdf",
+      "sha256": "07c1659d93cbcfced61452ab3cdd94061d180eff4cff4e0e14d0d6142936a978",
+      "links": 21,
+      "active_joints": 15,
+      "mimic_joints": 0,
+      "roots": [
+        "link_base"
+      ],
+      "authored_mass_kg": 0.9768118033739182,
+      "joint_limits": [
+        {
+          "name": "joint_1_1",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_2",
+          "lower": "-2.670353755551324",
+          "upper": "0",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_1",
+          "lower": "-0.8377580409572782",
+          "upper": "0.2617993877991494",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_2",
+          "lower": "0",
+          "upper": "2.199114857512855",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_1",
+          "lower": "-0.5759586531581288",
+          "upper": "0.7330382858376184",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_2",
+          "lower": "0",
+          "upper": "2.2689280275926285",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_1",
+          "lower": "-0.20943951023931956",
+          "upper": "0.8377580409572782",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_2",
+          "lower": "0",
+          "upper": "2.2165681500327987",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_1",
+          "lower": "0",
+          "upper": "1.0471975511965976",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_2",
+          "lower": "-0.6457718232379019",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        }
+      ],
+      "mesh_reference_count": 42,
+      "missing_meshes_with_local_resolution": [],
+      "mjcf_actuator_count": 0,
+      "mjcf_sensor_count": 0
+    },
+    {
+      "file": "tesollo_model/dg5fs/dg5fs_15dof_right_w_mount.urdf",
+      "sha256": "4b85f79d2b6a3c640a67f66171b3f8139abc7bf57a3e096dd43b516c3f0e2416",
+      "links": 22,
+      "active_joints": 15,
+      "mimic_joints": 0,
+      "roots": [
+        "link_mount"
+      ],
+      "authored_mass_kg": 1.0881918033739182,
+      "joint_limits": [
+        {
+          "name": "joint_1_1",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_2",
+          "lower": "-2.670353755551324",
+          "upper": "0",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_1",
+          "lower": "-0.8377580409572782",
+          "upper": "0.2617993877991494",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_2",
+          "lower": "0",
+          "upper": "2.199114857512855",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_1",
+          "lower": "-0.5759586531581288",
+          "upper": "0.7330382858376184",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_2",
+          "lower": "0",
+          "upper": "2.2689280275926285",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_1",
+          "lower": "-0.20943951023931956",
+          "upper": "0.8377580409572782",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_2",
+          "lower": "0",
+          "upper": "2.2165681500327987",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_1",
+          "lower": "0",
+          "upper": "1.0471975511965976",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_2",
+          "lower": "-0.6457718232379019",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        }
+      ],
+      "mesh_reference_count": 44,
+      "missing_meshes_with_local_resolution": [],
+      "mjcf_actuator_count": 0,
+      "mjcf_sensor_count": 0
+    },
+    {
+      "file": "tesollo_model/dg5fs/dg5fs_left.urdf",
+      "sha256": "2e5a22b148d31360435629175a65ad246f396a494b8e8d497db2bef37e03d220",
+      "links": 26,
+      "active_joints": 20,
+      "mimic_joints": 0,
+      "roots": [
+        "link_base"
+      ],
+      "authored_mass_kg": 1.0467638690929502,
+      "joint_limits": [
+        {
+          "name": "joint_1_1",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_2",
+          "lower": "0",
+          "upper": "2.670353755551324",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_1",
+          "lower": "-0.2617993877991494",
+          "upper": "0.8377580409572782",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_2",
+          "lower": "0",
+          "upper": "2.199114857512855",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_1",
+          "lower": "-0.7330382858376184",
+          "upper": "0.5759586531581288",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_2",
+          "lower": "0",
+          "upper": "2.2689280275926285",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_1",
+          "lower": "-0.8377580409572782",
+          "upper": "0.20943951023931956",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_2",
+          "lower": "0",
+          "upper": "2.2165681500327987",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_1",
+          "lower": "-1.0471975511965976",
+          "upper": "0",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_2",
+          "lower": "-1.5707963267948966",
+          "upper": "0.6457718232379019",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        }
+      ],
+      "mesh_reference_count": 52,
+      "missing_meshes_with_local_resolution": [],
+      "mjcf_actuator_count": 0,
+      "mjcf_sensor_count": 0
+    },
+    {
+      "file": "tesollo_model/dg5fs/dg5fs_left_w_mount.urdf",
+      "sha256": "18ef181a024d7fff3c621ff31116346403618c05a2f2b3308b74ceba0d4e3c5b",
+      "links": 27,
+      "active_joints": 20,
+      "mimic_joints": 0,
+      "roots": [
+        "link_mount"
+      ],
+      "authored_mass_kg": 1.1581438690929502,
+      "joint_limits": [
+        {
+          "name": "joint_1_1",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_2",
+          "lower": "0",
+          "upper": "2.670353755551324",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_1",
+          "lower": "-0.2617993877991494",
+          "upper": "0.8377580409572782",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_2",
+          "lower": "0",
+          "upper": "2.199114857512855",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_1",
+          "lower": "-0.7330382858376184",
+          "upper": "0.5759586531581288",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_2",
+          "lower": "0",
+          "upper": "2.2689280275926285",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_1",
+          "lower": "-0.8377580409572782",
+          "upper": "0.20943951023931956",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_2",
+          "lower": "0",
+          "upper": "2.2165681500327987",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_1",
+          "lower": "-1.0471975511965976",
+          "upper": "0",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_2",
+          "lower": "-1.5707963267948966",
+          "upper": "0.6457718232379019",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        }
+      ],
+      "mesh_reference_count": 54,
+      "missing_meshes_with_local_resolution": [],
+      "mjcf_actuator_count": 0,
+      "mjcf_sensor_count": 0
+    },
+    {
+      "file": "tesollo_model/dg5fs/dg5fs_right.urdf",
+      "sha256": "96002cab62f82f305a4fd564f7d1e7b76fc64df26537bff326f1c54edab2d8af",
+      "links": 26,
+      "active_joints": 20,
+      "mimic_joints": 0,
+      "roots": [
+        "link_base"
+      ],
+      "authored_mass_kg": 1.046759951963353,
+      "joint_limits": [
+        {
+          "name": "joint_1_1",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_2",
+          "lower": "-2.670353755551324",
+          "upper": "0",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_1",
+          "lower": "-0.8377580409572782",
+          "upper": "0.2617993877991494",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_2",
+          "lower": "0",
+          "upper": "2.199114857512855",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_1",
+          "lower": "-0.5759586531581288",
+          "upper": "0.7330382858376184",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_2",
+          "lower": "0",
+          "upper": "2.2689280275926285",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_1",
+          "lower": "-0.20943951023931956",
+          "upper": "0.8377580409572782",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_2",
+          "lower": "0",
+          "upper": "2.2165681500327987",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_1",
+          "lower": "0",
+          "upper": "1.0471975511965976",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_2",
+          "lower": "-0.6457718232379019",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        }
+      ],
+      "mesh_reference_count": 52,
+      "missing_meshes_with_local_resolution": [],
+      "mjcf_actuator_count": 0,
+      "mjcf_sensor_count": 0
+    },
+    {
+      "file": "tesollo_model/dg5fs/dg5fs_right_w_mount.urdf",
+      "sha256": "0397fc0374ea926e99e8b3a6ac775e4cb95c23403da84ea363f1f5e1648f2f52",
+      "links": 27,
+      "active_joints": 20,
+      "mimic_joints": 0,
+      "roots": [
+        "link_mount"
+      ],
+      "authored_mass_kg": 1.158139951963353,
+      "joint_limits": [
+        {
+          "name": "joint_1_1",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_2",
+          "lower": "-2.670353755551324",
+          "upper": "0",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_1_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_1",
+          "lower": "-0.8377580409572782",
+          "upper": "0.2617993877991494",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_2",
+          "lower": "0",
+          "upper": "2.199114857512855",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_2_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_1",
+          "lower": "-0.5759586531581288",
+          "upper": "0.7330382858376184",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_2",
+          "lower": "0",
+          "upper": "2.2689280275926285",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_3_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_1",
+          "lower": "-0.20943951023931956",
+          "upper": "0.8377580409572782",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_2",
+          "lower": "0",
+          "upper": "2.2165681500327987",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_4_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_1",
+          "lower": "0",
+          "upper": "1.0471975511965976",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_2",
+          "lower": "-0.6457718232379019",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_3",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        },
+        {
+          "name": "joint_5_4",
+          "lower": "-1.5707963267948966",
+          "upper": "1.5707963267948966",
+          "effort": "7.5",
+          "velocity": "3.141592653589793"
+        }
+      ],
+      "mesh_reference_count": 54,
+      "missing_meshes_with_local_resolution": [],
+      "mjcf_actuator_count": 0,
+      "mjcf_sensor_count": 0
+    }
+  ]
+}
