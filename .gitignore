@@ -1,14 +1,37 @@
+# Python
 .venv*/
 __pycache__/
 *.py[cod]
 *.egg-info/
 .pytest_cache/
 .ruff_cache/
+
+# Environment
 .env
 .env.*
 !.env.example
+
+# Logs
 *.log
-/runs/
-/review_site/
+MUJOCO_LOG.TXT
+
+# Build output
 /build/
 /dist/
+
+# Run outputs
+/runs/
+/review_site/
+/crate_lab/results/
+
+# screwdriver_lab: local virtualenvs and generated artifacts.
+# Keep the small inputs that the code reads back.
+/screwdriver_lab/vendor/
+/screwdriver_lab/artifacts/*
+!/screwdriver_lab/artifacts/grasp.json
+!/screwdriver_lab/artifacts/grasp.jpg
+!/screwdriver_lab/artifacts/scene.xml
+!/screwdriver_lab/artifacts/publication.json
+
+# Published site (separate git repository)
+/screwdriver_site/

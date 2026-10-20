@@ -17,7 +17,7 @@ import xml.etree.ElementTree as ET
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     root = Path(__file__).resolve().parents[1]
-    parser.add_argument("--urdf", type=Path, default=root / "tesollo_model/dg5fs/dg5fs_right_w_mount.urdf")
+    parser.add_argument("--urdf", type=Path, default=root / "third-party/tesollo_model/dg5fs/dg5fs_right_w_mount.urdf")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     import numpy as np

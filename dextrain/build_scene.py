@@ -26,7 +26,7 @@ def compose(out):
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     arm_dir = ROOT.parent / "graph-as-policy/third_party/robosuite/robosuite/models/assets/robots/ur5e"
-    hand_dir = ROOT / "tesollo_model/dg5fs"
+    hand_dir = ROOT / "third-party/tesollo_model/dg5fs"
     scene = ET.parse(arm_dir / "robot.xml").getroot()
     scene.set("model", "ur5e_dg5fs_nut_spin_curriculum")
     ET.SubElement(scene, "compiler", angle="radian", autolimits="true")

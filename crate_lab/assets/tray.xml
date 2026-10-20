@@ -1,0 +1,139 @@
+<mujoco model="rack">
+  <compiler angle="radian" autolimits="true" />
+  <asset>
+    <material name="crate_box_default" rgba="0.025 0.027 0.028 1" />
+    <mesh name="crate_box_visual" file="/home/uyoo/Projects/dexagent/third-party/vab_crate_washing/sim_models/crate_washing/crate_with_handles_v5/black_crate.stl" />
+    <mesh name="crate_box_col_00" file="/home/uyoo/Projects/dexagent/third-party/vab_crate_washing/sim_models/crate_washing/crate_with_handles_v5/collision/part_00.obj" />
+    <mesh name="crate_box_col_01" file="/home/uyoo/Projects/dexagent/third-party/vab_crate_washing/sim_models/crate_washing/crate_with_handles_v5/collision/part_01.obj" />
+    <mesh name="crate_box_col_02" file="/home/uyoo/Projects/dexagent/third-party/vab_crate_washing/sim_models/crate_washing/crate_with_handles_v5/collision/part_02.obj" />
+    <mesh name="crate_box_col_03" file="/home/uyoo/Projects/dexagent/third-party/vab_crate_washing/sim_models/crate_washing/crate_with_handles_v5/collision/part_03.obj" />
+    <mesh name="crate_box_col_04" file="/home/uyoo/Projects/dexagent/third-party/vab_crate_washing/sim_models/crate_washing/crate_with_handles_v5/collision/part_04.obj" />
+    <mesh name="crate_box_col_05" file="/home/uyoo/Projects/dexagent/third-party/vab_crate_washing/sim_models/crate_washing/crate_with_handles_v5/collision/part_05.obj" />
+    <mesh name="crate_box_col_06" file="/home/uyoo/Projects/dexagent/third-party/vab_crate_washing/sim_models/crate_washing/crate_with_handles_v5/collision/part_06.obj" />
+    <mesh name="reference_rack" file="/home/uyoo/Projects/dexagent/crate_lab/assets/reference_rack.obj" />
+  </asset>
+  <worldbody>
+    <body name="tray" pos="0 0 0">
+      <freejoint name="tray_free" />
+      <inertial mass="1.0" pos="-7.15573433840433e-18 -6.613633252161577e-18 -0.018835596218026978" fullinertia="0.02911271349554595 0.015998145318442694 0.044149238722219084 0.0 -2.0667603913004928e-19 -9.200825630730334e-20" />
+      <geom type="mesh" mesh="reference_rack" rgba=".05 .052 .054 1" contype="0" conaffinity="0" group="2" />
+      <geom type="box" pos="0.0 0.0 -0.0335" size="0.181 0.2585 0.004" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.179 0.0 0.0" size="0.003 0.2585 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.0 -0.2565 0.0" size="0.181 0.003 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.179 0.0 0.0345" size="0.006 0.2625 0.003" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.0 -0.2565 0.0345" size="0.185 0.006 0.003" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.183 0.0 -0.029" size="0.002 0.2625 0.0018" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.0 -0.2605 -0.029" size="0.185 0.002 0.0018" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.183 0.0 -0.007" size="0.002 0.2625 0.0018" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.0 -0.2605 -0.007" size="0.185 0.002 0.0018" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.183 0.0 0.015" size="0.002 0.2625 0.0018" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.0 -0.2605 0.015" size="0.185 0.002 0.0018" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.183 -0.245 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.183 -0.196 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.183 -0.147 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.183 -0.09799999999999998 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.183 -0.04899999999999999 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.183 0.0 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.183 0.049000000000000044 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.183 0.09800000000000003 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.183 0.14700000000000002 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.183 0.196 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.183 0.245 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.165 -0.2605 0.0" size="0.0018 0.002 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.11785714285714285 -0.2605 0.0" size="0.0018 0.002 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.07071428571428572 -0.2605 0.0" size="0.0018 0.002 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.023571428571428577 -0.2605 0.0" size="0.0018 0.002 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.023571428571428577 -0.2605 0.0" size="0.0018 0.002 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.07071428571428573 -0.2605 0.0" size="0.0018 0.002 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.11785714285714285 -0.2605 0.0" size="0.0018 0.002 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.165 -0.2605 0.0" size="0.0018 0.002 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.179 0.0 0.0" size="0.003 0.2585 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.0 0.2565 0.0" size="0.181 0.003 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.179 0.0 0.0345" size="0.006 0.2625 0.003" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.0 0.2565 0.0345" size="0.185 0.006 0.003" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.183 0.0 -0.029" size="0.002 0.2625 0.0018" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.0 0.2605 -0.029" size="0.185 0.002 0.0018" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.183 0.0 -0.007" size="0.002 0.2625 0.0018" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.0 0.2605 -0.007" size="0.185 0.002 0.0018" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.183 0.0 0.015" size="0.002 0.2625 0.0018" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.0 0.2605 0.015" size="0.185 0.002 0.0018" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.183 -0.245 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.183 -0.196 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.183 -0.147 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.183 -0.09799999999999998 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.183 -0.04899999999999999 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.183 0.0 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.183 0.049000000000000044 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.183 0.09800000000000003 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.183 0.14700000000000002 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.183 0.196 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.183 0.245 0.0" size="0.002 0.0018 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.165 0.2605 0.0" size="0.0018 0.002 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.11785714285714285 0.2605 0.0" size="0.0018 0.002 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.07071428571428572 0.2605 0.0" size="0.0018 0.002 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.023571428571428577 0.2605 0.0" size="0.0018 0.002 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.023571428571428577 0.2605 0.0" size="0.0018 0.002 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.07071428571428573 0.2605 0.0" size="0.0018 0.002 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.11785714285714285 0.2605 0.0" size="0.0018 0.002 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.165 0.2605 0.0" size="0.0018 0.002 0.0335" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.0 -0.218 -0.023" size="0.174 0.002 0.0065" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.145 -0.224 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.145 -0.212 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.043 -0.224 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.043 -0.212 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.043 -0.224 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.043 -0.212 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.145 -0.224 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.145 -0.212 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.0 -0.1308 -0.023" size="0.174 0.002 0.0065" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.145 -0.1368 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.145 -0.1248 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.043 -0.1368 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.043 -0.1248 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.043 -0.1368 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.043 -0.1248 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.145 -0.1368 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.145 -0.1248 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.0 -0.0436 -0.023" size="0.174 0.002 0.0065" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.145 -0.0496 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.145 -0.0376 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.043 -0.0496 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.043 -0.0376 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.043 -0.0496 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.043 -0.0376 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.145 -0.0496 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.145 -0.0376 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.0 0.0436 -0.023" size="0.174 0.002 0.0065" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.145 0.0376 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.145 0.0496 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.043 0.0376 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.043 0.0496 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.043 0.0376 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.043 0.0496 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.145 0.0376 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.145 0.0496 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.0 0.1308 -0.023" size="0.174 0.002 0.0065" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.145 0.1248 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.145 0.1368 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.043 0.1248 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.043 0.1368 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.043 0.1248 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.043 0.1368 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.145 0.1248 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.145 0.1368 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.0 0.218 -0.023" size="0.174 0.002 0.0065" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.145 0.212 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.145 0.224 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.043 0.212 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.043 0.224 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.043 0.212 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.043 0.224 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.145 0.212 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.145 0.224 -0.01" size="0.007 0.0018 0.0195" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.145 0.0 -0.023" size="0.002 0.25 0.0065" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="0.145 0.0 -0.023" size="0.002 0.25 0.0065" friction="0.45 0.001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.0005" group="3" />
+      <geom type="box" pos="-0.1851 0 .018" size=".00015 .012 .003" rgba=".8 .8 .75 1" contype="0" conaffinity="0" group="2" />
+      <geom type="box" pos="0.1851 0 .018" size=".00015 .012 .003" rgba=".8 .8 .75 1" contype="0" conaffinity="0" group="2" />
+    </body>
+  </worldbody>
+</mujoco>

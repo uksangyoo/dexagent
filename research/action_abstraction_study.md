@@ -152,7 +152,7 @@ Use the local Isaac Lab backend architecture, with **Newton MJWarp for the rigid
 After installing the renderer dependencies, a bounded camera smoke check using the local CLI is:
 
 ```bash
-cd /home/uyoo/Projects/dexagent/IsaacLab
+cd /home/uyoo/Projects/dexagent/third-party/IsaacLab
 uv run --extra ovrtx isaaclab zero_agent \
   --task Isaac-Cartpole-Camera --num_envs 1 --max_steps 100 \
   physics=newton_mjwarp renderer=ovrtx presets=rgb
@@ -160,7 +160,7 @@ uv run --extra ovrtx isaaclab zero_agent \
 
 This is an upstream installation check, not a dexterous environment or a command run in this study. The checkout requires Python 3.12, pins a Newton commit, and declares an `ovrtx` extra. Follow its installation instructions to build a dedicated environment; mixing its pins into the existing `mind-cable` environment would make the evidence difficult to reproduce.
 
-The local [Franka cable configuration](../IsaacLab/source/isaaclab_tasks/isaaclab_tasks/core/lift/config/franka_soft/franka_cable_env_cfg.py) supplies an MJWarp/VBD coupling example. Replace its robot-specific proxy bodies with the hand surfaces that can touch the cable, including palm and intermediate phalanges where appropriate. Validate reaction-force transfer and coupling delay; the installed Newton proxy implementation uses lagged-impulse feedback. The example's high friction setting and coarse cable discretization should not become uncalibrated industrial defaults.
+The local [Franka cable configuration](../third-party/IsaacLab/source/isaaclab_tasks/isaaclab_tasks/core/lift/config/franka_soft/franka_cable_env_cfg.py) supplies an MJWarp/VBD coupling example. Replace its robot-specific proxy bodies with the hand surfaces that can touch the cable, including palm and intermediate phalanges where appropriate. Validate reaction-force transfer and coupling delay; the installed Newton proxy implementation uses lagged-impulse feedback. The example's high friction setting and coarse cable discretization should not become uncalibrated industrial defaults.
 
 Newton is a multi-solver framework. Joint, contact, and deformable support depend on the selected solver and version. Pin those choices per experiment; repeat numerical sensitivity checks before interpreting task differences. [Newton solver documentation](https://newton-physics.github.io/newton/stable/solvers/index.html)
 

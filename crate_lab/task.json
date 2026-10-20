@@ -1,0 +1,79 @@
+{
+  "goal": "Repeat the reference strategy: grasp opposite rack rims, lift one rack clear of the stack, invert approximately 180 degrees, place onto the washer entry conveyor, release, and repeat.",
+  "reference": "/home/uyoo/Projects/dexagent/reference/crate_human.mp4",
+  "reference_sha256": "c0bba5ab60b71aa9b94acd5f1993fe0a6c9c5b2500e8c56e513da4dac59b0714",
+  "reference_duration_s": 23.567,
+  "observed_cycles_approx_s": [
+    [
+      1.5,
+      5
+    ],
+    [
+      6,
+      10
+    ],
+    [
+      11,
+      14
+    ],
+    [
+      15,
+      18
+    ],
+    [
+      19,
+      23
+    ]
+  ],
+  "robot": {
+    "arms": "2 x UR5e",
+    "hands": "Tesollo DG5F-S manufacturer left + right, 20 DOF each",
+    "controlled_dof": 52,
+    "finger_continuous_torque_limit_Nm": 0.11,
+    "arm_effort_limits_Nm": [
+      150,
+      150,
+      150,
+      28,
+      28,
+      28
+    ],
+    "body_gravity_compensation": false
+  },
+  "physics": {
+    "engine": "Newton SolverMuJoCo / MuJoCo-Warp",
+    "physical_GPU": 1,
+    "physics_step_s": 0.001,
+    "control_step_s": 0.02,
+    "free_racks": 11,
+    "rack_mass_kg": 1.0,
+    "rack_dimensions_m": [
+      0.37,
+      0.525,
+      0.075
+    ],
+    "rack_friction": 0.45,
+    "hand_friction": 0.6,
+    "friction_calibrated": false,
+    "object_attachments": false,
+    "object_pose_teleportation_during_policy": false,
+    "external_object_forcing": false,
+    "belt_transport": "Not modeled; reconstructed wire surface is stationary. No artificial belt-force term."
+  },
+  "uncertainties": [
+    "Monocular video does not identify absolute dimensions, mass, friction, compliance or actuator dynamics.",
+    "Rack outer dimensions and nominal mass borrow VAB; shell/rib/clip geometry was reconstructed from selected video frames.",
+    "Rim cross-section and unseen underside remain approximate.",
+    "Camera fit uses manually selected four rack corners and assumed dimensions; moving-camera trajectory is not yet fitted.",
+    "Washer source mesh is an approximate benchmark model, with reconstructed window, grid and control details.",
+    "Contact stability is numerical evidence, not experimental physical calibration."
+  ],
+  "asset_sources": {
+    "machine": "Local Variational-Automation-Benchmark crate_washing mesh, MIT source license copied.",
+    "rack": "Procedural reference-derived replacement; VAB v5 rejected after rendered inspection.",
+    "UR5e": "Existing local MuJoCo Menagerie UR5e asset; license copied.",
+    "hands": "Local Tesollo BSD-3-Clause manufacturer CAD and inertial properties.",
+    "RoboSimStudio_commit": "23417de77edf59d614531a833334ed4e2206fc2c"
+  },
+  "rendering": "Blender Cycles + OptiX through a RoboSimStudio renderer plugin. Exact live Newton visual geometry and body transforms; CUDA_VISIBLE_DEVICES=1. OVRTX GPU-mask interop failed, so it is not used."
+}

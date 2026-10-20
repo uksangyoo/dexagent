@@ -1,0 +1,830 @@
+{
+  "version": 3,
+  "meta": {
+    "name": "ur5e_tesollo_screw_in",
+    "description": "Agent-authored graph with interchangeable dexterous-hand servo skills. No GaP harness or runtime LLM required.",
+    "structure_source": "graph-as-policy/examples/build_a_graph and grocery_packing/packing_graph",
+    "source_commit": "c8b5515df80d3029ca5dc7f7f1ec1c327b70bbea"
+  },
+  "nodes": {
+    "approach": {
+      "type": "subgraph",
+      "ref": "approach_sg"
+    },
+    "grasp": {
+      "type": "subgraph",
+      "ref": "grasp_sg"
+    },
+    "lift": {
+      "type": "subgraph",
+      "ref": "lift_sg"
+    },
+    "reorient": {
+      "type": "subgraph",
+      "ref": "reorient_sg"
+    },
+    "align": {
+      "type": "subgraph",
+      "ref": "align_sg"
+    },
+    "press": {
+      "type": "subgraph",
+      "ref": "press_sg"
+    },
+    "shift_grip": {
+      "type": "subgraph",
+      "ref": "shift_grip_sg"
+    },
+    "reposition": {
+      "type": "subgraph",
+      "ref": "reposition_sg"
+    },
+    "turn": {
+      "type": "subgraph",
+      "ref": "turn_sg"
+    },
+    "seat": {
+      "type": "subgraph",
+      "ref": "seat_sg"
+    },
+    "done": {
+      "type": "end",
+      "status": "success"
+    },
+    "abort": {
+      "type": "end",
+      "status": "failure"
+    }
+  },
+  "edges": [
+    [
+      "START",
+      "approach"
+    ]
+  ],
+  "conditional_edges": {
+    "approach": {
+      "router_field": "exit",
+      "mapping": {
+        "complete": "grasp",
+        "failed": "abort"
+      }
+    },
+    "grasp": {
+      "router_field": "exit",
+      "mapping": {
+        "complete": "lift",
+        "failed": "abort"
+      }
+    },
+    "lift": {
+      "router_field": "exit",
+      "mapping": {
+        "complete": "reorient",
+        "failed": "abort"
+      }
+    },
+    "reorient": {
+      "router_field": "exit",
+      "mapping": {
+        "complete": "align",
+        "failed": "abort"
+      }
+    },
+    "align": {
+      "router_field": "exit",
+      "mapping": {
+        "complete": "press",
+        "failed": "abort"
+      }
+    },
+    "press": {
+      "router_field": "exit",
+      "mapping": {
+        "complete": "shift_grip",
+        "failed": "abort"
+      }
+    },
+    "shift_grip": {
+      "router_field": "exit",
+      "mapping": {
+        "complete": "reposition",
+        "failed": "abort"
+      }
+    },
+    "reposition": {
+      "router_field": "exit",
+      "mapping": {
+        "complete": "turn",
+        "failed": "abort"
+      }
+    },
+    "turn": {
+      "router_field": "exit",
+      "mapping": {
+        "complete": "seat",
+        "failed": "abort",
+        "reacquire": "shift_grip"
+      }
+    },
+    "seat": {
+      "router_field": "exit",
+      "mapping": {
+        "complete": "done",
+        "failed": "abort"
+      }
+    }
+  },
+  "subgraphs": {
+    "approach_sg": {
+      "skill": "dexterous-approach",
+      "description": "Move the UR5e to the horizontal screwdriver with the Tesollo hand open.",
+      "inputs": {
+        "observation": {
+          "type": "ArmHandObservation"
+        },
+        "abstraction": {
+          "type": "ControllerInterface"
+        }
+      },
+      "outputs": {
+        "state": {
+          "$ref": "tick.state"
+        }
+      },
+      "nodes": {
+        "observe": {
+          "type": "tool",
+          "tool": "robot.observe"
+        },
+        "tick": {
+          "type": "tool",
+          "tool": "controller.approach",
+          "inputs": {
+            "observation": {
+              "$ref": "observe.observation"
+            },
+            "abstraction": {
+              "$ref": "in.abstraction"
+            }
+          }
+        },
+        "complete": {
+          "type": "exit"
+        },
+        "failed": {
+          "type": "exit"
+        }
+      },
+      "edges": [
+        [
+          "START",
+          "observe"
+        ],
+        [
+          "observe",
+          "tick"
+        ],
+        [
+          "complete",
+          "END"
+        ],
+        [
+          "failed",
+          "END"
+        ]
+      ],
+      "conditional_edges": {
+        "tick": {
+          "router_field": "exit",
+          "mapping": {
+            "running": "observe",
+            "complete": "complete",
+            "failed": "failed"
+          }
+        }
+      }
+    },
+    "grasp_sg": {
+      "skill": "dexterous-grasp",
+      "description": "Acquire opposed handle contacts and regulate normal force.",
+      "inputs": {
+        "observation": {
+          "type": "ArmHandObservation"
+        },
+        "abstraction": {
+          "type": "ControllerInterface"
+        }
+      },
+      "outputs": {
+        "state": {
+          "$ref": "tick.state"
+        }
+      },
+      "nodes": {
+        "observe": {
+          "type": "tool",
+          "tool": "robot.observe"
+        },
+        "tick": {
+          "type": "tool",
+          "tool": "controller.grasp",
+          "inputs": {
+            "observation": {
+              "$ref": "observe.observation"
+            },
+            "abstraction": {
+              "$ref": "in.abstraction"
+            }
+          }
+        },
+        "complete": {
+          "type": "exit"
+        },
+        "failed": {
+          "type": "exit"
+        }
+      },
+      "edges": [
+        [
+          "START",
+          "observe"
+        ],
+        [
+          "observe",
+          "tick"
+        ],
+        [
+          "complete",
+          "END"
+        ],
+        [
+          "failed",
+          "END"
+        ]
+      ],
+      "conditional_edges": {
+        "tick": {
+          "router_field": "exit",
+          "mapping": {
+            "running": "observe",
+            "complete": "complete",
+            "failed": "failed"
+          }
+        }
+      }
+    },
+    "lift_sg": {
+      "skill": "dexterous-lift",
+      "description": "Lift clear of both cradle supports; verify retained tool support.",
+      "inputs": {
+        "observation": {
+          "type": "ArmHandObservation"
+        },
+        "abstraction": {
+          "type": "ControllerInterface"
+        }
+      },
+      "outputs": {
+        "state": {
+          "$ref": "tick.state"
+        }
+      },
+      "nodes": {
+        "observe": {
+          "type": "tool",
+          "tool": "robot.observe"
+        },
+        "tick": {
+          "type": "tool",
+          "tool": "controller.lift",
+          "inputs": {
+            "observation": {
+              "$ref": "observe.observation"
+            },
+            "abstraction": {
+              "$ref": "in.abstraction"
+            }
+          }
+        },
+        "complete": {
+          "type": "exit"
+        },
+        "failed": {
+          "type": "exit"
+        }
+      },
+      "edges": [
+        [
+          "START",
+          "observe"
+        ],
+        [
+          "observe",
+          "tick"
+        ],
+        [
+          "complete",
+          "END"
+        ],
+        [
+          "failed",
+          "END"
+        ]
+      ],
+      "conditional_edges": {
+        "tick": {
+          "router_field": "exit",
+          "mapping": {
+            "running": "observe",
+            "complete": "complete",
+            "failed": "failed"
+          }
+        }
+      }
+    },
+    "reorient_sg": {
+      "skill": "dexterous-reorient",
+      "description": "Bring the tool upright with arm pose and grasp feedback.",
+      "inputs": {
+        "observation": {
+          "type": "ArmHandObservation"
+        },
+        "abstraction": {
+          "type": "ControllerInterface"
+        }
+      },
+      "outputs": {
+        "state": {
+          "$ref": "tick.state"
+        }
+      },
+      "nodes": {
+        "observe": {
+          "type": "tool",
+          "tool": "robot.observe"
+        },
+        "tick": {
+          "type": "tool",
+          "tool": "controller.reorient",
+          "inputs": {
+            "observation": {
+              "$ref": "observe.observation"
+            },
+            "abstraction": {
+              "$ref": "in.abstraction"
+            }
+          }
+        },
+        "complete": {
+          "type": "exit"
+        },
+        "failed": {
+          "type": "exit"
+        }
+      },
+      "edges": [
+        [
+          "START",
+          "observe"
+        ],
+        [
+          "observe",
+          "tick"
+        ],
+        [
+          "complete",
+          "END"
+        ],
+        [
+          "failed",
+          "END"
+        ]
+      ],
+      "conditional_edges": {
+        "tick": {
+          "router_field": "exit",
+          "mapping": {
+            "running": "observe",
+            "complete": "complete",
+            "failed": "failed"
+          }
+        }
+      }
+    },
+    "align_sg": {
+      "skill": "dexterous-align",
+      "description": "Align the actual bit with the screw slot before descending.",
+      "inputs": {
+        "observation": {
+          "type": "ArmHandObservation"
+        },
+        "abstraction": {
+          "type": "ControllerInterface"
+        }
+      },
+      "outputs": {
+        "state": {
+          "$ref": "tick.state"
+        }
+      },
+      "nodes": {
+        "observe": {
+          "type": "tool",
+          "tool": "robot.observe"
+        },
+        "tick": {
+          "type": "tool",
+          "tool": "controller.align",
+          "inputs": {
+            "observation": {
+              "$ref": "observe.observation"
+            },
+            "abstraction": {
+              "$ref": "in.abstraction"
+            }
+          }
+        },
+        "complete": {
+          "type": "exit"
+        },
+        "failed": {
+          "type": "exit"
+        }
+      },
+      "edges": [
+        [
+          "START",
+          "observe"
+        ],
+        [
+          "observe",
+          "tick"
+        ],
+        [
+          "complete",
+          "END"
+        ],
+        [
+          "failed",
+          "END"
+        ]
+      ],
+      "conditional_edges": {
+        "tick": {
+          "router_field": "exit",
+          "mapping": {
+            "running": "observe",
+            "complete": "complete",
+            "failed": "failed"
+          }
+        }
+      }
+    },
+    "press_sg": {
+      "skill": "dexterous-press",
+      "description": "Establish measured bit-slot contact under a bounded axial load.",
+      "inputs": {
+        "observation": {
+          "type": "ArmHandObservation"
+        },
+        "abstraction": {
+          "type": "ControllerInterface"
+        }
+      },
+      "outputs": {
+        "state": {
+          "$ref": "tick.state"
+        }
+      },
+      "nodes": {
+        "observe": {
+          "type": "tool",
+          "tool": "robot.observe"
+        },
+        "tick": {
+          "type": "tool",
+          "tool": "controller.press",
+          "inputs": {
+            "observation": {
+              "$ref": "observe.observation"
+            },
+            "abstraction": {
+              "$ref": "in.abstraction"
+            }
+          }
+        },
+        "complete": {
+          "type": "exit"
+        },
+        "failed": {
+          "type": "exit"
+        }
+      },
+      "edges": [
+        [
+          "START",
+          "observe"
+        ],
+        [
+          "observe",
+          "tick"
+        ],
+        [
+          "complete",
+          "END"
+        ],
+        [
+          "failed",
+          "END"
+        ]
+      ],
+      "conditional_edges": {
+        "tick": {
+          "router_field": "exit",
+          "mapping": {
+            "running": "observe",
+            "complete": "complete",
+            "failed": "failed"
+          }
+        }
+      }
+    },
+    "shift_grip_sg": {
+      "skill": "dexterous-shift_grip",
+      "description": "Maintain the pinch and acquire the swivel cap with the thumb.",
+      "inputs": {
+        "observation": {
+          "type": "ArmHandObservation"
+        },
+        "abstraction": {
+          "type": "ControllerInterface"
+        }
+      },
+      "outputs": {
+        "state": {
+          "$ref": "tick.state"
+        }
+      },
+      "nodes": {
+        "observe": {
+          "type": "tool",
+          "tool": "robot.observe"
+        },
+        "tick": {
+          "type": "tool",
+          "tool": "controller.shift_grip",
+          "inputs": {
+            "observation": {
+              "$ref": "observe.observation"
+            },
+            "abstraction": {
+              "$ref": "in.abstraction"
+            }
+          }
+        },
+        "complete": {
+          "type": "exit"
+        },
+        "failed": {
+          "type": "exit"
+        }
+      },
+      "edges": [
+        [
+          "START",
+          "observe"
+        ],
+        [
+          "observe",
+          "tick"
+        ],
+        [
+          "complete",
+          "END"
+        ],
+        [
+          "failed",
+          "END"
+        ]
+      ],
+      "conditional_edges": {
+        "tick": {
+          "router_field": "exit",
+          "mapping": {
+            "running": "observe",
+            "complete": "complete",
+            "failed": "failed"
+          }
+        }
+      }
+    },
+    "reposition_sg": {
+      "skill": "dexterous-reposition",
+      "description": "Move the arm and slide the side contacts while the thumb maintains cap pressure.",
+      "inputs": {
+        "observation": {
+          "type": "ArmHandObservation"
+        },
+        "abstraction": {
+          "type": "ControllerInterface"
+        }
+      },
+      "outputs": {
+        "state": {
+          "$ref": "tick.state"
+        }
+      },
+      "nodes": {
+        "observe": {
+          "type": "tool",
+          "tool": "robot.observe"
+        },
+        "tick": {
+          "type": "tool",
+          "tool": "controller.reposition",
+          "inputs": {
+            "observation": {
+              "$ref": "observe.observation"
+            },
+            "abstraction": {
+              "$ref": "in.abstraction"
+            }
+          }
+        },
+        "complete": {
+          "type": "exit"
+        },
+        "failed": {
+          "type": "exit"
+        }
+      },
+      "edges": [
+        [
+          "START",
+          "observe"
+        ],
+        [
+          "observe",
+          "tick"
+        ],
+        [
+          "complete",
+          "END"
+        ],
+        [
+          "failed",
+          "END"
+        ]
+      ],
+      "conditional_edges": {
+        "tick": {
+          "router_field": "exit",
+          "mapping": {
+            "running": "observe",
+            "complete": "complete",
+            "failed": "failed"
+          }
+        }
+      }
+    },
+    "turn_sg": {
+      "skill": "dexterous-turn",
+      "description": "Drive, slide or release, return, and reacquire contact patches.",
+      "inputs": {
+        "observation": {
+          "type": "ArmHandObservation"
+        },
+        "abstraction": {
+          "type": "ControllerInterface"
+        }
+      },
+      "outputs": {
+        "state": {
+          "$ref": "tick.state"
+        }
+      },
+      "nodes": {
+        "observe": {
+          "type": "tool",
+          "tool": "robot.observe"
+        },
+        "tick": {
+          "type": "tool",
+          "tool": "controller.turn",
+          "inputs": {
+            "observation": {
+              "$ref": "observe.observation"
+            },
+            "abstraction": {
+              "$ref": "in.abstraction"
+            }
+          }
+        },
+        "complete": {
+          "type": "exit"
+        },
+        "failed": {
+          "type": "exit"
+        }
+      },
+      "edges": [
+        [
+          "START",
+          "observe"
+        ],
+        [
+          "observe",
+          "tick"
+        ],
+        [
+          "complete",
+          "END"
+        ],
+        [
+          "failed",
+          "END"
+        ]
+      ],
+      "conditional_edges": {
+        "tick": {
+          "router_field": "exit",
+          "mapping": {
+            "running": "observe",
+            "complete": "complete",
+            "failed": "failed"
+          }
+        }
+      }
+    },
+    "seat_sg": {
+      "skill": "dexterous-seat",
+      "description": "Stop angular motion and verify depth, axial load, and head seating.",
+      "inputs": {
+        "observation": {
+          "type": "ArmHandObservation"
+        },
+        "abstraction": {
+          "type": "ControllerInterface"
+        }
+      },
+      "outputs": {
+        "state": {
+          "$ref": "tick.state"
+        }
+      },
+      "nodes": {
+        "observe": {
+          "type": "tool",
+          "tool": "robot.observe"
+        },
+        "tick": {
+          "type": "tool",
+          "tool": "controller.seat",
+          "inputs": {
+            "observation": {
+              "$ref": "observe.observation"
+            },
+            "abstraction": {
+              "$ref": "in.abstraction"
+            }
+          }
+        },
+        "complete": {
+          "type": "exit"
+        },
+        "failed": {
+          "type": "exit"
+        }
+      },
+      "edges": [
+        [
+          "START",
+          "observe"
+        ],
+        [
+          "observe",
+          "tick"
+        ],
+        [
+          "complete",
+          "END"
+        ],
+        [
+          "failed",
+          "END"
+        ]
+      ],
+      "conditional_edges": {
+        "tick": {
+          "router_field": "exit",
+          "mapping": {
+            "running": "observe",
+            "complete": "complete",
+            "failed": "failed"
+          }
+        }
+      }
+    }
+  }
+}

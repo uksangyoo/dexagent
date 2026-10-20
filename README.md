@@ -1,5 +1,46 @@
 # Dexterous action abstractions for UR5e + Tesollo DG5F-S
 
+## Repository layout
+
+```bash
+git clone --recursive <repo-url>    # or: git submodule update --init --recursive
+```
+
+External code and assets live in `third-party/`:
+
+| Path | Source |
+| --- | --- |
+| `third-party/IsaacLab` | submodule, [isaac-sim/IsaacLab](https://github.com/isaac-sim/IsaacLab) |
+| `third-party/newton` | submodule, [newton-physics/newton](https://github.com/newton-physics/newton) (used by `screwdriver_lab/run_contact_bench.py`) |
+| `third-party/robosimstudio` | submodule, [robosimstudio/robosimstudio](https://github.com/robosimstudio/robosimstudio) (used by `crate_lab`) |
+| `third-party/tesollo_model` | submodule, [tesollodelto/tesollo_model](https://github.com/tesollodelto/tesollo_model) |
+| `third-party/universal_robots_ur5e` | vendored UR5e MJCF and meshes (BSD-3-Clause, see `LICENSE`) |
+| `third-party/vab_crate_washing` | vendored crate-washing scene assets (MIT, see `LICENSE`) |
+
+Generated outputs (`runs/`, `screwdriver_lab/artifacts/`, `crate_lab/results/`), local virtualenvs (`screwdriver_lab/vendor/`) and the published site (`screwdriver_site/`) are not tracked.
+
+## Goal-to-control workflow (October 16)
+
+The executable authoring layer is in [screwdriver_lab/agentic](screwdriver_lab/agentic/README.md): language/video request → agent-authored graph and Python nodes → selected hand abstraction → 20 hand + 6 arm motor commands → measured feedback for revision. It includes an external-generator command protocol and bounded revision loop with a fixed physical goal contract. The current examples were authored in this conversation; a separate live model provider has not been configured or evaluated. The website exposes actual policy transitions, RTX replays and actuator traces. Full pickup-to-seat execution remains incomplete. All GPU work is restricted to physical GPU 1.
+
+## Screwdriver control laboratory (October 15)
+
+The October 16 cube extension now includes one continuous pickup → 30° in-hand
+goal → stable hold result: 3.94° final error, 77.52 mm lift and 0.312 s accepted
+hold, with only 0.014° palm rotation. A matched rerun reproduced the trajectory;
+fingertip-path and rigid-object-twist adapters collided from the same initial
+state. Perturbed-start and quarter-turn results do not yet pass. The website
+includes synchronized RTX movies, the frozen comparison, sensitivity cases,
+and the request → graph → bounded motor-command → measured-feedback artifacts.
+The screwdriver has reached engagement and partial driving in a prepared
+diagnostic; the continuous pickup-to-seat task remains incomplete.
+
+The current revision is in `screwdriver_lab/hom/`. It uses Drake SAP with hydroelastic fingertip pressure patches, explicit mating thread contact, and 26 bounded robot motors. Screwdriver and screw are independent unactuated rigid bodies. MuJoCo supplies kinematics only; dynamics runs on CPU and RTX rendering uses physical GPU 1.
+
+A frozen six-second, three-interface comparison produces 39.47° / 0.116 mm for fingertip paths, 26.10° / 0.079 mm for rigid object twist, and 154.10° / 0.434 mm for HOM-inspired relative-contact control. Three starting finger clearances preserve this ordering. These are prepared-grasp manipulation trials, not full pickup-to-seating successes. Material assumptions remain uncalibrated; numerical and friction sensitivity checks are retained with the raw evidence in `screwdriver_lab/artifacts/hom_revision`.
+
+Earlier full-task claims from `artifacts/physical_task` are superseded: inspection found a wrist collision capsule overlapping the thumb base, an oversized tool surrogate, and condition-specific tuning. Those solver-generated recordings are historical diagnostics, not credible evidence of realistic manipulation or an abstraction ranking. The corrected wrist uses the supplied CAD envelope. See the [interactive comparison](https://dexagent-screwdriver-lab.comet-basil-0008.chatgpt.site) and `screwdriver_lab/HOM_REVISION.txt` for methods, limitations, and reproduction.
+
 The contact-aware implementation is in `dexagent/`. The existing three-seed PPO curriculum remains in `dextrain/`; it is a separate experiment. The design and earlier literature study are in [research/action_abstraction_study.md](research/action_abstraction_study.md).
 
 ## Visual review
@@ -126,3 +167,33 @@ Policy improvement rounds are distinct from decisions within a rollout. `learnin
 Results are stratified by task, split and improvement iteration. The summarizer rejects pending outcomes, duplicate trials, incomplete A–F pairs, changed physical cases/budgets and mismatched controllers/agents/observations. Next-action recovery and eventual task recovery are reported separately. The earlier study's crossed seed/case bootstrap should be applied to completed paired outcomes before drawing performance conclusions.
 
 RTX remains unconfigured. These experiments currently use state/contact observations; A100 GPUs are [not supported for Isaac Sim RTX rendering](https://docs.isaacsim.omniverse.nvidia.com/latest/installation/requirements.html). Renderer integration is a distinct pending validation step.
+
+## Historical controlled-slip prototype (2026-10-15; invalidated)
+
+The standalone `screwdriver_lab` experiment now implements an index-cap,
+thumb/middle controlled-slip gait on an articulated UR5e + Tesollo DG5F-S.
+Its executable policy graph routes acquire → drive → unload → sliding return,
+with measured contact gates and seating verification. It uses the general
+Graph-as-Policy structure without the GaP harness or a runtime LLM.
+
+The old prototype reported 720° / 2 mm and a fifteen-case comparison.
+Those records used the overlapping wrist capsule and are **invalid as evidence
+of realistic task completion or abstraction superiority**. They are retained
+only as development history. The corrected hydroelastic comparison at the top
+of this README supersedes them; full pickup-to-seating remains unverified.
+
+This lab has its own RTX replay pipeline (Blender Cycles / OptiX, physical GPU 1)
+and does not configure the separate contact-grammar experiments above.
+
+- Implementation: `screwdriver_lab/controlled_slip.py`, `slip_graph.py`, `slip_compare.py`.
+- Reproduction and limits: `screwdriver_lab/artifacts/reference_strategy/CONTROLLED_SLIP_REPRODUCE.txt`.
+- Raw experiments and frozen source snapshots: `screwdriver_lab/artifacts/full_motion/`.
+- Website: `screwdriver_site/dist/`; preview with `python -m screwdriver_lab.serve_screw`.
+- Mechanical/provenance checks: `python -m screwdriver_lab.slip_validate`.
+
+The contact-based stopping branch now passes its 0.5 s hold test after
+695.8° / 1.941 mm of screw motion. This is an explicitly **checkpoint-resumed**
+validation from the original long trial, whose incorrect distance guard let
+it lose alignment after reaching the seat. No object pose or velocity is
+adjusted at the checkpoint. A fresh complete pickup-to-seat rollout remains
+unverified. See `screwdriver_lab/HOM_REVISION.txt` for the criteria and provenance.

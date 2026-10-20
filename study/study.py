@@ -58,7 +58,7 @@ def audit_hand(asset_root):
     if not models:
         raise ValueError(f"No URDF assets found in {asset_root}")
     revisions = {}
-    for name, path in {"IsaacLab": ROOT / "IsaacLab", "tesollo_model": ROOT / "tesollo_model",
+    for name, path in {"IsaacLab": ROOT / "third-party/IsaacLab", "tesollo_model": ROOT / "third-party/tesollo_model",
                        "graph-as-policy": ROOT.parent / "graph-as-policy"}.items():
         result = subprocess.run(["git", "-C", str(path), "rev-parse", "HEAD"],
                                 capture_output=True, text=True, check=False)
@@ -217,7 +217,7 @@ def main():
     analysis.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.command == "audit":
-        value = audit_hand(ROOT / "tesollo_model" / "dg5fs")
+        value = audit_hand(ROOT / "third-party/tesollo_model" / "dg5fs")
         write_json(args.output, value)
         print(f"Audited {len(value['models'])} models: {args.output}")
     elif args.command == "manifest":

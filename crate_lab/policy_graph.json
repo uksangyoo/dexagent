@@ -1,0 +1,109 @@
+{
+  "goal_source": "reference/crate_human.mp4, manually inspected visual anchors",
+  "nodes": [
+    {
+      "id": "settle",
+      "action": "Allow the free stack to settle",
+      "guard": "finite state; less than 2 mm rest drift"
+    },
+    {
+      "id": "approach",
+      "action": "Move both open hands to opposite short rims",
+      "guard": "joint and collision limits"
+    },
+    {
+      "id": "close",
+      "action": "Independently curl 20 finger joints on each hand",
+      "guard": "bounded 0.11 Nm finger effort"
+    },
+    {
+      "id": "regulate_grip",
+      "action": "Regulate wrist spacing from measured contact forces",
+      "guard": "14 N opposing normal force per hand"
+    },
+    {
+      "id": "lift",
+      "action": "Lift one free rack clear of the stack",
+      "guard": "measured rack height increases by at least 150 mm"
+    },
+    {
+      "id": "flip",
+      "action": "Rotate the coordinated hand frames about the rack long axis",
+      "guard": "measured rack up axis points downward"
+    },
+    {
+      "id": "transfer",
+      "action": "Move the inverted rack toward the conveyor",
+      "guard": "inverse kinematics feasible; grasp maintained"
+    },
+    {
+      "id": "lower",
+      "action": "Lower onto the entry conveyor surface",
+      "guard": "support contact required"
+    },
+    {
+      "id": "release",
+      "action": "Open both hands",
+      "guard": "rack remains supported"
+    },
+    {
+      "id": "repeat",
+      "action": "Return to the next rack",
+      "guard": "up to five observed cycles"
+    }
+  ],
+  "edges": [
+    {
+      "source": "settle",
+      "target": "approach",
+      "condition": "guard passes"
+    },
+    {
+      "source": "approach",
+      "target": "close",
+      "condition": "guard passes"
+    },
+    {
+      "source": "close",
+      "target": "regulate_grip",
+      "condition": "guard passes"
+    },
+    {
+      "source": "regulate_grip",
+      "target": "lift",
+      "condition": "guard passes"
+    },
+    {
+      "source": "lift",
+      "target": "flip",
+      "condition": "guard passes"
+    },
+    {
+      "source": "flip",
+      "target": "transfer",
+      "condition": "guard passes"
+    },
+    {
+      "source": "transfer",
+      "target": "lower",
+      "condition": "guard passes"
+    },
+    {
+      "source": "lower",
+      "target": "release",
+      "condition": "guard passes"
+    },
+    {
+      "source": "release",
+      "target": "repeat",
+      "condition": "guard passes"
+    },
+    {
+      "source": "repeat",
+      "target": "approach",
+      "condition": "rack remains in stack"
+    }
+  ],
+  "implemented_scope": "first-cycle probe through release; repeat and supported-release verification still pending",
+  "failure_edge": "stop and preserve the measured failure; no attach, object force, pose correction or success override"
+}

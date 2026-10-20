@@ -1,0 +1,141 @@
+<mujoco model="tesollo_screwdriver">
+  <compiler angle="radian" meshdir="/home/uyoo/Projects/dexagent/third-party/tesollo_model/dg5fs/meshes" />
+
+  <asset>
+    <mesh name="link_base" content_type="model/stl" file="dg5fs_right/link_base.STL" />
+    <mesh name="link_1_1" content_type="model/stl" file="dg5fs_right/link_1_1.STL" />
+    <mesh name="link_1_2" content_type="model/stl" file="dg5fs_right/link_1_2.STL" />
+    <mesh name="link_1_3" content_type="model/stl" file="dg5fs_right/link_1_3.STL" />
+    <mesh name="link_1_4" content_type="model/stl" file="dg5fs_right/link_1_4.STL" />
+    <mesh name="link_1_tip" content_type="model/stl" file="dg5fs_right/link_1_tip.STL" />
+    <mesh name="link_2_1" content_type="model/stl" file="dg5fs_right/link_2_1.STL" />
+    <mesh name="link_2_2" content_type="model/stl" file="dg5fs_right/link_2_2.STL" />
+    <mesh name="link_2_3" content_type="model/stl" file="dg5fs_right/link_2_3.STL" />
+    <mesh name="link_2_4" content_type="model/stl" file="dg5fs_right/link_2_4.STL" />
+    <mesh name="link_2_tip" content_type="model/stl" file="dg5fs_right/link_2_tip.STL" />
+    <mesh name="link_3_1" content_type="model/stl" file="dg5fs_right/link_3_1.STL" />
+    <mesh name="link_3_2" content_type="model/stl" file="dg5fs_right/link_3_2.STL" />
+    <mesh name="link_3_3" content_type="model/stl" file="dg5fs_right/link_3_3.STL" />
+    <mesh name="link_3_4" content_type="model/stl" file="dg5fs_right/link_3_4.STL" />
+    <mesh name="link_3_tip" content_type="model/stl" file="dg5fs_right/link_3_tip.STL" />
+    <mesh name="link_4_1" content_type="model/stl" file="dg5fs_right/link_4_1.STL" />
+    <mesh name="link_4_2" content_type="model/stl" file="dg5fs_right/link_4_2.STL" />
+    <mesh name="link_4_3" content_type="model/stl" file="dg5fs_right/link_4_3.STL" />
+    <mesh name="link_4_4" content_type="model/stl" file="dg5fs_right/link_4_4.STL" />
+    <mesh name="link_4_tip" content_type="model/stl" file="dg5fs_right/link_4_tip.STL" />
+    <mesh name="link_5_1" content_type="model/stl" file="dg5fs_right/link_5_1.STL" />
+    <mesh name="link_5_2" content_type="model/stl" file="dg5fs_right/link_5_2.STL" />
+    <mesh name="link_5_3" content_type="model/stl" file="dg5fs_right/link_5_3.STL" />
+    <mesh name="link_5_4" content_type="model/stl" file="dg5fs_right/link_5_4.STL" />
+    <mesh name="link_5_tip" content_type="model/stl" file="dg5fs_right/link_5_tip.STL" />
+  </asset>
+
+  <worldbody>
+    <body name="palm" pos="0 0 .16" quat="1 0 0 0"><geom type="mesh" mesh="link_base" />
+    <body name="link_1_1" pos="0.0017 0.018 0.0298" quat="0.499998 0.5 0.500002 0.5">
+      <inertial pos="2.03296e-09 -0.00601222 0.00795349" quat="0.979032 -0.203705 0 0" mass="0.0198064" diaginertia="3.17093e-06 2.68441e-06 1.18745e-06" />
+      <joint name="joint_1_1" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-7.5 7.5" />
+      <geom type="mesh" mesh="link_1_1" rgba=".36 .78 .71 1" />
+      <body name="link_1_2" pos="0 0 0.0262" quat="0.707105 -0.707108 0 0">
+        <inertial pos="0.01642 0.000294037 0.000325609" quat="-0.0500865 0.721925 -0.0078327 0.690112" mass="0.0280996" diaginertia="4.2812e-06 4.2228e-06 1.40325e-06" />
+        <joint name="joint_1_2" pos="0 0 0" axis="0 0 1" range="-2.67035 0" actuatorfrcrange="-7.5 7.5" />
+        <geom type="mesh" mesh="link_1_2" rgba=".36 .78 .71 1" />
+        <body name="link_1_3" pos="0.0381 0 0" quat="0.707105 0.707108 0 0">
+          <inertial pos="0.0138279 -6.38885e-09 3.77858e-05" quat="0.463071 0.534384 0.534377 0.463077" mass="0.023482" diaginertia="3.13583e-06 2.92228e-06 1.11694e-06" />
+          <joint name="joint_1_3" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-7.5 7.5" />
+          <geom type="mesh" mesh="link_1_3" rgba=".36 .78 .71 1" />
+          <body name="link_1_4" pos="0.0334 0 0">
+            <inertial pos="0.0165709 0.00230561 0.000312451" quat="-0.157427 0.710524 0.125248 0.674304" mass="0.0292716" diaginertia="5.03049e-06 4.4975e-06 2.05549e-06" />
+            <joint name="joint_1_4" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-7.5 7.5" />
+            <geom type="mesh" mesh="link_1_4" rgba=".36 .78 .71 1" />
+            <geom pos="0.0289 0 0" quat="1 0 0 0" type="mesh" mesh="link_1_tip" rgba=".36 .78 .71 1" />
+          <site name="tip_1" pos="0.0289 0 0" size=".002" rgba="1 1 1 0" /></body>
+        </body>
+      </body>
+    </body>
+    <body name="link_2_1" pos="0.0017 0.028 0.08365" quat="-2.59734e-06 0.707105 2.59735e-06 0.707108">
+      <inertial pos="0.0198782 0.000277092 0.000891767" quat="0.686188 -0.134177 -0.177008 0.692684" mass="0.0330237" diaginertia="4.58833e-06 3.29048e-06 2.90003e-06" />
+      <joint name="joint_2_1" pos="0 0 0" axis="0 0 1" range="-0.837758 0.261799" actuatorfrcrange="-7.5 7.5" />
+      <geom type="mesh" mesh="link_2_1" rgba=".43 .64 .94 1" />
+      <body name="link_2_2" pos="0.02415 0 0.0126" quat="0.707105 -0.707108 0 0">
+        <inertial pos="0.0195721 6.37508e-09 3.77861e-05" quat="0.463071 0.534384 0.534378 0.463076" mass="0.023482" diaginertia="3.13583e-06 2.92228e-06 1.11694e-06" />
+        <joint name="joint_2_2" pos="0 0 0" axis="0 0 -1" range="0 2.19911" actuatorfrcrange="-7.5 7.5" />
+        <geom type="mesh" mesh="link_2_2" rgba=".43 .64 .94 1" />
+        <body name="link_2_3" pos="0.0334 0 0" quat="-3.67321e-06 1 0 0">
+          <inertial pos="0.0195721 6.58759e-09 3.77859e-05" quat="0.534384 0.463071 0.463077 0.534377" mass="0.023482" diaginertia="3.13583e-06 2.92228e-06 1.11694e-06" />
+          <joint name="joint_2_3" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-7.5 7.5" />
+          <geom type="mesh" mesh="link_2_3" rgba=".43 .64 .94 1" />
+          <body name="link_2_4" pos="0.0334 0 0">
+            <inertial pos="0.0139058 -0.00262796 -0.000524353" quat="0.542977 0.70992 0.196764 0.403079" mass="0.0157537" diaginertia="1.57369e-06 1.39225e-06 9.14587e-07" />
+            <joint name="joint_2_4" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-7.5 7.5" />
+            <geom type="mesh" mesh="link_2_4" rgba=".43 .64 .94 1" />
+            <geom pos="0.018 0 0" quat="1 0 0 0" type="mesh" mesh="link_2_tip" rgba=".43 .64 .94 1" />
+          <site name="tip_2" pos="0.018 0 0" size=".002" rgba="1 1 1 0" /></body>
+        </body>
+      </body>
+    </body>
+    <body name="link_3_1" pos="0.0017 0.005 0.08865" quat="-2.59734e-06 0.707105 2.59735e-06 0.707108">
+      <inertial pos="0.0198782 0.000277092 0.000891767" quat="0.686188 -0.134177 -0.177008 0.692684" mass="0.0330237" diaginertia="4.58833e-06 3.29048e-06 2.90003e-06" />
+      <joint name="joint_3_1" pos="0 0 0" axis="0 0 1" range="-0.575959 0.733038" actuatorfrcrange="-7.5 7.5" />
+      <geom type="mesh" mesh="link_3_1" rgba=".73 .56 .88 1" />
+      <body name="link_3_2" pos="0.02415 0 0.0126" quat="0.707105 -0.707108 0 0">
+        <inertial pos="0.0195721 6.67109e-09 3.77864e-05" quat="0.463071 0.534384 0.534378 0.463076" mass="0.023482" diaginertia="3.13583e-06 2.92228e-06 1.11694e-06" />
+        <joint name="joint_3_2" pos="0 0 0" axis="0 0 -1" range="0 2.26893" actuatorfrcrange="-7.5 7.5" />
+        <geom type="mesh" mesh="link_3_2" rgba=".73 .56 .88 1" />
+        <body name="link_3_3" pos="0.0334 0 0" quat="-3.67321e-06 1 0 0">
+          <inertial pos="0.0195721 6.37508e-09 3.77861e-05" quat="0.463071 0.534384 0.534378 0.463076" mass="0.023482" diaginertia="3.13583e-06 2.92228e-06 1.11694e-06" />
+          <joint name="joint_3_3" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-7.5 7.5" />
+          <geom type="mesh" mesh="link_3_3" rgba=".73 .56 .88 1" />
+          <body name="link_3_4" pos="0.0334 0 0">
+            <inertial pos="0.0139053 -0.00262851 0.000524531" quat="0.512949 0.740916 0.215188 0.376326" mass="0.0157537" diaginertia="1.56834e-06 1.41319e-06 8.99058e-07" />
+            <joint name="joint_3_4" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-7.5 7.5" />
+            <geom type="mesh" mesh="link_3_4" rgba=".73 .56 .88 1" />
+            <geom pos="0.018 0 0" quat="1 0 0 0" type="mesh" mesh="link_3_tip" rgba=".73 .56 .88 1" />
+          <site name="tip_3" pos="0.018 0 0" size=".002" rgba="1 1 1 0" /></body>
+        </body>
+      </body>
+    </body>
+    <body name="link_4_1" pos="0.0013 -0.018 0.08065" quat="-2.59734e-06 0.707105 2.59735e-06 0.707108">
+      <inertial pos="0.0198782 0.000277092 0.000891767" quat="0.686188 -0.134177 -0.177008 0.692684" mass="0.0330237" diaginertia="4.58833e-06 3.29048e-06 2.90003e-06" />
+      <joint name="joint_4_1" pos="0 0 0" axis="0 0 1" range="-0.20944 0.837758" actuatorfrcrange="-7.5 7.5" />
+      <geom type="mesh" mesh="link_4_1" rgba=".95 .64 .37 1" />
+      <body name="link_4_2" pos="0.02415 0 0.0126" quat="0.707105 -0.707108 0 0">
+        <inertial pos="0.0195721 6.35657e-09 3.7786e-05" quat="0.463071 0.534384 0.534378 0.463076" mass="0.023482" diaginertia="3.13583e-06 2.92228e-06 1.11694e-06" />
+        <joint name="joint_4_2" pos="0 0 0" axis="0 0 -1" range="0 2.21657" actuatorfrcrange="-7.5 7.5" />
+        <geom type="mesh" mesh="link_4_2" rgba=".95 .64 .37 1" />
+        <body name="link_4_3" pos="0.0334 0 0" quat="-3.67321e-06 1 0 0">
+          <inertial pos="0.0195721 6.37508e-09 3.77861e-05" quat="0.463071 0.534384 0.534378 0.463076" mass="0.023482" diaginertia="3.13583e-06 2.92228e-06 1.11694e-06" />
+          <joint name="joint_4_3" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-7.5 7.5" />
+          <geom type="mesh" mesh="link_4_3" rgba=".95 .64 .37 1" />
+          <body name="link_4_4" pos="0.0334 0 0">
+            <inertial pos="0.0139053 -0.00262851 0.000524531" quat="0.512949 0.740916 0.215188 0.376326" mass="0.0157537" diaginertia="1.56834e-06 1.41319e-06 8.99058e-07" />
+            <joint name="joint_4_4" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-7.5 7.5" />
+            <geom type="mesh" mesh="link_4_4" rgba=".95 .64 .37 1" />
+            <geom pos="0.018 0 0" quat="1 0 0 0" type="mesh" mesh="link_4_tip" rgba=".95 .64 .37 1" />
+          <site name="tip_4" pos="0.018 0 0" size=".002" rgba="1 1 1 0" /></body>
+        </body>
+      </body>
+    </body>
+    <body name="link_5_1" pos="0.013 -0.01805 0.0364" quat="0.707105 0 0 -0.707108">
+      <inertial pos="0.0214521 -0.00296674 0.010525" quat="0.992106 0.0411602 0.0755267 -0.0912588" mass="0.0714341" diaginertia="1.85677e-05 1.66879e-05 8.53733e-06" />
+      <joint name="joint_5_1" pos="0 0 0" axis="0 0 1" range="0 1.0472" actuatorfrcrange="-7.5 7.5" />
+      <geom type="mesh" mesh="link_5_1" rgba=".88 .78 .49 1" />
+      <body name="link_5_2" pos="0.02445 0 0.0307" quat="0.707105 -0.707108 0 0">
+        <inertial pos="0.000569864 -0.0136 -0.000569863" quat="0.688702 0.600309 -0.160268 0.373675" mass="0.0144988" diaginertia="1.30428e-06 1.26247e-06 8.11065e-07" />
+        <joint name="joint_5_2" pos="0 0 0" axis="0 0 1" range="-0.645772 1.5708" actuatorfrcrange="-7.5 7.5" />
+        <geom type="mesh" mesh="link_5_2" rgba=".88 .78 .49 1" />
+        <body name="link_5_3" pos="0 -0.0272 0" quat="0.499998 0.5 -0.500002 -0.5">
+          <inertial pos="0.0138279 -6.37508e-09 3.77861e-05" quat="0.534384 0.463071 0.463076 0.534378" mass="0.023482" diaginertia="3.13583e-06 2.92228e-06 1.11694e-06" />
+          <joint name="joint_5_3" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-7.5 7.5" />
+          <geom type="mesh" mesh="link_5_3" rgba=".88 .78 .49 1" />
+          <body name="link_5_4" pos="0.0334 0 0">
+            <inertial pos="0.0165709 -0.00230563 -0.000312447" quat="0.125245 0.674304 -0.157428 0.710524" mass="0.0292713" diaginertia="5.03046e-06 4.49747e-06 2.05544e-06" />
+            <joint name="joint_5_4" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-7.5 7.5" />
+            <geom type="mesh" mesh="link_5_4" rgba=".88 .78 .49 1" />
+            <geom pos="0.0289 0 0" quat="1 0 0 0" type="mesh" mesh="link_5_tip" rgba=".88 .78 .49 1" />
+          <site name="tip_5" pos="0.0289 0 0" size=".002" rgba="1 1 1 0" /></body>
+        </body>
+      </body>
+    </body>
+  </body><body name="screwdriver" pos="0.062 0.012 0.305" quat="1.0 0.0 0.0 0.0"><freejoint name="tool_free" /><geom name="handle" type="cylinder" size="0.018 .042" mass=".065" rgba=".13 .16 .19 1" /><geom name="cap" type="cylinder" pos="0 0 .045" size="0.01944 .005" mass=".008" rgba=".94 .27 .23 1" /><geom name="shaft" type="cylinder" pos="0 0 -.090" size=".002 .048" mass=".012" rgba=".66 .72 .78 1" /><geom name="stripe" type="box" pos="0.018 0 0" size=".0007 .002 .034" mass=".0001" contype="0" conaffinity="0" rgba=".98 .71 .25 1" /></body><geom name="floor" type="plane" size="1 1 .01" rgba=".13 .17 .21 1" /><light pos=".2 -.3 .9" dir="-.2 .3 -.9" diffuse=".8 .8 .8" /><light pos="-.5 .2 .5" diffuse=".4 .4 .4" /></worldbody>
+<option timestep=".002" integrator="implicitfast" cone="elliptic" iterations="60" gravity="0 0 -9.81" /><default><geom friction="0.8 .002 .0001" solref=".008 1" solimp=".95 .99 .001" condim="3" /><joint damping=".04" armature=".002" /></default><actuator><position name="servo_joint_1_1" joint="joint_1_1" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_1_2" joint="joint_1_2" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_1_3" joint="joint_1_3" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_1_4" joint="joint_1_4" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_2_1" joint="joint_2_1" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_2_2" joint="joint_2_2" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_2_3" joint="joint_2_3" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_2_4" joint="joint_2_4" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_3_1" joint="joint_3_1" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_3_2" joint="joint_3_2" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_3_3" joint="joint_3_3" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_3_4" joint="joint_3_4" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_4_1" joint="joint_4_1" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_4_2" joint="joint_4_2" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_4_3" joint="joint_4_3" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_4_4" joint="joint_4_4" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_5_1" joint="joint_5_1" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_5_2" joint="joint_5_2" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_5_3" joint="joint_5_3" kp="1.5" kv=".06" forcerange="-.3 .3" /><position name="servo_joint_5_4" joint="joint_5_4" kp="1.5" kv=".06" forcerange="-.3 .3" /></actuator><contact><exclude body1="palm" body2="link_1_1" /><exclude body1="palm" body2="link_2_1" /><exclude body1="palm" body2="link_3_1" /><exclude body1="palm" body2="link_4_1" /><exclude body1="palm" body2="link_5_1" /><exclude body1="palm" body2="link_1_2" /></contact><visual><global offwidth="960" offheight="720" /><headlight ambient=".4 .4 .4" diffuse=".5 .5 .5" /></visual></mujoco>
