@@ -1,6 +1,12 @@
 [submodule "tesollo_model"]
-	path = tesollo_model
+	path = third-party/tesollo_model
 	url = https://github.com/tesollodelto/tesollo_model.git
 [submodule "IsaacLab"]
-	path = IsaacLab
+	path = third-party/IsaacLab
 	url = https://github.com/isaac-sim/IsaacLab.git
+[submodule "robosimstudio"]
+	path = third-party/robosimstudio
+	url = https://github.com/robosimstudio/robosimstudio.git
+[submodule "newton"]
+	path = third-party/newton
+	url = https://github.com/newton-physics/newton.git
