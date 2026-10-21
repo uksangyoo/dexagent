@@ -4,8 +4,8 @@
 
 The scene file is executed under the same contract as the live page
 (`robosimstudio_real2sim_agent.scenefile.run_scene_file`). Frames come from
-`--renderer` (default `tiled`, Newton's collider ray tracer; `cycles` is the
-OptiX path tracer used for snapshots).
+`--renderer`: `rtx` (default) is RoboSimStudio's OVRTX path tracer on the visual
+meshes; `tiled` is Newton's ray tracer on the colliders, faster for debugging.
 """
 import argparse
 import os
@@ -14,6 +14,7 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+NVIDIA_ICD = "/etc/vulkan/icd.d/nvidia_icd.json"
 
 
 def main(argv=None):
@@ -22,11 +23,14 @@ def main(argv=None):
     ap.add_argument("--routine", help="name in the file's `routines` (default: the first)")
     ap.add_argument("--camera", help="camera to film (default: none)")
     ap.add_argument("--every", type=int, default=2, help="film every N control steps")
-    ap.add_argument("--renderer", default="tiled")
+    ap.add_argument("--renderer", default="rtx", help="rtx (OVRTX path tracer) or tiled (collider ray tracer)")
     ap.add_argument("--out", default=str(ROOT / "artifacts/rss"))
     ap.add_argument("--max-steps", type=int, default=5000)
     a = ap.parse_args(argv)
-    os.environ["ROBOSIMSTUDIO_RENDERER"] = "dexagent.cycles_renderer.CyclesRenderer" if a.renderer == "cycles" else a.renderer
+    os.environ["ROBOSIMSTUDIO_RENDERER"] = a.renderer
+    # OVRTX reports every GPU twice when several Vulkan ICDs are installed; use NVIDIA's.
+    if Path(NVIDIA_ICD).exists():
+        os.environ.setdefault("VK_ICD_FILENAMES", NVIDIA_ICD)
     scene_path = Path(a.scene).resolve()
     if scene_path.is_dir():
         scene_path = scene_path / "scene.py"

@@ -16,11 +16,20 @@ Score: cumulative rotation of the ball-to-ball vector about the palm normal
 (180 deg = the balls have exchanged places), and both balls still in the hand
 after leveling and a 0.6 s hold.
 
-Status: NOT WORKING. Every tested setting loses a ball. The DG5F-S palm has
-no wall at about 80 mm from the wrist on either side (between the thumb tip
-and the index knuckle, and along the little-finger metacarpal), and the balls
-roll out there. The best run reached 211 deg before a ball fell. Ball
-friction 0.5 against the default hand friction 0.9 (nominal, not measured).
+Status: NOT WORKING. Every tested setting loses a ball. On Newton 1.7 /
+MuJoCo 3.15 this routine drops a ball after 5-16 deg of exchange (it reached
+211 deg on Newton 1.6). A CPU free-space check of a ball centre against the
+hand's collision hulls finds why: the cupped hand is not a bowl. The heel of
+the palm is open (a ball spills over it 5 mm above the palm floor), the thumb
+side is open underneath the thumb at palm level, and the flat floor is only
+about 50 mm wide between the thumb and the little-finger edge, so two balls
+cannot pass side by side. Cupping the little-finger metacarpal (joint_5_1)
+raises that edge but does not widen the floor. A tried variant with 25 mm
+balls, a static cup and pure tilt precession reached 27 deg before a ball
+left over the heel; no thumb posture found closes the heel.
+
+The balls' friction 0.5 has no effect: Newton takes the larger of the two
+geoms' coefficients, so ball-hand contacts use the hand's 0.9.
 """
 from pathlib import Path
 import numpy as np

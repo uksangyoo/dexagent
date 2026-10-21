@@ -17,17 +17,16 @@ from palm_transfer import EDGE, to_palm, open_palm, resting_on_palm, return_to_t
 
 HERE = Path(__file__).resolve().parent
 CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4782_cube_palm_roll.mov"
-# Where the clip's cube sits in the phone view. The clip's cube is turned about
-# 40 deg; this one is square to the table, which is the start the routine is
-# tuned for (turned to the hand's yaw, it lands toward the thumb side and rolls off).
+# Where the clip's cube sits in the phone view. The cube starts turned to the
+# palm's yaw (40 deg, close to the clip's), so the pads close square on its faces;
+# square to the table, the closing pads twist it 20 deg and it slips off the far fingers.
 START = WORK + np.array([-0.01, -0.024, EDGE / 2])
-YAW0 = float(__import__("os").environ.get("CUBE_YAW", "0"))
 
 scene = table_scene("cube_palm")
-# The hand turns over 320 mm above the table, above the phone camera's frame top.
+# A side view of the turn-over (the hand turns 200 mm above the table, inside the phone view).
 scene.add(CameraSpec(name="side", width=1280, height=720, fov_y=40,
                      eye=(0.42, 0.42, TABLE_Z + 0.52), look_at=(0.55, 0.0, TABLE_Z + 0.30)))
-scene.add(rss.box(name="cube", half=(EDGE / 2,) * 3, at=tuple(START), quat=(0, 0, np.sin(YAW0 / 2), np.cos(YAW0 / 2)), mass=0.012, friction=0.9, color=(0.42, 0.28, 0.72)))
+scene.add(rss.box(name="cube", half=(EDGE / 2,) * 3, at=tuple(START), quat=(0, 0, np.sin(YAW / 2), np.cos(YAW / 2)), mass=0.012, friction=0.9, color=(0.42, 0.28, 0.72)))
 
 
 def palm_roll(sim, session=None):
@@ -52,7 +51,8 @@ def palm_roll(sim, session=None):
         yield from return_to_table(c, p0)
         p, R = c.pose("cube")
         metrics.update(placed_offset_mm=(1000 * (p - p0 - [0, 0.05, 0])).round(1).tolist(),
-                       resting_height_mm=round(1000 * (p[2] - TABLE_Z), 1))
+                       resting_height_mm=round(1000 * (p[2] - TABLE_Z), 1),
+                       final_yaw_deg=round(float(np.degrees(np.arctan2(R[1, 0], R[0, 0]))), 1))
         flat = np.abs(R[2]).max() > 0.99  # some face down
         on_table = abs(p[2] - TABLE_Z - EDGE / 2) < 0.003
         ok = flat and on_table and np.linalg.norm(metrics["placed_offset_mm"][:2]) < 30

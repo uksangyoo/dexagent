@@ -31,3 +31,6 @@ MUJOCO_LOG.TXT
 
 # Raw demo archives (too large for GitHub; extracted into tasks/hand_demos/)
 /tasks/*.zip
+
+# RoboSimStudio writes a stripped MJCF beside its source while building; a crash leaks one
+robosimstudio_stripped_*.xml

@@ -54,7 +54,11 @@ def drag_hand(c, palm, R, contact, press):
     return c.fingertips(targets, q)
 
 
-def pick_up(sim, session=None, target_overhang=0.030, press=0.008, max_slide=0.13, lean_deg=0.0):
+# The drag stops at `target_overhang`, but stick-slip and the release carry the tile
+# about 26 mm further (Newton 1.7). 12 mm ends near 38 mm, centre still 7 mm on the
+# book; a 30 mm target ended at 46 mm, past the tile's 45 mm half-length, and the
+# tile tipped off the edge before the pinch.
+def pick_up(sim, session=None, target_overhang=0.012, press=0.008, max_slide=0.13, lean_deg=0.0):
     c = Controller(sim, session, objects=("tile",))
     outcome, metrics = "incomplete", {}
     try:

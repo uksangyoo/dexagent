@@ -1,12 +1,12 @@
 # dexagent
 
-Dexterous manipulation for a UR5e arm with a 20-DOF Tesollo DG5F-S right hand, simulated on the GPU with RoboSimStudio: Newton collision and the MuJoCo-Warp solver at 1 kHz, with 50 Hz control. Each task is a RoboSimStudio scene file with scripted routines. The tasks either reproduce a human clip in `reference/hand_demos` or are in-hand manipulation tasks of their own.
+Dexterous manipulation for a UR5e arm with a 20-DOF Tesollo DG5F-S right hand, simulated on the GPU with RoboSimStudio: Newton collision and the MuJoCo-Warp solver at 1 kHz, with 50 Hz control, rendered by RoboSimStudio's OVRTX (RTX) path tracer. Each task is a RoboSimStudio scene file with scripted routines. The tasks either reproduce a human clip in `reference/hand_demos` or are in-hand manipulation tasks of their own.
 
 ## Layout
 
 ```
-dexagent/            the table workcell: robot MJCF and kinematics, scene builder, hand controller,
-                     objects, headless runner, Cycles/OptiX snapshot renderer (see dexagent/README.md)
+dexagent/            the table workcell on RoboSimStudio: robot MJCF and kinematics, scene builder,
+                     hand controller, objects, headless runner (see dexagent/README.md)
 tasks/
   live               launch a live RoboSimStudio page for one scene folder
   hand_demos/        scenes that reproduce the clips in reference/hand_demos
@@ -22,16 +22,20 @@ Each scene folder holds `scene.py` (the scene and its `routines`), any helper mo
 
 ```bash
 git clone --recursive <repo-url>        # or: git submodule update --init --recursive
-python3.12 -m venv .venv
-.venv/bin/pip install -e third-party/robosimstudio -e .
+# The environment is RoboSimStudio's own lockfile (Newton 1.7, MuJoCo 3.15, MuJoCo-Warp, OVRTX 0.4.1), in .venv here.
+(cd third-party/robosimstudio && UV_PROJECT_ENVIRONMENT=$PWD/../../.venv uv sync --frozen --python 3.12)
+uv pip install --python .venv/bin/python -e .
+# The locked warp-lang is a CUDA 13 build. Drivers older than CUDA 13 (this workstation: 570, CUDA 12.8) need the cu12 wheel:
+uv pip install --python .venv/bin/python "warp-lang @ https://github.com/NVIDIA/warp/releases/download/v1.18.0/warp_lang-1.18.0+cu12-py3-none-manylinux_2_28_x86_64.whl"
 ```
 
-All GPU work on this workstation runs on physical GPU 1 (`CUDA_VISIBLE_DEVICES=1`). Snapshots on the live page use Blender Cycles/OptiX, which needs a separate `bpy==4.5.10` interpreter: point `DEXAGENT_RENDER_PYTHON` at it.
+All GPU work on this workstation runs on physical GPU 1. `CUDA_VISIBLE_DEVICES=1` keeps both the physics and the OVRTX renderer on it. Without the mask, OVRTX opens a context on GPU 0 as well, even with `ROBOSIMSTUDIO_DEVICE=cuda:1`.
 
 ```bash
-export PYTHON=.venv/bin/python CUDA_VISIBLE_DEVICES=1
-PYTHONPATH=.:third-party/robosimstudio $PYTHON -m dexagent.run tasks/hand_demos/cube_pinch --camera reference
-tasks/live tasks/hand_demos/cube_pinch up     # live page; rebuilds when scene.py is saved
+export CUDA_VISIBLE_DEVICES=1
+PYTHONPATH=. .venv/bin/python -m dexagent.run tasks/hand_demos/cube_pinch --camera reference   # RTX film in artifacts/rss/
+PYTHONPATH=. .venv/bin/python -m dexagent.run tasks/hand_demos/cube_pinch --renderer tiled      # collider ray tracer, faster
+tasks/live tasks/hand_demos/cube_pinch up     # live page with RTX snapshots; rebuilds when scene.py is saved
 ```
 
 ## Tasks

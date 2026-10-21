@@ -13,6 +13,14 @@ The pen's contacts have no torsional friction (`grip.smooth_pen`: its geom
 takes priority over the hand's condim 4), so a two-pad pinch cannot stop the
 pen turning about the pinch axis: that freedom is what lets it pivot upright.
 
+What holds the upright pen. Once the pen stands, the tweezer's grip fades to
+about 0.1 N: the pen has drifted 8 mm across the fingers. The middle finger,
+uncurling to its stop beside the index, sweeps into the 35 mm stub above the
+pinch and pins the pen against the index; the lift is carried by that
+index-middle clamp (about 4.5 N each), not by the thumb. A stub short enough
+for the middle to clear (OFFSET 0.055) leaves nothing holding the pen, and it
+topples. Squeezing harder (TIGHT 0.5 mm tighter) stops the pen pivoting at all.
+
 Assumed numbers (not measured): pen 5 g, 7.5 mm x 140 mm; pad friction 0.9.
 """
 import sys
@@ -37,7 +45,6 @@ PITCH, BETA = 0.3, np.radians(50)
 CENTRE = np.array([0.11, 0.03, 0.10])
 TIGHT, OPEN_W = PEN_RADIUS - 0.00425, 0.025
 STOP = 0.015      # middle-finger stop beside the index, across the fingers [m]
-ENTER = 0.015     # the middle comes in this much further out, then closes to STOP [m]
 
 scene = table_scene("pen_pickup_pivot")
 scene.add(pen(at=tuple(START), direction=ACROSS, friction=0.9))   # the pad friction: the pen pair uses the pen's own
@@ -48,7 +55,7 @@ def tilt_from_vertical(axis):
 
 
 def pickup_pivot(sim, session=None, tight=TIGHT, lift_pad=0.0, offset=OFFSET, rise=3.0, stand_gap=0.004,
-                 stop=STOP, enter=ENTER, regrip=None, use_middle=True):
+                 stop=STOP):
     fingers.smooth_pen(sim)
     c = Controller(sim, session, objects=("pen",))
     outcome, metrics = "incomplete", {}
@@ -91,20 +98,15 @@ def pickup_pivot(sim, session=None, tight=TIGHT, lift_pad=0.0, offset=OFFSET, ri
         pp, Rpp = c.in_palm("pen")
         d = Rpp[:, 2]
         centre_v = pp + d * ((CENTRE - pp) @ d)
-        if regrip is not None:
-            # Re-centre the tweezer on the pen where it now passes the pinch.
-            q1 = fingers.tweezer(c.kin, centre_v, axis, down, regrip, BETA, base=c.hand)[0]
-            yield from c.move(hand=q1, seconds=0.6, phase="regrip")
-            yield from c.hold(0.2)
         dm = np.cos(BETA) * down + np.sin(BETA) * axis
-        def middle(back, out=0.0):
+        lateral = np.array([0.0, -stop, 0.0])
+        def middle(back):
             q = c.hand.copy()
-            end = centre_v - (tight + back) * axis + np.array([0.0, -stop - out, 0.0])
+            end = centre_v - (tight + back) * axis + lateral
             q[8:12] = fingers.solve(c.kin, 2, end - fingers.TIP_END * dm, dm, q[8:12], 0.02)[0]
             return q
-        if use_middle:
-            yield from c.move(hand=middle(0.02, enter), seconds=0.6, phase="middle in")
-            yield from c.move(hand=lambda u: middle(0.02 * (1 - u), enter * (1 - u)), seconds=0.6, phase="middle stop")
+        yield from c.move(hand=middle(0.02), seconds=0.6, phase="middle in")
+        yield from c.move(hand=lambda u: middle(0.02 * (1 - u)), seconds=0.6, phase="middle stop")
         yield from c.hold(0.3)
         yield from c.move(c.xyz + [0, 0, .10], R, seconds=1.5, phase="lift clear")
         yield from c.hold(1.0, "hold")

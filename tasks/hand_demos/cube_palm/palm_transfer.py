@@ -1,7 +1,6 @@
 """Fingertips-to-palm transfer of the 40 mm cube on the upturned hand, and back.
 
-Shared by tasks/hand_demos/cube_palm and tasks/inhand/cube_reorient. Only
-robot joint targets are written (through `dexagent.hand.Controller`).
+Only robot joint targets are written (through `dexagent.hand.Controller`).
 """
 import numpy as np
 from scipy.spatial.transform import Rotation
@@ -9,13 +8,16 @@ from dexagent.workcell import hand_down, TABLE_Z
 
 EDGE = 0.04
 FLIP = np.diag([-1.0, -1.0, 1.0])  # 180 deg about the finger axis: palm down <-> palm up
-LIFT = 0.32                         # the hand turns over this far above the table
+LIFT = 0.20                         # the hand turns over this far above the table, inside the phone view
 TILT = np.radians(15)               # palm-up, fingers raised: the palm slopes toward the wrist
 
 # Grip (palm frame): thumb on the wrist-side face, middle and ring side by side on the far face.
 PICK = np.array([0.08, -0.004, 0.114])
 AXIS = np.array([0.0, 0.0, -1.0])
-SQUEEZE = 0.006                     # pads commanded 14 mm inside the 20 mm half-width
+# Pads commanded 1 mm inside the 20 mm half-width. Harder (0.006-0.015) the two
+# far-face fingers overpower the thumb, which slides down the near face to its
+# edge, and the cube spins out mid-turn; 0.016-0.022 all hold.
+SQUEEZE = 0.019
 FIST = np.array([0, 2.0, 1.5, 1.2])
 CRADLE = np.array([0, 0.35, 0.3, 0.2])
 LITTLE = np.zeros(4)                # little finger straight throughout
@@ -57,8 +59,8 @@ def grip(c, centre, h):
     """Thumb on the near (wrist-side) face; middle and ring side by side on the far face.
 
     Three contacts, two of them 22 mm apart on one face, so the cube cannot spin
-    out about a two-point pinch axis while the hand turns over (the hand's
-    contacts have no torsional friction: MuJoCo condim 3). Index and little lie
+    out about a two-point pinch axis while the hand turns over (the pads'
+    torsional friction, condim 4, is too small to hold it alone). Index and little lie
     straight: palm-down they are above the cube and clear of the table,
     palm-up they are the flat hand the cube lands on.
     """
@@ -102,6 +104,11 @@ def to_palm(c, p0, roll=0.0):
     yield from orbit(c, held, Rup @ Ry(TILT) @ Rz(roll), 1.0, PICK, "tilt")
     yield from c.hold(0.3)
     note(c, "palm-up")
+    # Ease the far-face fingers off first, so they do not shove the cube down
+    # the sloping palm to the wrist (past where the curl can reach) when the thumb lets go.
+    tips = c.kin.tips_in_palm(c.hand)
+    eased = c.fingertips({2: tips[2] + [0, 0, 0.008], 3: tips[3] + [0, 0, 0.008]})
+    yield from c.move(hand=eased, seconds=0.4, phase="ease")
     # Thumb straight back off the near face, up, and down beside the palm as a wall.
     thumb = c.kin.tips_in_palm(c.hand)[0]
     back = c.fingertips({0: thumb + [0.0, 0.0, -0.015]})

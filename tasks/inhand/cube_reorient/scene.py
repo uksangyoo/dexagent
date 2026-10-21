@@ -1,11 +1,20 @@
 """New task: palm-up in-hand reorientation. The arm starts palm-up, 230 mm above
-the table, with the 40 mm cube resting in the middle of the palm. The fingers
-turn it 90 deg about the palm normal by gaiting: each gait the thumb (reaching
-across the palm) and the index push opposite side faces at opposite ends, a
-couple about the palm normal (see `gait`), then back off, lift, and reset on
-the faces the cube now presents. Gravity keeps the cube on the palm between gaits.
+the table, with the 40 mm cube resting on the flat of the palm. The thumb and
+little finger turn it 90 deg about the palm normal by gaiting. Each gait is a
+couple: the thumb pushes the thumb-side face at its fingertip end, the little
+finger pushes the opposite face at its wrist end, and both contacts swing TURN
+about the cube centre (see `gait`). Then they back off, lift and reset on the
+faces the cube now presents. The palm carries the cube throughout.
 
-Cube: 40 mm, 12 g, friction 0.9 (nominal, not measured).
+Why these fingers: on this hand the only collision-free contacts on a cube
+resting mid-palm are the thumb on the thumb-side and fingertip-side faces,
+middle/ring/little on the fingertip-side face, and the little finger on the
+little-side face (CPU clearance check of each finger's links against the
+cube). No thumb-index pair opposes across the cube except at one angle, so
+the thumb-index pinch-and-turn jams.
+
+Cube: 40 mm, 12 g, friction 0.9 (nominal, not measured; Newton takes the
+larger of the two friction coefficients, so the hand's 0.9 applies anyway).
 """
 from pathlib import Path
 import numpy as np
@@ -14,23 +23,23 @@ import robosimstudio as rss
 from robosimstudio.specs import CameraSpec
 from dexagent.scene import table_scene
 from dexagent.workcell import TABLE_Z
-from dexagent.hand import Controller, smooth
+from dexagent.hand import Controller
 from palm_up import register_palm_up
 
 HERE = Path(__file__).resolve().parent
 EDGE = 0.04
 GOAL = np.radians(90)
-TIP = 0.008               # fingertip pad radius, roughly
-RAISED = 0.05             # how far the tips lift off between gaits
-THUMB_SEED = np.array([1.15, -0.92, 1.29, 1.19])  # thumb opposing across the palm
-CLEAR = 0.10              # palm-x height a fingertip rises to before it crosses over the cube
-SQUEEZE = 0.001           # pads commanded this far inside the faces: about 1 N of pinch
-LOW = -0.004              # pinch a little below the cube's mid-height (palm x)
-# Pinch axis range (atan2(y, z) of the index contact, palm frame) that thumb and
-# index both reach around a cube centred at TURN_AT: START at the start of a gait,
-# up to about START + 95 deg at the end.
-START = np.radians(90)
-TURN_AT = np.array([0.041, 0.0, 0.065])
+TURN = np.radians(20)     # contact swing per gait
+PRESS = 0.002             # contacts commanded this far inside the faces during the swing
+OUT = 0.007               # pre-contact standoff
+RELEASE = 0.022           # how far the tips back off along the cube-to-tip direction before lifting
+RAISED = 0.05             # how far the tips lift between gaits (palm x)
+# Contacts, found with a CPU clearance check of every finger link against the
+# cube: (palm-frame height offset from the cube centre, pad-site distance from
+# the centre along the face normal, offset along the face toward the fingertips,
+# a joint seed on the right IK branch).
+THUMB = dict(dx=-0.011, gap=0.028, along=0.014, seed=np.array([0.16, -0.13, 1.14, 1.55]))
+LITTLE = dict(dx=0.004, gap=0.034, along=-0.007, seed=np.array([0.0, 0.6, 1.57, 1.57]))
 CENTRE = np.array([0.041, 0.0, 0.065])  # cube centre resting on the flat of the palm (palm face at x = .020 for z = 45-85 mm)
 PALM = np.array([0.48, -0.06, TABLE_Z + 0.23])
 TILT = np.radians(5)
@@ -49,8 +58,7 @@ def yaw_of(R):
     """Cube yaw about the palm normal (palm x), modulo 90 deg, and how flat it lies."""
     flat = np.abs(R[0]).max()           # some cube axis along the palm normal
     k = int(np.argmax(np.abs(R[0])))
-    cols = [R[:, j] for j in range(3) if j != k]
-    a = cols[0]
+    a = [R[:, j] for j in range(3) if j != k][0]
     return np.arctan2(a[1], a[2]) % (np.pi / 2), flat
 
 
@@ -62,37 +70,48 @@ class Tracker:
 
     def update(self, R):
         y, flat = yaw_of(R)
-        d = (y - self.last + np.pi / 4) % (np.pi / 2) - np.pi / 4
-        self.total += d
+        self.total += (y - self.last + np.pi / 4) % (np.pi / 2) - np.pi / 4
         self.last = y
         return self.total, flat
 
 
-DEBUG = True
+def face(R, toward):
+    """Outward normal (palm y-z plane) of the cube side face nearest the direction `toward`."""
+    k = int(np.argmax(np.abs(R[0])))
+    normals = []
+    for j in range(3):
+        if j != k:
+            for n in (R[:, j], -R[:, j]):
+                n = np.array([0.0, n[1], n[2]])
+                normals.append(n / np.linalg.norm(n))
+    return max(normals, key=lambda n: n @ toward)
+
+
+def along(n):
+    """In-face direction of a side face, toward the fingertips (+z)."""
+    t = np.cross([1.0, 0, 0], n)
+    return t if t[2] > 0 else -t
+
+
+def rot_x(v, a):
+    c, s = np.cos(a), np.sin(a)
+    return np.array([v[0], c * v[1] - s * v[2], s * v[1] + c * v[2]])
+
+
+DEBUG = False
 
 
 def dbg(c, tag):
     pos, R = c.in_palm("cube")
-    _, flat = yaw_of(R)
-    tot = np.degrees(yaw_of(R)[0])
-    tips = c.kin.tips_in_palm(c.sim.state.joint_q.numpy()[c.hand_idx])
-    q = c.sim.state.joint_q.numpy()[c.hand_idx]
-    print(f"      thumb q {np.round(q[:4], 2)} cmd {np.round(c.hand[:4], 2)}  index q {np.round(q[4:8], 2)} cmd {np.round(c.hand[4:8], 2)}")
-    print(f"   {tag}: yaw(mod90) {tot:.1f} flat {flat:.3f} pos {np.round(pos*1000,1)} F {np.round(c.contact_forces('cube'),2)} thumb {np.round(tips[0]*1000)} index {np.round(tips[1]*1000)}", flush=True)
-
-
-def tips_now(c, fingers):
-    tips = c.kin.tips_in_palm(c.hand)
-    return {i: tips[i].copy() for i in fingers}
+    print(f"   {tag}: yaw(mod90) {np.degrees(yaw_of(R)[0]):.1f} flat {yaw_of(R)[1]:.3f} pos {np.round(pos * 1000, 1)} "
+          f"F {np.round(c.contact_forces('cube'), 2)}", flush=True)
 
 
 def tip_line(c, goal, seconds, phase, track=None):
-    """Fingertips along straight lines (palm frame) to `goal` {finger: xyz}, IK every other step.
-
-    Interpolating joint angles instead swings a finger's links through the cube.
-    """
+    """Fingertips along straight lines (palm frame) to `goal` {finger: xyz}, IK every other step."""
     c.phase = phase
-    start = tips_now(c, goal)
+    tips = c.kin.tips_in_palm(c.hand)
+    start = {i: tips[i].copy() for i in goal}
     n = max(2, round(seconds * 50))
     for k in range(1, n + 1):
         if k % 2 == 0 or k == n:
@@ -101,67 +120,54 @@ def tip_line(c, goal, seconds, phase, track=None):
         c.step()
         if track is not None:
             track.update(c.in_palm("cube")[1])
+        if DEBUG and phase in ("gait: release", "gait: lift") and k % 4 == 0:
+            dbg(c, f"{phase} {k}")
         yield
     if DEBUG:
         dbg(c, phase)
 
 
-def face_angle(R, near):
-    """Angle in the palm's y-z plane (atan2(y, z)) of the cube side-face normal nearest `near`."""
-    k = int(np.argmax(np.abs(R[0])))
-    angles = [np.arctan2(s * R[1, j], s * R[2, j]) for j in range(3) if j != k for s in (1.0, -1.0)]
-    return min(angles, key=lambda a: abs((a - near + np.pi) % (2 * np.pi) - np.pi))
+def contact(p, n, spec, extra):
+    """Pad-site target for a finger contact on the face with outward normal n."""
+    q = p + (spec["gap"] + extra) * n + spec["along"] * along(n)
+    q[0] = p[0] + spec["dx"]
+    return q
 
 
-def contacts(p, phi, gap):
-    """Thumb and index pad centres either side of `p` along the palm-plane direction `phi`."""
-    n = np.array([0.0, np.sin(phi), np.cos(phi)])
-    return p - gap * n, p + gap * n
-
-
-def pinch_turn(c, track, turn, seconds=2.4):
-    """One gait: pinch two opposite side faces, swing the pinch `turn` about the cube centre, release.
-
-    The index takes the face whose normal is nearest START (the thumb the
-    opposite one); the pinch axis then sweeps toward END, the range both
-    fingers reach around a cube at TURN_AT. The cube stays on the palm and
-    is carried round by friction at the two pads; its centre slides to
-    TURN_AT during the swing.
-    """
+def gait(c, track, sense, turn=TURN):
+    """One gait: thumb and little finger push opposite faces at opposite ends and swing `turn`."""
     p, R = c.in_palm("cube")
-    phi = face_angle(R, START)
-    low = np.array([LOW, 0, 0])
-    gap = EDGE / 2 + TIP
+    # Thumb-side face; between two candidates (+-45 deg) take the one the swing starts from.
+    nt = face(R, rot_x(np.array([0, 1.0, 0]), -sense * np.radians(15)))
+    nl = -nt                                # little-side face
     up = np.array([RAISED, 0, 0])
-    t, i = contacts(p + low, phi, gap + 0.010)
-    # Preshape in joint space with the fingertips high over the start contacts.
-    # The thumb is seeded on the opposition branch that tracks the whole swing
-    # smoothly; the other branch (joint_1_2 near its -2.67 limit) jams.
-    pre = c.hand.copy()
-    pre[:4], _ = c.kin.solve_finger(0, np.r_[CLEAR, t[1:]], THUMB_SEED)
-    pre[4:8], _ = c.kin.solve_finger(1, np.r_[CLEAR, i[1:]], c.hand[4:8])
-    yield from c.move(hand=pre, seconds=0.8, phase="gait: preshape")
-    yield from tip_line(c, {0: t + up, 1: i + up}, 0.4, "gait: above", track)
-    yield from tip_line(c, {0: t, 1: i}, 0.5, "gait: down", track)
-    t, i = contacts(p + low, phi, gap - SQUEEZE)
-    yield from tip_line(c, {0: t, 1: i}, 0.5, "gait: pinch", track)
-    c.phase = "gait: turn"
-    c0, c1 = p + low, np.array([p[0], TURN_AT[1], TURN_AT[2]]) + low
-    n = round(seconds * 50)
+    pre = {0: contact(p, nt, THUMB, OUT), 4: contact(p, nl, LITTLE, OUT)}
+    # Preshape in joint space on the IK branches found offline, tips high over the contacts.
+    shape = c.hand.copy()
+    for i, spec in ((0, THUMB), (4, LITTLE)):
+        shape[4 * i:4 * i + 4], _ = c.kin.solve_finger(i, pre[i] + up, spec["seed"])
+    yield from c.move(hand=shape, seconds=0.6, phase="gait: preshape")
+    yield from tip_line(c, pre, 0.5, "gait: down", track)
+    press = {0: contact(p, nt, THUMB, -PRESS), 4: contact(p, nl, LITTLE, -PRESS)}
+    yield from tip_line(c, press, 0.3, "gait: touch", track)
+    c.phase = "gait: swing"
+    n = 50
     for k in range(1, n + 1):
-        u = smooth(k / n)
-        t, i = contacts((1 - u) * c0 + u * c1, phi + u * turn, gap - SQUEEZE)
-        c.hand = c.fingertips({0: t, 1: i})
+        if k % 2 == 0:
+            a = sense * turn * k / n
+            c.hand = c.fingertips({i: p + rot_x(press[i] - p, a) for i in press})
         c.step()
         track.update(c.in_palm("cube")[1])
-        if DEBUG and k % 15 == 0:
-            dbg(c, f"turn {np.degrees(u * turn):.0f} cmd thumb {np.round(t * 1000)} index {np.round(i * 1000)}")
         yield
-    # Open along the pinch axis about where the cube actually is, then lift clear.
-    pc, _ = c.in_palm("cube")
-    t, i = contacts(pc + low, phi + turn, gap + 0.008)
-    yield from tip_line(c, {0: t + [0.010, 0, 0], 1: i + [0.010, 0, 0]}, 0.4, "gait: release", track)
-    yield from tip_line(c, {0: t + up, 1: i + up}, 0.5, "gait: lift", track)
+    if DEBUG:
+        dbg(c, "gait: swing")
+    # Back off along the faces' measured normals, then lift.
+    pc, Rc = c.in_palm("cube")
+    nt = face(Rc, nt)
+    tips = c.kin.tips_in_palm(c.hand)
+    away = {0: tips[0] + RELEASE * nt, 4: tips[4] - RELEASE * nt}
+    yield from tip_line(c, away, 0.3, "gait: release", track)
+    yield from tip_line(c, {i: a + up for i, a in away.items()}, 0.4, "gait: lift", track)
 
 
 def resting_on_palm(c):
@@ -171,24 +177,18 @@ def resting_on_palm(c):
     return bool(f[5] > 0.02 and f[:5].sum() < 0.5 and pos[0] < 0.06 and abs(pos[1]) < 0.045)
 
 
-def reorient(sim, session=None):
+def reorient(sim, session=None, sense=1.0, max_gaits=8):
     c = Controller(sim, session, objects=("cube",))
     outcome, metrics = "incomplete", {}
     try:
         yield from c.hold(0.6, "settle")
-        pos, R = c.in_palm("cube")
         if not resting_on_palm(c):
             outcome = "not_on_palm"
             return
-        pos, R = c.in_palm("cube")
-        track = Tracker(R)
+        track = Tracker(c.in_palm("cube")[1])
         gaits = 0
-        while gaits < 3:
-            total, flat = track.update(c.in_palm("cube")[1])
-            left = GOAL - total
-            if abs(left) < np.radians(5):
-                break
-            yield from pinch_turn(c, track, float(np.clip(left, -np.radians(95), np.radians(95))))
+        while gaits < max_gaits and abs(track.total) < GOAL - np.radians(5):
+            yield from gait(c, track, sense, min(TURN, GOAL - abs(track.total)))
             gaits += 1
             yield from c.hold(0.3, "gait: settle")
             total, flat = track.update(c.in_palm("cube")[1])
@@ -202,7 +202,8 @@ def reorient(sim, session=None):
         on_palm = resting_on_palm(c)
         metrics.update(gaits=gaits, yaw_deg=round(float(np.degrees(total)), 1),
                        yaw_error_deg=round(float(np.degrees(abs(total) - GOAL)), 1),
-                       on_palm=bool(on_palm), flat=round(float(flat), 3))
+                       on_palm=bool(on_palm), flat=round(float(flat), 3),
+                       cube_in_palm_mm=np.round(c.in_palm("cube")[0] * 1000, 1).tolist())
         if outcome == "incomplete":
             outcome = "success" if on_palm and abs(abs(total) - GOAL) < np.radians(10) else "short_of_goal"
     finally:

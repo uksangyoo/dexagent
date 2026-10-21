@@ -10,11 +10,11 @@ target="$1"; shift
 scene="$(cd "$(dirname "$target")" && pwd)/$(basename "$target")"
 run="$(dirname "$scene")/run"
 export CUDA_VISIBLE_DEVICES=1 OPENBLAS_NUM_THREADS=1
-# Warp and Cycles/OptiX see only physical GPU 1; OVRTX fails under that mask, so snapshots use Cycles.
-export ROBOSIMSTUDIO_RENDERER="${ROBOSIMSTUDIO_RENDERER:-dexagent.cycles_renderer.CyclesRenderer}"
+# Physics (Warp) and the OVRTX path tracer both run on physical GPU 1 only.
+export ROBOSIMSTUDIO_RENDERER="${ROBOSIMSTUDIO_RENDERER:-rtx}"
 export VK_ICD_FILENAMES=/etc/vulkan/icd.d/nvidia_icd.json
-export PYTHONPATH="$root:$root/third-party/robosimstudio${PYTHONPATH:+:$PYTHONPATH}"
-py="${PYTHON:-/home/uyoo/Projects/physgram/robosimstudio/.venv/bin/python}"
+export PYTHONPATH="$root${PYTHONPATH:+:$PYTHONPATH}"
+py="${PYTHON:-$root/.venv/bin/python}"
 args=("$@")
 if [ "${args[0]:-}" = up ]; then
   case " ${args[*]} " in *" --scene "*) ;; *) args+=(--scene "$scene") ;; esac

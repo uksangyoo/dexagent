@@ -1,26 +1,32 @@
 """IMG_4781: a pen stands on its tip, the hand pinches it and lowers, and the table pushes the pen up through the fingers.
 
 The pen stands on the table inside a through-bored guide block (a 14 mm
-bore, 30 mm tall) that keeps it upright before the hand arrives; the bore
+bore, 60 mm tall) that keeps it upright before the hand arrives; the bore
 carries no vertical load. The hand comes down palm first as in the clip and
 pinches the exposed top lightly: thumb on one side, index and middle on the
 other, spread 16 mm along the barrel. It then keeps lowering: the table
 pushes the pen up through the fingers (extrinsic dexterity), which is the
-clip's motion. Finally it lifts the pen out of the guide and holds it.
+clip's motion. Finally it lets go, backs off, takes a fresh three-finger
+carry grip near the top (thumb and index across the barrel, middle on the
+third side), lifts the pen out of the guide and holds it for 2 s.
 
 What differs from the clips, and why:
 - IMG_4780 picks the pen up off the flat table. With the DG5F fingertips
   that failed: the thumb lies flat and rides over a 7.5 mm barrel while the
   index tip's low point sits outboard of its pad (24 tilt/height/squeeze
   combinations, none lifted it).
-- A pen drawn out of a holder and carried did not survive the carry. A firm
-  pinch ejects the thin barrel (the two fingertip contacts are not
-  antipodal), and a light one creeps out within ~2 s. So the slide happens
-  where the pen already stands.
+- A thumb-index pinch alone does not carry the pen: the two fingertip
+  contacts are not antipodal (the index pushes 37 deg off the thumb's line),
+  so the barrel is squeezed out within ~1 s, sooner the firmer the pinch.
+  The carry grip adds the middle finger on the third side. The guide is
+  60 mm tall so that, as a pen cup does, it holds the lower barrel while
+  the carry grip closes; with a 30 mm guide the pen pivots on its tip, the
+  squeeze pushes it 12 mm out of the middle finger's reach, and the grip
+  creeps out within ~2 s of the lift.
 
-Contact model: the pen's contacts use condim 4 (torsional friction 0.005 m
-from the fingertip geoms), set in `contact.py`; with Newton's default
-condim 3 a two-point pinch is a frictionless hinge.
+Contact model: hand geoms use condim 4 (torsional friction 0.005 m, the
+workcell default), so a two-point pinch is not a free hinge about the
+pinch axis.
 
 Assumed numbers (not measured): pen 7.5 mm x 140 mm, 5 g, friction 0.8
 (dexagent.objects); fingertip friction 0.9 (workcell default).
@@ -31,7 +37,7 @@ import numpy as np
 import robosimstudio as rss
 from dexagent.scene import table_scene, WORK
 from dexagent.workcell import hand_down, TABLE_Z, YAW
-from dexagent.hand import Controller
+from dexagent.hand import Controller, PINCH_CENTRE
 from dexagent.objects import pen, PEN_RADIUS, PEN_HALF
 
 HERE = Path(__file__).resolve().parent
@@ -39,13 +45,20 @@ CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4781_pen_table_slide.mov"
 END = PEN_HALF + PEN_RADIUS
 DOWN = hand_down(YAW)        # palm down, fingers forward: the pinch axis is horizontal
 HOLDER = WORK + np.array([0.06, 0.13, 0.0])
-# A guide block on the table: a 14 mm square through-bore, 30 mm tall, in a 40 mm block.
-BORE, BLOCK, HEIGHT = 0.0070, 0.020, 0.030
+# A guide block on the table: a 14 mm square through-bore, 60 mm tall, in a 40 mm block.
+BORE, BLOCK, HEIGHT = 0.0070, 0.020, 0.060
 GRIP_BELOW_TOP = 0.030      # pinch this far below the upper cap centre
 SQUEEZE = 0.006             # thumb-to-index pad half-separation commanded (a light pinch)
 RISE = 0.016                # middle-finger contact above the index, along the barrel [m]
 SLIDE = 0.035               # how far the hand keeps lowering with the tip on the table [m]
 LIFT = 0.10                 # lift after the slide [m]
+HOLD_S = 2.0                # hold after the lift [s]
+# Carry grip for the lift-out (as in pen_finger_roll): thumb and index pads 3 mm either
+# side of a centre 12 mm toward the middle finger from PINCH_CENTRE, and the middle pad
+# on the third side. A thumb-index pinch alone squeezes the barrel out within ~1 s.
+CARRY_CENTRE = PINCH_CENTRE + np.array([0, -0.012, 0])
+CARRY_HALF = 0.003
+CARRY_MIDDLE = np.array([0.010, -0.006, 0.0])
 
 scene = table_scene("pen_table_slide")
 wall = (BLOCK - BORE) / 2
@@ -133,17 +146,22 @@ def slide(sim, session=None):
                        tip_height_during_slide_mm=[round(1000 * min(heights), 1), round(1000 * max(heights), 1)],
                        max_tilt_during_slide_deg=round(float(max(tilts)), 1),
                        finger_force_during_slide_N=[round(min(forces), 2), round(max(forces), 2)])
-        # Regrasp where the pen now stands, then lift it out of the guide and hold it.
-        yield from c.move(hand=grip_q(c, 0.02), seconds=0.4, phase="regrasp")
+        # Let go, back off, and take a fresh pinch where the pen now stands
+        # (the slide leaves the fingers low on the barrel, wedged against the
+        # guide), then lift it out of the guide and hold it.
+        yield from c.move(hand=grip_q(c, 0.024), seconds=0.5, phase="release")
+        yield from c.move(c.xyz + [0, 0, 0.10], seconds=1.2, phase="back_off")
+        yield from c.move(hand=c.pinch(0.026, CARRY_CENTRE), seconds=0.5)
         p1, a1, _ = pen_geometry(c)
         up1 = a1 if a1[2] > 0 else -a1
-        here = c.tips_world()[:2].mean(0)
-        on_pen = p1 + ((here - p1) @ up1) * up1
-        yield from c.move(c.palm_for(on_pen, R=c.R), c.R, seconds=0.6)
-        yield from c.move(hand=grip_q(c, SQUEEZE), seconds=0.5)
-        yield from c.hold(0.3)
+        grip1 = p1 + PEN_HALF * up1 - GRIP_BELOW_TOP * up1
+        yield from c.move(c.palm_for(grip1 + [0, 0, .08], CARRY_CENTRE, R), R, seconds=1.0, phase="regrasp")
+        yield from c.move(c.palm_for(grip1, CARRY_CENTRE, R), R, seconds=1.0)
+        carry = c.fingertips({2: CARRY_CENTRE + CARRY_MIDDLE}, c.pinch(CARRY_HALF, CARRY_CENTRE, tuck=(3, 4)))
+        yield from c.move(hand=carry, seconds=0.8)
+        yield from c.hold(0.4)
         yield from c.move(c.xyz + [0, 0, LIFT], seconds=2.0, phase="lift_out")
-        yield from c.hold(0.6, "hold")
+        yield from c.hold(HOLD_S, "hold")
         metrics["held_tip_height_mm"] = round(1000 * tip_height(c), 1)
         metrics["held_tilt_deg"] = round(tilt_of(c), 1)
         slid = metrics["slip_mm"] > 15 and max(heights) < 0.003

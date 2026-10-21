@@ -7,8 +7,8 @@ name = "dexagent"
 version = "0.3.0"
 description = "Dexterous UR5e + Tesollo DG5F-S manipulation on Newton/MuJoCo-Warp (RoboSimStudio), GPU only"
 requires-python = ">=3.12"
-# RoboSimStudio (Newton, Warp, MuJoCo-Warp) is the third-party/robosimstudio submodule:
-# install it into the same environment with `pip install -e third-party/robosimstudio`.
+# RoboSimStudio (Newton, Warp, MuJoCo-Warp, OVRTX) is the third-party/robosimstudio
+# submodule. The environment is built from its lockfile; see README.md, Setup.
 dependencies = [
     "mujoco>=3.10",
     "numpy>=2",
@@ -16,10 +16,6 @@ dependencies = [
     "trimesh>=4",
     "imageio[ffmpeg]>=2.30",
 ]
-
-[project.optional-dependencies]
-# The Cycles/OptiX snapshot renderer (dexagent.cycles_worker) runs in a separate bpy interpreter.
-render = ["bpy==4.5.10"]
 
 [tool.setuptools.packages.find]
 include = ["dexagent*"]
