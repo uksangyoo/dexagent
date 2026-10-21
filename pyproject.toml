@@ -4,13 +4,27 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dexagent"
-version = "0.1.0"
-description = "Contact-grounded action interfaces for UR5e and Tesollo DG5F-S"
+version = "0.2.0"
+description = "Agent-authored dexterous manipulation for UR5e + Tesollo DG5F-S on Drake hydroelastic contact"
 requires-python = ">=3.12"
-dependencies = ["numpy>=2", "scipy>=1.12", "pydantic>=2.8,<3"]
+dependencies = [
+    "drake==1.58.0",
+    "mujoco>=3.10",
+    "numpy>=2",
+    "scipy>=1.12",
+    "trimesh>=4",
+    "rtree",
+    "pillow>=10",
+    "tetgen==0.8.4",
+    "pymeshlab",
+]
+
+[project.optional-dependencies]
+# Blender Cycles/OptiX renderer (dexagent.render.blender) runs in a separate bpy interpreter.
+render = ["bpy==4.5.10"]
 
 [tool.setuptools.packages.find]
-include = ["dexagent*", "dextrain*"]
+include = ["dexagent*", "tasks*"]
 
 [tool.ruff]
 line-length = 100

@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Live RoboSimStudio page for one scene folder:  tasks/live <scene-dir|scene.py> <ctl command...>
+#   tasks/live tasks/hand_demos/cube_pinch up      # serve it; prints the URL
+#   tasks/live tasks/hand_demos/cube_pinch play    # press its first Run button
+# Each scene folder gets its own run/ (socket, log, snapshots, takes), so several pages can be up at once.
+set -euo pipefail
+root="$(cd "$(dirname "$0")/.." && pwd)"
+target="$1"; shift
+[ -d "$target" ] && target="$target/scene.py"
+scene="$(cd "$(dirname "$target")" && pwd)/$(basename "$target")"
+run="$(dirname "$scene")/run"
+export CUDA_VISIBLE_DEVICES=1 OPENBLAS_NUM_THREADS=1
+# Warp and Cycles/OptiX see only physical GPU 1; OVRTX fails under that mask, so snapshots use Cycles.
+export ROBOSIMSTUDIO_RENDERER="${ROBOSIMSTUDIO_RENDERER:-dexagent.rss.cycles_renderer.CyclesRenderer}"
+export VK_ICD_FILENAMES=/etc/vulkan/icd.d/nvidia_icd.json
+export PYTHONPATH="$root:$root/third-party/robosimstudio${PYTHONPATH:+:$PYTHONPATH}"
+py="${PYTHON:-/home/uyoo/Projects/physgram/robosimstudio/.venv/bin/python}"
+args=("$@")
+if [ "${args[0]:-}" = up ]; then
+  case " ${args[*]} " in *" --scene "*) ;; *) args+=(--scene "$scene") ;; esac
+fi
+cd "$(dirname "$scene")"
+exec "$py" -m robosimstudio_real2sim_agent --run-dir "$run" "${args[@]}"

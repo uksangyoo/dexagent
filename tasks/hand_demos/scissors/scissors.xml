@@ -1,0 +1,37 @@
+<!--
+  Office scissors, 190 mm, ~60 g: two parts on a pivot screw.
+  Handle loops are 9 mm thick walls around 32 x 24 mm holes.
+  Local frame: pivot at the origin, blades toward +x, lying flat (z up).
+  Part A (root, free) carries the handle loop at +y; part B turns about +z by
+  the opening angle and carries the loop at -y, so the loops spread as the
+  blades open, as in crossed scissors. Nominal dimensions, not measured.
+  Pivot friction 0.04 N m (a snug screw) and damping are assumed.
+-->
+<mujoco model="scissors">
+  <compiler angle="radian" autolimits="true"/>
+  <default>
+    <default class="steel"><geom type="box" density="7800" rgba="0.70 0.72 0.74 1" friction="0.5 0.005 0.0001"/></default>
+    <default class="handle"><geom type="box" density="1150" rgba="0.86 0.30 0.30 1" friction="0.7 0.005 0.0001"/></default>
+  </default>
+  <worldbody>
+    <body name="scissors" pos="0 0 0.0058">
+      <freejoint name="scissors_free"/>
+      <geom name="scissors_blade_a" class="steel" pos="0.048 -0.0005 0.0012" size="0.048 0.0055 0.0011"/>
+      <geom name="scissors_shank_a" class="handle" type="capsule" fromto="0.004 0.004 0.0012 -0.045 0.020 0.0012" size="0.0035"/>
+      <geom name="scissors_loop_a1" class="handle" pos="-0.065 0.008 0.0012" size="0.0225 0.0025 0.0045"/>
+      <geom name="scissors_loop_a2" class="handle" pos="-0.065 0.04 0.0012" size="0.0225 0.0025 0.0045"/>
+      <geom name="scissors_loop_a3" class="handle" pos="-0.045 0.024 0.0012" size="0.0025 0.0185 0.0045"/>
+      <geom name="scissors_loop_a4" class="handle" pos="-0.085 0.024 0.0012" size="0.0025 0.0185 0.0045"/>
+      <geom name="scissors_pivot" type="cylinder" pos="0 0 0" size="0.0045 0.0028" rgba="0.55 0.56 0.58 1" density="7800"/>
+      <body name="scissors_b" pos="0 0 0">
+        <joint name="scissors_hinge" type="hinge" axis="0 0 1" range="0 1.2" damping="0.002" frictionloss="0.04" armature="0.00001" solreflimit="0.002 1"/>
+        <geom name="scissors_blade_b" class="steel" pos="0.048 0.0005 -0.0012" size="0.048 0.0055 0.0011"/>
+        <geom name="scissors_shank_b" class="handle" type="capsule" fromto="0.004 -0.004 -0.0012 -0.045 -0.020 -0.0012" size="0.0035"/>
+        <geom name="scissors_loop_b1" class="handle" pos="-0.065 -0.008 -0.0012" size="0.0225 0.0025 0.0045"/>
+        <geom name="scissors_loop_b2" class="handle" pos="-0.065 -0.04 -0.0012" size="0.0225 0.0025 0.0045"/>
+        <geom name="scissors_loop_b3" class="handle" pos="-0.045 -0.024 -0.0012" size="0.0025 0.0185 0.0045"/>
+        <geom name="scissors_loop_b4" class="handle" pos="-0.085 -0.024 -0.0012" size="0.0025 0.0185 0.0045"/>
+      </body>
+    </body>
+  </worldbody>
+</mujoco>

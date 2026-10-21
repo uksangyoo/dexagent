@@ -1,5 +1,7 @@
 # Action abstractions for industrial dexterity with UR5e and DG5F S
 
+> **Historical.** This note describes the October 12 Newton/GaP prototype, which was removed from the tree. Paths below refer to commit `e460c20`; view them with `git show e460c20:<path>`.
+
 Study date: 10 October 2026. Target: one UR5e carrying a right, 20-DOF Tesollo DG5F-S, Newton physics, RTX observations, and Graph-as-Policy orchestration.
 
 **The strongest research direction is an executable grammar of contact transitions and object effects.** The agent should specify which fingers support an object, which fingers may move, and the motion or force outcome it wants. A feedback controller should realize those instructions through the hand's joints. Start with constrained wrench regrasping and finger-driven nut rotation, then extend the same interface to cable feeding and wrapping.
@@ -37,7 +39,7 @@ Your concern about eigen coordinates is plausible for agent-facing control, but 
 
 ## Local feasibility findings
 
-The exact revisions and per-model details are recorded in [the asset audit](../study/artifacts/asset_audit.json).
+The exact revisions and per-model details are recorded in the asset audit (`study/artifacts/asset_audit.json`).
 
 | Component inspected | Finding | Implication |
 |---|---|---|
@@ -50,9 +52,9 @@ The exact revisions and per-model details are recorded in [the asset audit](../s
 | `graph-as-policy` at `93e929c` | Connector control paths synthesize arm actions with one gripper channel; observations expose `gripper_fraction`. | Add a named hand-state and action interface. Changing an action dimension alone is insufficient. |
 | Execution environment, updated after GPU access was enabled | Eight A100-SXM4-80GB GPUs are visible. GPUs 2, 3, and 7 were idle at inspection. CUDA Newton/MuJoCo-Warp smoke training passes in a local `.venv-newton`; Isaac Lab/OVRTX remain unconfigured. | These GPUs support physics and policy training. A100s lack RT cores and are [not supported for Isaac Sim RTX rendering](https://docs.isaacsim.omniverse.nvidia.com/latest/installation/requirements.html). RTX observations require a suitable renderer host. |
 
-The CPU probe used the Newton checkout already installed from `mind-cable`, rather than the revision pinned by this Isaac Lab checkout. Its full provenance and limitations are in [the probe output](../study/artifacts/newton_asset_probe.json).
+The CPU probe used the Newton checkout already installed from `mind-cable`, rather than the revision pinned by this Isaac Lab checkout. Its full provenance and limitations are in the probe output (`study/artifacts/newton_asset_probe.json`).
 
-The follow-up [GPU training package](../dextrain/README.md) composes the local UR5e and mounted DG5F-S and trains a direction-conditioned nut-rotation motor controller. It uses a passive revolute fixture and state observations, so it is a prerequisite curriculum, not thread tightening or an agent-level abstraction comparison. The CUDA setup uses convex collision hulls, explicit same-body collision filtering, and a 0.5 mm per-shape detection gap. Three-seed training logs and checkpoints are separate from the still-pending benchmark manifest; motor rewards must not be reported as industrial task success rates.
+The follow-up GPU training package (`dextrain/README.md`) composes the local UR5e and mounted DG5F-S and trains a direction-conditioned nut-rotation motor controller. It uses a passive revolute fixture and state observations, so it is a prerequisite curriculum, not thread tightening or an agent-level abstraction comparison. The CUDA setup uses convex collision hulls, explicit same-body collision filtering, and a 0.5 mm per-shape detection gap. Three-seed training logs and checkpoints are separate from the still-pending benchmark manifest; motor rewards must not be reported as industrial task success rates.
 
 The finger numbering must be mapped to logical thumb/index/middle/ring/little roles after visual FK inspection. Do not infer that `joint_1_*` necessarily denotes the thumb. The UR5e flange-to-hand transform also needs an explicit mount definition and validation; a mounted hand asset alone is not an assembled UR5e-hand robot.
 
@@ -160,7 +162,7 @@ uv run --extra ovrtx isaaclab zero_agent \
 
 This is an upstream installation check, not a dexterous environment or a command run in this study. The checkout requires Python 3.12, pins a Newton commit, and declares an `ovrtx` extra. Follow its installation instructions to build a dedicated environment; mixing its pins into the existing `mind-cable` environment would make the evidence difficult to reproduce.
 
-The local [Franka cable configuration](../third-party/IsaacLab/source/isaaclab_tasks/isaaclab_tasks/core/lift/config/franka_soft/franka_cable_env_cfg.py) supplies an MJWarp/VBD coupling example. Replace its robot-specific proxy bodies with the hand surfaces that can touch the cable, including palm and intermediate phalanges where appropriate. Validate reaction-force transfer and coupling delay; the installed Newton proxy implementation uses lagged-impulse feedback. The example's high friction setting and coarse cable discretization should not become uncalibrated industrial defaults.
+The local Franka cable configuration (`IsaacLab/source/isaaclab_tasks/isaaclab_tasks/core/lift/config/franka_soft/franka_cable_env_cfg.py`) supplies an MJWarp/VBD coupling example. Replace its robot-specific proxy bodies with the hand surfaces that can touch the cable, including palm and intermediate phalanges where appropriate. Validate reaction-force transfer and coupling delay; the installed Newton proxy implementation uses lagged-impulse feedback. The example's high friction setting and coarse cable discretization should not become uncalibrated industrial defaults.
 
 Newton is a multi-solver framework. Joint, contact, and deformable support depend on the selected solver and version. Pin those choices per experiment; repeat numerical sensitivity checks before interpreting task differences. [Newton solver documentation](https://newton-physics.github.io/newton/stable/solvers/index.html)
 
@@ -206,7 +208,7 @@ Use three distinct generalization splits:
 
 Add dynamics perturbations and contact-estimation noise as separate sweeps. Do not pool them with geometry or composition when reporting the main ranking. Parameterize perturbation severity so improvements can be plotted against difficulty instead of summarized by one average.
 
-The [machine-readable protocol](../study/protocol.json) proposes:
+The machine-readable protocol (`study/protocol.json`) proposes:
 
 | Stage | Methods | Tasks | Splits | Training seeds | Cases per cell | Episodes |
 |---|---:|---:|---:|---:|---:|---:|

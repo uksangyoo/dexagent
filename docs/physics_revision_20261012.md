@@ -1,5 +1,7 @@
 # Physics-first revision — 12 October 2026
 
+> **Historical.** This note describes the October 12 Newton/GaP prototype, which was removed from the tree. Paths below refer to commit `e460c20`; view them with `git show e460c20:<path>`.
+
 The archived learned policies rotate a fixture-supported nut. The passive hinge prevents translation and dropping. These rollouts cannot support a claim about free in-hand dexterity; their visual quality and physical scope were inadequate for the proposed study.
 
 ## What changed

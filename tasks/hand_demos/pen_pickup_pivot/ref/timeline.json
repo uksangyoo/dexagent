@@ -1,0 +1,40 @@
+{
+  "clip": "/home/uyoo/Projects/dexagent/reference/hand_demos/IMG_4780_pen_pickup_stand.mov",
+  "fps": 30.0,
+  "width": 1920,
+  "height": 1080,
+  "duration": 11.63,
+  "frames": 349,
+  "anchors": [
+    {
+      "t": 0.0,
+      "file": "t000.00.jpg",
+      "label": "start",
+      "sim_t": 0.2
+    },
+    {
+      "t": 2.5,
+      "file": "t002.50.jpg",
+      "label": "pinch",
+      "sim_t": 5.32
+    },
+    {
+      "t": 5.0,
+      "file": "t005.00.jpg",
+      "label": "upright",
+      "sim_t": 8.62
+    },
+    {
+      "t": 8.0,
+      "file": "t008.00.jpg",
+      "label": "standing",
+      "sim_t": 10.32
+    },
+    {
+      "t": 11.59,
+      "file": "t011.59.jpg",
+      "label": "end",
+      "sim_t": 13.1
+    }
+  ]
+}

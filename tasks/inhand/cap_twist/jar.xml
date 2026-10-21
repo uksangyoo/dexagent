@@ -1,0 +1,21 @@
+<mujoco model="jar">
+  <!-- A 300 ml screw-top jar, fixed to the table (it stands in for a jar the
+       other hand holds). The lid turns on one hinge about the jar axis; thread
+       lead is not modelled. Thread friction is a joint friction loss.
+       Nominal, unmeasured numbers: lid 70 mm x 15 mm, 20 g; thread friction
+       0.02 N m (a lid already cracked loose); polymer lid friction 1.0. -->
+  <compiler angle="radian" autolimits="true"/>
+  <worldbody>
+    <body name="jar" pos="0 0 0">
+      <geom name="jar_body" type="cylinder" size="0.04 0.05" pos="0 0 0.05" rgba="0.86 0.84 0.78 1" friction="0.8 0.005 0.0001" mass="0.4"/>
+      <geom name="jar_shoulder" type="cylinder" size="0.036 0.0035" pos="0 0 0.1035" rgba="0.86 0.84 0.78 1" mass="0.01"/>
+      <body name="lid" pos="0 0 0.1155">
+        <joint name="lid_twist" type="hinge" axis="0 0 1" frictionloss="0.02" damping="0.0005" armature="0.00001"/>
+        <geom name="lid_shell" type="cylinder" size="0.035 0.0075" rgba="0.74 0.13 0.10 1" friction="1.0 0.005 0.0001" mass="0.018"/>
+        <!-- White index stripe on top, so the turn reads from any camera. -->
+        <geom name="lid_mark" type="box" size="0.028 0.004 0.0005" pos="0.0 0 0.0078" rgba="0.95 0.95 0.92 1" mass="0.0005"/>
+        <geom name="lid_dot" type="cylinder" size="0.006 0.0005" pos="0.022 0 0.0084" rgba="0.1 0.1 0.12 1" mass="0.0001"/>
+      </body>
+    </body>
+  </worldbody>
+</mujoco>

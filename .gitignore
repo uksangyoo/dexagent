@@ -19,19 +19,12 @@ MUJOCO_LOG.TXT
 /build/
 /dist/
 
-# Run outputs
-/runs/
-/review_site/
-/crate_lab/results/
-
-# screwdriver_lab: local virtualenvs and generated artifacts.
-# Keep the small inputs that the code reads back.
-/screwdriver_lab/vendor/
-/screwdriver_lab/artifacts/*
-!/screwdriver_lab/artifacts/grasp.json
-!/screwdriver_lab/artifacts/grasp.jpg
-!/screwdriver_lab/artifacts/scene.xml
-!/screwdriver_lab/artifacts/publication.json
+# Generated experiment outputs (see artifacts/RELOCATION.json for provenance)
+/artifacts/
 
 # Published site (separate git repository)
 /screwdriver_site/
+
+# Live RoboSimStudio pages (snapshots, takes, logs) and routine results
+/tasks/**/run/
+/tasks/**/results/

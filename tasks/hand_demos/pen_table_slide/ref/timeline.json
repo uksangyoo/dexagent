@@ -1,0 +1,30 @@
+{
+ "clip": "/home/uyoo/Projects/dexagent/reference/hand_demos/IMG_4781_pen_table_slide.mov",
+ "fps": 30.0,
+ "width": 1920,
+ "height": 1080,
+ "duration": 8.23,
+ "frames": 247,
+ "anchors": [
+  {
+   "t": 0.0,
+   "file": "t000.00.jpg",
+   "label": "start"
+  },
+  {
+   "t": 2.0,
+   "file": "t002.00.jpg",
+   "label": "pinched"
+  },
+  {
+   "t": 5.0,
+   "file": "t005.00.jpg",
+   "label": "slid"
+  },
+  {
+   "t": 8.19,
+   "file": "t008.19.jpg",
+   "label": "end"
+  }
+ ]
+}

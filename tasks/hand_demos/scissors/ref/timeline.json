@@ -1,0 +1,30 @@
+{
+ "clip": "/home/uyoo/Projects/dexagent/reference/hand_demos/IMG_4778_scissors_open_close_a.mov",
+ "fps": 30.0,
+ "width": 1920,
+ "height": 1080,
+ "duration": 13.47,
+ "frames": 404,
+ "anchors": [
+  {
+   "t": 0.0,
+   "file": "t000.00.jpg",
+   "label": "start"
+  },
+  {
+   "t": 4.0,
+   "file": "t004.00.jpg",
+   "label": "lifted"
+  },
+  {
+   "t": 6.5,
+   "file": "t006.50.jpg",
+   "label": "open"
+  },
+  {
+   "t": 13.43,
+   "file": "t013.43.jpg",
+   "label": "end"
+  }
+ ]
+}

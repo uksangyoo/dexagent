@@ -1,0 +1,35 @@
+{
+ "clip": "/home/uyoo/Projects/dexagent/reference/hand_demos/IMG_4783_pen_writing_grasp.mov",
+ "fps": 30.0,
+ "width": 1920,
+ "height": 1080,
+ "duration": 16.03,
+ "frames": 481,
+ "anchors": [
+  {
+   "t": 0.0,
+   "file": "t000.00.jpg",
+   "label": "start"
+  },
+  {
+   "t": 4.0,
+   "file": "t004.00.jpg",
+   "label": "grasped"
+  },
+  {
+   "t": 8.0,
+   "file": "t008.00.jpg",
+   "label": "writing"
+  },
+  {
+   "t": 12.0,
+   "file": "t012.00.jpg",
+   "label": "lifted"
+  },
+  {
+   "t": 15.99,
+   "file": "t015.99.jpg",
+   "label": "end"
+  }
+ ]
+}

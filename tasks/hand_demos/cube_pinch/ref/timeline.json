@@ -1,0 +1,35 @@
+{
+ "clip": "/home/uyoo/Projects/dexagent/reference/hand_demos/IMG_4772_cube_pinch_lift.mov",
+ "fps": 30.0,
+ "width": 1920,
+ "height": 1080,
+ "duration": 12.17,
+ "frames": 365,
+ "anchors": [
+  {
+   "t": 0.0,
+   "file": "t000.00.jpg",
+   "label": "start"
+  },
+  {
+   "t": 3.0,
+   "file": "t003.00.jpg",
+   "label": "pinch"
+  },
+  {
+   "t": 5.5,
+   "file": "t005.50.jpg",
+   "label": "lifted"
+  },
+  {
+   "t": 9.5,
+   "file": "t009.50.jpg",
+   "label": "placed"
+  },
+  {
+   "t": 12.13,
+   "file": "t012.13.jpg",
+   "label": "end"
+  }
+ ]
+}

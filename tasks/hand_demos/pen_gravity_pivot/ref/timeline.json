@@ -1,0 +1,34 @@
+{
+  "clip": "/home/uyoo/Projects/dexagent/reference/hand_demos/IMG_4774_pen_gravity_pivot_a.mov",
+  "fps": 30.0,
+  "width": 1920,
+  "height": 1080,
+  "duration": 6.1,
+  "frames": 183,
+  "anchors": [
+    {
+      "t": 0.0,
+      "file": "t000.00.jpg",
+      "label": "level",
+      "sim_t": 7.42
+    },
+    {
+      "t": 3.3,
+      "file": "t003.30.jpg",
+      "label": "release",
+      "sim_t": 7.72
+    },
+    {
+      "t": 4.5,
+      "file": "t004.50.jpg",
+      "label": "hanging",
+      "sim_t": 8.32
+    },
+    {
+      "t": 6.06,
+      "file": "t006.06.jpg",
+      "label": "end",
+      "sim_t": 10.1
+    }
+  ]
+}

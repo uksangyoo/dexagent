@@ -1,0 +1,30 @@
+{
+ "clip": "/home/uyoo/Projects/dexagent/reference/hand_demos/IMG_4776_pen_finger_roll.mov",
+ "fps": 30.0,
+ "width": 1920,
+ "height": 1080,
+ "duration": 6.57,
+ "frames": 197,
+ "anchors": [
+  {
+   "t": 0.0,
+   "file": "t000.00.jpg",
+   "label": "start"
+  },
+  {
+   "t": 2.5,
+   "file": "t002.50.jpg",
+   "label": "roll"
+  },
+  {
+   "t": 5.0,
+   "file": "t005.00.jpg",
+   "label": "roll_back"
+  },
+  {
+   "t": 6.53,
+   "file": "t006.53.jpg",
+   "label": "end"
+  }
+ ]
+}
