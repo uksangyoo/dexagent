@@ -1,1 +1,1 @@
-"""Dexterous UR5e + Tesollo DG5F-S manipulation: simulation, planning, agentic policies, rendering."""
+"""RoboSimStudio/Newton side of the stack: the single-arm hand workcell and its controller."""
