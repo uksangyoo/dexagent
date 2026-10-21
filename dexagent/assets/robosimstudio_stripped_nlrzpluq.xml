@@ -1,0 +1,343 @@
+<mujoco model="ur5e_dg5fs_right">
+  <compiler angle="radian" autolimits="true" />
+  <option timestep="0.001" integrator="implicitfast" cone="elliptic" />
+  <default>
+    <default class="ur5e">
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2" />
+      </default>
+      <default class="collision">
+        <geom type="capsule" group="3" />
+        <default class="eef_collision">
+          <geom type="cylinder" />
+        </default>
+      </default>
+      <joint axis="0 1 0" range="-6.28319 6.28319" />
+      <default class="joint_limited">
+        <joint range="-3.1415 3.1415" />
+      </default>
+      <default class="position">
+        <position ctrlrange="-6.2831 6.2831" kp="2000" kv="100" forcerange="-150 150" />
+        <default class="position_limited">
+          <position ctrlrange="-3.1415 3.1415" />
+        </default>
+        <default class="position_small">
+          <position kp="500" kv="25" forcerange="-28 28" />
+        </default>
+      </default>
+    </default>
+    <default class="hand">
+      <joint damping="0.015" armature="0.00002" />
+      <geom condim="4" friction="0.9 0.005 0.0001" rgba="0.12 0.13 0.14 1" solref="0.004 1" solimp="0.95 0.99 0.0005" />
+    </default>
+  </default>
+  <asset>
+    <material name="black" rgba="0.033 0.033 0.033 1" />
+    <material name="jointgray" rgba="0.278 0.278 0.278 1" />
+    <material name="linkgray" rgba="0.82 0.82 0.82 1" />
+    <material name="urblue" rgba="0.49 0.678 0.8 1" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/base_0.obj" name="base_0" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/base_1.obj" name="base_1" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/shoulder_0.obj" name="shoulder_0" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/shoulder_1.obj" name="shoulder_1" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/shoulder_2.obj" name="shoulder_2" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/upperarm_0.obj" name="upperarm_0" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/upperarm_1.obj" name="upperarm_1" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/upperarm_2.obj" name="upperarm_2" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/upperarm_3.obj" name="upperarm_3" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/forearm_0.obj" name="forearm_0" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/forearm_1.obj" name="forearm_1" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/forearm_2.obj" name="forearm_2" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/forearm_3.obj" name="forearm_3" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/wrist1_0.obj" name="wrist1_0" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/wrist1_1.obj" name="wrist1_1" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/wrist1_2.obj" name="wrist1_2" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/wrist2_0.obj" name="wrist2_0" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/wrist2_1.obj" name="wrist2_1" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/wrist2_2.obj" name="wrist2_2" />
+    <mesh file="../../third-party/universal_robots_ur5e/assets/wrist3.obj" name="wrist3" />
+    <mesh name="link_base" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_base.STL" />
+    <mesh name="link_1_1" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_1_1.STL" />
+    <mesh name="link_1_2" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_1_2.STL" />
+    <mesh name="link_1_3" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_1_3.STL" />
+    <mesh name="link_1_4" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_1_4.STL" />
+    <mesh name="link_1_tip" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_1_tip.STL" />
+    <mesh name="link_2_1" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_2_1.STL" />
+    <mesh name="link_2_2" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_2_2.STL" />
+    <mesh name="link_2_3" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_2_3.STL" />
+    <mesh name="link_2_4" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_2_4.STL" />
+    <mesh name="link_2_tip" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_2_tip.STL" />
+    <mesh name="link_3_1" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_3_1.STL" />
+    <mesh name="link_3_2" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_3_2.STL" />
+    <mesh name="link_3_3" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_3_3.STL" />
+    <mesh name="link_3_4" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_3_4.STL" />
+    <mesh name="link_3_tip" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_3_tip.STL" />
+    <mesh name="link_4_1" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_4_1.STL" />
+    <mesh name="link_4_2" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_4_2.STL" />
+    <mesh name="link_4_3" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_4_3.STL" />
+    <mesh name="link_4_4" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_4_4.STL" />
+    <mesh name="link_4_tip" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_4_tip.STL" />
+    <mesh name="link_5_1" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_5_1.STL" />
+    <mesh name="link_5_2" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_5_2.STL" />
+    <mesh name="link_5_3" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_5_3.STL" />
+    <mesh name="link_5_4" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_5_4.STL" />
+    <mesh name="link_5_tip" content_type="model/stl" file="../../third-party/tesollo_model/dg5fs/meshes/dg5fs_right/link_5_tip.STL" />
+  </asset>
+  <worldbody>
+    <body name="base" quat="6.123233995736766e-17 0 0 1.0" childclass="ur5e" pos="0.3 -0.58 0.75">
+      <inertial mass="4" pos="0 0 0" diaginertia="0.00443333156 0.00443333156 0.0072" />
+      <geom mesh="base_0" material="black" class="visual" />
+      <geom mesh="base_1" material="jointgray" class="visual" />
+      <body name="shoulder_link" pos="0 0 0.163">
+        <inertial mass="3.7" pos="0 0 0" diaginertia="0.0102675 0.0102675 0.00666" />
+        <joint name="shoulder_pan" axis="0 0 1" />
+        <geom mesh="shoulder_0" material="urblue" class="visual" />
+        <geom mesh="shoulder_1" material="black" class="visual" />
+        <geom mesh="shoulder_2" material="jointgray" class="visual" />
+        <geom class="collision" size="0.06 0.06" pos="0 0 -0.04" />
+        <body name="upper_arm_link" pos="0 0.138 0" quat="1 0 1 0">
+          <inertial mass="8.393" pos="0 0 0.2125" diaginertia="0.133886 0.133886 0.0151074" />
+          <joint name="shoulder_lift" />
+          <geom mesh="upperarm_0" material="linkgray" class="visual" />
+          <geom mesh="upperarm_1" material="black" class="visual" />
+          <geom mesh="upperarm_2" material="jointgray" class="visual" />
+          <geom mesh="upperarm_3" material="urblue" class="visual" />
+          <geom class="collision" pos="0 -0.04 0" quat="1 1 0 0" size="0.06 0.06" />
+          <geom class="collision" size="0.05 0.2" pos="0 0 0.2" />
+          <body name="forearm_link" pos="0 -0.131 0.425">
+            <inertial mass="2.275" pos="0 0 0.196" diaginertia="0.0311796 0.0311796 0.004095" />
+            <joint name="elbow" class="joint_limited" />
+            <geom mesh="forearm_0" material="urblue" class="visual" />
+            <geom mesh="forearm_1" material="linkgray" class="visual" />
+            <geom mesh="forearm_2" material="black" class="visual" />
+            <geom mesh="forearm_3" material="jointgray" class="visual" />
+            <geom class="collision" pos="0 0.08 0" quat="1 1 0 0" size="0.055 0.06" />
+            <geom class="collision" size="0.038 0.19" pos="0 0 0.2" />
+            <body name="wrist_1_link" pos="0 0 0.392" quat="1 0 1 0">
+              <inertial mass="1.219" pos="0 0.127 0" diaginertia="0.0025599 0.0025599 0.0021942" />
+              <joint name="wrist_1" />
+              <geom mesh="wrist1_0" material="black" class="visual" />
+              <geom mesh="wrist1_1" material="urblue" class="visual" />
+              <geom mesh="wrist1_2" material="jointgray" class="visual" />
+              <geom class="collision" pos="0 0.05 0" quat="1 1 0 0" size="0.04 0.07" />
+              <body name="wrist_2_link" pos="0 0.127 0">
+                <inertial mass="1.219" pos="0 0 0.1" diaginertia="0.0025599 0.0025599 0.0021942" />
+                <joint name="wrist_2" axis="0 0 1" />
+                <geom mesh="wrist2_0" material="black" class="visual" />
+                <geom mesh="wrist2_1" material="urblue" class="visual" />
+                <geom mesh="wrist2_2" material="jointgray" class="visual" />
+                <geom name="wrist_2_link" class="collision" size="0.04 0.06" pos="0 0 0.04" />
+                <body name="wrist_3_link" pos="0 0 0.1">
+                  <inertial mass="0.1879" pos="0 0.0771683 0" quat="1 0 0 1" diaginertia="0.000132134 9.90863e-05 9.90863e-05" />
+                  <joint name="wrist_3" />
+                  <geom material="linkgray" mesh="wrist3" class="visual" />
+                  <geom name="wrist_3_link" class="collision" pos="0 0.025 0" quat="1 1 0 0" size="0.04 0.05" />
+                  <site name="attachment_site" size="0.01" pos="0 0.1 0" quat="-1 1 1 1" rgba="1 0 0 1" group="1" />
+                  <body name="palm" pos="0 0.1 0" quat="-1 1 1 1" childclass="hand">
+                    <inertial mass="0.52019" pos="0.0010499 0.0032939 0.047487" fullinertia="0.00052611 0.00039032 0.00026984 4.2565E-06 -1.4454E-05 -4.094E-05" />
+                    <geom type="mesh" mesh="link_base" group="3" />
+                    <body name="link_1_1" pos="0.0017 0.018 0.0298" quat="0.499998 0.5 0.500002 0.5">
+                      <inertial pos="2.03296e-09 -0.00601222 0.00795349" quat="0.979032 -0.203705 0 0" mass="0.0198064" diaginertia="3.17093e-06 2.68441e-06 1.18745e-06" />
+                      <joint name="joint_1_1" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-0.65 0.65" />
+                      <geom type="mesh" mesh="link_1_1" group="3" />
+                      <body name="link_1_2" pos="0 0 0.0262" quat="0.707105 -0.707108 0 0">
+                        <inertial pos="0.01642 0.000294037 0.000325609" quat="-0.0500865 0.721925 -0.0078327 0.690112" mass="0.0280996" diaginertia="4.2812e-06 4.2228e-06 1.40325e-06" />
+                        <joint name="joint_1_2" pos="0 0 0" axis="0 0 1" range="-2.67035 0" actuatorfrcrange="-0.65 0.65" />
+                        <geom type="mesh" mesh="link_1_2" group="3" />
+                        <body name="link_1_3" pos="0.0381 0 0" quat="0.707105 0.707108 0 0">
+                          <inertial pos="0.0138279 -6.38885e-09 3.77858e-05" quat="0.463071 0.534384 0.534377 0.463077" mass="0.023482" diaginertia="3.13583e-06 2.92228e-06 1.11694e-06" />
+                          <joint name="joint_1_3" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-0.65 0.65" />
+                          <geom type="mesh" mesh="link_1_3" group="3" />
+                          <body name="link_1_4" pos="0.0334 0 0">
+                            <inertial pos="0.0165709 0.00230561 0.000312451" quat="-0.157427 0.710524 0.125248 0.674304" mass="0.0292716" diaginertia="5.03049e-06 4.4975e-06 2.05549e-06" />
+                            <joint name="joint_1_4" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-0.65 0.65" />
+                            <geom type="mesh" mesh="link_1_4" group="3" />
+                            <geom pos="0.0289 0 0" quat="1 0 0 0" type="mesh" mesh="link_1_tip" group="3" />
+                            <site name="tip_1" pos="0.03785 -0.00000 -0.00000" size="0.004" rgba="1 .3 .1 1" group="4" />
+                            <geom type="mesh" mesh="link_1_4" contype="0" conaffinity="0" group="2" />
+                            <geom pos="0.0289 0 0" quat="1 0 0 0" type="mesh" mesh="link_1_tip" contype="0" conaffinity="0" group="2" rgba="0.78 0.78 0.76 1" />
+                          </body>
+                          <geom type="mesh" mesh="link_1_3" contype="0" conaffinity="0" group="2" />
+                        </body>
+                        <geom type="mesh" mesh="link_1_2" contype="0" conaffinity="0" group="2" />
+                      </body>
+                      <geom type="mesh" mesh="link_1_1" contype="0" conaffinity="0" group="2" />
+                    </body>
+                    <body name="link_2_1" pos="0.0017 0.028 0.08365" quat="-2.59734e-06 0.707105 2.59735e-06 0.707108">
+                      <inertial pos="0.0198782 0.000277092 0.000891767" quat="0.686188 -0.134177 -0.177008 0.692684" mass="0.0330237" diaginertia="4.58833e-06 3.29048e-06 2.90003e-06" />
+                      <joint name="joint_2_1" pos="0 0 0" axis="0 0 1" range="-0.837758 0.261799" actuatorfrcrange="-0.65 0.65" />
+                      <geom type="mesh" mesh="link_2_1" group="3" />
+                      <body name="link_2_2" pos="0.02415 0 0.0126" quat="0.707105 -0.707108 0 0">
+                        <inertial pos="0.0195721 6.37508e-09 3.77861e-05" quat="0.463071 0.534384 0.534378 0.463076" mass="0.023482" diaginertia="3.13583e-06 2.92228e-06 1.11694e-06" />
+                        <joint name="joint_2_2" pos="0 0 0" axis="0 0 -1" range="0 2.19911" actuatorfrcrange="-0.65 0.65" />
+                        <geom type="mesh" mesh="link_2_2" group="3" />
+                        <body name="link_2_3" pos="0.0334 0 0" quat="-3.67321e-06 1 0 0">
+                          <inertial pos="0.0195721 6.58759e-09 3.77859e-05" quat="0.534384 0.463071 0.463077 0.534377" mass="0.023482" diaginertia="3.13583e-06 2.92228e-06 1.11694e-06" />
+                          <joint name="joint_2_3" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-0.65 0.65" />
+                          <geom type="mesh" mesh="link_2_3" group="3" />
+                          <body name="link_2_4" pos="0.0334 0 0">
+                            <inertial pos="0.0139058 -0.00262796 -0.000524353" quat="0.542977 0.70992 0.196764 0.403079" mass="0.0157537" diaginertia="1.57369e-06 1.39225e-06 9.14587e-07" />
+                            <joint name="joint_2_4" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-0.65 0.65" />
+                            <geom type="mesh" mesh="link_2_4" group="3" />
+                            <geom pos="0.018 0 0" quat="1 0 0 0" type="mesh" mesh="link_2_tip" group="3" />
+                            <site name="tip_2" pos="0.02695 -0.00000 -0.00000" size="0.004" rgba="1 .3 .1 1" group="4" />
+                            <geom type="mesh" mesh="link_2_4" contype="0" conaffinity="0" group="2" />
+                            <geom pos="0.018 0 0" quat="1 0 0 0" type="mesh" mesh="link_2_tip" contype="0" conaffinity="0" group="2" rgba="0.78 0.78 0.76 1" />
+                          </body>
+                          <geom type="mesh" mesh="link_2_3" contype="0" conaffinity="0" group="2" />
+                        </body>
+                        <geom type="mesh" mesh="link_2_2" contype="0" conaffinity="0" group="2" />
+                      </body>
+                      <geom type="mesh" mesh="link_2_1" contype="0" conaffinity="0" group="2" />
+                    </body>
+                    <body name="link_3_1" pos="0.0017 0.005 0.08865" quat="-2.59734e-06 0.707105 2.59735e-06 0.707108">
+                      <inertial pos="0.0198782 0.000277092 0.000891767" quat="0.686188 -0.134177 -0.177008 0.692684" mass="0.0330237" diaginertia="4.58833e-06 3.29048e-06 2.90003e-06" />
+                      <joint name="joint_3_1" pos="0 0 0" axis="0 0 1" range="-0.575959 0.733038" actuatorfrcrange="-0.65 0.65" />
+                      <geom type="mesh" mesh="link_3_1" group="3" />
+                      <body name="link_3_2" pos="0.02415 0 0.0126" quat="0.707105 -0.707108 0 0">
+                        <inertial pos="0.0195721 6.67109e-09 3.77864e-05" quat="0.463071 0.534384 0.534378 0.463076" mass="0.023482" diaginertia="3.13583e-06 2.92228e-06 1.11694e-06" />
+                        <joint name="joint_3_2" pos="0 0 0" axis="0 0 -1" range="0 2.26893" actuatorfrcrange="-0.65 0.65" />
+                        <geom type="mesh" mesh="link_3_2" group="3" />
+                        <body name="link_3_3" pos="0.0334 0 0" quat="-3.67321e-06 1 0 0">
+                          <inertial pos="0.0195721 6.37508e-09 3.77861e-05" quat="0.463071 0.534384 0.534378 0.463076" mass="0.023482" diaginertia="3.13583e-06 2.92228e-06 1.11694e-06" />
+                          <joint name="joint_3_3" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-0.65 0.65" />
+                          <geom type="mesh" mesh="link_3_3" group="3" />
+                          <body name="link_3_4" pos="0.0334 0 0">
+                            <inertial pos="0.0139053 -0.00262851 0.000524531" quat="0.512949 0.740916 0.215188 0.376326" mass="0.0157537" diaginertia="1.56834e-06 1.41319e-06 8.99058e-07" />
+                            <joint name="joint_3_4" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-0.65 0.65" />
+                            <geom type="mesh" mesh="link_3_4" group="3" />
+                            <geom pos="0.018 0 0" quat="1 0 0 0" type="mesh" mesh="link_3_tip" group="3" />
+                            <site name="tip_3" pos="0.02695 -0.00000 -0.00000" size="0.004" rgba="1 .3 .1 1" group="4" />
+                            <geom type="mesh" mesh="link_3_4" contype="0" conaffinity="0" group="2" />
+                            <geom pos="0.018 0 0" quat="1 0 0 0" type="mesh" mesh="link_3_tip" contype="0" conaffinity="0" group="2" rgba="0.78 0.78 0.76 1" />
+                          </body>
+                          <geom type="mesh" mesh="link_3_3" contype="0" conaffinity="0" group="2" />
+                        </body>
+                        <geom type="mesh" mesh="link_3_2" contype="0" conaffinity="0" group="2" />
+                      </body>
+                      <geom type="mesh" mesh="link_3_1" contype="0" conaffinity="0" group="2" />
+                    </body>
+                    <body name="link_4_1" pos="0.0013 -0.018 0.08065" quat="-2.59734e-06 0.707105 2.59735e-06 0.707108">
+                      <inertial pos="0.0198782 0.000277092 0.000891767" quat="0.686188 -0.134177 -0.177008 0.692684" mass="0.0330237" diaginertia="4.58833e-06 3.29048e-06 2.90003e-06" />
+                      <joint name="joint_4_1" pos="0 0 0" axis="0 0 1" range="-0.20944 0.837758" actuatorfrcrange="-0.65 0.65" />
+                      <geom type="mesh" mesh="link_4_1" group="3" />
+                      <body name="link_4_2" pos="0.02415 0 0.0126" quat="0.707105 -0.707108 0 0">
+                        <inertial pos="0.0195721 6.35657e-09 3.7786e-05" quat="0.463071 0.534384 0.534378 0.463076" mass="0.023482" diaginertia="3.13583e-06 2.92228e-06 1.11694e-06" />
+                        <joint name="joint_4_2" pos="0 0 0" axis="0 0 -1" range="0 2.21657" actuatorfrcrange="-0.65 0.65" />
+                        <geom type="mesh" mesh="link_4_2" group="3" />
+                        <body name="link_4_3" pos="0.0334 0 0" quat="-3.67321e-06 1 0 0">
+                          <inertial pos="0.0195721 6.37508e-09 3.77861e-05" quat="0.463071 0.534384 0.534378 0.463076" mass="0.023482" diaginertia="3.13583e-06 2.92228e-06 1.11694e-06" />
+                          <joint name="joint_4_3" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-0.65 0.65" />
+                          <geom type="mesh" mesh="link_4_3" group="3" />
+                          <body name="link_4_4" pos="0.0334 0 0">
+                            <inertial pos="0.0139053 -0.00262851 0.000524531" quat="0.512949 0.740916 0.215188 0.376326" mass="0.0157537" diaginertia="1.56834e-06 1.41319e-06 8.99058e-07" />
+                            <joint name="joint_4_4" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-0.65 0.65" />
+                            <geom type="mesh" mesh="link_4_4" group="3" />
+                            <geom pos="0.018 0 0" quat="1 0 0 0" type="mesh" mesh="link_4_tip" group="3" />
+                            <site name="tip_4" pos="0.02695 -0.00000 -0.00000" size="0.004" rgba="1 .3 .1 1" group="4" />
+                            <geom type="mesh" mesh="link_4_4" contype="0" conaffinity="0" group="2" />
+                            <geom pos="0.018 0 0" quat="1 0 0 0" type="mesh" mesh="link_4_tip" contype="0" conaffinity="0" group="2" rgba="0.78 0.78 0.76 1" />
+                          </body>
+                          <geom type="mesh" mesh="link_4_3" contype="0" conaffinity="0" group="2" />
+                        </body>
+                        <geom type="mesh" mesh="link_4_2" contype="0" conaffinity="0" group="2" />
+                      </body>
+                      <geom type="mesh" mesh="link_4_1" contype="0" conaffinity="0" group="2" />
+                    </body>
+                    <body name="link_5_1" pos="0.013 -0.01805 0.0364" quat="0.707105 0 0 -0.707108">
+                      <inertial pos="0.0214521 -0.00296674 0.010525" quat="0.992106 0.0411602 0.0755267 -0.0912588" mass="0.0714341" diaginertia="1.85677e-05 1.66879e-05 8.53733e-06" />
+                      <joint name="joint_5_1" pos="0 0 0" axis="0 0 1" range="0 1.0472" actuatorfrcrange="-0.65 0.65" />
+                      <geom type="mesh" mesh="link_5_1" group="3" />
+                      <body name="link_5_2" pos="0.02445 0 0.0307" quat="0.707105 -0.707108 0 0">
+                        <inertial pos="0.000569864 -0.0136 -0.000569863" quat="0.688702 0.600309 -0.160268 0.373675" mass="0.0144988" diaginertia="1.30428e-06 1.26247e-06 8.11065e-07" />
+                        <joint name="joint_5_2" pos="0 0 0" axis="0 0 1" range="-0.645772 1.5708" actuatorfrcrange="-0.65 0.65" />
+                        <geom type="mesh" mesh="link_5_2" group="3" />
+                        <body name="link_5_3" pos="0 -0.0272 0" quat="0.499998 0.5 -0.500002 -0.5">
+                          <inertial pos="0.0138279 -6.37508e-09 3.77861e-05" quat="0.534384 0.463071 0.463076 0.534378" mass="0.023482" diaginertia="3.13583e-06 2.92228e-06 1.11694e-06" />
+                          <joint name="joint_5_3" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-0.65 0.65" />
+                          <geom type="mesh" mesh="link_5_3" group="3" />
+                          <body name="link_5_4" pos="0.0334 0 0">
+                            <inertial pos="0.0165709 -0.00230563 -0.000312447" quat="0.125245 0.674304 -0.157428 0.710524" mass="0.0292713" diaginertia="5.03046e-06 4.49747e-06 2.05544e-06" />
+                            <joint name="joint_5_4" pos="0 0 0" axis="0 0 1" range="-1.5708 1.5708" actuatorfrcrange="-0.65 0.65" />
+                            <geom type="mesh" mesh="link_5_4" group="3" />
+                            <geom pos="0.0289 0 0" quat="1 0 0 0" type="mesh" mesh="link_5_tip" group="3" />
+                            <site name="tip_5" pos="0.03785 -0.00000 -0.00000" size="0.004" rgba="1 .3 .1 1" group="4" />
+                            <geom type="mesh" mesh="link_5_4" contype="0" conaffinity="0" group="2" />
+                            <geom pos="0.0289 0 0" quat="1 0 0 0" type="mesh" mesh="link_5_tip" contype="0" conaffinity="0" group="2" rgba="0.78 0.78 0.76 1" />
+                          </body>
+                          <geom type="mesh" mesh="link_5_3" contype="0" conaffinity="0" group="2" />
+                        </body>
+                        <geom type="mesh" mesh="link_5_2" contype="0" conaffinity="0" group="2" />
+                      </body>
+                      <geom type="mesh" mesh="link_5_1" contype="0" conaffinity="0" group="2" />
+                    </body>
+                    <geom type="mesh" mesh="link_base" contype="0" conaffinity="0" group="2" />
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <position class="position" name="shoulder_pan" joint="shoulder_pan" />
+    <position class="position" name="shoulder_lift" joint="shoulder_lift" />
+    <position class="position_limited" name="elbow" joint="elbow" />
+    <position class="position_small" name="wrist_1" joint="wrist_1" />
+    <position class="position_small" name="wrist_2" joint="wrist_2" />
+    <position class="position_small" name="wrist_3" joint="wrist_3" />
+    <position name="joint_1_1" joint="joint_1_1" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_1_2" joint="joint_1_2" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_1_3" joint="joint_1_3" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_1_4" joint="joint_1_4" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_2_1" joint="joint_2_1" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_2_2" joint="joint_2_2" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_2_3" joint="joint_2_3" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_2_4" joint="joint_2_4" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_3_1" joint="joint_3_1" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_3_2" joint="joint_3_2" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_3_3" joint="joint_3_3" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_3_4" joint="joint_3_4" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_4_1" joint="joint_4_1" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_4_2" joint="joint_4_2" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_4_3" joint="joint_4_3" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_4_4" joint="joint_4_4" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_5_1" joint="joint_5_1" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_5_2" joint="joint_5_2" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_5_3" joint="joint_5_3" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+    <position name="joint_5_4" joint="joint_5_4" kp="3.0" kv="0.12" forcerange="-0.65 0.65" />
+  </actuator>
+  <contact>
+    <exclude body1="base" body2="shoulder_link" />
+    <exclude body1="shoulder_link" body2="upper_arm_link" />
+    <exclude body1="upper_arm_link" body2="forearm_link" />
+    <exclude body1="forearm_link" body2="wrist_1_link" />
+    <exclude body1="wrist_1_link" body2="wrist_2_link" />
+    <exclude body1="wrist_2_link" body2="wrist_3_link" />
+    <exclude body1="wrist_3_link" body2="palm" />
+    <exclude body1="palm" body2="link_1_1" />
+    <exclude body1="palm" body2="link_2_1" />
+    <exclude body1="palm" body2="link_3_1" />
+    <exclude body1="palm" body2="link_4_1" />
+    <exclude body1="palm" body2="link_5_1" />
+    <exclude body1="link_1_1" body2="link_1_2" />
+    <exclude body1="link_1_2" body2="link_1_3" />
+    <exclude body1="link_1_3" body2="link_1_4" />
+    <exclude body1="link_2_1" body2="link_2_2" />
+    <exclude body1="link_2_2" body2="link_2_3" />
+    <exclude body1="link_2_3" body2="link_2_4" />
+    <exclude body1="link_3_1" body2="link_3_2" />
+    <exclude body1="link_3_2" body2="link_3_3" />
+    <exclude body1="link_3_3" body2="link_3_4" />
+    <exclude body1="link_4_1" body2="link_4_2" />
+    <exclude body1="link_4_2" body2="link_4_3" />
+    <exclude body1="link_4_3" body2="link_4_4" />
+    <exclude body1="link_5_1" body2="link_5_2" />
+    <exclude body1="link_5_2" body2="link_5_3" />
+    <exclude body1="link_5_3" body2="link_5_4" />
+    <exclude body1="palm" body2="link_1_2" />
+    <exclude body1="wrist_3_link" body2="link_1_1" />
+  </contact>
+</mujoco>

@@ -48,7 +48,7 @@ def tilt_from_vertical(axis):
 
 
 def pickup_pivot(sim, session=None, tight=TIGHT, lift_pad=0.0, offset=OFFSET, rise=3.0, stand_gap=0.004,
-                 stop=STOP, enter=ENTER):
+                 stop=STOP, enter=ENTER, regrip=None, use_middle=True):
     fingers.smooth_pen(sim)
     c = Controller(sim, session, objects=("pen",))
     outcome, metrics = "incomplete", {}
@@ -91,14 +91,20 @@ def pickup_pivot(sim, session=None, tight=TIGHT, lift_pad=0.0, offset=OFFSET, ri
         pp, Rpp = c.in_palm("pen")
         d = Rpp[:, 2]
         centre_v = pp + d * ((CENTRE - pp) @ d)
+        if regrip is not None:
+            # Re-centre the tweezer on the pen where it now passes the pinch.
+            q1 = fingers.tweezer(c.kin, centre_v, axis, down, regrip, BETA, base=c.hand)[0]
+            yield from c.move(hand=q1, seconds=0.6, phase="regrip")
+            yield from c.hold(0.2)
         dm = np.cos(BETA) * down + np.sin(BETA) * axis
         def middle(back, out=0.0):
             q = c.hand.copy()
             end = centre_v - (tight + back) * axis + np.array([0.0, -stop - out, 0.0])
             q[8:12] = fingers.solve(c.kin, 2, end - fingers.TIP_END * dm, dm, q[8:12], 0.02)[0]
             return q
-        yield from c.move(hand=middle(0.02, enter), seconds=0.6, phase="middle in")
-        yield from c.move(hand=lambda u: middle(0.02 * (1 - u), enter * (1 - u)), seconds=0.6, phase="middle stop")
+        if use_middle:
+            yield from c.move(hand=middle(0.02, enter), seconds=0.6, phase="middle in")
+            yield from c.move(hand=lambda u: middle(0.02 * (1 - u), enter * (1 - u)), seconds=0.6, phase="middle stop")
         yield from c.hold(0.3)
         yield from c.move(c.xyz + [0, 0, .10], R, seconds=1.5, phase="lift clear")
         yield from c.hold(1.0, "hold")
