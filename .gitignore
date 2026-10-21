@@ -28,3 +28,6 @@ MUJOCO_LOG.TXT
 # Live RoboSimStudio pages (snapshots, takes, logs) and routine results
 /tasks/**/run/
 /tasks/**/results/
+
+# Raw demo archives (too large for GitHub; extracted into tasks/hand_demos/)
+/tasks/*.zip
