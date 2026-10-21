@@ -12,7 +12,7 @@ import xml.etree.ElementTree as ET
 import numpy as np
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[1]
+ROOT = HERE.parent
 ASSETS = HERE / "assets"
 ROBOT_XML = ASSETS / "ur5e_dg5fs_right.xml"
 ARM = ("shoulder_pan", "shoulder_lift", "elbow", "wrist_1", "wrist_2", "wrist_3")
@@ -25,7 +25,7 @@ BASE = (0.30, -0.58, TABLE_Z)
 BASE_YAW = np.pi / 2
 # Default palm yaw: fingers point 40 deg left of the table's long axis, as in the clips.
 YAW = 0.7
-# Motor bounds shared with the Drake stack: kp 3, kd .12, |tau| <= .65 N m per finger joint.
+# Finger motor bounds: kp 3, kd .12, |tau| <= .65 N m per finger joint.
 HAND_KP, HAND_KV, HAND_TAU = 3.0, 0.12, 0.65
 
 

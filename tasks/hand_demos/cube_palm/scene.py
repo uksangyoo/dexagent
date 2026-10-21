@@ -10,9 +10,9 @@ from pathlib import Path
 import numpy as np
 import robosimstudio as rss
 from robosimstudio.specs import CameraSpec
-from dexagent.rss.scene import table_scene, WORK
-from dexagent.rss.workcell import TABLE_Z
-from dexagent.rss.hand import Controller
+from dexagent.scene import table_scene, WORK
+from dexagent.workcell import TABLE_Z, YAW
+from dexagent.hand import Controller
 from palm_transfer import EDGE, to_palm, open_palm, resting_on_palm, return_to_table, note
 
 HERE = Path(__file__).resolve().parent
@@ -21,12 +21,13 @@ CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4782_cube_palm_roll.mov"
 # 40 deg; this one is square to the table, which is the start the routine is
 # tuned for (turned to the hand's yaw, it lands toward the thumb side and rolls off).
 START = WORK + np.array([-0.01, -0.024, EDGE / 2])
+YAW0 = float(__import__("os").environ.get("CUBE_YAW", "0"))
 
 scene = table_scene("cube_palm")
 # The hand turns over 320 mm above the table, above the phone camera's frame top.
 scene.add(CameraSpec(name="side", width=1280, height=720, fov_y=40,
                      eye=(0.42, 0.42, TABLE_Z + 0.52), look_at=(0.55, 0.0, TABLE_Z + 0.30)))
-scene.add(rss.box(name="cube", half=(EDGE / 2,) * 3, at=tuple(START), mass=0.012, friction=0.9, color=(0.42, 0.28, 0.72)))
+scene.add(rss.box(name="cube", half=(EDGE / 2,) * 3, at=tuple(START), quat=(0, 0, np.sin(YAW0 / 2), np.cos(YAW0 / 2)), mass=0.012, friction=0.9, color=(0.42, 0.28, 0.72)))
 
 
 def palm_roll(sim, session=None):

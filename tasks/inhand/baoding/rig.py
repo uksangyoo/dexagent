@@ -1,7 +1,7 @@
 """Palm-up start for the baoding scene: the shared workcell built palm-up with a cupped hand."""
 import numpy as np
-from dexagent.rss.scene import table_scene
-from dexagent.rss.workcell import register
+from dexagent.scene import table_scene
+from dexagent.workcell import register
 
 NAME = "ur5e_dg5fs_right_palmup"
 

@@ -23,16 +23,16 @@ from the fingertip geoms), set in `contact.py`; with Newton's default
 condim 3 a two-point pinch is a frictionless hinge.
 
 Assumed numbers (not measured): pen 7.5 mm x 140 mm, 5 g, friction 0.8
-(dexagent.rss.objects); fingertip friction 0.9 (workcell default).
+(dexagent.objects); fingertip friction 0.9 (workcell default).
 Only robot joint targets are written.
 """
 from pathlib import Path
 import numpy as np
 import robosimstudio as rss
-from dexagent.rss.scene import table_scene, WORK
-from dexagent.rss.workcell import hand_down, TABLE_Z, YAW
-from dexagent.rss.hand import Controller
-from dexagent.rss.objects import pen, PEN_RADIUS, PEN_HALF
+from dexagent.scene import table_scene, WORK
+from dexagent.workcell import hand_down, TABLE_Z, YAW
+from dexagent.hand import Controller
+from dexagent.objects import pen, PEN_RADIUS, PEN_HALF
 
 HERE = Path(__file__).resolve().parent
 CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4781_pen_table_slide.mov"
@@ -71,7 +71,7 @@ def grip_q(c, half):
     between them on the other side, so the table's push on a slightly tilted
     tip cannot rotate the pen about a single thumb-index contact.
     """
-    from dexagent.rss.hand import PINCH_CENTRE as C, PINCH_AXIS as A, CURL
+    from dexagent.hand import PINCH_CENTRE as C, PINCH_AXIS as A, CURL
     q = c.hand.copy()
     q[12:16] = CURL
     q[16:20] = [0.3, CURL[1] - .2, CURL[2], CURL[3]]

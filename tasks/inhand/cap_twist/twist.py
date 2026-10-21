@@ -1,6 +1,6 @@
 """Rim-gait helpers for the cap-twist scene: lid readings and fingertip rim targets."""
 import numpy as np
-from dexagent.rss.hand import Controller
+from dexagent.hand import Controller
 
 # Disk grasp measured on this hand (palm frame, metres and radians): the pads sit on a
 # circle about CENTRE in the palm's y-z plane, at these angles from the finger axis
@@ -9,19 +9,20 @@ CENTRE = np.array([0.08, 0.02, 0.13])
 PHI = {0: np.radians(160), 1: np.radians(35), 2: np.radians(-10)}
 
 
-def rim_targets(c, lid, R, palm, twist, radius):
-    """20 joint angles placing thumb/index/middle pads on the rim, turned `twist` rad CCW from above."""
+def rim_targets(c, lid, R, palm, twist, radius, lift=0.0):
+    """20 joint angles placing thumb/index/middle pads on the rim, turned `twist` rad CCW from above,
+    `lift` metres above the lid's mid-height."""
     targets = {}
     for f, phi in PHI.items():
         d = R @ np.array([0, np.sin(phi), np.cos(phi)])
         psi = np.arctan2(d[1], d[0]) + twist
-        p = lid + radius * np.array([np.cos(psi), np.sin(psi), 0.0])
+        p = lid + radius * np.array([np.cos(psi), np.sin(psi), 0.0]) + [0, 0, lift]
         targets[f] = R.T @ (p - palm)
     return c.fingertips(targets, _tucked(c))
 
 
 def _tucked(c):
-    from dexagent.rss.hand import OPEN, CURL
+    from dexagent.hand import OPEN, CURL
     q = OPEN.copy()
     q[12:16] = CURL
     q[16:20] = [0.3, CURL[1] - .2, CURL[2], CURL[3]]

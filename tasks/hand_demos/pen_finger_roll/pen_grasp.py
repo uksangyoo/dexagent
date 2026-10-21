@@ -12,8 +12,8 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 import numpy as np
 from scipy.optimize import least_squares
-from dexagent.rss.workcell import ROBOT_XML, hand_down
-from dexagent.rss.objects import PEN_RADIUS, PEN_HALF
+from dexagent.workcell import ROBOT_XML, hand_down
+from dexagent.objects import PEN_RADIUS, PEN_HALF
 
 _CACHE = {}
 
@@ -168,7 +168,7 @@ if __name__ == "__main__":
 
 def tip_clearance(c, fingers=(0, 1)):
     """Lowest point of the given fingertip meshes above the table [m], from measured joints (CPU kinematics)."""
-    from dexagent.rss.workcell import TABLE_Z
+    from dexagent.workcell import TABLE_Z
     kin = c.kin
     q = c.sim.state.joint_q.numpy()
     kin.set(arm=q[c.arm_idx], hand=q[c.hand_idx])

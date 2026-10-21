@@ -1,6 +1,6 @@
 """Run a live-page scene file headless: build it, play a routine, film it.
 
-    python -m dexagent.rss.run tasks/hand_demos/cube_pinch --camera closeup
+    python -m dexagent.run tasks/hand_demos/cube_pinch --camera closeup
 
 The scene file is executed under the same contract as the live page
 (`robosimstudio_real2sim_agent.scenefile.run_scene_file`). Frames come from
@@ -13,7 +13,7 @@ import sys
 import time
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def main(argv=None):
@@ -26,7 +26,7 @@ def main(argv=None):
     ap.add_argument("--out", default=str(ROOT / "artifacts/rss"))
     ap.add_argument("--max-steps", type=int, default=5000)
     a = ap.parse_args(argv)
-    os.environ["ROBOSIMSTUDIO_RENDERER"] = "dexagent.rss.cycles_renderer.CyclesRenderer" if a.renderer == "cycles" else a.renderer
+    os.environ["ROBOSIMSTUDIO_RENDERER"] = "dexagent.cycles_renderer.CyclesRenderer" if a.renderer == "cycles" else a.renderer
     scene_path = Path(a.scene).resolve()
     if scene_path.is_dir():
         scene_path = scene_path / "scene.py"

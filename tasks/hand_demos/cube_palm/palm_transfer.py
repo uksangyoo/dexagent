@@ -1,11 +1,11 @@
 """Fingertips-to-palm transfer of the 40 mm cube on the upturned hand, and back.
 
 Shared by tasks/hand_demos/cube_palm and tasks/inhand/cube_reorient. Only
-robot joint targets are written (through `dexagent.rss.hand.Controller`).
+robot joint targets are written (through `dexagent.hand.Controller`).
 """
 import numpy as np
 from scipy.spatial.transform import Rotation
-from dexagent.rss.workcell import hand_down, TABLE_Z
+from dexagent.workcell import hand_down, TABLE_Z
 
 EDGE = 0.04
 FLIP = np.diag([-1.0, -1.0, 1.0])  # 180 deg about the finger axis: palm down <-> palm up

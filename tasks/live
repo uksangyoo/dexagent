@@ -11,7 +11,7 @@ scene="$(cd "$(dirname "$target")" && pwd)/$(basename "$target")"
 run="$(dirname "$scene")/run"
 export CUDA_VISIBLE_DEVICES=1 OPENBLAS_NUM_THREADS=1
 # Warp and Cycles/OptiX see only physical GPU 1; OVRTX fails under that mask, so snapshots use Cycles.
-export ROBOSIMSTUDIO_RENDERER="${ROBOSIMSTUDIO_RENDERER:-dexagent.rss.cycles_renderer.CyclesRenderer}"
+export ROBOSIMSTUDIO_RENDERER="${ROBOSIMSTUDIO_RENDERER:-dexagent.cycles_renderer.CyclesRenderer}"
 export VK_ICD_FILENAMES=/etc/vulkan/icd.d/nvidia_icd.json
 export PYTHONPATH="$root:$root/third-party/robosimstudio${PYTHONPATH:+:$PYTHONPATH}"
 py="${PYTHON:-/home/uyoo/Projects/physgram/robosimstudio/.venv/bin/python}"

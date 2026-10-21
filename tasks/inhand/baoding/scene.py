@@ -26,8 +26,8 @@ from pathlib import Path
 import numpy as np
 import robosimstudio as rss
 from robosimstudio.specs import CameraSpec
-from dexagent.rss.workcell import Kinematics, TABLE_Z
-from dexagent.rss.hand import Controller
+from dexagent.workcell import Kinematics, TABLE_Z
+from dexagent.hand import Controller
 from rig import NAME, palm_up, palm_up_scene
 
 HERE = Path(__file__).resolve().parent
@@ -51,8 +51,6 @@ for name, spot, color in (("ball_a", SPOTS[0], (0.72, 0.55, 0.18)), ("ball_b", S
     scene.add(rss.sphere(name=name, radius=RADIUS, at=tuple(_P + _R @ spot), mass=MASS, friction=0.5, color=color))
 scene.add(CameraSpec(name="palm", width=1280, height=720, fov_y=38,
                      eye=tuple(_P + np.array([0.28, 0.16, 0.22])), look_at=tuple(_P + _R @ np.array([0.03, 0, 0.06]))))
-scene.add(CameraSpec(name="overview", width=1280, height=720, fov_y=50,
-                     eye=(1.25, -0.75, TABLE_Z + 0.65), look_at=(0.45, -0.1, TABLE_Z + 0.2)))
 
 
 def thumb_wall(c, psi, u, sense=1.0, radius=0.047, open_deg=30, height=0.05):

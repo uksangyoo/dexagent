@@ -1,63 +1,57 @@
 # dexagent
 
-Agent-authored dexterous manipulation for a UR5e arm with a 20-DOF Tesollo DG5F-S hand. A language/video goal becomes an agent-authored policy graph. A selected hand abstraction lowers each graph command to 26 bounded motor commands. Drake SAP hydroelastic contact integrates the dynamics on CPU, and measured feedback returns to the agent for revision.
+Dexterous manipulation for a UR5e arm with a 20-DOF Tesollo DG5F-S right hand, simulated on the GPU with RoboSimStudio: Newton collision and the MuJoCo-Warp solver at 1 kHz, with 50 Hz control. Each task is a RoboSimStudio scene file with scripted routines. The tasks either reproduce a human clip in `reference/hand_demos` or are in-hand manipulation tasks of their own.
 
 ## Layout
 
 ```
-dexagent/            shared stack
-  sim/               Drake workcell: model preparation, hydroelastic backend, controllers
-                     (the three hand abstractions), contact graph, seating, thread geometry
-  planning/          hand/arm geometry, initial states, kinematics, arm/grasp/workspace plans,
-                     graph-policy compiler and request/feedback workflow
-  agentic/           goal -> graph -> abstraction -> motors runner and bounded revision loop
-  render/            recorded-state export and Blender Cycles/OptiX renderer
-  provenance.py      recorded-artifact hashes across the path relocation
+dexagent/            the table workcell: robot MJCF and kinematics, scene builder, hand controller,
+                     objects, headless runner, Cycles/OptiX snapshot renderer (see dexagent/README.md)
 tasks/
-  screwdriver/       prepared-grasp HOM study (study/) and continuous pickup-to-seat runner (sequence/)
-  cube/              cube pickup, in-hand rotation and hold
-  crate/             bimanual crate flipping on RoboSimStudio/Newton (work in progress)
-tests/               unit tests for contracts, compilers, kinematics and seating
-docs/                historical design notes from the October 12 Newton/GaP prototype
+  live               launch a live RoboSimStudio page for one scene folder
+  hand_demos/        scenes that reproduce the clips in reference/hand_demos
+  inhand/            in-hand manipulation scenes without a clip
 reference/           human reference videos and the HOM paper (arXiv:2609.25619)
-third-party/         tesollo_model and robosimstudio (submodules); UR5e and crate-washing assets (vendored)
+docs/                historical design notes from the October 12 Newton/GaP prototype
+third-party/         tesollo_model and robosimstudio (submodules); UR5e assets (vendored)
 ```
 
-Generated outputs go to `artifacts/`, which is not tracked. The published site in `screwdriver_site/` is its own repository.
+Each scene folder holds `scene.py` (the scene and its `routines`), any helper modules beside it, and `ref/` stills from its clip. Live pages write to `run/`, and routines write to `results/`. Films go to `artifacts/`. None of these is tracked.
 
 ## Setup
 
 ```bash
 git clone --recursive <repo-url>        # or: git submodule update --init --recursive
-python -m venv --system-site-packages .venv-drake
-.venv-drake/bin/pip install -e .
+python3.12 -m venv .venv
+.venv/bin/pip install -e third-party/robosimstudio -e .
 ```
 
-The recorded environment is Python 3.12, Drake 1.58.0, MuJoCo 3.10.1, NumPy 2.5.1, SciPy 1.18.0, trimesh 5.0.0rc1, tetgen 0.8.4 and pymeshlab 2025.7. RTX rendering needs a separate `bpy==4.5.10` interpreter: set `DEXAGENT_RENDER_PYTHON` to it. All GPU work on this workstation is restricted to physical GPU 1.
+All GPU work on this workstation runs on physical GPU 1 (`CUDA_VISIBLE_DEVICES=1`). Snapshots on the live page use Blender Cycles/OptiX, which needs a separate `bpy==4.5.10` interpreter: point `DEXAGENT_RENDER_PYTHON` at it.
 
 ```bash
-export CUDA_VISIBLE_DEVICES=1 OPENBLAS_NUM_THREADS=1
-.venv-drake/bin/python -m unittest discover -s tests -t .
+export PYTHON=.venv/bin/python CUDA_VISIBLE_DEVICES=1
+PYTHONPATH=.:third-party/robosimstudio $PYTHON -m dexagent.run tasks/hand_demos/cube_pinch --camera reference
+tasks/live tasks/hand_demos/cube_pinch up     # live page; rebuilds when scene.py is saved
 ```
 
 ## Tasks
 
-| Task | Entry points | Status |
+| Scene | Clip | What the routine does |
 | --- | --- | --- |
-| [Screwdriver](tasks/screwdriver/README.md) | `tasks.screwdriver.study.experiment`, `dexagent.agentic.run`, `tasks.screwdriver.sequence.pickup` | Frozen prepared-grasp comparison complete; continuous pickup-to-seat incomplete |
-| [Cube](tasks/cube/README.md) | `tasks.cube.workflow`, `tasks.cube.run` | One continuous pickup -> 30° rotation -> hold success (relative-contact control) |
-| [Crate](tasks/crate/README.md) | `tasks/crate/ctl up --scene tasks/crate/scene.py` | Work in progress |
+| `hand_demos/cube_pinch` | IMG_4772 | Pinch a 40 mm cube, lift it, turn it 35° and put it back |
+| `hand_demos/cube_palm` | IMG_4782 | Pick the cube up, roll it onto the open palm and place it |
+| `hand_demos/pen_gravity_pivot` | IMG_4774, 4775 | Hold a pen level, loosen the grip so it swings down under gravity, catch it |
+| `hand_demos/pen_pickup_pivot` | IMG_4773, 4780 | Pick a pen off the table and pivot it upright |
+| `hand_demos/pen_finger_roll` | IMG_4776, 4777 | Lift a pen from a cup, roll it between the fingers and swing it |
+| `hand_demos/pen_writing_grasp` | IMG_4783 | Take a tripod writing grasp and draw a stroke |
+| `hand_demos/pen_table_slide` | IMG_4781 | Pinch a pen and let it slide through the fingers to the table |
+| `hand_demos/scissors` | IMG_4778, 4779 | Pick up hinged scissors, open and close them |
+| `inhand/cap_twist` | none | Unscrew a jar lid with finger strokes; the palm holds still |
+| `inhand/card_pickup` | none | Slide a flat tile to the table edge and pinch it off |
+| `inhand/baoding` | none | Palm up: circle two balls around each other |
+| `inhand/cube_reorient` | none | Palm up: turn a cube 90° on the palm with finger pushes |
 
-The workflow for agent-authored policies (request, compile, run, feedback, revision loop) and the three hand abstractions are documented in [dexagent/agentic/README.md](dexagent/agentic/README.md).
+Per-scene results and known failures are in [tasks/hand_demos/README.md](tasks/hand_demos/README.md) and [tasks/inhand/README.md](tasks/inhand/README.md).
 
-## Current results
+**Physical contract.** A routine writes only the 26 robot joint targets. Object poses, velocities and forces are read for planning and scoring and never written. The routines read object poses from the simulator, so they are privileged-state scripts, not perception policies.
 
-**Screwdriver, prepared grasp.** A frozen six-second, three-interface comparison gives 39.47° / 0.116 mm for fingertip paths, 26.10° / 0.079 mm for rigid object twist, and 154.10° / 0.434 mm for HOM-inspired relative-contact control. Three starting finger clearances preserve this ordering. These are prepared-grasp trials, not full pickup-to-seating successes. Material parameters are uncalibrated. Methods, sensitivity checks and limitations are in [tasks/screwdriver/HOM_REVISION.txt](tasks/screwdriver/HOM_REVISION.txt).
-
-**Cube.** One continuous pickup -> 30° in-hand goal -> stable hold: 3.94° final error, 77.52 mm lift, 0.312 s accepted hold, 0.014° palm rotation. A matched rerun reproduced the trajectory. The fingertip-path and rigid-object-twist adapters collided from the same initial state. Perturbed-start and quarter-turn goals do not yet pass.
-
-The current examples were authored by a coding agent in conversation. A separate live model provider has not been configured or evaluated.
-
-## History
-
-The October 12 Newton/GaP contact-grammar prototype (`dexagent/` grammar and controllers, `dextrain/` PPO curriculum, review site tooling) and the superseded screwdriver pipelines (controlled slip, full motion, physical task, screw-in) were removed on October 20. The screwdriver records used an overlapping wrist collision capsule and are not evidence of realistic manipulation. Both are recoverable from git history: `e460c20` holds the October 12 stack, and `af43140` is the last tree with `screwdriver_lab/` and `crate_lab/` before the restructure. Two inputs recorded by the old physical-task pipeline are kept as frozen data in `dexagent/sim/data/`.

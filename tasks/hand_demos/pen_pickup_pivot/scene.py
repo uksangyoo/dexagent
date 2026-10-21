@@ -9,9 +9,9 @@ The DG5F-S fingertips are 16-20 mm thick and the pen is 7.5 mm across, so the
 pads cannot reach the pen's equator on a flat table. The pinch is a tweezer:
 the rounded fingertip ends, tilted 50 deg inward on a palm pitched 0.3 rad,
 meet the pen about 25 deg above its equator, inside the friction cone (0.9).
-Newton imports contacts without torsional friction (condim 3), so a two-pad
-pinch cannot stop the pen turning about the pinch axis: that freedom is what
-lets it pivot upright here.
+The pen's contacts have no torsional friction (`grip.smooth_pen`: its geom
+takes priority over the hand's condim 4), so a two-pad pinch cannot stop the
+pen turning about the pinch axis: that freedom is what lets it pivot upright.
 
 Assumed numbers (not measured): pen 5 g, 7.5 mm x 140 mm; pad friction 0.9.
 """
@@ -19,10 +19,10 @@ import sys
 from pathlib import Path
 import numpy as np
 from scipy.spatial.transform import Rotation
-from dexagent.rss.scene import table_scene, WORK
-from dexagent.rss.workcell import hand_down, YAW
-from dexagent.rss.hand import Controller
-from dexagent.rss.objects import pen, PEN_RADIUS, PEN_HALF
+from dexagent.scene import table_scene, WORK
+from dexagent.workcell import hand_down, YAW
+from dexagent.hand import Controller
+from dexagent.objects import pen, PEN_RADIUS, PEN_HALF
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "pen_gravity_pivot"))
@@ -37,9 +37,10 @@ PITCH, BETA = 0.3, np.radians(50)
 CENTRE = np.array([0.11, 0.03, 0.10])
 TIGHT, OPEN_W = PEN_RADIUS - 0.00425, 0.025
 STOP = 0.015      # middle-finger stop beside the index, across the fingers [m]
+ENTER = 0.015     # the middle comes in this much further out, then closes to STOP [m]
 
 scene = table_scene("pen_pickup_pivot")
-scene.add(pen(at=tuple(START), direction=ACROSS))
+scene.add(pen(at=tuple(START), direction=ACROSS, friction=0.9))   # the pad friction: the pen pair uses the pen's own
 
 
 def tilt_from_vertical(axis):
@@ -47,7 +48,8 @@ def tilt_from_vertical(axis):
 
 
 def pickup_pivot(sim, session=None, tight=TIGHT, lift_pad=0.0, offset=OFFSET, rise=3.0, stand_gap=0.004,
-                 stop=STOP):
+                 stop=STOP, enter=ENTER):
+    fingers.smooth_pen(sim)
     c = Controller(sim, session, objects=("pen",))
     outcome, metrics = "incomplete", {}
     try:
@@ -90,14 +92,13 @@ def pickup_pivot(sim, session=None, tight=TIGHT, lift_pad=0.0, offset=OFFSET, ri
         d = Rpp[:, 2]
         centre_v = pp + d * ((CENTRE - pp) @ d)
         dm = np.cos(BETA) * down + np.sin(BETA) * axis
-        lateral = np.array([0.0, -stop, 0.0])
-        def middle(back):
+        def middle(back, out=0.0):
             q = c.hand.copy()
-            end = centre_v - (tight + back) * axis + lateral
+            end = centre_v - (tight + back) * axis + np.array([0.0, -stop - out, 0.0])
             q[8:12] = fingers.solve(c.kin, 2, end - fingers.TIP_END * dm, dm, q[8:12], 0.02)[0]
             return q
-        yield from c.move(hand=middle(0.02), seconds=0.6, phase="middle in")
-        yield from c.move(hand=lambda u: middle(0.02 * (1 - u)), seconds=0.6, phase="middle stop")
+        yield from c.move(hand=middle(0.02, enter), seconds=0.6, phase="middle in")
+        yield from c.move(hand=lambda u: middle(0.02 * (1 - u), enter * (1 - u)), seconds=0.6, phase="middle stop")
         yield from c.hold(0.3)
         yield from c.move(c.xyz + [0, 0, .10], R, seconds=1.5, phase="lift clear")
         yield from c.hold(1.0, "hold")

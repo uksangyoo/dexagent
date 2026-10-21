@@ -2,55 +2,68 @@
 
 The scissors are articulated (scissors.xml): part B turns on a pivot screw
 with 0.04 N m friction, and its loop spreads away from part A's as the blades
-open. The index goes into loop A and the middle into loop B, curled straight
-down. Squeezing them together (adduction) closes the blades and holds the
-scissors; spreading them (abduction) pushes the loops' outer walls apart and
-opens the blades. A thumb-index pinch was tried first: the DG5F thumb meets a
-9 mm loop wall with its rounded lower cap and slides out when lifting, and
-pitching the palm to fix that drives the palm into the table.
+open. As in the clips, the thumb goes into one loop and a finger into the
+other: the thumb into loop A and the index into loop B, along the hand's
+thumb-index pinch axis, with the blades pointing left.
 
-Measured: the lift and hold height, the blade opening angle (hinge
-coordinate) through two open/close cycles, and a second lift. The open/close
-cycles run with the scissors resting on the table: spreading the fingers
-relaxes the squeeze that holds them up, and in the air they dropped.
+Squeezing the thumb and index together closes the blades against their stop
+and holds the scissors by friction. That hold only lasts a short lift: the
+loops are 9 mm walls and slide off the rounded fingertips within about two
+seconds. So, like the person, the hand rolls 90 deg about the finger
+direction once the scissors are clear of the table. The fingers are then
+horizontal through the loops, the blades hang below, and the loops rest on
+the fingers. The blades are opened and closed in the air in that pose: the
+thumb holds loop A while the index pushes loop B along its arc about the
+pivot. The hand then rolls back, sets the scissors down and lets go.
 
-Difference from the clips: the person uses thumb and fingers in the loops
-with the hand rolled; here two fingers do the opening and closing.
+Measured: the lift height, the height held after the roll, the blade opening
+angle (hinge coordinate) through two open/close cycles, whether the scissors
+are still in the hand after them, and where they come to rest.
+
+Differences from the clips: one finger (the index) works loop B where the
+person uses two, and the hand rolls further than the person's (about 90 deg
+against their 45 deg) so the loops hang on the fingers.
 
 Assumed numbers (not measured): 190 mm, 58 g, steel blades friction 0.5,
-plastic loops friction 0.7, loop holes 32 x 24 mm.
+plastic loops friction 0.7, loop holes 35 x 27 mm.
 Only robot joint targets are written.
 """
 from pathlib import Path
 import numpy as np
 from scipy.spatial.transform import Rotation
-from robosimstudio.specs import AssetSpec, StaticSpec, ObjectSpec
-from dexagent.rss.scene import table_scene, WORK
-from dexagent.rss.workcell import hand_down, TABLE_Z, YAW
-from dexagent.rss.hand import Controller, CURL, OPEN
+from robosimstudio.specs import AssetSpec, CameraSpec, StaticSpec, ObjectSpec
+from dexagent.scene import table_scene, WORK
+from dexagent.workcell import hand_down, TABLE_Z, YAW
+from dexagent.hand import Controller, PINCH_CENTRE, PINCH_AXIS
 
 HERE = Path(__file__).resolve().parent
 CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4778_scissors_open_close_a.mov"
-# Index in loop A, middle in loop B: both fingertips curl straight down into
-# the loops, so their sides (not their rounded ends) meet the loop walls, and
-# finger abduction spreads or squeezes them along the palm's y axis.
 HAND = hand_down(YAW)
-SPREAD_AXIS = np.array([0.0, 1.0, 0.0])            # palm frame: middle -> index
-GRIP_CENTRE = np.array([0.100, 0.016, 0.125])      # palm frame; both reach 16-34 mm either side (CPU IK search)
-LOCAL_Y = HAND @ SPREAD_AXIS                       # loop A (index) side
-LOCAL_X = np.cross(LOCAL_Y, [0, 0, 1.0])           # blades: far-left, as in the clip
+# Loop A toward the thumb (the wrist side of the pinch), loop B toward the
+# index; the blades then point along the palm's +y, to the left as in the clip.
+LOCAL_Y = HAND @ PINCH_AXIS
+LOCAL_X = np.cross(LOCAL_Y, [0, 0, 1.0])
 QUAT = tuple(Rotation.from_matrix(np.column_stack([LOCAL_X, LOCAL_Y, [0, 0, 1.0]])).as_quat())
-PIVOT = WORK + np.array([0.07, -0.05, 0.0058])
-LOOPS = np.array([-0.065, 0.0, 0.0])                  # midpoint between the loop holes (local)
-LOOP_HALF = 0.024                                   # loop-hole centres either side of LOOPS, closed
-SITE_HEIGHT = 0.003                                 # pad-centre height over the table inside the loops
-HOLD_HALF = 0.004                                   # fingertip half-separation commanded to squeeze shut
-OPEN_ANGLE = np.radians(35)                         # commanded blade opening
+LOOPS = np.array([-0.065, 0.0, 0.0])        # midpoint between the loop holes (scissors frame)
+HOLE_A = np.array([-0.065, 0.024, 0.0])     # loop A's hole centre (scissors frame)
+LOOPS_WORLD = WORK + np.array([0.05, 0.0, 0.0])
+PIVOT = LOOPS_WORLD - Rotation.from_quat(QUAT).as_matrix() @ LOOPS + [0, 0, 0.0058]
+PAD_HEIGHT = 0.013     # pad centres over the table: the finger ends reach about 11 mm below the pads
+INTO = 0.024           # thumb and index pads at the two hole centres
+SQUEEZE = 0.004        # commanded half-separation: the pads stop on the inner walls with the blades shut
+LIFT = 0.05            # friction lift before the roll
+HANG = 0.22            # pinch height above the table once rolled: the blades hang about 170 mm below
+ROLL = -np.pi / 2      # about the finger direction: the palm turns to face away from the thumb
+OPEN_ANGLE = np.radians(30)
+TUCK = (2, 3, 4)
 
 scene = table_scene("scissors")
 scene.add(StaticSpec(name="scissors_asset", asset=AssetSpec(path=str(HERE / "scissors.xml"))))
 scene.add(ObjectSpec(name="scissors", body_name="scissors", joint_name="scissors_free", pose=tuple(PIVOT), quat=QUAT,
                      obb_grasp=False))
+# A low camera across the table from the arm, for the fingers in the loops.
+scene.add(CameraSpec(name="loops", width=640, height=480, fov_y=45, eye=(0.80, 0.12, TABLE_Z + 0.14),
+                     look_at=(0.60, -0.04, TABLE_Z + 0.05)))
 
 
 def hinge_angle(sim):
@@ -62,36 +75,27 @@ def hinge_angle(sim):
     return float(sim.state.joint_q.numpy()[hinge_angle.index])
 
 
-def grip_q(c, half):
-    """Index and middle fingertips `half` either side of GRIP_CENTRE along SPREAD_AXIS; thumb, ring and little clear."""
-    q = OPEN.copy()
-    q[12:16] = CURL
-    q[16:20] = [0.3, CURL[1] - .2, CURL[2], CURL[3]]
-    return c.fingertips({1: GRIP_CENTRE + half * SPREAD_AXIS, 2: GRIP_CENTRE - half * SPREAD_AXIS}, q)
+def rolled(phi):
+    return HAND @ Rotation.from_rotvec([0, 0, phi]).as_matrix()
 
 
-def holes_palm(c, angle):
-    """Palm-frame centres of loop A's hole and of loop B's hole with the blades open by `angle`."""
-    p, R = c.pose("scissors")
-    a = p + R @ np.array([-0.065, 0.024, 0.0])
+def hole_b(angle):
+    """Loop B's hole centre (scissors frame) with the blades open by `angle`."""
     ca, sa = np.cos(angle), np.sin(angle)
-    b_local = np.array([-0.065 * ca + 0.024 * sa, -0.065 * sa - 0.024 * ca, 0.0])
-    return c.palm_frame_target(a), c.palm_frame_target(p + R @ b_local)
+    return np.array([-0.065 * ca + 0.024 * sa, -0.065 * sa - 0.024 * ca, 0.0])
 
 
-def work_q(c, angle):
-    """Index held in loop A; middle tracking loop B's hole along its arc to `angle`."""
-    a, b = holes_palm(c, angle)
-    a[0] = b[0] = GRIP_CENTRE[0]   # keep the fingertip depth
-    q = OPEN.copy()
-    q[12:16] = CURL
-    q[16:20] = [0.3, CURL[1] - .2, CURL[2], CURL[3]]
-    return c.fingertips({1: a, 2: b}, q)
-
-
-def loops_world(c):
+def work_q(c, angle, push):
+    """Thumb held in loop A; index on loop B's arc at `angle`, `push` m past the hole centre
+    along the arc (positive opens), from the measured scissors pose."""
     p, R = c.pose("scissors")
-    return p + R @ LOOPS
+    a = c.palm_frame_target(p + R @ HOLE_A)
+    b_local = hole_b(angle)
+    tangent = np.array([-b_local[1], b_local[0], 0.0]) / np.linalg.norm(b_local[:2])   # +angle direction
+    b = c.palm_frame_target(p + R @ (b_local - push * tangent))
+    a[0] = b[0] = PINCH_CENTRE[0]     # keep the fingertip depth in the loops
+    a[1] = b[1] = PINCH_CENTRE[1]
+    return c.fingertips({0: a, 1: b}, c.pinch(INTO, tuck=TUCK))
 
 
 def cut(sim, session=None):
@@ -99,59 +103,56 @@ def cut(sim, session=None):
     outcome, metrics = "incomplete", {}
     try:
         yield from c.hold(0.5, "settle")
-        mid = loops_world(c)
-        R = HAND
-        target = mid.copy()
-        target[2] = TABLE_Z + SITE_HEIGHT
-        into = grip_q(c, LOOP_HALF)
-        yield from c.move(c.palm_for(target + [0, 0, .07], centre=GRIP_CENTRE, R=R), R, into, 2.0, "approach")
-        yield from c.move(c.palm_for(target, centre=GRIP_CENTRE, R=R), R, seconds=1.2, phase="into_loops")
-        # Squeeze the loops together: the blades close and the scissors are held.
-        yield from c.move(hand=grip_q(c, HOLD_HALF), seconds=0.6, phase="squeeze")
+        p, R = c.pose("scissors")
+        grip = p + R @ LOOPS
+        grip[2] = TABLE_Z + PAD_HEIGHT
+        z0 = p[2]
+        into = c.pinch(INTO, tuck=TUCK)
+        yield from c.move(c.palm_for(grip + [0, 0, .07], R=HAND), HAND, into, 2.0, "approach")
+        yield from c.move(c.palm_for(grip, R=HAND), HAND, seconds=1.2, phase="into_loops")
+        yield from c.move(hand=c.pinch(SQUEEZE, tuck=TUCK), seconds=0.6, phase="squeeze")
         yield from c.hold(0.3)
-        z0 = c.pose("scissors")[0][2]
-        yield from c.move(c.xyz + [0, 0, .09], seconds=1.8, phase="lift")
-        lift = c.pose("scissors")[0][2] - z0
-        metrics["lift_mm"] = round(1000 * lift, 1)
-        yield from c.hold(0.5, "hold")
+        yield from c.move(c.palm_for(grip + [0, 0, LIFT], R=HAND), HAND, seconds=1.0, phase="lift")
+        metrics["lift_mm"] = round(1000 * (c.pose("scissors")[0][2] - z0), 1)
+        top = grip + [0, 0, HANG - PAD_HEIGHT]
+        yield from c.move(c.palm_for(top, R=rolled(ROLL)), rolled(ROLL), seconds=2.0, phase="roll")
+        yield from c.hold(0.6, "hang")
         metrics["held_height_mm"] = round(1000 * (c.pose("scissors")[0][2] - z0), 1)
-        # Spreading the fingers relaxes the squeeze that holds the scissors up,
-        # so the blades are worked with the scissors resting on the table.
-        yield from c.move(c.xyz - [0, 0, .09], seconds=1.5, phase="set_down")
-        if c.tips_world()[1, 2] > TABLE_Z + 0.02:
-            outcome = "fingers_out_of_loops"
+        if metrics["held_height_mm"] < 50:
+            outcome = "dropped"
             return
-        # The middle fingertip follows loop B's hole around the pivot (computed
-        # from the measured scissors pose), a few degrees past the commanded
-        # angle so it keeps pressing the wall; the index holds loop A.
+        # Open and close in the air: the index follows loop B's arc a little
+        # ahead of where the blades are, so it keeps pushing the wall.
         angles = []
         for cycle in range(2):
-            for end, phase, lead in ((OPEN_ANGLE, "open", np.radians(4)), (0.0, "close", -np.radians(8))):
-                start = hinge_angle(sim)   # each stroke starts from where the blades are
-                for _ in c.move(hand=lambda u: work_q(c, start + u * (end - start) + lead), seconds=2.0,
+            for end, phase, push in ((OPEN_ANGLE, "open", 0.006), (0.0, "close", -0.006)):
+                start = hinge_angle(sim)
+                for _ in c.move(hand=lambda u: work_q(c, start + u * (end - start), push), seconds=2.0,
                                 phase=f"{phase}_{cycle + 1}"):
                     angles.append(hinge_angle(sim))
                     yield
                 yield from c.hold(0.3)
                 angles.append(hinge_angle(sim))
         metrics.update(blade_angle_deg=[round(float(np.degrees(min(angles))), 1), round(float(np.degrees(max(angles))), 1)],
-                       closed_after_deg=round(float(np.degrees(angles[-1])), 1))
-        # Pick them up closed once more, then set them down and let go.
-        yield from c.move(c.xyz + [0, 0, .06], seconds=1.2, phase="lift_again")
-        metrics["second_lift_mm"] = round(1000 * (c.pose("scissors")[0][2] - z0), 1)
-        yield from c.move(c.xyz - [0, 0, .06], seconds=1.2, phase="set_down_again")
-        yield from c.move(hand=grip_q(c, LOOP_HALF), seconds=0.5, phase="release")
-        yield from c.move(c.xyz + [0, 0, .08], seconds=1.0, phase="retreat")
+                       closed_after_deg=round(float(np.degrees(angles[-1])), 1),
+                       held_after_cycles_mm=round(1000 * (c.pose("scissors")[0][2] - z0), 1))
+        # Squeeze shut, roll back and set them down.
+        yield from c.move(hand=c.pinch(SQUEEZE, tuck=TUCK), seconds=0.6, phase="squeeze_again")
+        yield from c.move(c.palm_for(grip + [0, 0, LIFT], R=HAND), HAND, seconds=2.0, phase="unroll")
+        yield from c.move(c.palm_for(grip + [0, 0, 0.002], R=HAND), HAND, seconds=1.0, phase="set_down")
+        yield from c.move(hand=into, seconds=0.5, phase="release")
+        yield from c.move(c.palm_for(grip + [0, 0, .09], R=HAND), HAND, seconds=1.0, phase="retreat")
         yield from c.hold(0.4, "rest")
         metrics["rest_height_mm"] = round(1000 * (c.pose("scissors")[0][2] - TABLE_Z), 1)
         opened = np.degrees(max(angles)) > 10
         closed = np.degrees(angles[-1]) < 3
-        lifted = metrics["held_height_mm"] > 50 and metrics["second_lift_mm"] > 40
-        if opened and closed and lifted:
+        held = metrics["held_height_mm"] > 100 and metrics["held_after_cycles_mm"] > 100
+        set_down = metrics["rest_height_mm"] < 15
+        if opened and closed and held and set_down:
             outcome = "success"
         else:
             outcome = "_".join(["opened" if opened else "not_opened", "closed" if closed else "not_closed",
-                                "lifted" if lifted else "not_lifted"])
+                                "held" if held else "dropped", "set_down" if set_down else "not_set_down"])
     finally:
         c.finish("scissors", outcome, metrics, HERE / "results")
 

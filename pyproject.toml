@@ -4,27 +4,28 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dexagent"
-version = "0.2.0"
-description = "Agent-authored dexterous manipulation for UR5e + Tesollo DG5F-S on Drake hydroelastic contact"
+version = "0.3.0"
+description = "Dexterous UR5e + Tesollo DG5F-S manipulation on Newton/MuJoCo-Warp (RoboSimStudio), GPU only"
 requires-python = ">=3.12"
+# RoboSimStudio (Newton, Warp, MuJoCo-Warp) is the third-party/robosimstudio submodule:
+# install it into the same environment with `pip install -e third-party/robosimstudio`.
 dependencies = [
-    "drake==1.58.0",
     "mujoco>=3.10",
     "numpy>=2",
     "scipy>=1.12",
     "trimesh>=4",
-    "rtree",
-    "pillow>=10",
-    "tetgen==0.8.4",
-    "pymeshlab",
+    "imageio[ffmpeg]>=2.30",
 ]
 
 [project.optional-dependencies]
-# Blender Cycles/OptiX renderer (dexagent.render.blender) runs in a separate bpy interpreter.
+# The Cycles/OptiX snapshot renderer (dexagent.cycles_worker) runs in a separate bpy interpreter.
 render = ["bpy==4.5.10"]
 
 [tool.setuptools.packages.find]
-include = ["dexagent*", "tasks*"]
+include = ["dexagent*"]
+
+[tool.setuptools.package-data]
+dexagent = ["assets/*.xml"]
 
 [tool.ruff]
 line-length = 100

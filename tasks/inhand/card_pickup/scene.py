@@ -16,9 +16,9 @@ from pathlib import Path
 import numpy as np
 import robosimstudio as rss
 from robosimstudio.specs import CameraSpec
-from dexagent.rss.scene import table_scene, WORK
-from dexagent.rss.workcell import hand_down, TABLE_Z
-from dexagent.rss.hand import Controller, OPEN, CURL, PINCH_CENTRE, PINCH_AXIS
+from dexagent.scene import table_scene, WORK
+from dexagent.workcell import hand_down, TABLE_Z
+from dexagent.hand import Controller, OPEN, CURL, PINCH_CENTRE, PINCH_AXIS
 
 HERE = Path(__file__).resolve().parent
 BOOK_HALF = np.array([0.08, 0.11, 0.0225])

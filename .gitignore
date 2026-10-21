@@ -19,7 +19,7 @@ MUJOCO_LOG.TXT
 /build/
 /dist/
 
-# Generated experiment outputs (see artifacts/RELOCATION.json for provenance)
+# Generated outputs (films, results)
 /artifacts/
 
 # Published site (separate git repository)

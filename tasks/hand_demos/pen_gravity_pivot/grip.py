@@ -7,9 +7,26 @@ pen_gravity_pivot and pen_pickup_pivot.
 """
 import numpy as np
 from scipy.optimize import least_squares
-from dexagent.rss.hand import CURL, OPEN
+from dexagent.hand import CURL, OPEN
 
 
+def smooth_pen(sim, name="pen"):
+    """Give the pen's contacts its own parameters: no torsional friction.
+
+    The hand's MJCF uses condim 4 (torsional friction 0.005). MuJoCo takes the
+    larger condim of two touching geoms unless one has higher priority, so the
+    pen's geom gets priority 1 and its own condim 3: a hard, smooth 7.5 mm
+    barrel turns freely about the contact normal, and its sliding friction is
+    its own `mu`. This is a contact-material setting written once before the
+    routine moves, not object state.
+    """
+    solver = sim.pipeline.solver
+    geoms = solver.mjc_geom_to_newton_shape.numpy()[0]
+    priority = solver.mjw_model.geom_priority.numpy()
+    for shape in sim.scene.handles.objects[name].shapes:
+        priority[geoms == shape] = 1
+    solver.mjw_model.geom_priority.assign(priority)
+    solver._invalidate_contact_fast_path()
 
 
 def pad(kin, i):

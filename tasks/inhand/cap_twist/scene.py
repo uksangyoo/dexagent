@@ -11,9 +11,9 @@ from pathlib import Path
 import numpy as np
 import robosimstudio as rss
 from robosimstudio.specs import AssetSpec, CameraSpec, StaticSpec
-from dexagent.rss.scene import table_scene, WORK
-from dexagent.rss.workcell import hand_down
-from dexagent.rss.hand import OPEN
+from dexagent.scene import table_scene, WORK
+from dexagent.workcell import hand_down
+from dexagent.hand import OPEN
 from twist import CapController, CENTRE, PHI, rim_targets
 
 HERE = Path(__file__).resolve().parent
@@ -21,6 +21,7 @@ JAR = WORK + np.array([0.0, 0.0, 0.0])
 LID_Z = 0.1155            # lid centre above the table
 RADIUS = 0.035
 GOAL = 360.0              # degrees, counter-clockwise from above
+CLEAR, LIFT = 0.018, 0.008  # released pads: this far outside the rim and above mid-height
 STROKE = 30.0             # each twist runs the pads from -STROKE to +STROKE around the rim
 
 scene = table_scene("cap_twist")
@@ -41,7 +42,7 @@ def unscrew(sim, session=None):
         palm = lid - R @ CENTRE
         yaw0 = c.palm_yaw()
         start = c.lid_angle()
-        grip = lambda deg, rad: rim_targets(c, lid, R, palm, np.radians(deg), rad)
+        grip = lambda deg, rad, lift=0.0: rim_targets(c, lid, R, palm, np.radians(deg), rad, lift)
         yield from c.move(palm + [0, 0, .08], R, grip(-STROKE, RADIUS + .014), 1.5, "approach")
         yield from c.move(palm, R, seconds=1.0, phase="descend")
         strokes, slips = 0, []
@@ -51,13 +52,14 @@ def unscrew(sim, session=None):
             yield from c.hold(0.15)
             yield from c.move(hand=lambda u: grip(-STROKE + 2 * STROKE * u, RADIUS - .007), seconds=1.2,
                               phase=f"twist {strokes + 1}")
-            yield from c.move(hand=grip(STROKE, RADIUS + .014), seconds=0.4, phase=f"release {strokes + 1}")
+            yield from c.move(hand=grip(STROKE, RADIUS + CLEAR, LIFT), seconds=0.4, phase=f"release {strokes + 1}")
             turned = np.degrees(c.lid_angle() - before)
             slips.append(round(turned / (2 * STROKE), 3))
             strokes += 1
-            yield from c.move(hand=lambda u: grip(STROKE - 2 * STROKE * u, RADIUS + .014), seconds=0.7,
+            yield from c.move(hand=lambda u: grip(STROKE - 2 * STROKE * u, RADIUS + CLEAR, LIFT), seconds=0.7,
                               phase=f"return {strokes}")
-        yield from c.move(palm + [0, 0, .10], R, OPEN, 1.0, "retreat")
+        yield from c.move(palm + [0, 0, .06], R, seconds=0.8, phase="retreat")
+        yield from c.move(palm + [0, 0, .10], R, OPEN, 0.6)
         yield from c.hold(0.5, "rest")
         total = float(np.degrees(c.lid_angle() - start))
         metrics.update(lid_turn_deg=round(total, 1), strokes=strokes,

@@ -1,7 +1,7 @@
 """Start the arm palm-up, so the cube can begin resting mid-palm."""
 import numpy as np
 from scipy.spatial.transform import Rotation
-from dexagent.rss.workcell import hand_down, register
+from dexagent.workcell import hand_down, register
 
 FLIP = np.diag([-1.0, -1.0, 1.0])
 NAME = "ur5e_dg5fs_right_palmup_cube"

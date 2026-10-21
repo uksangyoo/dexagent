@@ -5,7 +5,8 @@ the hand. The pen rests on a small block (a pen rest) so the fingertips can
 reach its equator; a 7.5 mm pen lying flat on the table cannot be held level
 by these 16-20 mm thick fingertips (see pen_pickup_pivot for the table pickup).
 
-Mechanism. Newton imports contacts without torsional friction (condim 3), so
+Mechanism. The pen's contacts have no torsional friction (`grip.smooth_pen`:
+its geom takes priority over the hand's condim 4, as a hard smooth barrel), so
 a thumb-index pinch alone cannot stop the pen turning about the pinch axis.
 The level hold therefore uses three contacts, as people do: the thumb on one
 side, index and middle on the other, spaced 25 mm along the pen, so friction at
@@ -21,10 +22,10 @@ from pathlib import Path
 import numpy as np
 from scipy.spatial.transform import Rotation
 import robosimstudio as rss
-from dexagent.rss.scene import table_scene, WORK
-from dexagent.rss.workcell import hand_down
-from dexagent.rss.hand import Controller
-from dexagent.rss.objects import pen, PEN_RADIUS
+from dexagent.scene import table_scene, WORK
+from dexagent.workcell import hand_down
+from dexagent.hand import Controller
+from dexagent.objects import pen, PEN_RADIUS
 import grip as fingers
 
 HERE = Path(__file__).resolve().parent
@@ -45,7 +46,7 @@ scene = table_scene("pen_gravity_pivot")
 _yaw = GRASP_YAW + np.pi / 2
 scene.add(rss.slab(name="pen_rest", half=(0.022, 0.010, REST_H / 2),
                    at=(*REST_AT, 0.0, 0.0, np.sin(_yaw / 2), np.cos(_yaw / 2)), color=(0.45, 0.33, 0.22)))
-scene.add(pen(at=tuple(START), direction=ACROSS))
+scene.add(pen(at=tuple(START), direction=ACROSS, friction=0.9))   # the pad friction: the pen pair uses the pen's own
 
 
 def tilt_from_vertical(axis):
@@ -54,6 +55,7 @@ def tilt_from_vertical(axis):
 
 def pivot(sim, session=None, tight=TIGHT, lift_pad=-0.005, spread=SPREAD, beta=BETA, stop_y=STOP_Y, drop=DROP,
           park_back=PARK_BACK):
+    fingers.smooth_pen(sim)
     c = Controller(sim, session, objects=("pen",))
     outcome, metrics = "incomplete", {}
     try:

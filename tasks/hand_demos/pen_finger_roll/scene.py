@@ -17,16 +17,16 @@ Picking the pen off the table, as in IMG_4773, is not used: with these
 16 x 20 mm fingertip shells the best synthesized pinch (pen_grasp.py) lifts
 it 2-9 cm before the contacts ride over the top of the 7.5 mm barrel.
 
-Assumed: pen 7.5 mm x 140 mm, 5 g, friction 0.8 (dexagent.rss.objects); hand
+Assumed: pen 7.5 mm x 140 mm, 5 g, friction 0.8 (dexagent.objects); hand
 pads 0.9; cup 60 mm tall with a 20 mm square bore. The capsule is symmetric,
 so roll is read off the body's orientation (twist about its own axis).
 """
 from pathlib import Path
 import numpy as np
 from scipy.spatial.transform import Rotation
-from dexagent.rss.scene import table_scene, WORK
-from dexagent.rss.workcell import TABLE_Z
-from dexagent.rss.hand import Controller, PINCH_CENTRE
+from dexagent.scene import table_scene, WORK
+from dexagent.workcell import TABLE_Z
+from dexagent.hand import Controller, PINCH_CENTRE
 from pen_cup import add_cup_and_pen, pick_from_cup, PINCH_HALF, MIDDLE_HOLD
 
 HERE = Path(__file__).resolve().parent

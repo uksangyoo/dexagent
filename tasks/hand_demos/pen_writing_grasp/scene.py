@@ -21,10 +21,10 @@ import sys
 from pathlib import Path
 import numpy as np
 from scipy.spatial.transform import Rotation
-from dexagent.rss.scene import table_scene, WORK
-from dexagent.rss.workcell import TABLE_Z
-from dexagent.rss.hand import Controller
-from dexagent.rss.objects import PEN_RADIUS, PEN_HALF
+from dexagent.scene import table_scene, WORK
+from dexagent.workcell import TABLE_Z
+from dexagent.hand import Controller
+from dexagent.objects import PEN_RADIUS, PEN_HALF
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "pen_finger_roll"))

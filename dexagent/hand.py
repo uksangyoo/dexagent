@@ -14,7 +14,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation, Slerp
 from .workcell import Kinematics, hand_down
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 # Thumb-index pinch measured on this hand (palm frame): the widest aperture
 # (8-70 mm) opposes the thumb toward the wrist and the index toward the
 # fingertips, so the pinch axis runs along the palm's finger direction.

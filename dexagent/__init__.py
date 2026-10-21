@@ -1,1 +1,1 @@
-"""RoboSimStudio/Newton side of the stack: the single-arm hand workcell and its controller."""
+"""Dexterous UR5e + right DG5F-S hand manipulation on RoboSimStudio (Newton physics, MuJoCo-Warp solver, GPU)."""
