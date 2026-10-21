@@ -20,12 +20,14 @@ dependencies = [
 [project.optional-dependencies]
 # The Cycles/OptiX snapshot renderer (dexagent.cycles_worker) runs in a separate bpy interpreter.
 render = ["bpy==4.5.10"]
+# Naive .mov pose estimate (MediaPipe Hands + OpenCV HSV cube).
+retarget = ["opencv-python-headless>=4.8", "mediapipe>=0.10"]
 
 [tool.setuptools.packages.find]
 include = ["dexagent*"]
 
 [tool.setuptools.package-data]
-dexagent = ["assets/*.xml"]
+dexagent = ["assets/*.xml", "retarget/models/*.task"]
 
 [tool.ruff]
 line-length = 100

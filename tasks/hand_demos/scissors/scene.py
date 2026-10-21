@@ -35,9 +35,11 @@ from robosimstudio.specs import AssetSpec, CameraSpec, StaticSpec, ObjectSpec
 from dexagent.scene import table_scene, WORK
 from dexagent.workcell import hand_down, TABLE_Z, YAW
 from dexagent.hand import Controller, PINCH_CENTRE, PINCH_AXIS
+from dexagent.retarget.replay import make_replay_routine
 
 HERE = Path(__file__).resolve().parent
 CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4778_scissors_open_close_a.mov"
+TRACKS = HERE / "tracks"
 HAND = hand_down(YAW)
 # Loop A toward the thumb (the wrist side of the pinch), loop B toward the
 # index; the blades then point along the palm's +y, to the left as in the clip.
@@ -157,4 +159,11 @@ def cut(sim, session=None):
         c.finish("scissors", outcome, metrics, HERE / "results")
 
 
-routines = {"pick up, open and close": cut}
+routines = {
+    "pick up, open and close": cut,
+    "retarget replay": make_replay_routine(
+        (TRACKS / "from_video.json", TRACKS / "synthetic.json"),
+        objects=("scissors",),
+        results_dir=HERE / "results",
+    ),
+}

@@ -20,18 +20,45 @@ Each scene folder holds `scene.py` (the scene and its `routines`), any helper mo
 
 ## Setup
 
+Python 3.12 for the main env. Use `uv venv` + `uv pip` (not `uv sync`): the optional `render` extra pins `bpy`, which only has 3.11 wheels, and `uv sync` resolves that extra into the lockfile.
+
 ```bash
 git clone --recursive <repo-url>        # or: git submodule update --init --recursive
-python3.12 -m venv .venv
-.venv/bin/pip install -e third-party/robosimstudio -e .
+uv venv --python 3.12
+uv pip install -e third-party/robosimstudio -e .
 ```
 
-All GPU work on this workstation runs on physical GPU 1 (`CUDA_VISIBLE_DEVICES=1`). Snapshots on the live page use Blender Cycles/OptiX, which needs a separate `bpy==4.5.10` interpreter: point `DEXAGENT_RENDER_PYTHON` at it.
+All GPU work on this workstation runs on physical GPU 1 (`CUDA_VISIBLE_DEVICES=1`). Snapshots on the live page use Blender Cycles/OptiX in a separate 3.11 interpreter; point `DEXAGENT_RENDER_PYTHON` at it:
 
 ```bash
-export PYTHON=.venv/bin/python CUDA_VISIBLE_DEVICES=1
+uv venv .venv-render --python 3.11
+uv pip install --python .venv-render/bin/python bpy==4.5.10
+export DEXAGENT_RENDER_PYTHON="$PWD/.venv-render/bin/python"
+```
+
+```bash
+export PYTHON="$PWD/.venv/bin/python" CUDA_VISIBLE_DEVICES=1
 PYTHONPATH=.:third-party/robosimstudio $PYTHON -m dexagent.run tasks/hand_demos/cube_pinch --camera reference
 tasks/live tasks/hand_demos/cube_pinch up     # live page; rebuilds when scene.py is saved
+```
+
+### Naive retarget baseline (cube_pinch)
+
+Existing scene twin + MediaPipe/HSV tracks from the matching `.mov`, then open-loop IK replay (objects teleported). See [dexagent/retarget/schema.md](dexagent/retarget/schema.md).
+
+```bash
+# Optional: synthetic tracks from the scripted routine (sanity)
+$PYTHON -m dexagent.retarget.record_from_routine tasks/hand_demos/cube_pinch
+
+# .mov → estimate → retarget → film (+ human|sim compare with hand overlay)
+$PYTHON -m dexagent.retarget.from_video \
+  --scene tasks/hand_demos/cube_pinch \
+  --clip reference/hand_demos/IMG_4772_cube_pinch_lift.mov
+# → artifacts/rss/cube_pinch/retarget_from_video.mp4
+# → artifacts/rss/cube_pinch/retarget_compare.mp4
+
+# Or play saved tracks headless / on the live page
+$PYTHON -m dexagent.run tasks/hand_demos/cube_pinch --routine "retarget replay" --camera reference
 ```
 
 ## Tasks

@@ -5,9 +5,11 @@ import robosimstudio as rss
 from dexagent.scene import table_scene, WORK
 from dexagent.workcell import hand_down, TABLE_Z, YAW
 from dexagent.hand import Controller, OPEN
+from dexagent.retarget.replay import make_replay_routine
 
 HERE = Path(__file__).resolve().parent
 CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4772_cube_pinch_lift.mov"
+TRACKS = HERE / "tracks"
 EDGE = 0.04
 START = WORK + np.array([0.0, 0.0, EDGE / 2])
 # The cube starts square to the default palm yaw, so the thumb and index close on opposite faces.
@@ -66,4 +68,11 @@ def pick_and_place(sim, session=None):
         c.finish("cube_pinch", outcome, metrics, HERE / "results")
 
 
-routines = {"pick, turn and place": pick_and_place}
+routines = {
+    "pick, turn and place": pick_and_place,
+    "retarget replay": make_replay_routine(
+        (TRACKS / "from_video.json", TRACKS / "synthetic.json"),
+        objects=("cube",),
+        results_dir=HERE / "results",
+    ),
+}
