@@ -11,6 +11,9 @@ One UR5e with a right DG5F-S hand at a wood table, simulated by RoboSimStudio (N
 | `run` | Headless runner: build a scene folder, play a routine, film it |
 | `cycles_renderer`, `cycles_worker` | Blender Cycles/OptiX snapshot renderer for the live page (bpy interpreter in `DEXAGENT_RENDER_PYTHON`) |
 | `retarget` | Naive track schema, MediaPipe/HSV `.mov` estimate, palm/tip IK retarget, object-teleport replay (see `retarget/schema.md`) |
+| `teleop` | Self-contained Vive + Manus clutch teleop (live page: `vive manus collect`; see `teleop/README.md`) |
+| `hom` | Minimal GCF / relative contact-velocity features for demo logging |
+| `skills` | Demo recorder, pack N demos → mean HOM skill, open-loop replay |
 
 **Palm frame.** +z runs along the fingers, +x is out of the palm face (fingers flex toward +x), and +y is toward the thumb. `hand_down(yaw)` faces the palm down with the fingers pointing `yaw` from +x; the default `YAW` = 0.7 rad matches the clips. The widest thumb-index pinch (8-70 mm) puts the thumb toward the wrist and the index toward the fingertips: `PINCH_CENTRE`, `PINCH_AXIS`.
 

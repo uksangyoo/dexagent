@@ -68,6 +68,41 @@ def pick_and_place(sim, session=None):
         c.finish("cube_pinch", outcome, metrics, HERE / "results")
 
 
+def vive_manus_collect(sim, session=None):
+    """Clutch teleop with Vive tracker + Manus glove; see the hand in the live viewer.
+
+    Keys (OS-wide): ``c`` engage/disengage, ``n`` new episode, ``s`` save, ``q`` quit.
+    Demos → ``demos/<stamp>/``. Requires SteamVR + glove; optional ``manus_glove_cal.json``.
+    """
+    from dexagent.teleop.loop import run_teleop_collect
+
+    def _first_cal(*names):
+        for n in names:
+            p = HERE / n
+            if p.is_file():
+                return p
+            p = HERE.parents[2] / n
+            if p.is_file():
+                return p
+        return None
+
+    yield from run_teleop_collect(
+        sim,
+        session,
+        scene_dir=HERE,
+        source_kind="hw",
+        object_name="cube",
+        start_xyz=START,
+        start_quat=QUAT,
+        edge=EDGE,
+        squeeze=SQUEEZE,
+        helpers=HELPERS,
+        tuck=TUCK,
+        yaw_cal=_first_cal("vive_yaw_cal.json"),
+        manus_cal=_first_cal("manus_glove_cal.json"),
+    )
+
+
 routines = {
     "pick, turn and place": pick_and_place,
     "retarget replay": make_replay_routine(
@@ -75,4 +110,11 @@ routines = {
         objects=("cube",),
         results_dir=HERE / "results",
     ),
+    "vive manus collect": vive_manus_collect,
 }
+
+_skill = HERE / "demos" / "skill" / "skill.json"
+if _skill.is_file():
+    from dexagent.skills.replay_skill import make_replay_routine as make_skill_replay
+
+    routines["skill replay"] = make_skill_replay(HERE)
