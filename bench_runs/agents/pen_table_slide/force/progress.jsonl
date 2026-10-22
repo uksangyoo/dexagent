@@ -1,0 +1,3 @@
+{"iter": 1, "time": "2026-10-22T06:09:56", "wall_s": 3854.6, "successes": 0, "n": 3, "by_severity": {"1": false, "0": false, "0.5": false}}
+{"iter": 2, "time": "2026-10-22T06:49:22", "wall_s": 2122.2, "successes": 3, "n": 3, "by_severity": {"1": true, "0": true, "0.5": true}}
+{"iter": 3, "time": "2026-10-22T06:54:23", "wall_s": 289.1, "successes": 3, "n": 3, "by_severity": {"1": true, "0": true, "0.5": true}}

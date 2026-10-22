@@ -1,0 +1,10 @@
+{
+ "task": "tasks/hand_demos/pen_writing_grasp",
+ "level": "layered",
+ "max_iters": 4,
+ "cameras": [
+  "closeup",
+  "overview",
+  "reference"
+ ]
+}

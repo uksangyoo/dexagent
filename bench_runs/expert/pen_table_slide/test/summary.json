@@ -1,0 +1,312 @@
+{
+ "task": "pen_table_slide",
+ "policy": "expert",
+ "level": "expert",
+ "label": "expert/test",
+ "n": 10,
+ "successes": 10,
+ "wall_s": 1327.0,
+ "time": "2026-10-21T22:45:09",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": true,
+   "metrics": {
+    "slip_on_table_mm": 27.8,
+    "max_tip_height_mm": 101.2,
+    "final_tip_height_mm": 98.7,
+    "final_tilt_deg": 10.6,
+    "final_held": true,
+    "final_finger_forces_N": [
+     2.27,
+     2.21,
+     0.15,
+     0.0,
+     0.0
+    ],
+    "max_total_finger_force_N": 32.39
+   },
+   "error": null,
+   "sim_s": 17.8,
+   "perturbation": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "block_yaw": -0.0,
+    "pen_length": 1.0,
+    "pen_radius": 1.0,
+    "pen_mass": 1.0
+   },
+   "sheet": null
+  },
+  {
+   "case": "1001:0.5",
+   "success": true,
+   "metrics": {
+    "slip_on_table_mm": 27.2,
+    "max_tip_height_mm": 102.1,
+    "final_tip_height_mm": 100.3,
+    "final_tilt_deg": 11.9,
+    "final_held": true,
+    "final_finger_forces_N": [
+     2.11,
+     2.12,
+     0.18,
+     0.0,
+     0.0
+    ],
+    "max_total_finger_force_N": 28.29
+   },
+   "error": null,
+   "sim_s": 17.8,
+   "perturbation": {
+    "dx": 0.00225,
+    "dy": -0.00969,
+    "block_yaw": -0.16353,
+    "pen_length": 1.03579,
+    "pen_radius": 0.95762,
+    "pen_mass": 0.85055
+   },
+   "sheet": null
+  },
+  {
+   "case": "1002:0.5",
+   "success": true,
+   "metrics": {
+    "slip_on_table_mm": 28.1,
+    "max_tip_height_mm": 101.5,
+    "final_tip_height_mm": 99.9,
+    "final_tilt_deg": 5.8,
+    "final_held": true,
+    "final_finger_forces_N": [
+     0.85,
+     0.84,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_total_finger_force_N": 32.58
+   },
+   "error": null,
+   "sim_s": 17.8,
+   "perturbation": {
+    "dx": -0.00238,
+    "dy": -0.00286,
+    "block_yaw": 0.12965,
+    "pen_length": 0.98895,
+    "pen_radius": 0.98371,
+    "pen_mass": 1.02745
+   },
+   "sheet": null
+  },
+  {
+   "case": "1003:0.5",
+   "success": true,
+   "metrics": {
+    "slip_on_table_mm": 24.5,
+    "max_tip_height_mm": 101.2,
+    "final_tip_height_mm": 98.5,
+    "final_tilt_deg": 10.2,
+    "final_held": true,
+    "final_finger_forces_N": [
+     2.3,
+     2.32,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_total_finger_force_N": 35.4
+   },
+   "error": null,
+   "sim_s": 17.8,
+   "perturbation": {
+    "dx": -0.00624,
+    "dy": -0.00487,
+    "block_yaw": -0.00279,
+    "pen_length": 1.01608,
+    "pen_radius": 1.02521,
+    "pen_mass": 1.11155
+   },
+   "sheet": null
+  },
+  {
+   "case": "1004:0.5",
+   "success": true,
+   "metrics": {
+    "slip_on_table_mm": 27.3,
+    "max_tip_height_mm": 101.6,
+    "final_tip_height_mm": 99.6,
+    "final_tilt_deg": 10.7,
+    "final_held": true,
+    "final_finger_forces_N": [
+     2.4,
+     2.4,
+     0.22,
+     0.0,
+     0.0
+    ],
+    "max_total_finger_force_N": 36.59
+   },
+   "error": null,
+   "sim_s": 17.8,
+   "perturbation": {
+    "dx": -0.00998,
+    "dy": -0.0074,
+    "block_yaw": -0.18929,
+    "pen_length": 0.98807,
+    "pen_radius": 1.01207,
+    "pen_mass": 1.16855
+   },
+   "sheet": null
+  },
+  {
+   "case": "1005:1",
+   "success": true,
+   "metrics": {
+    "slip_on_table_mm": 23.1,
+    "max_tip_height_mm": 101.3,
+    "final_tip_height_mm": 99.0,
+    "final_tilt_deg": 10.1,
+    "final_held": true,
+    "final_finger_forces_N": [
+     2.62,
+     2.63,
+     0.58,
+     0.0,
+     0.0
+    ],
+    "max_total_finger_force_N": 43.84
+   },
+   "error": null,
+   "sim_s": 17.8,
+   "perturbation": {
+    "dx": -0.01671,
+    "dy": 0.01722,
+    "block_yaw": -0.22276,
+    "pen_length": 1.02771,
+    "pen_radius": 1.06696,
+    "pen_mass": 1.47672
+   },
+   "sheet": null
+  },
+  {
+   "case": "1006:1",
+   "success": true,
+   "metrics": {
+    "slip_on_table_mm": 27.2,
+    "max_tip_height_mm": 98.5,
+    "final_tip_height_mm": 96.8,
+    "final_tilt_deg": 9.0,
+    "final_held": true,
+    "final_finger_forces_N": [
+     2.72,
+     2.18,
+     2.25,
+     0.0,
+     0.0
+    ],
+    "max_total_finger_force_N": 25.93
+   },
+   "error": null,
+   "sim_s": 17.8,
+   "perturbation": {
+    "dx": -0.00652,
+    "dy": 0.00403,
+    "block_yaw": -0.21171,
+    "pen_length": 0.94751,
+    "pen_radius": 1.05995,
+    "pen_mass": 0.83505
+   },
+   "sheet": null
+  },
+  {
+   "case": "1007:1",
+   "success": true,
+   "metrics": {
+    "slip_on_table_mm": 24.0,
+    "max_tip_height_mm": 98.1,
+    "final_tip_height_mm": 95.8,
+    "final_tilt_deg": 10.0,
+    "final_held": true,
+    "final_finger_forces_N": [
+     2.35,
+     2.36,
+     0.34,
+     0.0,
+     0.0
+    ],
+    "max_total_finger_force_N": 35.11
+   },
+   "error": null,
+   "sim_s": 17.8,
+   "perturbation": {
+    "dx": -0.01715,
+    "dy": 0.01264,
+    "block_yaw": 0.14967,
+    "pen_length": 0.93932,
+    "pen_radius": 1.01776,
+    "pen_mass": 1.39534
+   },
+   "sheet": null
+  },
+  {
+   "case": "1008:1",
+   "success": true,
+   "metrics": {
+    "slip_on_table_mm": 27.1,
+    "max_tip_height_mm": 102.5,
+    "final_tip_height_mm": 99.8,
+    "final_tilt_deg": 10.1,
+    "final_held": true,
+    "final_finger_forces_N": [
+     2.64,
+     2.69,
+     0.47,
+     0.0,
+     0.0
+    ],
+    "max_total_finger_force_N": 42.23
+   },
+   "error": null,
+   "sim_s": 17.8,
+   "perturbation": {
+    "dx": -0.01331,
+    "dy": 0.01252,
+    "block_yaw": -0.2959,
+    "pen_length": 1.09675,
+    "pen_radius": 1.09664,
+    "pen_mass": 1.34428
+   },
+   "sheet": null
+  },
+  {
+   "case": "1009:1",
+   "success": true,
+   "metrics": {
+    "slip_on_table_mm": 24.1,
+    "max_tip_height_mm": 85.6,
+    "final_tip_height_mm": 84.7,
+    "final_tilt_deg": 7.6,
+    "final_held": true,
+    "final_finger_forces_N": [
+     2.27,
+     1.22,
+     2.22,
+     0.0,
+     0.0
+    ],
+    "max_total_finger_force_N": 33.34
+   },
+   "error": null,
+   "sim_s": 17.8,
+   "perturbation": {
+    "dx": -0.01774,
+    "dy": -0.00692,
+    "block_yaw": -0.47139,
+    "pen_length": 0.95627,
+    "pen_radius": 1.06517,
+    "pen_mass": 1.10898
+   },
+   "sheet": null
+  }
+ ]
+}

@@ -1,0 +1,11 @@
+{
+ "task": "tasks/hand_demos/cube_palm",
+ "level": "synergies",
+ "max_iters": 4,
+ "cameras": [
+  "closeup",
+  "overview",
+  "reference",
+  "side"
+ ]
+}

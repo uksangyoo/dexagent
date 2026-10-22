@@ -1,0 +1,11 @@
+{
+ "task": "tasks/hand_demos/scissors",
+ "level": "contacts",
+ "max_iters": 4,
+ "cameras": [
+  "closeup",
+  "loops",
+  "overview",
+  "reference"
+ ]
+}

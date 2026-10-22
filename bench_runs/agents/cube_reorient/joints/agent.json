@@ -1,0 +1,11 @@
+{
+ "task": "tasks/inhand/cube_reorient",
+ "level": "joints",
+ "max_iters": 4,
+ "cameras": [
+  "closeup",
+  "overview",
+  "palm",
+  "reference"
+ ]
+}

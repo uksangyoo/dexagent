@@ -1,0 +1,198 @@
+{
+ "task": "pen_writing_grasp",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/pen_writing_grasp/synergies/iter_1/policy.py",
+ "level": "synergies",
+ "label": "test/pen_writing_grasp/synergies/iter1",
+ "n": 6,
+ "successes": 0,
+ "wall_s": 574.2,
+ "time": "2026-10-22T06:35:43",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": false,
+   "metrics": {
+    "max_tip_height_mm": 104.3,
+    "left_cup": true,
+    "ink_steps": 80,
+    "strokes": 5,
+    "best_stroke_path_mm": 23.5,
+    "best_stroke_extent_mm": 23.4,
+    "best_stroke_contact_fraction": 0.342,
+    "best_stroke_mean_lean_deg": 10.9,
+    "final_tip_height_mm": 78.9,
+    "final_free_of_table_and_cup": true,
+    "final_motion_0p5s_mm": 0.6,
+    "held_at_end": true
+   },
+   "error": null,
+   "sim_s": 35.14,
+   "perturbation": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "lean_x": -0.0,
+    "lean_y": -0.0,
+    "diameter": 1.0,
+    "length": 1.0,
+    "mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1001:0.5",
+   "success": false,
+   "metrics": {
+    "max_tip_height_mm": 101.6,
+    "left_cup": true,
+    "ink_steps": 85,
+    "strokes": 8,
+    "best_stroke_path_mm": 11.4,
+    "best_stroke_extent_mm": 11.4,
+    "best_stroke_contact_fraction": 0.25,
+    "best_stroke_mean_lean_deg": 10.0,
+    "final_tip_height_mm": 78.6,
+    "final_free_of_table_and_cup": true,
+    "final_motion_0p5s_mm": 0.3,
+    "held_at_end": true
+   },
+   "error": null,
+   "sim_s": 35.12,
+   "perturbation": {
+    "dx": 0.00225,
+    "dy": -0.00969,
+    "lean_x": -0.01635,
+    "lean_y": 0.01874,
+    "diameter": 0.95762,
+    "length": 0.97011,
+    "mass": 1.06505
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1002:0.5",
+   "success": false,
+   "metrics": {
+    "max_tip_height_mm": 103.4,
+    "left_cup": true,
+    "ink_steps": 21,
+    "strokes": 1,
+    "best_stroke_path_mm": 1.0,
+    "best_stroke_extent_mm": 0.9,
+    "best_stroke_contact_fraction": 1.0,
+    "best_stroke_mean_lean_deg": 15.9,
+    "final_tip_height_mm": 3.7,
+    "final_free_of_table_and_cup": false,
+    "final_motion_0p5s_mm": 0.5,
+    "held_at_end": false
+   },
+   "error": null,
+   "sim_s": 35.06,
+   "perturbation": {
+    "dx": -0.00238,
+    "dy": -0.00286,
+    "lean_x": 0.01296,
+    "lean_y": -0.00579,
+    "diameter": 0.98371,
+    "length": 1.00549,
+    "mass": 0.84361
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1005:1",
+   "success": false,
+   "metrics": {
+    "max_tip_height_mm": 102.5,
+    "left_cup": true,
+    "ink_steps": 53,
+    "strokes": 4,
+    "best_stroke_path_mm": 25.5,
+    "best_stroke_extent_mm": 25.5,
+    "best_stroke_contact_fraction": 0.216,
+    "best_stroke_mean_lean_deg": 5.6,
+    "final_tip_height_mm": 4.0,
+    "final_free_of_table_and_cup": false,
+    "final_motion_0p5s_mm": 0.8,
+    "held_at_end": false
+   },
+   "error": null,
+   "sim_s": 35.08,
+   "perturbation": {
+    "dx": -0.01671,
+    "dy": 0.01722,
+    "lean_x": -0.02228,
+    "lean_y": 0.01451,
+    "diameter": 1.06696,
+    "length": 1.09534,
+    "mass": 0.66223
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1006:1",
+   "success": false,
+   "metrics": {
+    "max_tip_height_mm": 104.3,
+    "left_cup": true,
+    "ink_steps": 111,
+    "strokes": 6,
+    "best_stroke_path_mm": 15.7,
+    "best_stroke_extent_mm": 15.7,
+    "best_stroke_contact_fraction": 0.269,
+    "best_stroke_mean_lean_deg": 11.3,
+    "final_tip_height_mm": 78.6,
+    "final_free_of_table_and_cup": true,
+    "final_motion_0p5s_mm": 0.4,
+    "held_at_end": true
+   },
+   "error": null,
+   "sim_s": 35.12,
+   "perturbation": {
+    "dx": -0.00652,
+    "dy": 0.00403,
+    "lean_x": -0.02117,
+    "lean_y": -0.02748,
+    "diameter": 1.05995,
+    "length": 0.96701,
+    "mass": 0.90577
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1007:1",
+   "success": false,
+   "metrics": {
+    "max_tip_height_mm": 103.5,
+    "left_cup": true,
+    "ink_steps": 42,
+    "strokes": 2,
+    "best_stroke_path_mm": 2.8,
+    "best_stroke_extent_mm": 2.7,
+    "best_stroke_contact_fraction": 0.895,
+    "best_stroke_mean_lean_deg": 17.5,
+    "final_tip_height_mm": 3.8,
+    "final_free_of_table_and_cup": false,
+    "final_motion_0p5s_mm": 0.5,
+    "held_at_end": false
+   },
+   "error": null,
+   "sim_s": 35.08,
+   "perturbation": {
+    "dx": -0.01715,
+    "dy": 0.01264,
+    "lean_x": 0.01497,
+    "lean_y": -0.03177,
+    "diameter": 1.01776,
+    "length": 1.07907,
+    "mass": 0.95118
+   },
+   "sheet": null,
+   "api_usage": null
+  }
+ ]
+}

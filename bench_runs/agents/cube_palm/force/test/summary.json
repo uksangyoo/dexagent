@@ -1,0 +1,348 @@
+{
+ "task": "cube_palm",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/cube_palm/force/iter_2/policy.py",
+ "level": "force",
+ "label": "test/cube_palm/force/iter2",
+ "n": 6,
+ "successes": 5,
+ "wall_s": 1366.7,
+ "time": "2026-10-22T06:54:22",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 364.8,
+    "max_palm_up_while_lifted": 1.0,
+    "max_palm_force_lifted_N": 2.452,
+    "on_open_palm_s": 3.9,
+    "longest_on_open_palm_s": 3.32,
+    "final_offset_mm": 17.6,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 27.2,
+   "perturbation": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "dyaw": -0.0,
+    "edge": 1.0,
+    "mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 3,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 4,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 16,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 2,
+     "layer": "force"
+    },
+    "translate": {
+     "calls": 9,
+     "layer": "contacts"
+    },
+    "ungrip": {
+     "calls": 2,
+     "layer": "force"
+    },
+    "release": {
+     "calls": 2,
+     "layer": "contacts"
+    }
+   }
+  },
+  {
+   "case": "1001:0.5",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 363.0,
+    "max_palm_up_while_lifted": 1.0,
+    "max_palm_force_lifted_N": 2.014,
+    "on_open_palm_s": 3.74,
+    "longest_on_open_palm_s": 3.64,
+    "final_offset_mm": 6.4,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 26.24,
+   "perturbation": {
+    "dx": 0.00225,
+    "dy": -0.00969,
+    "dyaw": -0.13627,
+    "edge": 1.04295,
+    "mass": 0.7881
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 3,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 4,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 14,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 2,
+     "layer": "force"
+    },
+    "translate": {
+     "calls": 8,
+     "layer": "contacts"
+    },
+    "ungrip": {
+     "calls": 2,
+     "layer": "force"
+    },
+    "release": {
+     "calls": 2,
+     "layer": "contacts"
+    }
+   }
+  },
+  {
+   "case": "1002:0.5",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 364.6,
+    "max_palm_up_while_lifted": 1.0,
+    "max_palm_force_lifted_N": 1.906,
+    "on_open_palm_s": 3.86,
+    "longest_on_open_palm_s": 3.04,
+    "final_offset_mm": 10.1,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 26.66,
+   "perturbation": {
+    "dx": -0.00238,
+    "dy": -0.00286,
+    "dyaw": 0.10804,
+    "edge": 0.98674,
+    "mass": 0.91857
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 3,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 4,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 14,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 2,
+     "layer": "force"
+    },
+    "translate": {
+     "calls": 8,
+     "layer": "contacts"
+    },
+    "ungrip": {
+     "calls": 2,
+     "layer": "force"
+    },
+    "release": {
+     "calls": 2,
+     "layer": "contacts"
+    }
+   }
+  },
+  {
+   "case": "1005:1",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 368.2,
+    "max_palm_up_while_lifted": 1.0,
+    "max_palm_force_lifted_N": 5.88,
+    "on_open_palm_s": 2.6,
+    "longest_on_open_palm_s": 0.84,
+    "final_offset_mm": 12.1,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 26.48,
+   "perturbation": {
+    "dx": -0.01671,
+    "dy": 0.01722,
+    "dyaw": -0.18563,
+    "edge": 1.03325,
+    "mass": 1.33479
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 3,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 4,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 14,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 2,
+     "layer": "force"
+    },
+    "translate": {
+     "calls": 8,
+     "layer": "contacts"
+    },
+    "ungrip": {
+     "calls": 2,
+     "layer": "force"
+    },
+    "release": {
+     "calls": 2,
+     "layer": "contacts"
+    }
+   }
+  },
+  {
+   "case": "1006:1",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 375.0,
+    "max_palm_up_while_lifted": 0.984,
+    "max_palm_force_lifted_N": 0.0,
+    "on_open_palm_s": 0.0,
+    "longest_on_open_palm_s": 0.0,
+    "final_offset_mm": 209.2,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": "Traceback (most recent call last):\n  File \"/home/uyoo/Projects/dexagent/dexagent/bench.py\", line 108, in run_one\n    for _ in gen:\n             ^^^\n  File \"/home/uyoo/Projects/dexagent/bench_runs/agents/cube_palm/force/iter_2/policy.py\", line 180, in run\n    yield from api.carry(api.palm_for(tgt, pc, Rd), Rd, seconds=1.2)\n  File \"/home/uyoo/Projects/dexagent/dexagent/levels.py\", line 460, in call\n    return (yield from fn(self, *a, **k))\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/uyoo/Projects/dexagent/dexagent/levels.py\", line 410, in carry\n    yield from self._go(xyz, R, None, seconds, \"carry\")\n  File \"/home/uyoo/Projects/dexagent/dexagent/levels.py\", line 131, in _go\n    yield from self._c.move(xyz, R, hand, seconds)\n  File \"/home/uyoo/Projects/dexagent/dexagent/hand.py\", line 148, in move\n    self.arm = self.kin.solve_arm(self.xyz, self.R, self.arm, tol=0.004)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: arm IK position residual 4.2 mm for [0.44141245 0.25911319 1.08266604]\n",
+   "sim_s": 24.54,
+   "perturbation": {
+    "dx": -0.00652,
+    "dy": 0.00403,
+    "dyaw": -0.17643,
+    "edge": 0.93702,
+    "mass": 1.29977
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 3,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 4,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 12,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 2,
+     "layer": "force"
+    },
+    "translate": {
+     "calls": 9,
+     "layer": "contacts"
+    },
+    "ungrip": {
+     "calls": 1,
+     "layer": "force"
+    },
+    "release": {
+     "calls": 1,
+     "layer": "contacts"
+    }
+   }
+  },
+  {
+   "case": "1007:1",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 365.7,
+    "max_palm_up_while_lifted": 1.0,
+    "max_palm_force_lifted_N": 5.662,
+    "on_open_palm_s": 3.78,
+    "longest_on_open_palm_s": 3.24,
+    "final_offset_mm": 14.5,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 26.64,
+   "perturbation": {
+    "dx": -0.01715,
+    "dy": 0.01264,
+    "dyaw": 0.12473,
+    "edge": 0.92718,
+    "mass": 1.08882
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 3,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 4,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 14,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 2,
+     "layer": "force"
+    },
+    "translate": {
+     "calls": 9,
+     "layer": "contacts"
+    },
+    "ungrip": {
+     "calls": 2,
+     "layer": "force"
+    },
+    "release": {
+     "calls": 2,
+     "layer": "contacts"
+    }
+   }
+  }
+ ]
+}

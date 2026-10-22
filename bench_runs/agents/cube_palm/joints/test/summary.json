@@ -1,0 +1,174 @@
+{
+ "task": "cube_palm",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/cube_palm/joints/iter_5/policy.py",
+ "level": "joints",
+ "label": "test/cube_palm/joints/iter5",
+ "n": 6,
+ "successes": 5,
+ "wall_s": 3318.0,
+ "time": "2026-10-22T06:09:13",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 294.2,
+    "max_palm_up_while_lifted": 0.522,
+    "max_palm_force_lifted_N": 0.0,
+    "on_open_palm_s": 0.0,
+    "longest_on_open_palm_s": 0.0,
+    "final_offset_mm": 142.1,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 37.12,
+   "perturbation": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "dyaw": -0.0,
+    "edge": 1.0,
+    "mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1001:0.5",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 309.0,
+    "max_palm_up_while_lifted": 0.87,
+    "max_palm_force_lifted_N": 0.165,
+    "on_open_palm_s": 3.08,
+    "longest_on_open_palm_s": 1.44,
+    "final_offset_mm": 75.2,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 33.52,
+   "perturbation": {
+    "dx": 0.00225,
+    "dy": -0.00969,
+    "dyaw": -0.13627,
+    "edge": 1.04295,
+    "mass": 0.7881
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1002:0.5",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 309.8,
+    "max_palm_up_while_lifted": 0.87,
+    "max_palm_force_lifted_N": 0.25,
+    "on_open_palm_s": 3.18,
+    "longest_on_open_palm_s": 2.92,
+    "final_offset_mm": 29.8,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 33.42,
+   "perturbation": {
+    "dx": -0.00238,
+    "dy": -0.00286,
+    "dyaw": 0.10804,
+    "edge": 0.98674,
+    "mass": 0.91857
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1005:1",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 305.0,
+    "max_palm_up_while_lifted": 0.87,
+    "max_palm_force_lifted_N": 0.412,
+    "on_open_palm_s": 3.16,
+    "longest_on_open_palm_s": 2.94,
+    "final_offset_mm": 52.5,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 33.42,
+   "perturbation": {
+    "dx": -0.01671,
+    "dy": 0.01722,
+    "dyaw": -0.18563,
+    "edge": 1.03325,
+    "mass": 1.33479
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1006:1",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 300.7,
+    "max_palm_up_while_lifted": 0.87,
+    "max_palm_force_lifted_N": 0.391,
+    "on_open_palm_s": 3.06,
+    "longest_on_open_palm_s": 2.36,
+    "final_offset_mm": 65.8,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 33.42,
+   "perturbation": {
+    "dx": -0.00652,
+    "dy": 0.00403,
+    "dyaw": -0.17643,
+    "edge": 0.93702,
+    "mass": 1.29977
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1007:1",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 306.2,
+    "max_palm_up_while_lifted": 0.87,
+    "max_palm_force_lifted_N": 0.139,
+    "on_open_palm_s": 3.18,
+    "longest_on_open_palm_s": 3.04,
+    "final_offset_mm": 66.6,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 33.42,
+   "perturbation": {
+    "dx": -0.01715,
+    "dy": 0.01264,
+    "dyaw": 0.12473,
+    "edge": 0.92718,
+    "mass": 1.08882
+   },
+   "sheet": null,
+   "api_usage": null
+  }
+ ]
+}

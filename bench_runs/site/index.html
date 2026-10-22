@@ -1,0 +1,810 @@
+<meta charset="utf-8">
+<title>Agentic Hand Synergies</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Layout: a paper column (~66ch) with figures that break out to a wider measure; sections numbered like a conference paper. */
+:root{
+  --paper:#f6f8fa; --panel:#ffffff; --ink:#16202c; --ink-2:#4b5869; --ink-3:#7a8796; --rule:#d5dce4; --rule-2:#e7ecf1;
+  --accent:#1d5c99; --accent-soft:#e3edf7;
+  --lv-joints:#2a78d6; --lv-synergies:#eb6834; --lv-contacts:#1baf7a; --lv-layered:#eda100; --lv-force:#e87ba4; --lv-skills:#008300; --lv-expert:#52514e;
+  --good:#0ca30c; --bad:#d03b3b;
+  --q0:#eef3f8; --q1:#cde2fb; --q2:#9ec5f4; --q3:#5598e7; --q4:#256abf; --q5:#104281; --q-ink-dark:#ffffff;
+  --hand:#26313d; --hand-ghost:#a9b4c0; --obj:#7a55d6;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0f141a; --panel:#161d25; --ink:#e4e9ee; --ink-2:#a9b5c2; --ink-3:#7c8996; --rule:#2b3541; --rule-2:#202832;
+  --accent:#7fb2e8; --accent-soft:#1b2a3a;
+  --lv-joints:#3987e5; --lv-synergies:#d95926; --lv-contacts:#199e70; --lv-layered:#c98500; --lv-force:#d55181; --lv-skills:#2f9a2f; --lv-expert:#a3a29c;
+  --q0:#18212b; --q1:#123056; --q2:#184f95; --q3:#2a78d6; --q4:#5598e7; --q5:#9ec5f4; --q-ink-dark:#0b1520;
+  --hand:#d2dbe4; --hand-ghost:#56626f; --obj:#a38bf0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0f141a; --panel:#161d25; --ink:#e4e9ee; --ink-2:#a9b5c2; --ink-3:#7c8996; --rule:#2b3541; --rule-2:#202832;
+  --accent:#7fb2e8; --accent-soft:#1b2a3a;
+  --lv-joints:#3987e5; --lv-synergies:#d95926; --lv-contacts:#199e70; --lv-layered:#c98500; --lv-force:#d55181; --lv-skills:#2f9a2f; --lv-expert:#a3a29c;
+  --q0:#18212b; --q1:#123056; --q2:#184f95; --q3:#2a78d6; --q4:#5598e7; --q5:#9ec5f4; --q-ink-dark:#0b1520;
+  --hand:#d2dbe4; --hand-ghost:#56626f; --obj:#a38bf0; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+a{color:var(--accent);text-underline-offset:2px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.col{max-width:700px;margin-inline:auto}
+.wide{max-width:1120px;margin-inline:auto}
+header.paper{max-width:900px;margin:0 auto;padding-block:56px 28px;text-align:center}
+.venue{font-family:var(--f-display);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:12.5px;color:var(--ink-3)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,4.4vw,46px);line-height:1.08;margin:.45em 0 .35em;text-wrap:balance;letter-spacing:-.005em}
+h1 em{font-style:normal;color:var(--accent)}
+.byline{font-family:var(--f-display);font-weight:500;color:var(--ink-2);font-size:15px}
+.links{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.links a{font-family:var(--f-display);font-weight:600;font-size:14px;text-decoration:none;border:1px solid var(--rule);background:var(--panel);color:var(--ink);padding:6px 14px;border-radius:999px}
+.links a:hover{border-color:var(--accent);color:var(--accent)}
+h2{font-family:var(--f-display);font-weight:700;font-size:23px;letter-spacing:.01em;margin:2.2em 0 .5em;text-wrap:balance}
+h2 .num{color:var(--ink-3);margin-right:.45em;font-weight:600}
+h3{font-family:var(--f-display);font-weight:600;font-size:18px;margin:1.6em 0 .3em}
+h3 .num{color:var(--ink-3);margin-right:.35em}
+p{margin:.65em 0}
+.abstract{background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:18px 22px;font-size:16px}
+.abstract b.lead{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.1em;font-size:12.5px;color:var(--ink-3);display:block;margin-bottom:4px}
+.findings{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:22px 0 0}
+.finding{border-top:3px solid var(--ink);padding-top:10px;min-width:0}
+.finding .big{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1;font-variant-numeric:tabular-nums}
+.finding .lbl{font-size:14.5px;color:var(--ink-2);line-height:1.4;margin-top:6px}
+figure{margin:28px auto;padding:0}
+figure.wide{max-width:1120px}
+figcaption{font-size:14.5px;line-height:1.5;color:var(--ink-2);margin-top:10px;max-width:880px}
+figcaption b{font-family:var(--f-display);color:var(--ink);letter-spacing:.02em}
+.fig-panel{background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:16px}
+.mono{font-family:var(--f-mono);font-size:.88em}
+code{font-family:var(--f-mono);font-size:.86em;background:var(--accent-soft);padding:1px 5px;border-radius:3px}
+.eq{font-family:var(--f-body);font-style:italic;text-align:center;margin:12px 0;font-size:17px;overflow-x:auto}
+.eq .tag{font-style:normal;color:var(--ink-3);float:right;font-size:14px}
+ul.tight{margin:.4em 0;padding-left:1.2em}
+ul.tight li{margin:.25em 0}
+/* ladder */
+.ladder{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.rung{background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:12px 12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.rung .hdr{display:flex;align-items:baseline;gap:8px}
+.rung .sw{width:10px;height:10px;border-radius:2px;flex:none;transform:translateY(-1px)}
+.rung .name{font-family:var(--f-display);font-weight:700;font-size:16px;letter-spacing:.02em}
+.rung .sig{font-family:var(--f-mono);font-size:12px;color:var(--ink-2);margin-left:auto;white-space:nowrap}
+.rung svg{width:100%;height:auto;color:var(--ink)}
+.rung .what{font-size:14px;line-height:1.45;color:var(--ink-2)}
+.rung .stat{font-family:var(--f-display);font-size:13.5px;border-top:1px solid var(--rule-2);padding-top:6px;color:var(--ink)}
+.rung .stat b{font-variant-numeric:tabular-nums}
+/* tasks */
+.tasks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.task{background:var(--panel);border:1px solid var(--rule);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.task img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--rule-2)}
+.task .tb{padding:8px 10px 10px;display:flex;flex-direction:column;gap:4px}
+.task .tn{font-family:var(--f-mono);font-size:12.5px;font-weight:500}
+.task .tg{font-size:13px;line-height:1.4;color:var(--ink-2)}
+.task .tx{font-family:var(--f-display);font-size:12px;color:var(--ink-3);letter-spacing:.03em;margin-top:auto}
+/* severity */
+.sev{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.sev figure{margin:0}
+.sev img{width:100%;display:block;border-radius:4px;border:1px solid var(--rule)}
+.sev .cap{font-family:var(--f-mono);font-size:12px;color:var(--ink-2);margin-top:6px;line-height:1.45}
+.sev .cap b{font-family:var(--f-display);font-size:13.5px;color:var(--ink)}
+/* svg diagrams */
+svg.diagram{width:100%;height:auto;display:block;color:var(--ink)}
+.scroll-x{overflow-x:auto}
+/* charts */
+.chart{position:relative}
+.chart svg{width:100%;height:auto;display:block;color:var(--ink);overflow:visible}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-family:var(--f-display);font-size:13px;line-height:1.35;padding:6px 9px;border-radius:4px;white-space:nowrap;transform:translate(-50%,calc(-100% - 10px));opacity:0;transition:opacity .08s}
+.tip.on{opacity:1}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-family:var(--f-display);font-size:13.5px;color:var(--ink-2);margin:0 0 8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:3px;border-radius:2px;display:inline-block}
+.legend i.dot{width:9px;height:9px;border-radius:50%}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.two > *{min-width:0}
+.panel-title{font-family:var(--f-display);font-weight:600;font-size:14.5px;margin:0 0 6px}
+/* table */
+table.res{border-collapse:separate;border-spacing:0;width:100%;font-family:var(--f-display);font-size:13.5px;font-variant-numeric:tabular-nums}
+table.res th{font-weight:600;color:var(--ink-2);text-align:center;padding:6px 6px;border-bottom:1px solid var(--rule);white-space:nowrap}
+table.res th:first-child,table.res td:first-child{text-align:left;font-family:var(--f-mono);font-size:12.5px;font-weight:400;padding-right:12px;white-space:nowrap}
+table.res td{text-align:center;padding:3px;border-bottom:1px solid var(--rule-2)}
+table.res td .cell{border-radius:3px;padding:5px 4px;line-height:1.15}
+table.res td .cell .s{font-weight:700;font-size:14px;display:block}
+table.res td .cell .d{font-family:var(--f-mono);font-size:10.5px;opacity:.85;letter-spacing:.06em}
+table.res tr.grp td{font-family:var(--f-display);font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);text-align:left;padding-top:12px;border-bottom:none}
+table.res td.na{color:var(--ink-3)}
+table.res tfoot td{border-top:1px solid var(--rule);font-weight:600;padding-top:8px}
+table.plain{border-collapse:collapse;width:100%;font-size:14.5px}
+table.plain th,table.plain td{border-bottom:1px solid var(--rule-2);padding:7px 8px;text-align:left;vertical-align:top}
+table.plain th{font-family:var(--f-display);font-weight:600;color:var(--ink-2);border-bottom:1px solid var(--rule)}
+table.plain td.n{font-family:var(--f-display);font-variant-numeric:tabular-nums;white-space:nowrap}
+/* videos */
+.vtools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:4px 0 14px;font-family:var(--f-display);font-size:14px;color:var(--ink-2)}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:999px;overflow:hidden;background:var(--panel)}
+.seg button{font:inherit;font-weight:600;border:0;background:transparent;color:var(--ink-2);padding:6px 14px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.vgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.vcard{background:var(--panel);border:1px solid var(--rule);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.vcard video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+.vcard .vb{padding:9px 12px 12px;display:flex;flex-direction:column;gap:4px}
+.vcard .vt{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.vcard .vn{font-family:var(--f-mono);font-size:13px;font-weight:500}
+.vcard .vs{font-family:var(--f-display);font-weight:700;font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.vcard .vsrc{display:flex;align-items:center;gap:6px;font-family:var(--f-display);font-size:13px;color:var(--ink-2)}
+.vcard .vsrc i{width:9px;height:9px;border-radius:2px;display:inline-block;flex:none}
+.vcard .vd{font-size:13.5px;line-height:1.45;color:var(--ink-2)}
+.pill{font-family:var(--f-display);font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:999px;border:1px solid currentColor}
+.pill.ok{color:var(--good)} .pill.no{color:var(--bad)}
+.note{font-size:14.5px;color:var(--ink-2);border-left:3px solid var(--rule);padding-left:12px}
+footer{max-width:700px;margin:48px auto 0;font-size:13.5px;color:var(--ink-3);border-top:1px solid var(--rule);padding-top:14px}
+@media (max-width:900px){.ladder{grid-template-columns:repeat(2,minmax(0,1fr))}.tasks{grid-template-columns:repeat(2,minmax(0,1fr))}.vgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.ladder,.vgrid,.two{grid-template-columns:minmax(0,1fr)}.sev{grid-template-columns:minmax(0,1fr)}body{font-size:16px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="paper">
+  <div class="venue">Study report · dexagent · 21–22 October 2026</div>
+  <h1>What is a <em>synergy</em> for a coding agent?<br>Finger-coordination abstractions for agent-written dexterous policies</h1>
+  <div class="byline">67 Claude agents · UR5e + Tesollo DG5F-S (20 DOF) · 12 tasks · Newton / MuJoCo-Warp</div>
+  <nav class="links" aria-label="Sections">
+    <a href="#method">Method</a><a href="#results">Results</a><a href="#videos">Videos</a><a href="#limits">Limitations</a>
+  </nav>
+</header>
+
+<main>
+<section class="col" aria-labelledby="abs">
+  <div class="abstract" id="abs">
+    <b class="lead">Abstract</b>
+    In reinforcement learning, a posture-synergy prior (as in EigenDexplore) shrinks a dexterous hand's search space. We ask what plays that role when the controller is <i>code written by an agent</i>. We gave coding agents one of six finger-command interfaces and a budget of four scored simulations, then measured their policies on held-out initial conditions across 12 manipulation tasks:
+    <ul class="tight">
+      <li>raw joints</li>
+      <li>fingertip IK</li>
+      <li>PCA postural synergies</li>
+      <li>object-centric contact primitives</li>
+      <li>all of these at once</li>
+      <li>all of these plus a grip-force servo</li>
+    </ul>
+    Agents converged on the same coordination layer whatever they were given: <b>per-finger task-space (fingertip) control</b> plus a reachability query and self-written feedback loops.
+    <ul class="tight">
+      <li>Joint-level and synergy-level agents rebuilt it themselves (10/12 each).</li>
+      <li>Agents offered every layer used it in 23 of 24 runs and never called synergies.</li>
+      <li>A force-servo layer, added because agents asked for it, cut iterations-to-solve on the solvable tasks from 12–15 to 6.</li>
+    </ul>
+    Held-out success was set mostly by the task, not the interface. The hard tasks failed on grasp shape: an unstable two-pad pinch on thin objects. Shared memory across agents opened two of them that no single agent could solve.
+  </div>
+  <div class="findings" role="list">
+    <div class="finding" role="listitem"><div class="big">0 / 24</div><div class="lbl">agents with every layer available that ever called the synergy layer</div></div>
+    <div class="finding" role="listitem"><div class="big">20 / 24</div><div class="lbl">joint- and synergy-level agents that built their own fingertip layer first</div></div>
+    <div class="finding" role="listitem"><div class="big">6 vs 12–15</div><div class="lbl">total iterations to first 3/3 on five solvable tasks: force servo vs. the other levels</div></div>
+    <div class="finding" role="listitem"><div class="big">0 → 6 / 6</div><div class="lbl">pen_finger_roll held-out success, single agents vs. an agent reading all prior runs</div></div>
+  </div>
+</section>
+
+<figure class="wide" id="fig1">
+  <div class="ladder" id="ladder"></div>
+  <figcaption><b>Fig. 1. The six finger-command interfaces, drawn on one thumb–index chain</b> (the other three fingers are drawn faint). Each interface gives the agent the same observations and the same arm control; only the finger command differs. The bottom line of each card reports what agents actually did with it.</figcaption>
+</figure>
+
+<section class="col">
+  <h2><span class="num">I</span>Introduction</h2>
+  <p>EigenDexplore-style RL keeps the full joint action space but adds a prior built from postural synergies, the few principal components that explain most human or expert grasping postures. The prior turns undirected exploration into exploration along meaningful whole-hand motions.</p>
+  <p>A coding agent explores differently:
+    <ul class="tight">
+      <li>It writes a program, runs it a few times, reads metrics and a contact sheet, and edits the program.</li>
+      <li>Its "samples" are whole iterations, each costing minutes.</li>
+      <li>Its prior is whatever vocabulary the interface hands it.</li>
+    </ul>
+  The question is which vocabulary, at which level of finger coordination, lets an agent reach a robust policy in the fewest iterations. We also ask how success depends on the iteration budget, on initial-condition variation, and on memory shared between agents.</p>
+  <p><b>Contributions.</b>
+  <ul class="tight">
+    <li>A benchmark of 12 in-hand and prehensile tasks with seeded, severity-scaled initial-condition variation.</li>
+    <li>Six interface levels with identical observations.</li>
+    <li>A budgeted agent protocol with held-out evaluation.</li>
+    <li>A study of 67 agent runs, with an audit of what each agent built and how it failed.</li>
+    <li>Evidence that the useful agentic prior is task-space fingertip control plus feedback, not a posture basis.</li>
+  </ul></p>
+
+  <h2 id="setup"><span class="num">II</span>Platform and tasks</h2>
+  <p><b>Robot.</b> A UR5e arm with a 20-DOF Tesollo DG5F-S right hand (5 fingers × 4 joints) is simulated in RoboSimStudio on Newton collision with the MuJoCo-Warp solver.
+  <ul class="tight">
+    <li><b>Timing:</b> physics at 1 kHz, control at 50 Hz.</li>
+    <li><b>Fingers:</b> weak position servos (kp 3 N·m/rad, |τ| ≤ 0.65 N·m), so they are compliant.</li>
+    <li><b>Arm:</b> follows commanded palm poses through IK.</li>
+    <li><b>Observations:</b> exact simulator state, the same at every level: object poses, measured palm pose, the five fingertip pad centres, and per-finger contact-force magnitudes against a named object.</li>
+  </ul></p>
+  <p><b>Tasks.</b> Twelve tasks (Fig. 2) range from a fingertip pinch-and-turn to in-hand pen re-orientation and Baoding balls. Each task has a scripted expert routine with privileged state, used only as a reference score. Agents could not read it.</p>
+</section>
+
+<figure class="wide" id="fig2">
+  <div class="tasks" id="tasks"></div>
+  <figcaption><b>Fig. 2. The 12 tasks.</b> Frames are mid-episode from the best policy found for each task (Section V). The bottom line gives each task's severity-1 variation and the scripted expert's held-out success out of 10.</figcaption>
+</figure>
+
+<section class="col">
+  <h3><span class="num">A.</span>Initial-condition variation</h3>
+  <p>Every case is a pair <span class="mono">seed:severity</span>. Each task's <span class="mono">scene.py</span> draws its perturbations uniformly within ±(half-range × severity), consuming one draw per parameter whatever the severity. Severity 0 is the nominal scene, and severity 1 is the full range the task documents. The parameters are position, yaw, size, mass, friction and articulation friction.</p>
+  <ul class="tight">
+    <li><b>Development cases:</b> each iteration of an agent scores 3 fresh cases, at severities 0, 0.5 and 1. Their seeds come from a hash of task, level and iteration, so an agent can never re-run a case to cherry-pick.</li>
+    <li><b>Held-out cases:</b> 6 fixed cases, <span class="mono">1000:0, 1001:0.5, 1002:0.5, 1005:1, 1006:1, 1007:1</span>, disjoint from every development seed.</li>
+  </ul>
+</section>
+
+<figure class="wide" id="fig3">
+  <div class="sev">
+    <figure><img src="media/sev_1000_0.jpg" alt="Cube at its nominal pose" loading="lazy"><div class="cap"><b>severity 0</b> · seed 1000<br>Δx 0 · Δy 0 · Δyaw 0° · edge ×1.00 · mass ×1.00</div></figure>
+    <figure><img src="media/sev_1001_0.5.jpg" alt="Cube at a severity 0.5 perturbation" loading="lazy"><div class="cap"><b>severity 0.5</b> · seed 1001<br>Δx +2.8 mm · Δy −12.1 mm · Δyaw −9.4° · edge ×1.05 · mass ×0.79</div></figure>
+    <figure><img src="media/sev_1005_1.jpg" alt="Cube at a severity 1 perturbation" loading="lazy"><div class="cap"><b>severity 1</b> · seed 1005<br>Δx −20.9 mm · Δy +21.5 mm · Δyaw −12.8° · edge ×1.04 · mass ×1.33</div></figure>
+  </div>
+  <figcaption><b>Fig. 3. Three held-out starts of cube_pinch</b>, as rendered by the simulator before any motion. At severity 1 the cube may sit anywhere in ±25 mm, ±30° yaw, ±15 % edge length and ±50 % mass. Every filmed result in Section V uses the hardest of these cases, seed 1005 at severity 1.</figcaption>
+</figure>
+
+<section class="col" id="method">
+  <h2><span class="num">III</span>Method</h2>
+  <h3><span class="num">A.</span>Finger-command interfaces</h3>
+  <p>All levels share the observation API and the arm (<code>palm_pose</code>, <code>carry</code>, <code>hold</code>). A policy is a Python generator <code>run(api)</code> that yields once per 20 ms step, using numpy and scipy only. The levels differ only in the finger command:</p>
+  <ul class="tight">
+    <li><b>Joints.</b> The agent sets 20 joint targets, <i>q</i> ∈ ℝ<sup>20</sup>, interpolated in joint space. There is no coordination.</li>
+    <li><b>Fingertips.</b> The agent sets palm-frame pad positions <i>p<sub>i</sub></i> ∈ ℝ<sup>3</sup> per finger, solved by per-finger IK, with optional straight-line paths and distal-link directions. A query <code>reach(i, p)</code> returns the IK residual without moving.</li>
+    <li><b>Synergies.</b> The agent sets six coefficients <i>s</i>. Targets are <i>q</i> = <i>μ</i> + <i>B s</i>, clipped to joint limits. <i>B</i> is a leave-one-task-out PCA of expert finger postures: the task being solved never contributes to its own basis. Six components explain about 90 % of the variance. <code>describe()</code> reports how each pad moves at ±1 sd.</li>
+    <li><b>Contacts.</b> Object-centric primitives take points in the object's own frame:
+      <ul class="tight">
+        <li><code>approach</code> and <code>grasp</code> bring pads to points, with a squeeze depth;</li>
+        <li><code>squeeze</code> presses held pads further in;</li>
+        <li><code>rotate</code> and <code>translate</code> move held pads rigidly as if fixed to the object;</li>
+        <li><code>release</code>, <code>relocate</code> and <code>tuck</code> manage the other fingers.</li>
+      </ul>
+      There is no direct finger move.</li>
+    <li><b>Layered.</b> All of the above at once, with every call counted by layer. This is the agentic analogue of EigenDexplore's "full action space plus a synergy prior": nothing is taken away, and the higher layers are offered, not imposed.</li>
+    <li><b>Force</b> (phase 2). Layered plus a closed-loop grip servo. <code>grip(obj, {finger: F*})</code> moves each named pad along its closing direction <i>n<sub>i</sub></i> every step. By default <i>n<sub>i</sub></i> points at the centroid of the other gripped pads, which is the pinch line. The servo keeps running through every later motion until <code>ungrip()</code>.</li>
+  </ul>
+  <div class="eq">d<sub>i</sub> ← clip( d<sub>i</sub> + k ( F<sub>i</sub>* − F<sub>i</sub> ) Δt , −6 mm, 15 mm ),&nbsp;&nbsp; p<sub>i</sub><sup>cmd</sup> = p<sub>i</sub><sup>nom</sup> + d<sub>i</sub> n<sub>i</sub>,&nbsp;&nbsp; k = 8 mm N<sup>−1</sup>s<sup>−1</sup> <span class="tag">(1)</span></div>
+  <p>Here <i>F<sub>i</sub></i> is the measured contact-force magnitude between finger <i>i</i> and the object. The fingers are about 1.2 N/mm stiff at the pad, so this gain gives a time constant of about 0.1 s.</p>
+
+  <h3><span class="num">B.</span>Agent protocol</h3>
+  <p>Each run gives one Claude agent one task and one level (Fig. 4). The agent receives:</p>
+  <ul class="tight">
+    <li>a brief;</li>
+    <li>the task's <span class="mono">TASK.md</span>: goal, objects, variation ranges and the exact success rule;</li>
+    <li>the level's API documentation;</li>
+    <li>the scorer <span class="mono">check.py</span>.</li>
+  </ul>
+  <p>It may not read the expert routines, the scene source, the docs or other agents' work (except in phase 3), and may not run offline kinematics. Every simulation goes through <span class="mono">iterate</span>, which:</p>
+  <ul class="tight">
+    <li>snapshots <span class="mono">policy.py</span>;</li>
+    <li>scores it on the three fresh development cases;</li>
+    <li>prints the metrics and the perturbation drawn, the last 60 lines of the api log, and optionally a 12-frame contact sheet of one case.</li>
+  </ul>
+  <p>Only completed iterations count against the budget of 4. The stop rule is 3/3 on two consecutive iterations. At the end the agent names its FINAL iteration, and that policy alone runs on the six held-out cases.</p>
+</section>
+
+<figure class="wide" id="fig4">
+  <div class="fig-panel scroll-x"><svg class="diagram" id="pipeline" viewBox="0 0 1100 470" role="img" aria-label="Agent loop: the agent reads the brief and writes policy.py, iterate scores it on three fresh starts at severities 0, 0.5 and 1 and returns metrics, a contact sheet and the api log; after four counted iterations the FINAL policy runs once on six fixed held-out starts."></svg></div>
+  <figcaption><b>Fig. 4. One agent run.</b> The loop on the left is the agent's only access to physics. Each pass consumes one of four budgeted iterations (dots) and returns three kinds of evidence: numeric metrics per case, a 12-frame contact sheet (the real sheet from pen_finger_roll phase 3, iteration 1), and the policy's own api log. The agent writes what it learned to <span class="mono">NOTES.md</span>, which phase 3 agents could read. The held-out evaluation on the right is run by us, once, on the FINAL policy.</figcaption>
+</figure>
+
+<section class="col">
+  <h3><span class="num">C.</span>Three phases</h3>
+  <p>The study ran in three phases (Fig. 5).</p>
+  <ul class="tight">
+    <li><b>Phase 1:</b> joints, synergies, contacts and layered on all 12 tasks, plus fingertips on cube_pinch. That is 49 runs.</li>
+    <li><b>Phase 2:</b> the force level on all 12 tasks, 12 fresh runs under an identical protocol. We added it because phase-1 agents repeatedly reported that they lacked force-regulated contact.</li>
+    <li><b>Phase 3:</b> six fresh force-level agents on the six hardest tasks, with 6 iterations each. They were allowed to read every earlier run's notes, policies and per-case logs, plus a one-page summary of cross-task lessons. This probes the "skill update" axis: accumulated, reusable knowledge across agents rather than more iterations within one agent.</li>
+  </ul>
+</section>
+
+<figure class="wide" id="fig5">
+  <div class="fig-panel scroll-x"><svg class="diagram" id="phases" viewBox="0 0 1100 250" role="img" aria-label="Three phases: phase 1 with 49 runs at four levels produced missing-capability reports that led to the force level in phase 2 with 12 runs; notes and helpers from all 61 runs fed phase 3, six runs with memory."></svg></div>
+  <figcaption><b>Fig. 5. How each phase fed the next.</b> The force servo exists because phase-1 agents asked for it. Phase-3 agents inherited the notes and helper functions of all 61 earlier runs. Counts on the arrows are numbers of agents.</figcaption>
+</figure>
+
+<section class="col" id="results">
+  <h2><span class="num">IV</span>Results</h2>
+  <h3><span class="num">A.</span>Success against iteration budget</h3>
+  <p>Fig. 6 shows mean development success per iteration, over the 12 tasks. A run that met the stop rule early keeps its last score.</p>
+  <ul class="tight">
+    <li>Higher-level interfaces start higher: the force level scores 0.33 at iteration 1, against 0.08 for joints.</li>
+    <li>By iteration 4 every level sits near 0.4.</li>
+  </ul>
+  <p>Given time, a raw-joint agent gets about as far. It pays for that with iterations, which it spends building the coordination layer it lacks (Section IV-C).</p>
+</section>
+
+<figure class="wide" id="fig6">
+  <div class="two">
+    <div class="fig-panel"><div class="panel-title">Mean development success per iteration</div><div class="legend" id="lg6"></div><div class="chart" id="c6"></div></div>
+    <div class="fig-panel"><div class="panel-title">Iterations until the first 3/3 (five solvable tasks)</div><div class="legend"><span><i class="dot" style="background:var(--ink-2)"></i>one task (5 = never reached)</span><span><i style="background:var(--ink)"></i>total</span></div><div class="chart" id="c6b"></div></div>
+  </div>
+  <figcaption><b>Fig. 6. Budget.</b> Left: each point is the mean, over 12 tasks, of success out of 3 fresh development cases. Right: iterations each level needed to first pass 3/3 on cube_pinch, card_pickup, cap_twist, cube_palm and pen_table_slide. Dots are tasks; the bar is the sum, with a task never solved counted as 5. Force-level agents solved four of the five on their first iteration. Caveat: force agents ran fresh, while many phase-1 runs were paused once and resumed by a second agent.</figcaption>
+</figure>
+
+<section class="col">
+  <h3><span class="num">B.</span>Held-out success and initial-condition variation</h3>
+  <p>Table I gives every run's held-out score.</p>
+  <ul class="tight">
+    <li><b>Five tasks are solved by nearly every level:</b> cube_pinch, card_pickup, cap_twist, pen_table_slide and cube_palm.</li>
+    <li><b>Five fail at every level in phases 1–2:</b> baoding, pen_finger_roll, pen_pickup_pivot, pen_writing_grasp and scissors.</li>
+  </ul>
+  <p>Pooled over tasks, the levels sit at 0.35–0.49 held-out success. That spread is within noise at six cases per run, and the outcome is dominated by the task.</p>
+  <p>Fig. 7 splits held-out success by severity. It is flat or even rising with severity, because the severity-1 cases are half the held-out set. When a policy fails, it fails at every severity: the failures are structural, not a matter of robustness. The one exception confirms the rule:</p>
+  <ul class="tight">
+    <li>cube_palm's contact-primitive policies failed on larger-than-nominal cubes, because the primitives ignore object size.</li>
+    <li>The force servo removed that sensitivity: 3/3 at every severity and 5/6 held out.</li>
+  </ul>
+</section>
+
+<figure class="wide" id="tab1">
+  <div class="fig-panel scroll-x"><table class="res" id="restable"></table></div>
+  <figcaption><b>Table I. Held-out success per task and level</b> (out of 6). The digits under each score are development successes per iteration, out of 3. Shading encodes the held-out fraction. Expert is the scripted routine with privileged state, scored on 10 held-out cases. Phase 3 (P3) is force plus memory of all earlier runs, with 6 iterations.</figcaption>
+</figure>
+
+<figure class="wide" id="fig7">
+  <div class="fig-panel"><div class="panel-title">Held-out success by severity, pooled over 12 tasks</div><div class="legend" id="lg7"></div><div class="chart" id="c7"></div></div>
+  <figcaption><b>Fig. 7. Initial-condition severity.</b> The held-out set has 1 nominal, 2 severity-0.5 and 3 severity-1 cases per run, so the points rest on 12, 24 and 36 cases per level. No level degrades with severity: once a strategy works, it tolerates the variation.</figcaption>
+</figure>
+
+<section class="col">
+  <h3><span class="num">C.</span>What agents built: the agentic synergy</h3>
+  <p>We audited every run's notes and code.</p>
+  <ul class="tight">
+    <li><b>Joints level:</b> 10 of 12 agents first built a fingertip layer inside <span class="mono">policy.py</span>. Seven used finite-difference Jacobian IK on measured pads with Broyden updates; three fitted a multilinear or product-of-exponentials forward model.</li>
+    <li><b>Synergies level:</b> 10 of 12 built a synergy-to-fingertip model and solved for coefficients. 11 of 12 reported coupling, an unreachable thumb, or a nonlinear map beyond about 1 sd.</li>
+    <li><b>Contacts level:</b> 5 of 12 rebuilt "put this pad here" out of <code>approach</code>.</li>
+    <li><b>Layered and force levels:</b> agents used fingertips in 23 of 24 runs and synergies in none (Fig. 8).</li>
+  </ul>
+  <p>Synergies helped only where a single whole-hand scalar fit the task, such as a grasp-to-open dial for cube_palm or a flexion sweep for cap_twist.</p>
+  <p>The useful prior for an agent is therefore a <i>representation</i>, not a reduction:</p>
+  <ul class="tight">
+    <li>per-finger Cartesian targets in the palm or object frame;</li>
+    <li>a cheap feasibility query;</li>
+    <li>object-frame primitives for whole-grasp motion;</li>
+    <li>closed-loop wrappers the agents write themselves, such as force bands, stop-on-contact moves and scorer replicas.</li>
+  </ul>
+  <p>Those wrappers accumulate across iterations and, in phase 3, across agents. They are the skills.</p>
+</section>
+
+<figure class="wide" id="fig8">
+  <div class="two">
+    <div class="fig-panel"><div class="panel-title">Layers used by the FINAL policy when every layer was offered</div><div class="legend" id="lg8"></div><div class="chart" id="c8"></div></div>
+    <div class="fig-panel"><div class="panel-title">Agents that built their own fingertip layer before solving the task</div><div class="chart" id="c8b"></div></div>
+  </div>
+  <figcaption><b>Fig. 8. Usage and self-built layers.</b> Left: share of layered and force agents whose FINAL policy issued at least one command through each layer, counted from logged api usage on the held-out set. Right: share of agents at each level whose policy contains a self-built fingertip IK or forward model. For contacts, the right panel counts a "place pad at point" helper built from <code>approach</code>.</figcaption>
+</figure>
+
+<section class="col">
+  <h3><span class="num">D.</span>Why hard tasks fail</h3>
+  <p>The audit puts the 49 phase-1 runs into failure categories (Fig. 9, left). Sixteen ended in a working policy. The largest failure category, also sixteen runs and fifteen of them pen tasks, is a <b>physical grip limit</b>:</p>
+  <ul class="tight">
+    <li>A thumb–index pinch on a 7.5 mm pen acts as a hinge about the pad line, and the pen squirts sideways under shear or tilt.</li>
+    <li>Force control fixes the force but not this, because the destabilising couple grows with grip force.</li>
+    <li>The one pen task solved by many levels was solved with a third contact: a V-cage of thumb against index and middle, or a bore wall as a brace.</li>
+  </ul>
+  <p>The second recurring limit is geometry the API does not expose:</p>
+  <ul class="tight">
+    <li><code>reach</code> checks pad centres only, so planned grasps collide through finger links.</li>
+    <li>The fingertips are thicker than the pen, so contacts sit above its equator.</li>
+  </ul>
+  <p>The capabilities agents most often said were missing (Fig. 9, right) are a map of the next interface layers.</p>
+</section>
+
+<figure class="wide" id="fig9">
+  <div class="two">
+    <div class="fig-panel"><div class="panel-title">Outcome category, 49 phase-1 runs</div><div class="chart" id="c9"></div></div>
+    <div class="fig-panel"><div class="panel-title">Capabilities agents said were missing (number of agents)</div><div class="chart" id="c9b"></div></div>
+  </div>
+  <figcaption><b>Fig. 9. Failure audit.</b> Left: primary outcome category of each phase-1 run, from its notes and logs. Right: missing capabilities reported in NOTES.md across phase 1. "Force-controlled squeeze" was reported before the force level existed and motivated phase 2.</figcaption>
+</figure>
+
+<section class="col">
+  <h3><span class="num">E.</span>Phase 3: memory across agents</h3>
+  <p>Phase-3 agents were the first to read other agents' work. They copied whole phase sequences, monitors and mock APIs, and turned earlier failure diagnoses into designs (Table II).</p>
+  <ul class="tight">
+    <li><b>pen_finger_roll</b> went from 0/6 for every earlier agent to <b>6/6</b>. An earlier note had suggested that the swing axis should be the pinch's free hinge. Building on that, the new agent held the pen between the index and middle fingers, squeezed by their abduction joints under the grip servo, and rotated the palm about the knuckle axis while the fingers counter-rotated.</li>
+    <li><b>pen_gravity_pivot</b> reached 4/6. It took the layered agent's pivot nearly verbatim and added a servo on the hinge pinch plus a third finger closed into the measured gap.</li>
+  </ul>
+  <p>Within one agent, iterations past about 3 bought little (Fig. 6). Across agents, written notes plus reusable helpers worked like skill updates.</p>
+</section>
+
+<figure class="wide" id="tab2">
+  <div class="fig-panel scroll-x"><table class="plain" id="p3table"></table></div>
+  <figcaption><b>Table II. Phase 3 results.</b> Fresh force-level agents with read access to all 61 earlier runs and 6 iterations each. "Best before" is the best held-out score of any phase-1 or phase-2 agent on that task. Not a controlled comparison: more budget, more information, and an idle GPU (about 3 min per iteration instead of 20).</figcaption>
+</figure>
+
+<section class="wide" id="videos">
+  <div class="col" style="padding:0">
+    <h2><span class="num">V</span>Result videos</h2>
+    <p>Each video is the best policy found for its task, re-run on held-out seed 1005 at severity 1, the hardest starts in the set, and filmed in simulation in real time. Every filmed policy passed that case again. For the four tasks no agent solved on held-out cases we show the scripted expert, labelled as such. Baoding was solved by nothing, so we show the best agent attempt. Videos start muted; use the controls to scrub.</p>
+  </div>
+  <div class="vtools"><span>Camera</span><div class="seg" role="group" aria-label="Camera"><button type="button" id="cam-overview" aria-pressed="true">Overview</button><button type="button" id="cam-reference" aria-pressed="false">Close view</button></div><span id="vcount"></span></div>
+  <div class="vgrid" id="vgrid"></div>
+  <figure class="wide" style="margin-top:28px">
+    <div class="two">
+      <div class="vcard"><video src="media/pen_finger_roll_fail_overview.mp4" poster="media/pen_finger_roll_fail_overview.jpg" controls muted loop playsinline preload="none"></video><div class="vb"><div class="vt"><span class="vn">pen_finger_roll · phase 1, layered</span><span class="pill no">fails</span></div><div class="vd">The two-pad thumb–index pinch rolls the pen but loses it during the swing. The pen squirts out of the pinch along the free axis.</div></div></div>
+      <div class="vcard"><video src="media/pen_finger_roll_overview.mp4" poster="media/pen_finger_roll_overview.jpg" controls muted loop playsinline preload="none"></video><div class="vb"><div class="vt"><span class="vn">pen_finger_roll · phase 3, force + memory</span><span class="pill ok">6/6</span></div><div class="vd">The pen is held between the index and middle fingers by abduction under the grip servo, and the swing happens about the knuckles. Same seed and severity as the left video.</div></div></div>
+    </div>
+    <figcaption><b>Fig. 10. Same task, same start, before and after memory.</b> The failure on the left is the "two-pad pinch" category from Fig. 9. The phase-3 agent's fix changes the grasp, not the force.</figcaption>
+  </figure>
+</section>
+
+<section class="col" id="limits">
+  <h2><span class="num">VI</span>Limitations and protocol deviations</h2>
+  <ul class="tight">
+    <li><b>Small numbers.</b> 4 iterations and 6 held-out cases per run make differences of one or two cases noise. The clear signals are the speed and usage patterns, not pooled success.</li>
+    <li><b>Changes mid-study.</b> The study was paused once. Many phase-1 runs were finished by a second agent reading the first agent's notes. The budget was cut from 8 to 4 iterations and the held-out set from 10 to 6 cases partway through. The fingertips level ran only on cube_pinch.</li>
+    <li><b>Rule deviations found in the audit:</b>
+      <ul class="tight">
+        <li>18 agents read partial results of killed, uncounted iterations;</li>
+        <li>2 ran iterations concurrently;</li>
+        <li>6 fitted models offline from logged api data;</li>
+        <li>3 read the hand's model or mesh files for link geometry.</li>
+      </ul>
+      No policy used private API or forbidden imports.</li>
+    <li><b>Force-servo defects reported by agents:</b>
+      <ul class="tight">
+        <li>it silently saturates at its travel limit;</li>
+        <li>directions given in the object frame rotate with the object;</li>
+        <li>it regulates only force magnitude, so a stray contact can satisfy it;</li>
+        <li><code>grip()</code> reports "settled" at 0 N for targets at or below 0.3 N;</li>
+        <li>it does not resist twisting about the pinch line.</li>
+      </ul></li>
+    <li><b>Simulation only.</b> Contact, friction and fingertip geometry are simulator approximations. Several failure modes, such as pen squirt and link collisions, depend on them.</li>
+  </ul>
+  <p class="note">Artifacts in the repository:
+    <ul class="tight">
+      <li><span class="mono">bench_runs/REPORT.md</span>: the full write-up;</li>
+      <li><span class="mono">bench_runs/RESULTS.md</span>: generated tables;</li>
+      <li><span class="mono">bench_runs/QUALITATIVE.md</span>: the per-run audit;</li>
+      <li><span class="mono">bench_runs/agents/&lt;task&gt;/&lt;level&gt;/</span>: every agent's notes, policies and per-case logs;</li>
+      <li><span class="mono">dexagent/levels.py</span>: all six interfaces.</li>
+    </ul></p>
+  <p>Related: <a href="https://github.com/hgupt3/eigendexplore">EigenDexplore</a> (synergy-prior exploration for dexterous RL).</p>
+</section>
+</main>
+
+<footer>Generated from the study's result files on 22 October 2026. Agent policies are Claude-written Python; simulation is RoboSimStudio with Newton and MuJoCo-Warp, rendered with OVRTX.</footer>
+
+<script>
+const DATA = {"cells":{"baoding/contacts":{"dev":[0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"2"},"baoding/force":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"4"},"baoding/joints":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"6"},"baoding/layered":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"4"},"baoding/skills":{"dev":[0,0,0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"2"},"baoding/synergies":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"2"},"cap_twist/contacts":{"dev":[0,0,0,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"5"},"cap_twist/force":{"dev":[3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"2"},"cap_twist/joints":{"dev":[0,0,3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"4"},"cap_twist/layered":{"dev":[0,3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"4"},"cap_twist/synergies":{"dev":[1,3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"4"},"card_pickup/contacts":{"dev":[2,3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"3"},"card_pickup/force":{"dev":[3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"2"},"card_pickup/joints":{"dev":[0,3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"3"},"card_pickup/layered":{"dev":[0,3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"4"},"card_pickup/synergies":{"dev":[0,3,3],"test":[5,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[2,3]},"final":"3"},"cube_palm/contacts":{"dev":[1,1,2,1],"test":[2,6],"test_sev":{"0":[0,1],"0.5":[1,2],"1":[1,3]},"final":"5"},"cube_palm/force":{"dev":[3,3],"test":[5,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[2,3]},"final":"2"},"cube_palm/joints":{"dev":[0,0,2,1],"test":[5,6],"test_sev":{"0":[0,1],"0.5":[2,2],"1":[3,3]},"final":"5"},"cube_palm/layered":{"dev":[1,2,2,1],"test":[4,6],"test_sev":{"0":[1,1],"0.5":[1,2],"1":[2,3]},"final":"4"},"cube_palm/synergies":{"dev":[1,0,3,3],"test":[5,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[2,3]},"final":"5"},"cube_pinch/contacts":{"dev":[3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"2"},"cube_pinch/fingertips":{"dev":[3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"1"},"cube_pinch/force":{"dev":[3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"2"},"cube_pinch/joints":{"dev":[3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"2"},"cube_pinch/layered":{"dev":[3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"2"},"cube_pinch/synergies":{"dev":[3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"1"},"cube_reorient/contacts":{"dev":[0,0,0,1],"test":[1,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[1,3]},"final":"5"},"cube_reorient/force":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"4"},"cube_reorient/joints":{"dev":[0,1,3,2],"test":[5,6],"test_sev":{"0":[1,1],"0.5":[1,2],"1":[3,3]},"final":"5"},"cube_reorient/layered":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"2"},"cube_reorient/synergies":{"dev":[0,0,0,1],"test":[1,6],"test_sev":{"0":[1,1],"0.5":[0,2],"1":[0,3]},"final":"5"},"pen_finger_roll/contacts":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"5"},"pen_finger_roll/force":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"2"},"pen_finger_roll/joints":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"4"},"pen_finger_roll/layered":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"5"},"pen_finger_roll/skills":{"dev":[3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"2"},"pen_finger_roll/synergies":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"4"},"pen_gravity_pivot/contacts":{"dev":[0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"4"},"pen_gravity_pivot/force":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"4"},"pen_gravity_pivot/joints":{"dev":[0,0,0,0],"test":[1,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[1,3]},"final":"4"},"pen_gravity_pivot/layered":{"dev":[0,2,0,0],"test":[3,6],"test_sev":{"0":[0,1],"0.5":[1,2],"1":[2,3]},"final":"3"},"pen_gravity_pivot/skills":{"dev":[0,0,3,2,2,3],"test":[4,6],"test_sev":{"0":[1,1],"0.5":[1,2],"1":[2,3]},"final":"6"},"pen_gravity_pivot/synergies":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"7"},"pen_pickup_pivot/contacts":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"2"},"pen_pickup_pivot/force":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"4"},"pen_pickup_pivot/joints":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"3"},"pen_pickup_pivot/layered":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"5"},"pen_pickup_pivot/skills":{"dev":[0,0,0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"4"},"pen_pickup_pivot/synergies":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"6"},"pen_table_slide/contacts":{"dev":[0,3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"4"},"pen_table_slide/force":{"dev":[0,3,3],"test":[3,6],"test_sev":{"0":[1,1],"0.5":[1,2],"1":[1,3]},"final":"3"},"pen_table_slide/joints":{"dev":[0,0,0,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"6"},"pen_table_slide/layered":{"dev":[2,3,3],"test":[6,6],"test_sev":{"0":[1,1],"0.5":[2,2],"1":[3,3]},"final":"3"},"pen_table_slide/synergies":{"dev":[0,0,0,1],"test":[2,6],"test_sev":{"0":[1,1],"0.5":[0,2],"1":[1,3]},"final":"5"},"pen_writing_grasp/contacts":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"1"},"pen_writing_grasp/force":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"4"},"pen_writing_grasp/joints":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"4"},"pen_writing_grasp/layered":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"4"},"pen_writing_grasp/skills":{"dev":[0,0,0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"4"},"pen_writing_grasp/synergies":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"1"},"scissors/contacts":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"5"},"scissors/force":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"3"},"scissors/joints":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"4"},"scissors/layered":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"4"},"scissors/skills":{"dev":[0,0,0,0,1,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"5"},"scissors/synergies":{"dev":[0,0,0,0],"test":[0,6],"test_sev":{"0":[0,1],"0.5":[0,2],"1":[0,3]},"final":"4"}},"usage":{"layered":{"n":12,"fingertips":12,"joints":6,"contacts":8,"arm":9},"force":{"n":12,"arm":11,"force":11,"fingertips":11,"joints":6,"contacts":9},"skills":{"n":6,"force":6,"fingertips":6,"joints":4,"arm":5,"contacts":1}},"lv_sev":{"joints":{"0":[5,12],"0.5":[11,24],"1":[19,36]},"synergies":{"0":[6,12],"0.5":[8,24],"1":[11,36]},"contacts":{"0":[4,12],"0.5":[9,24],"1":[14,36]},"layered":{"0":[5,12],"0.5":[10,24],"1":[16,36]},"force":{"0":[5,12],"0.5":[9,24],"1":[12,36]}},"expert":{"baoding":[0,10],"cap_twist":[10,10],"card_pickup":[10,10],"cube_palm":[7,10],"cube_pinch":[10,10],"cube_reorient":[4,10],"pen_finger_roll":[10,10],"pen_gravity_pivot":[8,10],"pen_pickup_pivot":[4,10],"pen_table_slide":[10,10],"pen_writing_grasp":[7,10],"scissors":[7,10]},"wall":{"joints":[18.6,45],"synergies":[21.3,44],"contacts":[16.2,41],"layered":[21.2,43],"force":[20.4,39],"skills":[2.7,32]},"levels":{"joints":{"cells":12,"dev_by_severity":{"0":0.2,"0.5":0.222,"1":0.244},"dev_curve_mean":[0.083,0.194,0.389,0.417],"dev_auc":0.271,"test_rate":0.486,"test_by_severity":{"0":0.417,"0.5":0.458,"1":0.528},"tasks_solved_test_80pct":6,"median_iters_to_2of3":5.0,"never_2of3":6},"fingertips":{"cells":1,"dev_by_severity":{"0":1.0,"0.5":1.0,"1":1.0},"dev_curve_mean":[1.0,1.0,1.0,1.0],"dev_auc":1.0,"test_rate":1.0,"test_by_severity":{"0":1.0,"0.5":1.0,"1":1.0},"tasks_solved_test_80pct":1,"median_iters_to_2of3":1.0,"never_2of3":0},"synergies":{"cells":12,"dev_by_severity":{"0":0.227,"0.5":0.182,"1":0.227},"dev_curve_mean":[0.139,0.25,0.333,0.389],"dev_auc":0.278,"test_rate":0.347,"test_by_severity":{"0":0.5,"0.5":0.333,"1":0.306},"tasks_solved_test_80pct":4,"median_iters_to_2of3":5.0,"never_2of3":8},"contacts":{"cells":12,"dev_by_severity":{"0":0.244,"0.5":0.268,"1":0.195},"dev_curve_mean":[0.167,0.278,0.306,0.389],"dev_auc":0.285,"test_rate":0.375,"test_by_severity":{"0":0.333,"0.5":0.375,"1":0.389},"tasks_solved_test_80pct":4,"median_iters_to_2of3":5.0,"never_2of3":7},"layered":{"cells":12,"dev_by_severity":{"0":0.279,"0.5":0.233,"1":0.279},"dev_curve_mean":[0.167,0.444,0.389,0.361],"dev_auc":0.34,"test_rate":0.431,"test_by_severity":{"0":0.417,"0.5":0.417,"1":0.444},"tasks_solved_test_80pct":4,"median_iters_to_2of3":4.0,"never_2of3":6},"force":{"cells":12,"dev_by_severity":{"0":0.256,"0.5":0.256,"1":0.256},"dev_curve_mean":[0.333,0.417,0.417,0.417],"dev_auc":0.396,"test_rate":0.361,"test_by_severity":{"0":0.417,"0.5":0.375,"1":0.333},"tasks_solved_test_80pct":4,"median_iters_to_2of3":5.0,"never_2of3":7},"skills":{"cells":6,"dev_by_severity":{"0":0.188,"0.5":0.125,"1":0.219},"dev_curve_mean":[0.167,0.167,0.333,0.278,0.333,0.333],"dev_auc":0.269,"test_rate":0.278,"test_by_severity":{"0":0.333,"0.5":0.25,"1":0.278},"tasks_solved_test_80pct":1,"median_iters_to_2of3":7.0,"never_2of3":4}}};
+const LV = ["joints","synergies","contacts","layered","force"];
+const LVNAME = {joints:"Joints",fingertips:"Fingertips",synergies:"Synergies",contacts:"Contacts",layered:"Layered",force:"Force",skills:"P3 (force + memory)",expert:"Expert"};
+const css = n => `var(--lv-${n})`;
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- Fig 1: the ladder ---------- */
+function chain(base, a0, lens, flex, dir){
+  const pts=[base]; let a=a0*Math.PI/180, p=base.slice();
+  lens.forEach((L,i)=>{ a+=dir*flex[i]; p=[p[0]+L*Math.cos(a), p[1]+L*Math.sin(a)]; pts.push(p); });
+  return pts;
+}
+/* Side view: palm upright on the left, index curling over to the right, thumb opposing from below. */
+const IDX={b:[62,82],a:-90,l:[40,30,22],d:1}, THB={b:[68,172],a:-20,l:[32,26,21],d:-1};
+const GH=[[6,-4,.97],[12,-8,.93],[17,-11,.82]];
+const OPEN={fi:[.3,.5,.4],ft:[.1,.2,.2]}, PINCH={fi:[.5,.9,.7],ft:[.2,.35,.3]};
+const P=c=>c.map(p=>p.map(v=>v.toFixed(1)).join(",")).join(" ");
+function handSVG(o={}){
+  const fi=o.fi||OPEN.fi, ft=o.ft||OPEN.ft, col="var(--hand)", g=o.ghost;
+  let s="";
+  GH.forEach(([dx,dy,k])=>{ const c=chain([IDX.b[0]+dx,IDX.b[1]+dy],IDX.a,IDX.l.map(L=>L*k),fi,1);
+    s+=`<polyline points="${P(c)}" fill="none" stroke="var(--hand-ghost)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="${g?.25:.55}"/>`; });
+  s+=`<rect x="38" y="76" width="38" height="120" rx="14" fill="var(--panel)" stroke="${g?'var(--hand-ghost)':col}" stroke-width="2" opacity="${g?.5:1}"/>`;
+  s+=`<line x1="57" y1="196" x2="57" y2="204" stroke="${g?'var(--hand-ghost)':col}" stroke-width="2"/>`;
+  const ci=chain(IDX.b,IDX.a,IDX.l,fi,IDX.d), ct=chain(THB.b,THB.a,THB.l,ft,THB.d);
+  [ci,ct].forEach(c=>{ s+=`<polyline points="${P(c)}" fill="none" stroke="${g?'var(--hand-ghost)':col}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="${g?.6:1}"/>`;
+    if(!g){ c.slice(0,-1).forEach(p=>{ s+=`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.8" fill="var(--panel)" stroke="${col}" stroke-width="1.6"/>`; });
+      const t=c[c.length-1]; s+=`<circle cx="${t[0].toFixed(1)}" cy="${t[1].toFixed(1)}" r="5.5" fill="${col}"/>`; } });
+  return {svg:s, ci, ct};
+}
+function arcAt(p, r, a0, a1, color){
+  const A=d=>[p[0]+r*Math.cos(d*Math.PI/180), p[1]+r*Math.sin(d*Math.PI/180)];
+  const s=A(a0), e=A(a1), ang=a1*Math.PI/180, tx=-Math.sin(ang), ty=Math.cos(ang);
+  const h=[e[0]-tx*6-Math.cos(ang)*3, e[1]-ty*6-Math.sin(ang)*3], h2=[e[0]-tx*6+Math.cos(ang)*3, e[1]-ty*6+Math.sin(ang)*3];
+  return `<path d="M${s[0].toFixed(1)} ${s[1].toFixed(1)} A${r} ${r} 0 0 1 ${e[0].toFixed(1)} ${e[1].toFixed(1)}" fill="none" stroke="${color}" stroke-width="1.7"/><polygon points="${e[0].toFixed(1)},${e[1].toFixed(1)} ${h[0].toFixed(1)},${h[1].toFixed(1)} ${h2[0].toFixed(1)},${h2[1].toFixed(1)}" fill="${color}"/>`;
+}
+function arrow(x1,y1,x2,y2,color,dash){
+  const a=Math.atan2(y2-y1,x2-x1), L=7, w=3.4, b=[x2-L*Math.cos(a), y2-L*Math.sin(a)];
+  return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="${color}" stroke-width="1.6" ${dash?'stroke-dasharray="3 3"':''}/><polygon points="${x2.toFixed(1)},${y2.toFixed(1)} ${(b[0]-w*Math.sin(a)).toFixed(1)},${(b[1]+w*Math.cos(a)).toFixed(1)} ${(b[0]+w*Math.sin(a)).toFixed(1)},${(b[1]-w*Math.cos(a)).toFixed(1)}" fill="${color}"/>`;
+}
+const T=(x,y,t,o={})=>`<text x="${x}" y="${y}" font-family="IBM Plex Mono, monospace" font-size="${o.fs||10.5}" fill="${o.fill||'currentColor'}" text-anchor="${o.anchor||'start'}" ${o.w?`font-weight="${o.w}"`:''}>${t}</text>`;
+const LBX=152;
+function labels(lines){ return lines.map(([t,o],i)=>T(LBX,166+i*14,t,o)).join(""); }
+function pinchObj(h,w,rot){ const ti=h.ci[3], tt=h.ct[3]; const cx=(ti[0]+tt[0])/2+4, cy=(ti[1]+tt[1])/2; return {cx,cy,svg:`<rect x="${cx-w/2}" y="${cy-w/2}" width="${w}" height="${w}" rx="3" transform="rotate(${rot} ${cx} ${cy})" fill="var(--obj)" opacity=".85"/>`}; }
+function rungJoints(){
+  const c=css("joints"), h=handSVG(); let s=h.svg;
+  h.ci.slice(0,3).forEach(p=>{ s+=arcAt(p,11,200,320,c); });
+  h.ct.slice(0,3).forEach(p=>{ s+=arcAt(p,11,40,160,c); });
+  return s+labels([["q₁ … q₂₀",{fill:c,w:500,fs:12}],["4 joints × 5 fingers",{fs:9.5,fill:"var(--ink-2)"}],["no coordination",{fs:9.5,fill:"var(--ink-2)"}]]);
+}
+function rungTips(){
+  const col="var(--accent)", h=handSVG(); let s=h.svg;
+  const ti=h.ci[3], tt=h.ct[3]; const gi=[ti[0]+14,ti[1]+22], gt=[tt[0]+22,tt[1]-6];
+  [[ti,gi],[tt,gt]].forEach(([a,b])=>{ s+=arrow(a[0],a[1],b[0],b[1],col,true);
+    s+=`<circle cx="${b[0]}" cy="${b[1]}" r="6" fill="none" stroke="${col}" stroke-width="1.6"/><line x1="${b[0]-9}" y1="${b[1]}" x2="${b[0]+9}" y2="${b[1]}" stroke="${col}" stroke-width="1.2"/><line x1="${b[0]}" y1="${b[1]-9}" x2="${b[0]}" y2="${b[1]+9}" stroke="${col}" stroke-width="1.2"/>`; });
+  return s+labels([["pᵢ ∈ ℝ³ → IK",{fill:col,w:500,fs:12}],["palm-frame targets",{fs:9.5,fill:"var(--ink-2)"}],["reach(i, p) = residual",{fs:9.5,fill:"var(--ink-2)"}]]);
+}
+function rungSyn(){
+  const c=css("synergies"); let s="";
+  const A={fi:[.02,.08,.05],ft:[-.15,0,0]}, B={fi:[.62,1.05,.8],ft:[.28,.42,.38]}, M={fi:A.fi.map((v,i)=>(v+B.fi[i])/2),ft:A.ft.map((v,i)=>(v+B.ft[i])/2)};
+  s+=handSVG({...A,ghost:1}).svg; s+=handSVG({...B,ghost:1}).svg; const h=handSVG(M); s+=h.svg;
+  const ha=handSVG({...A,ghost:1}), hb=handSVG({...B,ghost:1});
+  s+=arrow(ha.ci[3][0],ha.ci[3][1]+4,hb.ci[3][0]-4,hb.ci[3][1]-6,c,true); s+=arrow(ha.ct[3][0]-4,ha.ct[3][1],hb.ct[3][0]-2,hb.ct[3][1]+6,c,true);
+  s+=`<line x1="${LBX}" y1="208" x2="262" y2="208" stroke="var(--ink-3)" stroke-width="1.4"/><circle cx="207" cy="208" r="5" fill="${c}"/>`+T(LBX,203,"−1",{fs:8.5,fill:"var(--ink-3)"})+T(262,203,"+1",{fs:8.5,fill:"var(--ink-3)",anchor:"end"});
+  return s+labels([["q = μ + B s",{fill:c,w:500,fs:12}],["s ∈ ℝ⁶; one coefficient",{fs:9.5,fill:"var(--ink-2)"}],["moves all fingers",{fs:9.5,fill:"var(--ink-2)"}]]);
+}
+function rungContacts(){
+  const c=css("contacts"), h=handSVG(PINCH); const o=pinchObj(h,26,14); let s=o.svg+h.svg;
+  [h.ci[3],h.ct[3]].forEach(p=>{ const dx=o.cx-p[0], dy=o.cy-p[1], L=Math.hypot(dx,dy), q=[p[0]+dx/L*7,p[1]+dy/L*7];
+    s+=arrow(q[0]-dx/L*20,q[1]-dy/L*20,q[0]-dx/L*2,q[1]-dy/L*2,c); s+=`<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="3.4" fill="${c}" stroke="var(--panel)" stroke-width="1.2"/>`; });
+  s+=arcAt([o.cx,o.cy],26,-60,40,c);
+  return s+labels([["grasp(obj, {i: pᵒ})",{fill:c,w:500,fs:10.5}],["rotate(obj, axis, θ)",{fill:c,w:500,fs:10.5}],["points in object frame",{fs:9.5,fill:"var(--ink-2)"}]]);
+}
+function rungLayered(){
+  const h=handSVG(PINCH); const o=pinchObj(h,26,14); let s=o.svg+h.svg;
+  const items=[["fingertips","var(--accent)",1],["contacts",css("contacts"),1],["joints",css("joints"),1],["synergies",css("synergies"),0]];
+  items.forEach(([n,col,on],i)=>{ const y=124+i*15; s+=`<rect x="${LBX}" y="${y-8}" width="9" height="9" rx="1.5" fill="${col}" opacity="${on?1:.3}"/>`+T(LBX+14,y,n,{fs:10,fill:on?'currentColor':'var(--ink-3)'}); });
+  s+=`<line x1="${LBX}" y1="186" x2="262" y2="186" stroke="var(--ink-3)" stroke-width=".8"/>`+T(LBX,199,"+ arm · reach()",{fs:9.5,fill:"var(--ink-2)"});
+  return s;
+}
+function rungForce(){
+  const c=css("force"), h=handSVG(PINCH); const o=pinchObj(h,20,0); let s=o.svg+h.svg;
+  [h.ci[3],h.ct[3]].forEach(p=>{ const dx=o.cx-p[0], dy=o.cy-p[1], L=Math.hypot(dx,dy), ux=dx/L, uy=dy/L, nx=-uy, ny=ux;
+    let d=`M${p[0].toFixed(1)} ${p[1].toFixed(1)}`; const n=5, len=Math.max(L-10,8);
+    for(let k=1;k<=n;k++){ const t=len*k/(n+1), off=(k%2?1:-1)*4; d+=` L${(p[0]+ux*t+nx*off).toFixed(1)} ${(p[1]+uy*t+ny*off).toFixed(1)}`; }
+    s+=`<path d="${d}" fill="none" stroke="${c}" stroke-width="1.7"/>`; });
+  const x0=LBX,y0=150,w=76,hh=40; s+=`<rect x="${x0}" y="${y0-hh}" width="${w}" height="${hh}" fill="none" stroke="var(--rule)" stroke-width="1"/>`;
+  s+=`<line x1="${x0}" y1="${y0-28}" x2="${x0+w}" y2="${y0-28}" stroke="var(--ink-3)" stroke-dasharray="3 3" stroke-width="1"/>`;
+  let d=`M${x0} ${y0}`; for(let k=0;k<=40;k++){const t=k/40, v=1-Math.exp(-t*6)*Math.cos(t*9); d+=` L${(x0+t*w).toFixed(1)} ${(y0-28*Math.min(1.15,v)).toFixed(1)}`;} s+=`<path d="${d}" fill="none" stroke="${c}" stroke-width="1.8"/>`;
+  s+=T(x0+w,y0-hh-4,"F(t) → F*",{anchor:"end",fs:9,fill:"var(--ink-2)"});
+  return s+T(LBX,172,"grip(obj, {i: F*})",{fill:c,w:500,fs:10.5})+T(LBX,186,"servo along pinch line",{fs:9.5,fill:"var(--ink-2)"})+T(LBX,200,"runs through any motion",{fs:9.5,fill:"var(--ink-2)"});
+}
+const RUNGS=[
+  {k:"joints",name:"Joints",sig:"q ∈ ℝ²⁰",draw:rungJoints,what:"Every joint target directly. No coordination: the agent must discover what each joint does.",stat:"Rebuilt a fingertip layer: <b>10 / 12</b> agents"},
+  {k:"fingertips",name:"Fingertips",sig:"pᵢ ∈ ℝ³ ×5",draw:rungTips,what:"Pad positions in the palm frame, solved by per-finger IK, plus a no-motion reach query.",stat:"Used when offered: <b>23 / 24</b> agents"},
+  {k:"synergies",name:"Synergies",sig:"s ∈ ℝ⁶",draw:rungSyn,what:"Six PCA posture coefficients, leave-one-task-out from expert grasps. Every coefficient moves several fingers.",stat:"Used when offered: <b>0 / 24</b> agents"},
+  {k:"contacts",name:"Contacts",sig:"primitives",draw:rungContacts,what:"Object-centric: place pads on object-frame points, squeeze, move held pads rigidly with the object, release.",stat:"Used when offered: <b>17 / 24</b> agents"},
+  {k:"layered",name:"Layered",sig:"all of the above",draw:rungLayered,what:"Every layer offered as a prior, nothing imposed. The analogue of EigenDexplore's full action space plus synergy prior.",stat:"Synergy calls in 12 runs: <b>0</b>"},
+  {k:"force",name:"Force",sig:"layered + grip()",draw:rungForce,what:"Layered plus a per-step grip servo that holds a target contact force along the pinch line through any motion.",stat:"First-iteration solves on core tasks: <b>4 / 5</b>"},
+];
+$("#ladder").innerHTML = RUNGS.map(r=>{
+  const col = r.k==="fingertips" ? "var(--accent)" : css(r.k);
+  return `<div class="rung"><div class="hdr"><span class="sw" style="background:${col}"></span><span class="name">${r.name}</span><span class="sig">${r.sig}</span></div>
+  <svg viewBox="0 -14 270 230" role="img" aria-label="${esc(r.name)} interface drawn on a thumb and index finger">${r.draw()}</svg>
+  <div class="what">${r.what}</div><div class="stat">${r.stat}</div></div>`;}).join("");
+
+/* ---------- Fig 2: tasks ---------- */
+const TASKS=[
+ ["cube_pinch","Pick a cube with a fingertip grasp, turn it ≥25° while lifted, put it back.","±25 mm, ±30°, edge ±15 %, mass ±50 %"],
+ ["card_pickup","Get a thin tile off a book and hold it between thumb and index.","book ±20 mm, tile ±20 mm, ±25°, size ±12 %"],
+ ["cap_twist","Unscrew a jar lid a full turn with the fingers; the palm must stay still.","±20 mm, lid radius ±10 %, thread friction ±50 %"],
+ ["cube_palm","Pick a cube, turn palm-up, let the palm alone carry it, set it back.","±20 mm, ±25°, edge ±12 %, mass ±50 %"],
+ ["pen_table_slide","Let the table push a pen ≥15 mm up through the grasp, then lift it out.","±20 mm, ±30°, length and diameter ±10 %"],
+ ["cube_reorient","Turn a cube 90° about the palm normal using the fingers, palm-up.","±10/15 mm, ±25°, edge ±12 %, mass ±50 %"],
+ ["pen_gravity_pivot","Lift a pen level, let it swing to vertical in the fingers, hold it.","±20 mm, ±25°, size ±10 %, mass ±50 %"],
+ ["pen_finger_roll","Take a pen from a cup; swing it ≥30° and roll it ≥30° in hand.","±20 mm, ±30°, diameter ±12 %, length ±10 %"],
+ ["pen_pickup_pivot","Pivot a lying pen upright on its end, then lift it clear and hold it.","±20 mm, ±25°, radius ±10 %, length ±12 %"],
+ ["pen_writing_grasp","Take a pen in a writing grasp, draw a stroke on the table, keep holding it.","±20 mm, lean ±3°, size ±10 %, mass ±50 %"],
+ ["scissors","Lift scissors off the table, open and close them twice, set them down closed.","±20 mm, ±25°, size ±10 %, pivot friction ±50 %"],
+ ["baoding","Circle two balls about each other in the upturned palm by ≥180°.","ball offsets ±4 mm, ±25°, radius ±10 %"],
+];
+$("#tasks").innerHTML = TASKS.map(([t,g,v])=>{const e=DATA.expert[t]; return `<div class="task"><img src="media/${t}_reference.jpg" onerror="this.onerror=null;this.src='media/${t}_overview.jpg'" alt="${esc(t)} scene" loading="lazy"><div class="tb"><div class="tn">${t}</div><div class="tg">${esc(g)}</div><div class="tx">sev 1: ${esc(v)} · expert ${e?e[0]+"/"+e[1]:"–"}</div></div></div>`;}).join("");
+
+/* ---------- Fig 4: pipeline ---------- */
+(function(){
+  const s=[]; const ink="currentColor", mut="var(--ink-2)", rule="var(--rule)", acc="var(--accent)";
+  const box=(x,y,w,h,fill="var(--panel)")=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="${fill}" stroke="${rule}" stroke-width="1.2"/>`;
+  const tx=(x,y,t,o={})=>`<text x="${x}" y="${y}" font-family="${o.mono?'IBM Plex Mono, monospace':'IBM Plex Sans Condensed, Arial, sans-serif'}" font-size="${o.fs||13}" font-weight="${o.w||400}" fill="${o.fill||ink}" text-anchor="${o.a||'start'}">${t}</text>`;
+  s.push(`<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>`);
+  // inputs
+  s.push(box(10,30,190,150)); s.push(tx(24,54,"Inputs to the agent",{w:600,fs:14}));
+  [["TASK.md","goal, variation, rule"],["levels.py","its level's API"],["check.py","the scorer"],["brief","rules, budget 4"]].forEach(([a,b],i)=>{ s.push(tx(24,80+i*24,a,{mono:1,fs:12,w:500})); s.push(tx(96,80+i*24,b,{fs:11.5,fill:mut})); });
+  // agent writes policy
+  s.push(box(240,30,230,150)); s.push(tx(254,54,"Agent writes policy.py",{w:600,fs:14}));
+  const code=["def run(api):","  p, R = api.object_pose(\"pen\")","  yield from api.move_tips(","      tips={...}, straight=True)","  yield from api.grip(\"pen\",","      {\"index\": 1.5, \"middle\": 1.5})","  ..."];
+  s.push(`<rect x="252" y="64" width="206" height="104" rx="4" fill="var(--accent-soft)"/>`);
+  code.forEach((c,i)=>s.push(tx(260,80+i*13.5,c.replace(/</g,"&lt;").replace(/^ +/,m=>"\u00a0".repeat(m.length)),{mono:1,fs:10.2})));
+  s.push(`<line x1="200" y1="105" x2="238" y2="105" stroke="currentColor" stroke-width="1.6" marker-end="url(#ah)"/>`);
+  // iterate: three starts
+  s.push(box(510,30,330,150)); s.push(tx(524,54,"iterate: 3 fresh starts per pass",{w:600,fs:14}));
+  ["1000_0","1001_0.5","1005_1"].forEach((f,i)=>{ const x=522+i*104; s.push(`<image href="media/sev_${f}.jpg" x="${x}" y="66" width="98" height="55" preserveAspectRatio="xMidYMid slice"/>`); s.push(`<rect x="${x}" y="66" width="98" height="55" fill="none" stroke="${rule}"/>`); s.push(tx(x+49,138,["severity 0","severity 0.5","severity 1"][i],{a:"middle",fs:12,w:600})); s.push(tx(x+49,154,"new seed",{a:"middle",fs:11,fill:mut})); });
+  s.push(tx(675,172,"seeds = hash(task, level, k): never re-runnable",{a:"middle",fs:11,fill:mut}));
+  s.push(`<line x1="470" y1="105" x2="508" y2="105" stroke="currentColor" stroke-width="1.6" marker-end="url(#ah)"/>`);
+  s.push(tx(489,96,"run",{a:"middle",fs:11,fill:mut}));
+  // feedback
+  s.push(box(240,230,600,200)); s.push(tx(254,254,"Evidence returned to the agent",{w:600,fs:14}));
+  s.push(`<image href="media/iter_sheet.jpg" x="254" y="266" width="330" height="139" preserveAspectRatio="xMidYMid meet"/>`);
+  s.push(tx(419,422,"12-frame contact sheet of one case",{a:"middle",fs:11,fill:mut}));
+  const m=["swing_range_deg: 32.2  ✓","roll_range_deg: 47.9   ✓","held_at_end: true      ✓","perturbation: dx −20.9 mm …","api log (last 60 lines)","contact forces · grip_state"];
+  m.forEach((c,i)=>s.push(tx(602,282+i*20,c,{mono:1,fs:11})));
+  s.push(`<path d="M675 180 L675 228" stroke="currentColor" stroke-width="1.6" fill="none" marker-end="url(#ah)"/>`);
+  s.push(`<path d="M330 230 L330 182" stroke="currentColor" stroke-width="1.6" fill="none" marker-end="url(#ah)"/>`);
+  s.push(tx(340,204,"agent reads the evidence, edits the policy,",{fs:12,fill:mut})); s.push(tx(340,219,"appends NOTES.md",{fs:12,fill:mut}));
+  // budget dots
+  s.push(tx(24,268,"budget",{fs:12,w:600})); [0,1,2,3].forEach(i=>{ s.push(`<circle cx="${30+i*22}" cy="286" r="7" fill="${i<3?acc:'none'}" stroke="${acc}" stroke-width="1.6"/>`); });
+  s.push(tx(24,312,"4 completed passes;",{fs:11.5,fill:mut})); s.push(tx(24,327,"stop early at 3/3 twice",{fs:11.5,fill:mut}));
+  // held-out
+  s.push(box(880,30,210,400,"var(--panel)")); s.push(tx(894,54,"Held-out evaluation",{w:600,fs:14}));
+  s.push(tx(894,74,"FINAL policy only, run once",{fs:11.5,fill:mut}));
+  ["1000 : 0","1001 : 0.5","1002 : 0.5","1005 : 1","1006 : 1","1007 : 1"].forEach((c,i)=>{ const y=100+i*34; s.push(`<rect x="894" y="${y-16}" width="182" height="26" rx="4" fill="var(--accent-soft)"/>`); s.push(tx(906,y+2,c,{mono:1,fs:12}));
+    s.push(`<rect x="1040" y="${y-11}" width="28" height="16" rx="3" fill="${i<5?'var(--good)':'var(--bad)'}" opacity=".85"/>`); });
+  s.push(tx(985,322,"success out of 6 (here 5/6)",{a:"middle",fs:12,w:600})); s.push(tx(985,340,"disjoint from all dev seeds",{a:"middle",fs:11,fill:mut}));
+  s.push(tx(985,372,"+ films of the hardest",{a:"middle",fs:11,fill:mut})); s.push(tx(985,388,"passed case (Section V)",{a:"middle",fs:11,fill:mut}));
+  s.push(`<path d="M840 330 L860 330 L860 105 L878 105" stroke="currentColor" stroke-width="1.6" fill="none" marker-end="url(#ah)"/>`);
+  s.push(tx(864,226,"FINAL",{fs:11,w:600,fill:mut}));
+  $("#pipeline").innerHTML=s.join("");
+})();
+
+/* ---------- Fig 5: phases ---------- */
+(function(){
+  const s=[]; const mut="var(--ink-2)", rule="var(--rule)";
+  const tx=(x,y,t,o={})=>`<text x="${x}" y="${y}" font-family="${o.mono?'IBM Plex Mono, monospace':'IBM Plex Sans Condensed, Arial, sans-serif'}" font-size="${o.fs||13}" font-weight="${o.w||400}" fill="${o.fill||'currentColor'}" text-anchor="${o.a||'start'}">${t}</text>`;
+  s.push(`<defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>`);
+  const P=[{x:10,t:"Phase 1",n:"49 runs · 4 iterations",lv:["joints","synergies","contacts","layered"],extra:"+ fingertips on cube_pinch"},
+           {x:400,t:"Phase 2",n:"12 runs · 4 iterations",lv:["force"],extra:"same protocol, fresh agents"},
+           {x:790,t:"Phase 3",n:"6 runs · 6 iterations",lv:["skills"],extra:"6 hardest tasks, read all prior runs"}];
+  P.forEach(p=>{ s.push(`<rect x="${p.x}" y="20" width="300" height="130" rx="6" fill="var(--panel)" stroke="${rule}" stroke-width="1.2"/>`);
+    s.push(tx(p.x+14,46,p.t,{w:700,fs:16})); s.push(tx(p.x+286,46,p.n,{a:"end",fs:12,fill:mut}));
+    p.lv.forEach((l,i)=>{ const x=p.x+14+i*70; s.push(`<rect x="${x}" y="62" width="64" height="26" rx="4" fill="var(--lv-${l})"/>`); s.push(tx(x+32,80,l==="skills"?"force+mem":l,{a:"middle",fs:11.5,w:600,fill:"#fff"})); });
+    s.push(tx(p.x+14,116,p.extra,{fs:12.5,fill:mut})); s.push(tx(p.x+14,136,p.t==="Phase 3"?"6 tasks":"12 tasks",{fs:12,fill:mut})); });
+  s.push(`<line x1="310" y1="85" x2="398" y2="85" stroke="currentColor" stroke-width="1.6" marker-end="url(#ah2)"/>`);
+  s.push(`<line x1="700" y1="85" x2="788" y2="85" stroke="currentColor" stroke-width="1.6" marker-end="url(#ah2)"/>`);
+  s.push(tx(354,176,"missing-capability reports",{a:"middle",fs:12,w:600}));
+  [["force-controlled squeeze","6"],["contact location","9"],["link geometry / collisions","10"]].forEach(([a,b],i)=>{ s.push(tx(260,196+i*17,a,{fs:11.5,fill:mut})); s.push(tx(448,196+i*17,b,{a:"end",fs:11.5,mono:1})); });
+  s.push(`<path d="M354 160 L354 150" stroke="var(--ink-3)"/>`);
+  s.push(tx(744,176,"inherited from 61 runs",{a:"middle",fs:12,w:600}));
+  [["NOTES.md failure diagnoses","61"],["helper functions & monitors","reused"],["per-case logs, contact sheets","all"]].forEach(([a,b],i)=>{ s.push(tx(650,196+i*17,a,{fs:11.5,fill:mut})); s.push(tx(838,196+i*17,b,{a:"end",fs:11.5,mono:1})); });
+  s.push(tx(354,76,"adds grip()",{a:"middle",fs:11.5,fill:mut}));
+  s.push(tx(744,76,"adds memory",{a:"middle",fs:11.5,fill:mut}));
+  $("#phases").innerHTML=s.join("");
+})();
+
+/* ---------- chart helpers ---------- */
+function mkTip(host){ const t=document.createElement("div"); t.className="tip"; host.appendChild(t); return t; }
+function bindTip(host, svg){
+  const tip=mkTip(host);
+  svg.querySelectorAll("[data-tip]").forEach(el=>{
+    el.addEventListener("mouseenter",()=>{ tip.innerHTML=el.getAttribute("data-tip"); tip.classList.add("on"); });
+    el.addEventListener("mousemove",e=>{ const r=host.getBoundingClientRect(); let x=e.clientX-r.left; x=Math.max(70,Math.min(r.width-70,x)); tip.style.left=x+"px"; tip.style.top=(e.clientY-r.top)+"px"; });
+    el.addEventListener("mouseleave",()=>tip.classList.remove("on"));
+  });
+}
+const AX='font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="12" fill="var(--ink-2)"';
+function legend(el, keys, dot){ el.innerHTML=keys.map(k=>`<span><i class="${dot?'dot':''}" style="background:${css(k)}"></i>${LVNAME[k]}</span>`).join(""); }
+
+/* Fig 6 left: learning curves */
+(function(){
+  const W=520,H=300,m={l:44,r:84,t:12,b:36}; const x=i=>m.l+i*(W-m.l-m.r)/3, y=v=>m.t+(1-v)*(H-m.t-m.b);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Mean development success per iteration for five levels">`;
+  [0,.25,.5,.75,1].forEach(v=>{ s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--rule-2)"/><text x="${m.l-8}" y="${y(v)+4}" text-anchor="end" ${AX}>${v.toFixed(2)}</text>`; });
+  [0,1,2,3].forEach(i=>{ s+=`<text x="${x(i)}" y="${H-m.b+18}" text-anchor="middle" ${AX}>${i+1}</text>`; });
+  s+=`<text x="${(m.l+W-m.r)/2}" y="${H-4}" text-anchor="middle" ${AX}>iteration</text>`;
+  const ends=[];
+  LV.forEach(k=>{ const c=DATA.levels[k].dev_curve_mean; const pts=c.map((v,i)=>[x(i),y(v)]);
+    s+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${css(k)}" stroke-width="2" stroke-linejoin="round"/>`;
+    pts.forEach((p,i)=>{ s+=`<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="${css(k)}" stroke="var(--panel)" stroke-width="2"/><circle cx="${p[0]}" cy="${p[1]}" r="11" fill="transparent" data-tip="${LVNAME[k]} · iteration ${i+1}: ${c[i].toFixed(2)}"/>`; });
+    ends.push([k,pts[3][1],c[3]]); });
+  ends.sort((a,b)=>a[1]-b[1]); let last=-99; ends.forEach(e=>{ let yy=Math.max(e[1]+4,last+14); last=yy; s+=`<text x="${W-m.r+8}" y="${yy}" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="12.5" fill="var(--ink)">${LVNAME[e[0]]} ${e[2].toFixed(2)}</text>`; });
+  s+=`</svg>`; const host=$("#c6"); host.innerHTML=s; bindTip(host, host.querySelector("svg")); legend($("#lg6"),LV);
+})();
+/* Fig 6 right: iterations to first 3/3 */
+(function(){
+  const core=["cube_pinch","card_pickup","cap_twist","cube_palm","pen_table_slide"];
+  const rows=LV.map(k=>{ const v=core.map(t=>{ const d=DATA.cells[t+"/"+k].dev; const i=d.indexOf(3); return i<0?5:i+1; }); return {k,v,sum:v.reduce((a,b)=>a+b,0)}; });
+  const W=520,H=300,m={l:86,r:36,t:12,b:36}; const x=v=>m.l+v*(W-m.l-m.r)/25, bh=(H-m.t-m.b)/rows.length;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Total iterations to first 3/3 on five solvable tasks per level">`;
+  [0,5,10,15,20,25].forEach(v=>{ s+=`<line x1="${x(v)}" x2="${x(v)}" y1="${m.t}" y2="${H-m.b}" stroke="var(--rule-2)"/><text x="${x(v)}" y="${H-m.b+18}" text-anchor="middle" ${AX}>${v}</text>`; });
+  s+=`<text x="${(m.l+W-m.r)/2}" y="${H-4}" text-anchor="middle" ${AX}>iterations (sum over 5 tasks; lower is faster)</text>`;
+  rows.forEach((r,i)=>{ const cy=m.t+bh*i+bh/2;
+    s+=`<text x="${m.l-10}" y="${cy+4}" text-anchor="end" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="var(--ink)">${LVNAME[r.k]}</text>`;
+    s+=`<rect x="${m.l}" y="${cy-9}" width="${x(r.sum)-m.l}" height="18" rx="3" fill="${css(r.k)}" opacity=".9" data-tip="${LVNAME[r.k]}: ${r.sum} iterations · ${core.map((t,j)=>t+' '+(r.v[j]===5?'never':r.v[j])).join(' · ')}"/>`;
+    s+=`<text x="${x(r.sum)+6}" y="${cy+4}" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" font-weight="700" fill="var(--ink)">${r.sum}</text>`;
+    let acc=0; r.v.forEach((v,j)=>{ acc+=v; if(j<4) s+=`<line x1="${x(acc)}" x2="${x(acc)}" y1="${cy-9}" y2="${cy+9}" stroke="var(--panel)" stroke-width="2"/>`; });
+  });
+  s+=`</svg>`; const host=$("#c6b"); host.innerHTML=s; bindTip(host, host.querySelector("svg"));
+})();
+
+/* Table I */
+(function(){
+  const groups=[["Solved by most levels",["cube_pinch","card_pickup","cap_twist","pen_table_slide","cube_palm"]],["Partly solved",["cube_reorient","pen_gravity_pivot"]],["Unsolved in phases 1–2",["pen_finger_roll","pen_pickup_pivot","pen_writing_grasp","scissors","baoding"]]];
+  const shade=f=>{ const q=f>=.999?5:f>=.8?4:f>=.5?3:f>=.3?2:f>0?1:0; return [`var(--q${q})`, q>=4?'var(--q-ink-dark)':'var(--ink)']; };
+  const cols=["joints","synergies","contacts","layered","force","skills"];
+  let h=`<thead><tr><th>task</th><th>Expert</th>${cols.map(c=>`<th><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${css(c)};margin-right:5px"></span>${c==="skills"?"P3":LVNAME[c]}</th>`).join("")}</tr></thead><tbody>`;
+  groups.forEach(([g,ts])=>{ h+=`<tr class="grp"><td colspan="8">${g}</td></tr>`;
+    ts.forEach(t=>{ const e=DATA.expert[t]; h+=`<tr><td>${t}</td><td><div class="cell" style="background:${shade(e[0]/e[1])[0]};color:${shade(e[0]/e[1])[1]}"><span class="s">${e[0]}/${e[1]}</span><span class="d">scripted</span></div></td>`;
+      cols.forEach(c=>{ const cell=DATA.cells[t+"/"+c]; if(!cell||!cell.test){ h+=`<td class="na">–</td>`; return; }
+        const f=cell.test[0]/cell.test[1], [bg,fg]=shade(f); h+=`<td><div class="cell" style="background:${bg};color:${fg}" title="${t} · ${c}: held-out ${cell.test[0]}/${cell.test[1]}; dev ${cell.dev.join(' ')}"><span class="s">${cell.test[0]}/${cell.test[1]}</span><span class="d">${cell.dev.join('')}</span></div></td>`; });
+      h+=`</tr>`; }); });
+  h+=`</tbody><tfoot><tr><td>pooled held-out</td><td class="na">–</td>${cols.map(c=>{ if(c==="skills") return `<td>${(()=>{let a=0,b=0;Object.entries(DATA.cells).forEach(([k,v])=>{if(k.endsWith('/skills')&&v.test){a+=v.test[0];b+=v.test[1];}});return a+'/'+b;})()}</td>`; let a=0,b=0; Object.entries(DATA.cells).forEach(([k,v])=>{ if(k.endsWith('/'+c)&&v.test){a+=v.test[0];b+=v.test[1];} }); return `<td>${(a/b).toFixed(2)}</td>`; }).join("")}</tr></tfoot>`;
+  $("#restable").innerHTML=h;
+})();
+
+/* Fig 7: severity slope */
+(function(){
+  const sev=["0","0.5","1"], W=760,H=280,m={l:48,r:130,t:12,b:40}; const x=i=>m.l+i*(W-m.l-m.r)/2, y=v=>m.t+(1-v)*(H-m.t-m.b);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Held-out success by severity for five levels">`;
+  [0,.25,.5,.75,1].forEach(v=>{ s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--rule-2)"/><text x="${m.l-8}" y="${y(v)+4}" text-anchor="end" ${AX}>${v.toFixed(2)}</text>`; });
+  sev.forEach((sv,i)=>{ s+=`<text x="${x(i)}" y="${H-m.b+18}" text-anchor="middle" ${AX}>severity ${sv} (n = ${[12,24,36][i]})</text>`; });
+  const ends=[];
+  LV.forEach(k=>{ const d=DATA.lv_sev[k]; const v=sev.map(sv=>d[sv][0]/d[sv][1]); const pts=v.map((u,i)=>[x(i),y(u)]);
+    s+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${css(k)}" stroke-width="2"/>`;
+    pts.forEach((p,i)=>{ s+=`<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="${css(k)}" stroke="var(--panel)" stroke-width="2"/><circle cx="${p[0]}" cy="${p[1]}" r="11" fill="transparent" data-tip="${LVNAME[k]} · severity ${sev[i]}: ${d[sev[i]][0]}/${d[sev[i]][1]}"/>`; });
+    ends.push([k,pts[2][1],v[2]]); });
+  ends.sort((a,b)=>a[1]-b[1]); let last=-99; ends.forEach(e=>{ let yy=Math.max(e[1]+4,last+14); last=yy; s+=`<text x="${W-m.r+10}" y="${yy}" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="12.5" fill="var(--ink)">${LVNAME[e[0]]} ${e[2].toFixed(2)}</text>`; });
+  s+=`</svg>`; const host=$("#c7"); host.innerHTML=s; bindTip(host, host.querySelector("svg")); legend($("#lg7"),LV);
+})();
+
+/* Fig 8 left: layer usage */
+(function(){
+  const layers=["fingertips","arm","contacts","joints","force","synergies"], series=["layered","force"];
+  const W=520,H=300,m={l:86,r:40,t:8,b:36}; const x=v=>m.l+v*(W-m.l-m.r), bh=(H-m.t-m.b)/layers.length;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Share of layered and force agents using each layer">`;
+  [0,.25,.5,.75,1].forEach(v=>{ s+=`<line x1="${x(v)}" x2="${x(v)}" y1="${m.t}" y2="${H-m.b}" stroke="var(--rule-2)"/><text x="${x(v)}" y="${H-m.b+18}" text-anchor="middle" ${AX}>${Math.round(v*100)}%</text>`; });
+  layers.forEach((L,i)=>{ const cy=m.t+bh*i+bh/2; s+=`<text x="${m.l-10}" y="${cy+4}" text-anchor="end" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="var(--ink)">${L}</text>`;
+    series.forEach((sr,j)=>{ const u=DATA.usage[sr]; const n=u[L]||0, f=n/u.n; const yy=cy-11+j*12;
+      if(sr==="layered"&&L==="force"){ s+=`<text x="${m.l+4}" y="${yy+9}" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="10.5" fill="var(--ink-3)">not offered</text>`; return; }
+      s+=`<rect x="${m.l}" y="${yy}" width="${Math.max(f*(W-m.l-m.r),2)}" height="10" rx="2" fill="${css(sr)}" data-tip="${LVNAME[sr]} agents using ${L}: ${n}/${u.n}"/>`;
+      s+=`<text x="${x(f)+5}" y="${yy+9}" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="11" fill="var(--ink-2)">${n}/${u.n}</text>`; }); });
+  s+=`</svg>`; const host=$("#c8"); host.innerHTML=s; bindTip(host, host.querySelector("svg")); legend($("#lg8"),series);
+})();
+/* Fig 8 right: self-built layer */
+(function(){
+  const rows=[["joints","Joints","fingertip IK or fitted FK",10],["synergies","Synergies","synergy → fingertip model / IK",10],["contacts","Contacts","pad-to-point helper from approach()",5]];
+  const W=520,H=200,m={l:86,r:40,t:8,b:36}; const x=v=>m.l+v*(W-m.l-m.r), bh=(H-m.t-m.b)/rows.length;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Agents that built their own fingertip layer: joints 10 of 12, synergies 10 of 12, contacts 5 of 12">`;
+  [0,.25,.5,.75,1].forEach(v=>{ s+=`<line x1="${x(v)}" x2="${x(v)}" y1="${m.t}" y2="${H-m.b}" stroke="var(--rule-2)"/><text x="${x(v)}" y="${H-m.b+18}" text-anchor="middle" ${AX}>${Math.round(v*100)}%</text>`; });
+  rows.forEach(([k,n,d,c],i)=>{ const cy=m.t+bh*i+bh/2; s+=`<text x="${m.l-10}" y="${cy+4}" text-anchor="end" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="13" fill="var(--ink)">${n}</text>`;
+    s+=`<rect x="${m.l}" y="${cy-9}" width="${x(c/12)-m.l}" height="18" rx="3" fill="${css(k)}" data-tip="${n}: ${c}/12 built a ${d}"/><text x="${x(c/12)+6}" y="${cy+4}" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="12.5" font-weight="700" fill="var(--ink)">${c}/12</text>`;
+    s+=`<text x="${m.l+6}" y="${cy+22}" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="11" fill="var(--ink-2)">${d}</text>`; });
+  s+=`</svg>`; const host=$("#c8b"); host.innerHTML=s; bindTip(host, host.querySelector("svg"));
+})();
+/* Fig 9 */
+function hbars(sel, rows, total, label, W=520){
+  const H=26*rows.length+40, m={l:200,r:40,t:6,b:30}; const mx=Math.max(...rows.map(r=>r[1])); const x=v=>m.l+v/mx*(W-m.l-m.r); const bh=(H-m.t-m.b)/rows.length;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)}">`;
+  rows.forEach(([n,v,hl],i)=>{ const cy=m.t+bh*i+bh/2; s+=`<text x="${m.l-10}" y="${cy+4}" text-anchor="end" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="12.5" fill="var(--ink)">${n}</text><rect x="${m.l}" y="${cy-8}" width="${x(v)-m.l}" height="16" rx="3" fill="${hl||'var(--ink-2)'}" data-tip="${esc(n)}: ${v}${total?` of ${total}`:''}"/><text x="${x(v)+6}" y="${cy+4}" font-family="IBM Plex Sans Condensed, Arial, sans-serif" font-size="12" font-weight="700" fill="var(--ink)">${v}</text>`; });
+  s+=`</svg>`; const host=$(sel); host.innerHTML=s; bindTip(host, host.querySelector("svg"));
+}
+hbars("#c9",[["works (passes 3/3)",16,"var(--good)"],["weak two-pad pinch",16,"var(--bad)"],["hidden geometry",5],["other",5],["layer can't express motion",4],["interface-learning cost",2],["arm reach / IK",1]],49,"Outcome categories of 49 phase-1 runs");
+hbars("#c9b",[["synergy finger coupling",11],["link geometry / collision reach",10],["contact location / pad surface",9],["object dimensions",8],["squeeze toward object origin",7],["force-controlled squeeze",6,css("force")],["orientation-aware arm IK",6]],0,"Capabilities agents said were missing");
+
+/* Table II */
+(function(){
+  const rows=[["pen_finger_roll","3 3","6/6","0/6","Holds the pen between index and middle by abduction under grip(); the palm rotates about the knuckle axis while the fingers counter-rotate."],
+    ["pen_gravity_pivot","0 0 3 2 2 3","4/6","3/6","Layered agent's pivot reused; servo on the hinge pinch stops grip bleed; a third finger closes into the measured gap."],
+    ["scissors","0 0 0 0 1 0","0/6","0/6","First dev pass by any agent: reused lift and handover plan, servo-held squeeze survives the lift."],
+    ["pen_pickup_pivot","0 0 0 0 0 0","0/6","0/6","Force-servoed middle-finger ledge under the stub solves lift-off; pivots to 74°, stood on end once."],
+    ["pen_writing_grasp","0 0 0 0 0 0","0/6","0/6","Lift and valid strokes in most cases; the three-pad chuck lets the pen roll out before the final hold."],
+    ["baoding","0 0 0 0 0 0","0/6","0/6","Best 113° of 180°; the thumb's links fill the half of the palm where the swap must happen."]];
+  $("#p3table").innerHTML=`<thead><tr><th>task</th><th>dev per iteration</th><th>held-out</th><th>best before</th><th>what changed</th></tr></thead><tbody>${rows.map(r=>`<tr><td class="mono">${r[0]}</td><td class="n mono">${r[1]}</td><td class="n"><b>${r[2]}</b></td><td class="n">${r[3]}</td><td>${r[4]}</td></tr>`).join("")}</tbody>`;
+})();
+
+/* Videos */
+const VIDS=[
+ ["cube_pinch","contacts","Phase 1","6/6","Contact-level grasp on two faces; the arm turns the cube about its vertical axis while held.",true],
+ ["card_pickup","force","Phase 2","6/6","Force-servoed index and middle drag the tile to overhang the book edge; then a vertical thumb–index pinch closes by force.",true],
+ ["cap_twist","force","Phase 2","6/6","Index and middle press the lid at 2.5 N via grip() and sweep 64° strokes with rotate(); about 7 strokes per turn.",true],
+ ["pen_table_slide","layered","Phase 1","6/6","Thumb–index pinch with a per-step force band; three short strokes with re-centring between them.",true],
+ ["cube_palm","force","Phase 2","5/6","Pinch, roll palm-up, lower onto the palm until it feels the cube, release, roll back.",true],
+ ["cube_reorient","joints","Phase 1","5/6","Self-fitted finger kinematics plan thumb pushes on alternating faces; beats the scripted expert (4/10).",true],
+ ["pen_finger_roll","skills","Phase 3","6/6","Pen held between index and middle by abduction under grip(); swing about the knuckles; roll by pad shear.",true],
+ ["pen_gravity_pivot","skills","Phase 3","4/6","Hinge pinch near one end, pivot over the resting tip to vertical, third finger cages the pen, lift.",true],
+ ["scissors","expert","Scripted expert","7/10","No agent passed a held-out case (one phase-3 dev pass). Shown: the privileged scripted routine.",true],
+ ["pen_writing_grasp","expert","Scripted expert","7/10","No agent passed. Phase-3 agents drew valid strokes but lost the pen before the final hold.",true],
+ ["pen_pickup_pivot","expert","Scripted expert","4/10","No agent passed. The best agent pivoted the pen to 74° using a force-servoed middle-finger ledge.",true],
+ ["baoding","joints","Best agent attempt","0/6","Nothing solved baoding, the expert included. Palm tilt plus thumb pin; the balls escape before 180°.",false],
+];
+let CAM="overview";
+function renderVids(){
+  const list=VIDS.filter(v=>CAM==="overview"||v[0]!=="baoding");
+  $("#vgrid").innerHTML=list.map(([t,lv,ph,sc,d,ok])=>{ const col=lv==="expert"?"var(--lv-expert)":css(lv); const src=lv==="expert"?"Scripted expert (privileged state)":`${ph} · ${LVNAME[lv]}`;
+    return `<div class="vcard"><video src="media/${t}_${CAM}.mp4" poster="media/${t}_${CAM}.jpg" controls muted loop playsinline preload="none" aria-label="${esc(t)} result video"></video>
+    <div class="vb"><div class="vt"><span class="vn">${t}</span><span class="vs">${sc} <span class="pill ${ok?'ok':'no'}">${ok?'held-out':'fails'}</span></span></div>
+    <div class="vsrc"><i style="background:${col}"></i>${src}</div><div class="vd">${esc(d)}</div></div></div>`; }).join("");
+  $("#vcount").textContent=`${list.length} videos · seed 1005, severity 1`;
+}
+function setCam(c){ CAM=c; $("#cam-overview").setAttribute("aria-pressed",c==="overview"); $("#cam-reference").setAttribute("aria-pressed",c==="reference"); renderVids(); try{localStorage.setItem("cam",c)}catch(e){} }
+$("#cam-overview").addEventListener("click",()=>setCam("overview"));
+$("#cam-reference").addEventListener("click",()=>setCam("reference"));
+let saved="overview"; try{ saved=localStorage.getItem("cam")||"overview"; }catch(e){}
+setCam(saved==="reference"?"reference":"overview");
+</script>

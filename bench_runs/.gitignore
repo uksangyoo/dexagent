@@ -1,0 +1,34 @@
+# Keep the study lean: per agent run only its notes, budget log, config, FINAL choice,
+# held-out summary and (force-added) FINAL policy. Everything else is regenerable or scratch.
+agents/*/*/*
+!agents/*/*/NOTES.md
+!agents/*/*/FINAL
+!agents/*/*/progress.jsonl
+!agents/*/*/agent.json
+!agents/*/*/test/
+agents/*/*/test/*
+!agents/*/*/test/summary.json
+
+# Expert reference: held-out summaries only
+expert/*/*
+!expert/*/test/
+expert/*/test/*
+!expert/*/test/summary.json
+
+# Films, traces, scratch media, logs, runtime state
+best/
+site/media/
+site_media/
+logs/
+*.npy
+*.mp4
+*.jpg
+*.png
+*.out
+*.log
+__pycache__/
+.slots/
+.final_eval.lock
+.lock
+QUEUE.txt
+RESUME_ORDER.txt

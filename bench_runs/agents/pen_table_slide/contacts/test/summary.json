@@ -1,0 +1,198 @@
+{
+ "task": "pen_table_slide",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/pen_table_slide/contacts/iter_4/policy.py",
+ "level": "contacts",
+ "label": "test/pen_table_slide/contacts/iter4",
+ "n": 6,
+ "successes": 6,
+ "wall_s": 1573.6,
+ "time": "2026-10-22T06:20:44",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": true,
+   "metrics": {
+    "slip_on_table_mm": 24.9,
+    "max_tip_height_mm": 143.5,
+    "final_tip_height_mm": 140.3,
+    "final_tilt_deg": 7.4,
+    "final_held": true,
+    "final_finger_forces_N": [
+     1.55,
+     0.66,
+     1.56,
+     0.0,
+     0.0
+    ],
+    "max_total_finger_force_N": 11.82
+   },
+   "error": null,
+   "sim_s": 12.96,
+   "perturbation": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "block_yaw": -0.0,
+    "pen_length": 1.0,
+    "pen_radius": 1.0,
+    "pen_mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1001:0.5",
+   "success": true,
+   "metrics": {
+    "slip_on_table_mm": 25.3,
+    "max_tip_height_mm": 144.4,
+    "final_tip_height_mm": 141.4,
+    "final_tilt_deg": 11.0,
+    "final_held": true,
+    "final_finger_forces_N": [
+     1.47,
+     0.86,
+     1.58,
+     0.0,
+     0.0
+    ],
+    "max_total_finger_force_N": 10.28
+   },
+   "error": null,
+   "sim_s": 12.96,
+   "perturbation": {
+    "dx": 0.00225,
+    "dy": -0.00969,
+    "block_yaw": -0.16353,
+    "pen_length": 1.03579,
+    "pen_radius": 0.95762,
+    "pen_mass": 0.85055
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1002:0.5",
+   "success": true,
+   "metrics": {
+    "slip_on_table_mm": 25.1,
+    "max_tip_height_mm": 143.5,
+    "final_tip_height_mm": 140.4,
+    "final_tilt_deg": 7.6,
+    "final_held": true,
+    "final_finger_forces_N": [
+     1.53,
+     0.7,
+     1.64,
+     0.0,
+     0.0
+    ],
+    "max_total_finger_force_N": 11.42
+   },
+   "error": null,
+   "sim_s": 12.96,
+   "perturbation": {
+    "dx": -0.00238,
+    "dy": -0.00286,
+    "block_yaw": 0.12965,
+    "pen_length": 0.98895,
+    "pen_radius": 0.98371,
+    "pen_mass": 1.02745
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1005:1",
+   "success": true,
+   "metrics": {
+    "slip_on_table_mm": 24.5,
+    "max_tip_height_mm": 143.7,
+    "final_tip_height_mm": 140.5,
+    "final_tilt_deg": 7.5,
+    "final_held": true,
+    "final_finger_forces_N": [
+     1.82,
+     0.85,
+     1.84,
+     0.0,
+     0.0
+    ],
+    "max_total_finger_force_N": 14.37
+   },
+   "error": null,
+   "sim_s": 12.96,
+   "perturbation": {
+    "dx": -0.01671,
+    "dy": 0.01722,
+    "block_yaw": -0.22276,
+    "pen_length": 1.02771,
+    "pen_radius": 1.06696,
+    "pen_mass": 1.47672
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1006:1",
+   "success": true,
+   "metrics": {
+    "slip_on_table_mm": 26.6,
+    "max_tip_height_mm": 143.2,
+    "final_tip_height_mm": 140.0,
+    "final_tilt_deg": 7.4,
+    "final_held": true,
+    "final_finger_forces_N": [
+     1.72,
+     0.77,
+     1.79,
+     0.0,
+     0.0
+    ],
+    "max_total_finger_force_N": 13.21
+   },
+   "error": null,
+   "sim_s": 13.06,
+   "perturbation": {
+    "dx": -0.00652,
+    "dy": 0.00403,
+    "block_yaw": -0.21171,
+    "pen_length": 0.94751,
+    "pen_radius": 1.05995,
+    "pen_mass": 0.83505
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1007:1",
+   "success": true,
+   "metrics": {
+    "slip_on_table_mm": 24.7,
+    "max_tip_height_mm": 143.4,
+    "final_tip_height_mm": 140.2,
+    "final_tilt_deg": 7.5,
+    "final_held": true,
+    "final_finger_forces_N": [
+     1.66,
+     0.68,
+     1.63,
+     0.0,
+     0.0
+    ],
+    "max_total_finger_force_N": 12.93
+   },
+   "error": null,
+   "sim_s": 12.96,
+   "perturbation": {
+    "dx": -0.01715,
+    "dy": 0.01264,
+    "block_yaw": 0.14967,
+    "pen_length": 0.93932,
+    "pen_radius": 1.01776,
+    "pen_mass": 1.39534
+   },
+   "sheet": null,
+   "api_usage": null
+  }
+ ]
+}

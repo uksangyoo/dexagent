@@ -1,0 +1,312 @@
+{
+ "task": "pen_gravity_pivot",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/pen_gravity_pivot/force/iter_4/policy.py",
+ "level": "force",
+ "label": "test/pen_gravity_pivot/force/iter4",
+ "n": 6,
+ "successes": 0,
+ "wall_s": 584.8,
+ "time": "2026-10-22T07:04:40",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 161.5,
+    "level_hold_s": 3.28,
+    "held_level": true,
+    "max_pivot_in_palm_deg": 90.0,
+    "max_swept_world_deg": 87.1,
+    "max_turn_rate_dps": 748.0,
+    "final_pivot_in_palm_deg": 89.3,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_tilt_max_last_1s_deg": 90.0,
+    "final_lift_min_last_1s_mm": -780.5,
+    "pads_on_pen_min_last_1s": 0
+   },
+   "error": null,
+   "sim_s": 21.08,
+   "perturbation": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "dyaw": -0.0,
+    "radius": 1.0,
+    "length": 1.0,
+    "mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": {
+    "tuck": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "move_tips": {
+     "calls": 2,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 253,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 72,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 1,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1001:0.5",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 162.1,
+    "level_hold_s": 3.36,
+    "held_level": true,
+    "max_pivot_in_palm_deg": 90.0,
+    "max_swept_world_deg": 88.4,
+    "max_turn_rate_dps": 825.0,
+    "final_pivot_in_palm_deg": 88.7,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_tilt_max_last_1s_deg": 90.0,
+    "final_lift_min_last_1s_mm": -30.5,
+    "pads_on_pen_min_last_1s": 0
+   },
+   "error": null,
+   "sim_s": 21.1,
+   "perturbation": {
+    "dx": 0.00225,
+    "dy": -0.00969,
+    "dyaw": -0.13627,
+    "radius": 1.03579,
+    "length": 0.95762,
+    "mass": 0.85055
+   },
+   "sheet": null,
+   "api_usage": {
+    "tuck": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "move_tips": {
+     "calls": 2,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 253,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 72,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 1,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1002:0.5",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 161.3,
+    "level_hold_s": 3.22,
+    "held_level": true,
+    "max_pivot_in_palm_deg": 89.9,
+    "max_swept_world_deg": 89.3,
+    "max_turn_rate_dps": 1388.0,
+    "final_pivot_in_palm_deg": 86.2,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_tilt_max_last_1s_deg": 90.0,
+    "final_lift_min_last_1s_mm": -780.5,
+    "pads_on_pen_min_last_1s": 0
+   },
+   "error": null,
+   "sim_s": 21.12,
+   "perturbation": {
+    "dx": -0.00238,
+    "dy": -0.00286,
+    "dyaw": 0.10804,
+    "radius": 0.98895,
+    "length": 0.98371,
+    "mass": 1.02745
+   },
+   "sheet": null,
+   "api_usage": {
+    "tuck": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "move_tips": {
+     "calls": 2,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 253,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 72,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 1,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1005:1",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 159.8,
+    "level_hold_s": 2.94,
+    "held_level": true,
+    "max_pivot_in_palm_deg": 89.9,
+    "max_swept_world_deg": 89.1,
+    "max_turn_rate_dps": 665.0,
+    "final_pivot_in_palm_deg": 77.9,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_tilt_max_last_1s_deg": 90.0,
+    "final_lift_min_last_1s_mm": -30.5,
+    "pads_on_pen_min_last_1s": 0
+   },
+   "error": null,
+   "sim_s": 21.0,
+   "perturbation": {
+    "dx": -0.01671,
+    "dy": 0.01722,
+    "dyaw": -0.18563,
+    "radius": 1.02771,
+    "length": 1.06696,
+    "mass": 1.47672
+   },
+   "sheet": null,
+   "api_usage": {
+    "tuck": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "move_tips": {
+     "calls": 2,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 253,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 72,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 1,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1006:1",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 162.0,
+    "level_hold_s": 3.34,
+    "held_level": true,
+    "max_pivot_in_palm_deg": 89.9,
+    "max_swept_world_deg": 87.2,
+    "max_turn_rate_dps": 855.0,
+    "final_pivot_in_palm_deg": 84.3,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_tilt_max_last_1s_deg": 90.0,
+    "final_lift_min_last_1s_mm": -30.5,
+    "pads_on_pen_min_last_1s": 0
+   },
+   "error": null,
+   "sim_s": 21.16,
+   "perturbation": {
+    "dx": -0.00652,
+    "dy": 0.00403,
+    "dyaw": -0.17643,
+    "radius": 0.94751,
+    "length": 1.05995,
+    "mass": 0.83505
+   },
+   "sheet": null,
+   "api_usage": {
+    "tuck": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "move_tips": {
+     "calls": 2,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 253,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 72,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 1,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1007:1",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 160.4,
+    "level_hold_s": 2.96,
+    "held_level": true,
+    "max_pivot_in_palm_deg": 89.9,
+    "max_swept_world_deg": 89.6,
+    "max_turn_rate_dps": 1735.0,
+    "final_pivot_in_palm_deg": 87.4,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_tilt_max_last_1s_deg": 90.0,
+    "final_lift_min_last_1s_mm": -780.5,
+    "pads_on_pen_min_last_1s": 0
+   },
+   "error": null,
+   "sim_s": 21.04,
+   "perturbation": {
+    "dx": -0.01715,
+    "dy": 0.01264,
+    "dyaw": 0.12473,
+    "radius": 0.93932,
+    "length": 1.01776,
+    "mass": 1.39534
+   },
+   "sheet": null,
+   "api_usage": {
+    "tuck": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "move_tips": {
+     "calls": 2,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 253,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 72,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 1,
+     "layer": "force"
+    }
+   }
+  }
+ ]
+}

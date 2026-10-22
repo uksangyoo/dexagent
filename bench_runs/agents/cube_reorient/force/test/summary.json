@@ -1,0 +1,316 @@
+{
+ "task": "cube_reorient",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/cube_reorient/force/iter_4/policy.py",
+ "level": "force",
+ "label": "test/cube_reorient/force/iter4",
+ "n": 6,
+ "successes": 0,
+ "wall_s": 490.7,
+ "time": "2026-10-22T06:54:10",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": false,
+   "metrics": {
+    "yaw_deg": -0.0,
+    "yaw_error_deg": 90.0,
+    "max_abs_yaw_deg": 0.0,
+    "flat": 0.998,
+    "min_flat": 0.998,
+    "height_change_mm": -0.0,
+    "drift_mm": 1.7,
+    "cube_in_palm_mm": [
+     43.5,
+     -0.4,
+     67.4
+    ],
+    "finger_force_N": 0.0,
+    "palm_force_N": 0.12,
+    "resting_on_palm": true,
+    "left_palm": false,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 3.0,
+   "perturbation": {
+    "dy_palm": 0.0,
+    "dz_palm": 0.0,
+    "dyaw": -0.0,
+    "edge": 1.0,
+    "mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 1,
+     "layer": "joints"
+    }
+   }
+  },
+  {
+   "case": "1001:0.5",
+   "success": false,
+   "metrics": {
+    "yaw_deg": 40.2,
+    "yaw_error_deg": 49.8,
+    "max_abs_yaw_deg": 42.5,
+    "flat": 0.997,
+    "min_flat": 0.646,
+    "height_change_mm": -251.9,
+    "drift_mm": 234.5,
+    "cube_in_palm_mm": [
+     -208.1,
+     233.5,
+     26.5
+    ],
+    "finger_force_N": 0.0,
+    "palm_force_N": 0.0,
+    "resting_on_palm": false,
+    "left_palm": true,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 30.38,
+   "perturbation": {
+    "dy_palm": 0.00113,
+    "dz_palm": -0.00726,
+    "dyaw": -0.13627,
+    "edge": 1.04295,
+    "mass": 0.7881
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 34,
+     "layer": "fingertips"
+    },
+    "grip": {
+     "calls": 3,
+     "layer": "force"
+    },
+    "rotate": {
+     "calls": 3,
+     "layer": "contacts"
+    },
+    "release": {
+     "calls": 3,
+     "layer": "contacts"
+    },
+    "move_joints": {
+     "calls": 5,
+     "layer": "joints"
+    }
+   }
+  },
+  {
+   "case": "1002:0.5",
+   "success": false,
+   "metrics": {
+    "yaw_deg": 99.4,
+    "yaw_error_deg": 9.4,
+    "max_abs_yaw_deg": 132.1,
+    "flat": 1.0,
+    "min_flat": 0.704,
+    "height_change_mm": -1.3,
+    "drift_mm": 51.2,
+    "cube_in_palm_mm": [
+     42.1,
+     16.1,
+     111.8
+    ],
+    "finger_force_N": 0.09,
+    "palm_force_N": 0.01,
+    "resting_on_palm": false,
+    "left_palm": false,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 34.84,
+   "perturbation": {
+    "dy_palm": -0.00119,
+    "dz_palm": -0.00214,
+    "dyaw": 0.10804,
+    "edge": 0.98674,
+    "mass": 0.91857
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 36,
+     "layer": "fingertips"
+    },
+    "grip": {
+     "calls": 4,
+     "layer": "force"
+    },
+    "rotate": {
+     "calls": 4,
+     "layer": "contacts"
+    },
+    "release": {
+     "calls": 4,
+     "layer": "contacts"
+    },
+    "move_joints": {
+     "calls": 6,
+     "layer": "joints"
+    }
+   }
+  },
+  {
+   "case": "1005:1",
+   "success": false,
+   "metrics": {
+    "yaw_deg": -11.3,
+    "yaw_error_deg": 78.7,
+    "max_abs_yaw_deg": 63.0,
+    "flat": 0.997,
+    "min_flat": 0.652,
+    "height_change_mm": -253.3,
+    "drift_mm": 68.8,
+    "cube_in_palm_mm": [
+     -209.2,
+     -71.8,
+     52.0
+    ],
+    "finger_force_N": 0.0,
+    "palm_force_N": 0.0,
+    "resting_on_palm": false,
+    "left_palm": true,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 20.88,
+   "perturbation": {
+    "dy_palm": -0.00836,
+    "dz_palm": 0.01292,
+    "dyaw": -0.18563,
+    "edge": 1.03325,
+    "mass": 1.33479
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 20,
+     "layer": "fingertips"
+    },
+    "grip": {
+     "calls": 2,
+     "layer": "force"
+    },
+    "rotate": {
+     "calls": 2,
+     "layer": "contacts"
+    },
+    "release": {
+     "calls": 2,
+     "layer": "contacts"
+    },
+    "move_joints": {
+     "calls": 3,
+     "layer": "joints"
+    }
+   }
+  },
+  {
+   "case": "1006:1",
+   "success": false,
+   "metrics": {
+    "yaw_deg": 43.1,
+    "yaw_error_deg": 46.9,
+    "max_abs_yaw_deg": 78.3,
+    "flat": 0.998,
+    "min_flat": 0.948,
+    "height_change_mm": -0.4,
+    "drift_mm": 8.8,
+    "cube_in_palm_mm": [
+     41.6,
+     -7.1,
+     76.7
+    ],
+    "finger_force_N": 0.09,
+    "palm_force_N": 0.16,
+    "resting_on_palm": true,
+    "left_palm": false,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 35.44,
+   "perturbation": {
+    "dy_palm": -0.00326,
+    "dz_palm": 0.00303,
+    "dyaw": -0.17643,
+    "edge": 0.93702,
+    "mass": 1.29977
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 37,
+     "layer": "fingertips"
+    },
+    "grip": {
+     "calls": 7,
+     "layer": "force"
+    },
+    "rotate": {
+     "calls": 7,
+     "layer": "contacts"
+    },
+    "release": {
+     "calls": 7,
+     "layer": "contacts"
+    },
+    "move_joints": {
+     "calls": 4,
+     "layer": "joints"
+    }
+   }
+  },
+  {
+   "case": "1007:1",
+   "success": false,
+   "metrics": {
+    "yaw_deg": -0.1,
+    "yaw_error_deg": 89.9,
+    "max_abs_yaw_deg": 0.1,
+    "flat": 0.998,
+    "min_flat": 0.997,
+    "height_change_mm": 0.0,
+    "drift_mm": 1.6,
+    "cube_in_palm_mm": [
+     41.4,
+     -9.0,
+     76.9
+    ],
+    "finger_force_N": 0.0,
+    "palm_force_N": 0.13,
+    "resting_on_palm": true,
+    "left_palm": false,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 3.0,
+   "perturbation": {
+    "dy_palm": -0.00858,
+    "dz_palm": 0.00948,
+    "dyaw": 0.12473,
+    "edge": 0.92718,
+    "mass": 1.08882
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 1,
+     "layer": "joints"
+    }
+   }
+  }
+ ]
+}

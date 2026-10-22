@@ -1,0 +1,156 @@
+{
+ "task": "baoding",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/baoding/joints/iter_6/policy.py",
+ "level": "joints",
+ "label": "test/baoding/joints/iter6",
+ "n": 6,
+ "successes": 0,
+ "wall_s": 1772.1,
+ "time": "2026-10-22T05:05:50",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": false,
+   "metrics": {
+    "swap_deg": 137.3,
+    "max_swap_deg": 137.3,
+    "both_in_hand_end": false,
+    "ever_dropped": true,
+    "final_palm_tilt_deg": 0.6,
+    "max_palm_tilt_deg": 9.7,
+    "ball_centre_dist_end_mm": 777.4
+   },
+   "error": null,
+   "sim_s": 4.56,
+   "perturbation": {
+    "ball_b_dy": 0.0,
+    "ball_b_dz": 0.0,
+    "pair_rot": -0.0,
+    "radius": 1.0,
+    "mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1001:0.5",
+   "success": false,
+   "metrics": {
+    "swap_deg": 3.6,
+    "max_swap_deg": 4.3,
+    "both_in_hand_end": false,
+    "ever_dropped": true,
+    "final_palm_tilt_deg": 0.6,
+    "max_palm_tilt_deg": 16.9,
+    "ball_centre_dist_end_mm": 857.7
+   },
+   "error": null,
+   "sim_s": 8.56,
+   "perturbation": {
+    "ball_b_dy": 0.00045,
+    "ball_b_dz": -0.00194,
+    "pair_rot": -0.13627,
+    "radius": 1.03579,
+    "mass": 0.7881
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1002:0.5",
+   "success": false,
+   "metrics": {
+    "swap_deg": 5.7,
+    "max_swap_deg": 6.2,
+    "both_in_hand_end": false,
+    "ever_dropped": true,
+    "final_palm_tilt_deg": 0.6,
+    "max_palm_tilt_deg": 17.7,
+    "ball_centre_dist_end_mm": 829.6
+   },
+   "error": null,
+   "sim_s": 9.02,
+   "perturbation": {
+    "ball_b_dy": -0.00048,
+    "ball_b_dz": -0.00057,
+    "pair_rot": 0.10804,
+    "radius": 0.98895,
+    "mass": 0.91857
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1005:1",
+   "success": false,
+   "metrics": {
+    "swap_deg": 2.2,
+    "max_swap_deg": 4.5,
+    "both_in_hand_end": false,
+    "ever_dropped": true,
+    "final_palm_tilt_deg": 0.6,
+    "max_palm_tilt_deg": 17.0,
+    "ball_centre_dist_end_mm": 878.2
+   },
+   "error": null,
+   "sim_s": 8.68,
+   "perturbation": {
+    "ball_b_dy": -0.00334,
+    "ball_b_dz": 0.00344,
+    "pair_rot": -0.18563,
+    "radius": 1.02771,
+    "mass": 1.33479
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1006:1",
+   "success": false,
+   "metrics": {
+    "swap_deg": 4.6,
+    "max_swap_deg": 7.3,
+    "both_in_hand_end": false,
+    "ever_dropped": true,
+    "final_palm_tilt_deg": 0.6,
+    "max_palm_tilt_deg": 18.0,
+    "ball_centre_dist_end_mm": 725.2
+   },
+   "error": null,
+   "sim_s": 9.68,
+   "perturbation": {
+    "ball_b_dy": -0.0013,
+    "ball_b_dz": 0.00081,
+    "pair_rot": -0.17643,
+    "radius": 0.94751,
+    "mass": 1.29977
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1007:1",
+   "success": false,
+   "metrics": {
+    "swap_deg": 3.4,
+    "max_swap_deg": 4.4,
+    "both_in_hand_end": false,
+    "ever_dropped": true,
+    "final_palm_tilt_deg": 0.6,
+    "max_palm_tilt_deg": 18.0,
+    "ball_centre_dist_end_mm": 894.5
+   },
+   "error": null,
+   "sim_s": 9.9,
+   "perturbation": {
+    "ball_b_dy": -0.00343,
+    "ball_b_dz": 0.00253,
+    "pair_rot": 0.12473,
+    "radius": 0.93932,
+    "mass": 1.08882
+   },
+   "sheet": null,
+   "api_usage": null
+  }
+ ]
+}

@@ -1,0 +1,288 @@
+{
+ "task": "pen_finger_roll",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/pen_finger_roll/force/iter_2/policy.py",
+ "level": "force",
+ "label": "test/pen_finger_roll/force/iter2",
+ "n": 6,
+ "successes": 0,
+ "wall_s": 427.3,
+ "time": "2026-10-22T06:56:39",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 149.8,
+    "left_cup": true,
+    "swing_range_deg": 7.7,
+    "swing_min_max_deg": [
+     -2.9,
+     4.8
+    ],
+    "settled_after_swing": false,
+    "roll_range_deg": 31.2,
+    "final_clearance_above_cup_mm": -56.3,
+    "held_at_end": false
+   },
+   "error": null,
+   "sim_s": 13.94,
+   "perturbation": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "cup_yaw": -0.0,
+    "pen_diameter": 1.0,
+    "pen_length": 1.0,
+    "pen_mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": {
+    "tuck": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "move_tips": {
+     "calls": 25,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 3,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 1,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1001:0.5",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 149.9,
+    "left_cup": true,
+    "swing_range_deg": 8.4,
+    "swing_min_max_deg": [
+     -3.4,
+     5.0
+    ],
+    "settled_after_swing": false,
+    "roll_range_deg": 31.4,
+    "final_clearance_above_cup_mm": -56.1,
+    "held_at_end": false
+   },
+   "error": null,
+   "sim_s": 13.52,
+   "perturbation": {
+    "dx": 0.00225,
+    "dy": -0.00969,
+    "cup_yaw": -0.16353,
+    "pen_diameter": 1.04295,
+    "pen_length": 0.95762,
+    "pen_mass": 0.85055
+   },
+   "sheet": null,
+   "api_usage": {
+    "tuck": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "move_tips": {
+     "calls": 21,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 3,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 1,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1002:0.5",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 149.8,
+    "left_cup": true,
+    "swing_range_deg": 7.6,
+    "swing_min_max_deg": [
+     -2.9,
+     4.7
+    ],
+    "settled_after_swing": false,
+    "roll_range_deg": 31.0,
+    "final_clearance_above_cup_mm": -56.3,
+    "held_at_end": false
+   },
+   "error": null,
+   "sim_s": 14.24,
+   "perturbation": {
+    "dx": -0.00238,
+    "dy": -0.00286,
+    "cup_yaw": 0.12965,
+    "pen_diameter": 0.98674,
+    "pen_length": 0.98371,
+    "pen_mass": 1.02745
+   },
+   "sheet": null,
+   "api_usage": {
+    "tuck": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "move_tips": {
+     "calls": 28,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 3,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 1,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1005:1",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 149.9,
+    "left_cup": true,
+    "swing_range_deg": 81.8,
+    "swing_min_max_deg": [
+     -3.4,
+     78.4
+    ],
+    "settled_after_swing": false,
+    "roll_range_deg": 36.1,
+    "final_clearance_above_cup_mm": -56.1,
+    "held_at_end": false
+   },
+   "error": null,
+   "sim_s": 15.3,
+   "perturbation": {
+    "dx": -0.01671,
+    "dy": 0.01722,
+    "cup_yaw": -0.22276,
+    "pen_diameter": 1.03325,
+    "pen_length": 1.06696,
+    "pen_mass": 1.47672
+   },
+   "sheet": null,
+   "api_usage": {
+    "tuck": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "move_tips": {
+     "calls": 39,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 3,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 1,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1006:1",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 149.9,
+    "left_cup": true,
+    "swing_range_deg": 88.2,
+    "swing_min_max_deg": [
+     -3.2,
+     85.0
+    ],
+    "settled_after_swing": false,
+    "roll_range_deg": 28.0,
+    "final_clearance_above_cup_mm": -56.5,
+    "held_at_end": false
+   },
+   "error": null,
+   "sim_s": 13.26,
+   "perturbation": {
+    "dx": -0.00652,
+    "dy": 0.00403,
+    "cup_yaw": -0.21171,
+    "pen_diameter": 0.93702,
+    "pen_length": 1.05995,
+    "pen_mass": 0.83505
+   },
+   "sheet": null,
+   "api_usage": {
+    "tuck": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "move_tips": {
+     "calls": 18,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 3,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 1,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1007:1",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 149.8,
+    "left_cup": true,
+    "swing_range_deg": 7.0,
+    "swing_min_max_deg": [
+     -2.7,
+     4.4
+    ],
+    "settled_after_swing": false,
+    "roll_range_deg": 33.5,
+    "final_clearance_above_cup_mm": -56.5,
+    "held_at_end": false
+   },
+   "error": null,
+   "sim_s": 15.44,
+   "perturbation": {
+    "dx": -0.01715,
+    "dy": 0.01264,
+    "cup_yaw": 0.14967,
+    "pen_diameter": 0.92718,
+    "pen_length": 1.01776,
+    "pen_mass": 1.39534
+   },
+   "sheet": null,
+   "api_usage": {
+    "tuck": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "move_tips": {
+     "calls": 40,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 3,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 1,
+     "layer": "force"
+    }
+   }
+  }
+ ]
+}

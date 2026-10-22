@@ -1,0 +1,11 @@
+{
+ "task": "tasks/hand_demos/pen_writing_grasp",
+ "level": "force",
+ "max_iters": 6,
+ "cameras": [
+  "closeup",
+  "overview",
+  "reference"
+ ],
+ "seed_tag": "skills"
+}

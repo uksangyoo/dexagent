@@ -1,0 +1,315 @@
+{
+ "task": "scissors",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/scissors/skills/iter_5/policy.py",
+ "level": "force",
+ "label": "test/scissors/skills/iter5",
+ "n": 6,
+ "successes": 0,
+ "wall_s": 466.9,
+ "time": "2026-10-22T08:07:35",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": false,
+   "metrics": {
+    "max_pivot_lift_mm": 194.1,
+    "max_clearance_mm": 130.0,
+    "time_in_air_s": 25.82,
+    "max_open_in_air_deg": 16.8,
+    "cycles_in_air": 1,
+    "cycle_peaks_deg": [
+     12.4
+    ],
+    "final_hinge_deg": 60.4,
+    "rest_height_mm": 69.3,
+    "resting_flat": false,
+    "final_offset_mm": 32.9
+   },
+   "error": null,
+   "sim_s": 47.24,
+   "perturbation": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "dyaw": -0.0,
+    "size": 1.0,
+    "mass": 1.0,
+    "pivot_friction": 1.0
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 1,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 17,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 34,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 15,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 11,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1001:0.5",
+   "success": false,
+   "metrics": {
+    "max_pivot_lift_mm": 205.2,
+    "max_clearance_mm": 159.4,
+    "time_in_air_s": 23.2,
+    "max_open_in_air_deg": 5.9,
+    "cycles_in_air": 0,
+    "cycle_peaks_deg": [],
+    "final_hinge_deg": 0.2,
+    "rest_height_mm": 4.8,
+    "resting_flat": true,
+    "final_offset_mm": 22.3
+   },
+   "error": null,
+   "sim_s": 42.92,
+   "perturbation": {
+    "dx": 0.00225,
+    "dy": -0.00969,
+    "dyaw": -0.13627,
+    "size": 1.03579,
+    "mass": 0.7881,
+    "pivot_friction": 0.85055
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 1,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 17,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 27,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 19,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 11,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1002:0.5",
+   "success": false,
+   "metrics": {
+    "max_pivot_lift_mm": 197.5,
+    "max_clearance_mm": 135.7,
+    "time_in_air_s": 26.54,
+    "max_open_in_air_deg": 10.5,
+    "cycles_in_air": 1,
+    "cycle_peaks_deg": [
+     10.5
+    ],
+    "final_hinge_deg": 64.4,
+    "rest_height_mm": 6.0,
+    "resting_flat": true,
+    "final_offset_mm": 8.3
+   },
+   "error": null,
+   "sim_s": 47.44,
+   "perturbation": {
+    "dx": -0.00238,
+    "dy": -0.00286,
+    "dyaw": 0.10804,
+    "size": 0.98895,
+    "mass": 0.91857,
+    "pivot_friction": 1.02745
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 1,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 17,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 30,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 20,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 11,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1005:1",
+   "success": false,
+   "metrics": {
+    "max_pivot_lift_mm": 190.9,
+    "max_clearance_mm": 129.3,
+    "time_in_air_s": 12.92,
+    "max_open_in_air_deg": 17.0,
+    "cycles_in_air": 2,
+    "cycle_peaks_deg": [
+     14.3,
+     17.0
+    ],
+    "final_hinge_deg": 6.4,
+    "rest_height_mm": 4.8,
+    "resting_flat": true,
+    "final_offset_mm": 11.7
+   },
+   "error": null,
+   "sim_s": 32.88,
+   "perturbation": {
+    "dx": -0.01671,
+    "dy": 0.01722,
+    "dyaw": -0.18563,
+    "size": 1.02771,
+    "mass": 1.33479,
+    "pivot_friction": 1.47672
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 1,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 13,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 23,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 10,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 7,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1006:1",
+   "success": false,
+   "metrics": {
+    "max_pivot_lift_mm": 199.2,
+    "max_clearance_mm": 132.2,
+    "time_in_air_s": 22.8,
+    "max_open_in_air_deg": 16.1,
+    "cycles_in_air": 0,
+    "cycle_peaks_deg": [],
+    "final_hinge_deg": 57.2,
+    "rest_height_mm": 4.5,
+    "resting_flat": true,
+    "final_offset_mm": 41.2
+   },
+   "error": null,
+   "sim_s": 45.12,
+   "perturbation": {
+    "dx": -0.00652,
+    "dy": 0.00403,
+    "dyaw": -0.17643,
+    "size": 0.94751,
+    "mass": 1.29977,
+    "pivot_friction": 0.83505
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 1,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 17,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 33,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 14,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 11,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1007:1",
+   "success": false,
+   "metrics": {
+    "max_pivot_lift_mm": 204.3,
+    "max_clearance_mm": 142.4,
+    "time_in_air_s": 27.48,
+    "max_open_in_air_deg": 69.1,
+    "cycles_in_air": 1,
+    "cycle_peaks_deg": [
+     11.0
+    ],
+    "final_hinge_deg": 68.8,
+    "rest_height_mm": 124.1,
+    "resting_flat": false,
+    "final_offset_mm": 54.3
+   },
+   "error": null,
+   "sim_s": 48.3,
+   "perturbation": {
+    "dx": -0.01715,
+    "dy": 0.01264,
+    "dyaw": 0.12473,
+    "size": 0.93932,
+    "mass": 1.08882,
+    "pivot_friction": 1.39534
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 1,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 17,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 34,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 16,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 11,
+     "layer": "force"
+    }
+   }
+  }
+ ]
+}

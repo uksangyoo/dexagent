@@ -1,0 +1,11 @@
+{
+ "task": "tasks/hand_demos/pen_table_slide",
+ "level": "layered",
+ "max_iters": 4,
+ "cameras": [
+  "closeup",
+  "overview",
+  "reference",
+  "side"
+ ]
+}

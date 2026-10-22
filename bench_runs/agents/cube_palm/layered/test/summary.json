@@ -1,0 +1,324 @@
+{
+ "task": "cube_palm",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/cube_palm/layered/iter_4/policy.py",
+ "level": "layered",
+ "label": "test/cube_palm/layered/iter4",
+ "n": 6,
+ "successes": 4,
+ "wall_s": 2013.6,
+ "time": "2026-10-22T05:47:29",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 203.7,
+    "max_palm_up_while_lifted": 1.0,
+    "max_palm_force_lifted_N": 0.261,
+    "on_open_palm_s": 9.18,
+    "longest_on_open_palm_s": 3.1,
+    "final_offset_mm": 35.2,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 26.3,
+   "perturbation": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "dyaw": -0.0,
+    "edge": 1.0,
+    "mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 7,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 2,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 5,
+     "layer": "arm"
+    },
+    "grasp": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "translate": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "release": {
+     "calls": 2,
+     "layer": "contacts"
+    }
+   }
+  },
+  {
+   "case": "1001:0.5",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 203.7,
+    "max_palm_up_while_lifted": 0.956,
+    "max_palm_force_lifted_N": 1.039,
+    "on_open_palm_s": 0.16,
+    "longest_on_open_palm_s": 0.1,
+    "final_offset_mm": 87.0,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 30.3,
+   "perturbation": {
+    "dx": 0.00225,
+    "dy": -0.00969,
+    "dyaw": -0.13627,
+    "edge": 1.04295,
+    "mass": 0.7881
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 9,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 2,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 5,
+     "layer": "arm"
+    },
+    "grasp": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "translate": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "release": {
+     "calls": 2,
+     "layer": "contacts"
+    }
+   }
+  },
+  {
+   "case": "1002:0.5",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 205.0,
+    "max_palm_up_while_lifted": 1.0,
+    "max_palm_force_lifted_N": 3.476,
+    "on_open_palm_s": 9.92,
+    "longest_on_open_palm_s": 3.5,
+    "final_offset_mm": 61.0,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 26.3,
+   "perturbation": {
+    "dx": -0.00238,
+    "dy": -0.00286,
+    "dyaw": 0.10804,
+    "edge": 0.98674,
+    "mass": 0.91857
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 7,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 2,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 5,
+     "layer": "arm"
+    },
+    "grasp": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "translate": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "release": {
+     "calls": 2,
+     "layer": "contacts"
+    }
+   }
+  },
+  {
+   "case": "1005:1",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 203.9,
+    "max_palm_up_while_lifted": 1.0,
+    "max_palm_force_lifted_N": 0.912,
+    "on_open_palm_s": 9.22,
+    "longest_on_open_palm_s": 4.24,
+    "final_offset_mm": 44.5,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 26.3,
+   "perturbation": {
+    "dx": -0.01671,
+    "dy": 0.01722,
+    "dyaw": -0.18563,
+    "edge": 1.03325,
+    "mass": 1.33479
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 7,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 2,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 5,
+     "layer": "arm"
+    },
+    "grasp": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "translate": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "release": {
+     "calls": 2,
+     "layer": "contacts"
+    }
+   }
+  },
+  {
+   "case": "1006:1",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 206.8,
+    "max_palm_up_while_lifted": 1.0,
+    "max_palm_force_lifted_N": 0.551,
+    "on_open_palm_s": 9.3,
+    "longest_on_open_palm_s": 3.18,
+    "final_offset_mm": 70.4,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 26.3,
+   "perturbation": {
+    "dx": -0.00652,
+    "dy": 0.00403,
+    "dyaw": -0.17643,
+    "edge": 0.93702,
+    "mass": 1.29977
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 7,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 2,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 5,
+     "layer": "arm"
+    },
+    "grasp": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "translate": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "release": {
+     "calls": 2,
+     "layer": "contacts"
+    }
+   }
+  },
+  {
+   "case": "1007:1",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 209.0,
+    "max_palm_up_while_lifted": 0.956,
+    "max_palm_force_lifted_N": 1.171,
+    "on_open_palm_s": 0.6,
+    "longest_on_open_palm_s": 0.22,
+    "final_offset_mm": 158.7,
+    "final_height_err_mm": -0.0,
+    "resting_flat": true,
+    "on_table": true,
+    "released": true
+   },
+   "error": null,
+   "sim_s": 30.3,
+   "perturbation": {
+    "dx": -0.01715,
+    "dy": 0.01264,
+    "dyaw": 0.12473,
+    "edge": 0.92718,
+    "mass": 1.08882
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 9,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 2,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 5,
+     "layer": "arm"
+    },
+    "grasp": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "translate": {
+     "calls": 1,
+     "layer": "contacts"
+    },
+    "release": {
+     "calls": 2,
+     "layer": "contacts"
+    }
+   }
+  }
+ ]
+}

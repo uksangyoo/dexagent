@@ -1,0 +1,252 @@
+{
+ "task": "cube_reorient",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/cube_reorient/layered/iter_2/policy.py",
+ "level": "layered",
+ "label": "test/cube_reorient/layered/iter2",
+ "n": 6,
+ "successes": 0,
+ "wall_s": 1483.9,
+ "time": "2026-10-22T06:06:00",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": false,
+   "metrics": {
+    "yaw_deg": 34.9,
+    "yaw_error_deg": 55.1,
+    "max_abs_yaw_deg": 19.8,
+    "flat": 0.639,
+    "min_flat": 0.607,
+    "height_change_mm": 13.4,
+    "drift_mm": 15.4,
+    "cube_in_palm_mm": [
+     56.9,
+     -5.4,
+     80.2
+    ],
+    "finger_force_N": 4.52,
+    "palm_force_N": 4.62,
+    "resting_on_palm": false,
+    "left_palm": false,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 17.6,
+   "perturbation": {
+    "dy_palm": 0.0,
+    "dz_palm": 0.0,
+    "dyaw": -0.0,
+    "edge": 1.0,
+    "mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 55,
+     "layer": "fingertips"
+    }
+   }
+  },
+  {
+   "case": "1001:0.5",
+   "success": false,
+   "metrics": {
+    "yaw_deg": -1.0,
+    "yaw_error_deg": 89.0,
+    "max_abs_yaw_deg": 30.4,
+    "flat": 0.997,
+    "min_flat": 0.711,
+    "height_change_mm": -252.4,
+    "drift_mm": 106.3,
+    "cube_in_palm_mm": [
+     -208.5,
+     -104.7,
+     48.0
+    ],
+    "finger_force_N": 0.0,
+    "palm_force_N": 0.0,
+    "resting_on_palm": false,
+    "left_palm": true,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 18.08,
+   "perturbation": {
+    "dy_palm": 0.00113,
+    "dz_palm": -0.00726,
+    "dyaw": -0.13627,
+    "edge": 1.04295,
+    "mass": 0.7881
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 59,
+     "layer": "fingertips"
+    }
+   }
+  },
+  {
+   "case": "1002:0.5",
+   "success": false,
+   "metrics": {
+    "yaw_deg": -13.0,
+    "yaw_error_deg": 77.0,
+    "max_abs_yaw_deg": 8.3,
+    "flat": 0.831,
+    "min_flat": 0.706,
+    "height_change_mm": 9.3,
+    "drift_mm": 23.3,
+    "cube_in_palm_mm": [
+     52.6,
+     -16.0,
+     45.7
+    ],
+    "finger_force_N": 0.13,
+    "palm_force_N": 0.0,
+    "resting_on_palm": false,
+    "left_palm": false,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 13.34,
+   "perturbation": {
+    "dy_palm": -0.00119,
+    "dz_palm": -0.00214,
+    "dyaw": 0.10804,
+    "edge": 0.98674,
+    "mass": 0.91857
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 55,
+     "layer": "fingertips"
+    }
+   }
+  },
+  {
+   "case": "1005:1",
+   "success": false,
+   "metrics": {
+    "yaw_deg": 6.9,
+    "yaw_error_deg": 83.1,
+    "max_abs_yaw_deg": 6.9,
+    "flat": 0.997,
+    "min_flat": 0.978,
+    "height_change_mm": 0.8,
+    "drift_mm": 25.2,
+    "cube_in_palm_mm": [
+     44.9,
+     -7.7,
+     53.5
+    ],
+    "finger_force_N": 25.65,
+    "palm_force_N": 25.8,
+    "resting_on_palm": false,
+    "left_palm": false,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 41.0,
+   "perturbation": {
+    "dy_palm": -0.00836,
+    "dz_palm": 0.01292,
+    "dyaw": -0.18563,
+    "edge": 1.03325,
+    "mass": 1.33479
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 98,
+     "layer": "fingertips"
+    }
+   }
+  },
+  {
+   "case": "1006:1",
+   "success": false,
+   "metrics": {
+    "yaw_deg": -29.5,
+    "yaw_error_deg": 60.5,
+    "max_abs_yaw_deg": 27.2,
+    "flat": 0.815,
+    "min_flat": 0.694,
+    "height_change_mm": 0.9,
+    "drift_mm": 65.1,
+    "cube_in_palm_mm": [
+     42.9,
+     -26.6,
+     8.1
+    ],
+    "finger_force_N": 10.21,
+    "palm_force_N": 7.28,
+    "resting_on_palm": false,
+    "left_palm": false,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 11.92,
+   "perturbation": {
+    "dy_palm": -0.00326,
+    "dz_palm": 0.00303,
+    "dyaw": -0.17643,
+    "edge": 0.93702,
+    "mass": 1.29977
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 37,
+     "layer": "fingertips"
+    }
+   }
+  },
+  {
+   "case": "1007:1",
+   "success": false,
+   "metrics": {
+    "yaw_deg": 9.4,
+    "yaw_error_deg": 80.6,
+    "max_abs_yaw_deg": 12.9,
+    "flat": 0.999,
+    "min_flat": 0.983,
+    "height_change_mm": 2.5,
+    "drift_mm": 51.4,
+    "cube_in_palm_mm": [
+     43.8,
+     -12.3,
+     24.1
+    ],
+    "finger_force_N": 9.01,
+    "palm_force_N": 2.78,
+    "resting_on_palm": false,
+    "left_palm": false,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 41.48,
+   "perturbation": {
+    "dy_palm": -0.00858,
+    "dz_palm": 0.00948,
+    "dyaw": 0.12473,
+    "edge": 0.92718,
+    "mass": 1.08882
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 104,
+     "layer": "fingertips"
+    }
+   }
+  }
+ ]
+}

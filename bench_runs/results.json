@@ -1,0 +1,4850 @@
+{
+ "cells": [
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     2
+    ],
+    "0.5": [
+     0,
+     2
+    ],
+    "1": [
+     0,
+     2
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/baoding/contacts",
+   "task": "baoding",
+   "level": "contacts",
+   "iters_used": 2,
+   "dev_rate": [
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    17.2,
+    36.3
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "2",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {
+    "fingertips": 28,
+    "force": 7,
+    "arm": 915
+   },
+   "workdir": "bench_runs/agents/baoding/force",
+   "task": "baoding",
+   "level": "force",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    19.3,
+    36.0,
+    52.3,
+    73.4
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/baoding/joints",
+   "task": "baoding",
+   "level": "joints",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    43.5,
+    247.2,
+    269.3,
+    269.5
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "6",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {
+    "fingertips": 558
+   },
+   "workdir": "bench_runs/agents/baoding/layered",
+   "task": "baoding",
+   "level": "layered",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    10.1,
+    29.5,
+    197.1,
+    234.0
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     6
+    ],
+    "0.5": [
+     0,
+     6
+    ],
+    "1": [
+     0,
+     6
+    ]
+   },
+   "layers_last_iter": {
+    "fingertips": 553,
+    "force": 4
+   },
+   "workdir": "bench_runs/agents/baoding/skills",
+   "task": "baoding",
+   "level": "skills",
+   "iters_used": 6,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    1.4,
+    5.1,
+    8.4,
+    11.9,
+    14.9,
+    18.9
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "2",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/baoding/synergies",
+   "task": "baoding",
+   "level": "synergies",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    8.6,
+    32.1,
+    45.1,
+    257.4
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "2",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     1,
+     4
+    ],
+    "0.5": [
+     1,
+     4
+    ],
+    "1": [
+     1,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/cap_twist/contacts",
+   "task": "cap_twist",
+   "level": "contacts",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "minutes": [
+    19.9,
+    42.8,
+    51.8,
+    71.2
+   ],
+   "first_2of3": 5,
+   "first_3of3": 5,
+   "final": "5",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     2
+    ],
+    "0.5": [
+     2,
+     2
+    ],
+    "1": [
+     2,
+     2
+    ]
+   },
+   "layers_last_iter": {
+    "joints": 3,
+    "fingertips": 48,
+    "arm": 3,
+    "force": 42,
+    "contacts": 42
+   },
+   "workdir": "bench_runs/agents/cap_twist/force",
+   "task": "cap_twist",
+   "level": "force",
+   "iters_used": 2,
+   "dev_rate": [
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    14.4,
+    42.6
+   ],
+   "first_2of3": 1,
+   "first_3of3": 1,
+   "final": "2",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     4
+    ],
+    "0.5": [
+     2,
+     4
+    ],
+    "1": [
+     2,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/cap_twist/joints",
+   "task": "cap_twist",
+   "level": "joints",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    20.2,
+    36.4,
+    48.2,
+    70.3
+   ],
+   "first_2of3": 3,
+   "first_3of3": 3,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     3
+    ],
+    "0.5": [
+     2,
+     3
+    ],
+    "1": [
+     2,
+     3
+    ]
+   },
+   "layers_last_iter": {
+    "joints": 18,
+    "fingertips": 178,
+    "arm": 3,
+    "contacts": 2170
+   },
+   "workdir": "bench_runs/agents/cap_twist/layered",
+   "task": "cap_twist",
+   "level": "layered",
+   "iters_used": 3,
+   "dev_rate": [
+    0.0,
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    0.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    48.0,
+    239.7,
+    254.8
+   ],
+   "first_2of3": 3,
+   "first_3of3": 3,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     3
+    ],
+    "0.5": [
+     2,
+     3
+    ],
+    "1": [
+     3,
+     3
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/cap_twist/synergies",
+   "task": "cap_twist",
+   "level": "synergies",
+   "iters_used": 3,
+   "dev_rate": [
+    0.3333333333333333,
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    0.3333333333333333,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    50.1,
+    69.3,
+    216.9
+   ],
+   "first_2of3": 2,
+   "first_3of3": 2,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     3,
+     3
+    ],
+    "0.5": [
+     3,
+     3
+    ],
+    "1": [
+     2,
+     3
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/card_pickup/contacts",
+   "task": "card_pickup",
+   "level": "contacts",
+   "iters_used": 3,
+   "dev_rate": [
+    0.6666666666666666,
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    0.6666666666666666,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    10.8,
+    42.9,
+    51.2
+   ],
+   "first_2of3": 1,
+   "first_3of3": 2,
+   "final": "3",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     2
+    ],
+    "0.5": [
+     2,
+     2
+    ],
+    "1": [
+     2,
+     2
+    ]
+   },
+   "layers_last_iter": {
+    "joints": 6,
+    "contacts": 6,
+    "fingertips": 12,
+    "arm": 33,
+    "force": 9
+   },
+   "workdir": "bench_runs/agents/card_pickup/force",
+   "task": "card_pickup",
+   "level": "force",
+   "iters_used": 2,
+   "dev_rate": [
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    14.9,
+    51.5
+   ],
+   "first_2of3": 1,
+   "first_3of3": 1,
+   "final": "2",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     3
+    ],
+    "0.5": [
+     2,
+     3
+    ],
+    "1": [
+     2,
+     3
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/card_pickup/joints",
+   "task": "card_pickup",
+   "level": "joints",
+   "iters_used": 3,
+   "dev_rate": [
+    0.0,
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    0.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    7.1,
+    17.5,
+    39.5
+   ],
+   "first_2of3": 2,
+   "first_3of3": 2,
+   "final": "3",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     3
+    ],
+    "0.5": [
+     2,
+     3
+    ],
+    "1": [
+     2,
+     3
+    ]
+   },
+   "layers_last_iter": {
+    "contacts": 6,
+    "fingertips": 6,
+    "arm": 39
+   },
+   "workdir": "bench_runs/agents/card_pickup/layered",
+   "task": "card_pickup",
+   "level": "layered",
+   "iters_used": 3,
+   "dev_rate": [
+    0.0,
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    0.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    26.2,
+    183.9,
+    205.4
+   ],
+   "first_2of3": 3,
+   "first_3of3": 3,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     3
+    ],
+    "0.5": [
+     2,
+     3
+    ],
+    "1": [
+     2,
+     3
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/card_pickup/synergies",
+   "task": "card_pickup",
+   "level": "synergies",
+   "iters_used": 3,
+   "dev_rate": [
+    0.0,
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    0.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    9.8,
+    23.7,
+    185.3
+   ],
+   "first_2of3": 2,
+   "first_3of3": 2,
+   "final": "3",
+   "test": {
+    "n": 6,
+    "successes": 5,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      2,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     4
+    ],
+    "0.5": [
+     2,
+     4
+    ],
+    "1": [
+     1,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/cube_palm/contacts",
+   "task": "cube_palm",
+   "level": "contacts",
+   "iters_used": 4,
+   "dev_rate": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.6666666666666666,
+    0.3333333333333333
+   ],
+   "dev_curve": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.6666666666666666,
+    0.3333333333333333
+   ],
+   "minutes": [
+    11.1,
+    36.9,
+    67.4,
+    81.3
+   ],
+   "first_2of3": 5,
+   "first_3of3": null,
+   "final": "5",
+   "test": {
+    "n": 6,
+    "successes": 2,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      1,
+      2
+     ],
+     "1": [
+      1,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     2
+    ],
+    "0.5": [
+     2,
+     2
+    ],
+    "1": [
+     2,
+     2
+    ]
+   },
+   "layers_last_iter": {
+    "joints": 9,
+    "fingertips": 12,
+    "arm": 42,
+    "force": 12,
+    "contacts": 32
+   },
+   "workdir": "bench_runs/agents/cube_palm/force",
+   "task": "cube_palm",
+   "level": "force",
+   "iters_used": 2,
+   "dev_rate": [
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    37.5,
+    48.7
+   ],
+   "first_2of3": 1,
+   "first_3of3": 1,
+   "final": "2",
+   "test": {
+    "n": 6,
+    "successes": 5,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      2,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     1,
+     4
+    ],
+    "1": [
+     2,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/cube_palm/joints",
+   "task": "cube_palm",
+   "level": "joints",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.6666666666666666,
+    0.3333333333333333
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.6666666666666666,
+    0.3333333333333333
+   ],
+   "minutes": [
+    40.6,
+    253.3,
+    263.2,
+    278.1
+   ],
+   "first_2of3": 5,
+   "first_3of3": null,
+   "final": "5",
+   "test": {
+    "n": 6,
+    "successes": 5,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     3,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     3,
+     4
+    ]
+   },
+   "layers_last_iter": {
+    "joints": 25,
+    "fingertips": 6,
+    "arm": 15,
+    "contacts": 32
+   },
+   "workdir": "bench_runs/agents/cube_palm/layered",
+   "task": "cube_palm",
+   "level": "layered",
+   "iters_used": 4,
+   "dev_rate": [
+    0.3333333333333333,
+    0.6666666666666666,
+    0.6666666666666666,
+    0.3333333333333333
+   ],
+   "dev_curve": [
+    0.3333333333333333,
+    0.6666666666666666,
+    0.6666666666666666,
+    0.3333333333333333
+   ],
+   "minutes": [
+    49.7,
+    70.2,
+    88.6,
+    95.6
+   ],
+   "first_2of3": 3,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 4,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      1,
+      2
+     ],
+     "1": [
+      2,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     4
+    ],
+    "0.5": [
+     2,
+     4
+    ],
+    "1": [
+     3,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/cube_palm/synergies",
+   "task": "cube_palm",
+   "level": "synergies",
+   "iters_used": 4,
+   "dev_rate": [
+    0.3333333333333333,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    0.3333333333333333,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    35.3,
+    53.7,
+    232.8,
+    247.9
+   ],
+   "first_2of3": 4,
+   "first_3of3": 4,
+   "final": "5",
+   "test": {
+    "n": 6,
+    "successes": 5,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      2,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     2
+    ],
+    "0.5": [
+     2,
+     2
+    ],
+    "1": [
+     2,
+     2
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/cube_pinch/contacts",
+   "task": "cube_pinch",
+   "level": "contacts",
+   "iters_used": 2,
+   "dev_rate": [
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    8.0,
+    14.9
+   ],
+   "first_2of3": 1,
+   "first_3of3": 1,
+   "final": "2",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     2
+    ],
+    "0.5": [
+     2,
+     2
+    ],
+    "1": [
+     2,
+     2
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/cube_pinch/fingertips",
+   "task": "cube_pinch",
+   "level": "fingertips",
+   "iters_used": 2,
+   "dev_rate": [
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    4.7,
+    14.7
+   ],
+   "first_2of3": 1,
+   "first_3of3": 1,
+   "final": "1",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     2
+    ],
+    "0.5": [
+     2,
+     2
+    ],
+    "1": [
+     2,
+     2
+    ]
+   },
+   "layers_last_iter": {
+    "joints": 3,
+    "contacts": 3,
+    "fingertips": 9,
+    "arm": 39,
+    "force": 6
+   },
+   "workdir": "bench_runs/agents/cube_pinch/force",
+   "task": "cube_pinch",
+   "level": "force",
+   "iters_used": 2,
+   "dev_rate": [
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    49.7,
+    62.7
+   ],
+   "first_2of3": 1,
+   "first_3of3": 1,
+   "final": "2",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     2
+    ],
+    "0.5": [
+     2,
+     2
+    ],
+    "1": [
+     2,
+     2
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/cube_pinch/joints",
+   "task": "cube_pinch",
+   "level": "joints",
+   "iters_used": 2,
+   "dev_rate": [
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    11.1,
+    25.1
+   ],
+   "first_2of3": 1,
+   "first_3of3": 1,
+   "final": "2",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     2
+    ],
+    "0.5": [
+     2,
+     2
+    ],
+    "1": [
+     2,
+     2
+    ]
+   },
+   "layers_last_iter": {
+    "contacts": 12,
+    "fingertips": 3,
+    "arm": 33
+   },
+   "workdir": "bench_runs/agents/cube_pinch/layered",
+   "task": "cube_pinch",
+   "level": "layered",
+   "iters_used": 2,
+   "dev_rate": [
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    33.8,
+    51.7
+   ],
+   "first_2of3": 1,
+   "first_3of3": 1,
+   "final": "2",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     2
+    ],
+    "0.5": [
+     2,
+     2
+    ],
+    "1": [
+     2,
+     2
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/cube_pinch/synergies",
+   "task": "cube_pinch",
+   "level": "synergies",
+   "iters_used": 2,
+   "dev_rate": [
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    48.7,
+    71.8
+   ],
+   "first_2of3": 1,
+   "first_3of3": 1,
+   "final": "1",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     1,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/cube_reorient/contacts",
+   "task": "cube_reorient",
+   "level": "contacts",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.3333333333333333
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.3333333333333333
+   ],
+   "minutes": [
+    6.7,
+    32.3,
+    40.8,
+    261.3
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "5",
+   "test": {
+    "n": 6,
+    "successes": 1,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      1,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {
+    "joints": 3
+   },
+   "workdir": "bench_runs/agents/cube_reorient/force",
+   "task": "cube_reorient",
+   "level": "force",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    5.7,
+    35.5,
+    45.3,
+    51.5
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     4
+    ],
+    "0.5": [
+     2,
+     4
+    ],
+    "1": [
+     2,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/cube_reorient/joints",
+   "task": "cube_reorient",
+   "level": "joints",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.3333333333333333,
+    1.0,
+    0.6666666666666666
+   ],
+   "dev_curve": [
+    0.0,
+    0.3333333333333333,
+    1.0,
+    0.6666666666666666
+   ],
+   "minutes": [
+    8.0,
+    33.0,
+    235.9,
+    266.3
+   ],
+   "first_2of3": 5,
+   "first_3of3": 5,
+   "final": "5",
+   "test": {
+    "n": 6,
+    "successes": 5,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      1,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {
+    "fingertips": 400
+   },
+   "workdir": "bench_runs/agents/cube_reorient/layered",
+   "task": "cube_reorient",
+   "level": "layered",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    8.3,
+    22.2,
+    225.4,
+    236.0
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "2",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     1,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/cube_reorient/synergies",
+   "task": "cube_reorient",
+   "level": "synergies",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.3333333333333333
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.3333333333333333
+   ],
+   "minutes": [
+    27.5,
+    253.2,
+    300.7,
+    331.4
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "5",
+   "test": {
+    "n": 6,
+    "successes": 1,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/pen_finger_roll/contacts",
+   "task": "pen_finger_roll",
+   "level": "contacts",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    10.1,
+    35.0,
+    47.1,
+    56.5
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "5",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {
+    "contacts": 3,
+    "fingertips": 334,
+    "arm": 9,
+    "force": 3
+   },
+   "workdir": "bench_runs/agents/pen_finger_roll/force",
+   "task": "pen_finger_roll",
+   "level": "force",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    29.2,
+    54.1,
+    60.1,
+    77.4
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "2",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/pen_finger_roll/joints",
+   "task": "pen_finger_roll",
+   "level": "joints",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    11.6,
+    20.8,
+    34.8,
+    42.4
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {
+    "joints": 3,
+    "fingertips": 18,
+    "arm": 6,
+    "contacts": 33
+   },
+   "workdir": "bench_runs/agents/pen_finger_roll/layered",
+   "task": "pen_finger_roll",
+   "level": "layered",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    20.5,
+    187.3,
+    238.4,
+    245.3
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "5",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     2
+    ],
+    "0.5": [
+     2,
+     2
+    ],
+    "1": [
+     2,
+     2
+    ]
+   },
+   "layers_last_iter": {
+    "joints": 238,
+    "fingertips": 73,
+    "arm": 12,
+    "force": 3
+   },
+   "workdir": "bench_runs/agents/pen_finger_roll/skills",
+   "task": "pen_finger_roll",
+   "level": "skills",
+   "iters_used": 2,
+   "dev_rate": [
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    3.3,
+    6.6
+   ],
+   "first_2of3": 1,
+   "first_3of3": 1,
+   "final": "2",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/pen_finger_roll/synergies",
+   "task": "pen_finger_roll",
+   "level": "synergies",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    6.9,
+    189.9,
+    228.5,
+    246.1
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     3
+    ],
+    "0.5": [
+     0,
+     3
+    ],
+    "1": [
+     0,
+     3
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/pen_gravity_pivot/contacts",
+   "task": "pen_gravity_pivot",
+   "level": "contacts",
+   "iters_used": 3,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    9.1,
+    20.5,
+    63.9
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {
+    "contacts": 3,
+    "fingertips": 6,
+    "arm": 759,
+    "force": 219
+   },
+   "workdir": "bench_runs/agents/pen_gravity_pivot/force",
+   "task": "pen_gravity_pivot",
+   "level": "force",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    17.0,
+    48.7,
+    73.4,
+    90.1
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/pen_gravity_pivot/joints",
+   "task": "pen_gravity_pivot",
+   "level": "joints",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    4.9,
+    28.1,
+    75.7,
+    91.7
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 1,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      1,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     1,
+     4
+    ],
+    "1": [
+     1,
+     4
+    ]
+   },
+   "layers_last_iter": {
+    "joints": 6,
+    "fingertips": 15,
+    "arm": 87
+   },
+   "workdir": "bench_runs/agents/pen_gravity_pivot/layered",
+   "task": "pen_gravity_pivot",
+   "level": "layered",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.6666666666666666,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.6666666666666666,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    16.0,
+    44.0,
+    68.2,
+    79.0
+   ],
+   "first_2of3": 3,
+   "first_3of3": null,
+   "final": "3",
+   "test": {
+    "n": 6,
+    "successes": 3,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      1,
+      2
+     ],
+     "1": [
+      2,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     4,
+     6
+    ],
+    "0.5": [
+     2,
+     6
+    ],
+    "1": [
+     4,
+     6
+    ]
+   },
+   "layers_last_iter": {
+    "joints": 6,
+    "fingertips": 30,
+    "arm": 94,
+    "force": 52
+   },
+   "workdir": "bench_runs/agents/pen_gravity_pivot/skills",
+   "task": "pen_gravity_pivot",
+   "level": "skills",
+   "iters_used": 6,
+   "dev_rate": [
+    0.0,
+    0.0,
+    1.0,
+    0.6666666666666666,
+    0.6666666666666666,
+    1.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    1.0,
+    0.6666666666666666,
+    0.6666666666666666,
+    1.0
+   ],
+   "minutes": [
+    1.2,
+    6.9,
+    15.7,
+    20.2,
+    25.0,
+    29.7
+   ],
+   "first_2of3": 3,
+   "first_3of3": 3,
+   "final": "6",
+   "test": {
+    "n": 6,
+    "successes": 4,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      1,
+      2
+     ],
+     "1": [
+      2,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/pen_gravity_pivot/synergies",
+   "task": "pen_gravity_pivot",
+   "level": "synergies",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    10.8,
+    46.5,
+    58.3,
+    252.4
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "7",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/pen_pickup_pivot/contacts",
+   "task": "pen_pickup_pivot",
+   "level": "contacts",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    3.2,
+    26.2,
+    33.9,
+    61.5
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "2",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {
+    "joints": 3,
+    "fingertips": 38,
+    "arm": 243,
+    "force": 29
+   },
+   "workdir": "bench_runs/agents/pen_pickup_pivot/force",
+   "task": "pen_pickup_pivot",
+   "level": "force",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    12.8,
+    23.7,
+    33.2,
+    56.0
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/pen_pickup_pivot/joints",
+   "task": "pen_pickup_pivot",
+   "level": "joints",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    19.7,
+    27.1,
+    63.3,
+    75.8
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "3",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {
+    "contacts": 12,
+    "fingertips": 240,
+    "arm": 36
+   },
+   "workdir": "bench_runs/agents/pen_pickup_pivot/layered",
+   "task": "pen_pickup_pivot",
+   "level": "layered",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    15.1,
+    265.1,
+    277.2,
+    289.9
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "5",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     6
+    ],
+    "0.5": [
+     0,
+     6
+    ],
+    "1": [
+     0,
+     6
+    ]
+   },
+   "layers_last_iter": {
+    "joints": 6,
+    "fingertips": 83,
+    "arm": 18,
+    "force": 15
+   },
+   "workdir": "bench_runs/agents/pen_pickup_pivot/skills",
+   "task": "pen_pickup_pivot",
+   "level": "skills",
+   "iters_used": 6,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    2.1,
+    6.9,
+    11.2,
+    13.7,
+    15.4,
+    22.2
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/pen_pickup_pivot/synergies",
+   "task": "pen_pickup_pivot",
+   "level": "synergies",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    18.1,
+    29.9,
+    48.6,
+    246.5
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "6",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     3
+    ],
+    "0.5": [
+     2,
+     3
+    ],
+    "1": [
+     2,
+     3
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/pen_table_slide/contacts",
+   "task": "pen_table_slide",
+   "level": "contacts",
+   "iters_used": 3,
+   "dev_rate": [
+    0.0,
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    0.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    5.4,
+    13.6,
+    46.7
+   ],
+   "first_2of3": 2,
+   "first_3of3": 2,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     2,
+     3
+    ],
+    "0.5": [
+     2,
+     3
+    ],
+    "1": [
+     2,
+     3
+    ]
+   },
+   "layers_last_iter": {
+    "contacts": 3,
+    "fingertips": 6,
+    "arm": 87,
+    "force": 9
+   },
+   "workdir": "bench_runs/agents/pen_table_slide/force",
+   "task": "pen_table_slide",
+   "level": "force",
+   "iters_used": 3,
+   "dev_rate": [
+    0.0,
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    0.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    64.2,
+    103.7,
+    108.7
+   ],
+   "first_2of3": 2,
+   "first_3of3": 2,
+   "final": "3",
+   "test": {
+    "n": 6,
+    "successes": 3,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      1,
+      2
+     ],
+     "1": [
+      1,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     1,
+     4
+    ],
+    "0.5": [
+     1,
+     4
+    ],
+    "1": [
+     1,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/pen_table_slide/joints",
+   "task": "pen_table_slide",
+   "level": "joints",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ],
+   "minutes": [
+    7.2,
+    29.8,
+    52.2,
+    310.3
+   ],
+   "first_2of3": 6,
+   "first_3of3": 6,
+   "final": "6",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     3,
+     3
+    ],
+    "0.5": [
+     3,
+     3
+    ],
+    "1": [
+     2,
+     3
+    ]
+   },
+   "layers_last_iter": {
+    "joints": 3,
+    "fingertips": 1750
+   },
+   "workdir": "bench_runs/agents/pen_table_slide/layered",
+   "task": "pen_table_slide",
+   "level": "layered",
+   "iters_used": 3,
+   "dev_rate": [
+    0.6666666666666666,
+    1.0,
+    1.0
+   ],
+   "dev_curve": [
+    0.6666666666666666,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "minutes": [
+    29.2,
+    79.6,
+    102.2
+   ],
+   "first_2of3": 1,
+   "first_3of3": 2,
+   "final": "3",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     1,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/pen_table_slide/synergies",
+   "task": "pen_table_slide",
+   "level": "synergies",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.3333333333333333
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.3333333333333333
+   ],
+   "minutes": [
+    10.5,
+    24.6,
+    40.2,
+    65.8
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "5",
+   "test": {
+    "n": 6,
+    "successes": 2,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      1,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/pen_writing_grasp/contacts",
+   "task": "pen_writing_grasp",
+   "level": "contacts",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    12.5,
+    25.0,
+    31.1,
+    48.2
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "1",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {
+    "contacts": 3,
+    "fingertips": 9,
+    "arm": 621,
+    "force": 3
+   },
+   "workdir": "bench_runs/agents/pen_writing_grasp/force",
+   "task": "pen_writing_grasp",
+   "level": "force",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    15.4,
+    22.3,
+    54.0,
+    78.5
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/pen_writing_grasp/joints",
+   "task": "pen_writing_grasp",
+   "level": "joints",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    20.1,
+    29.6,
+    303.2,
+    340.5
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {
+    "contacts": 3,
+    "fingertips": 14,
+    "arm": 1362
+   },
+   "workdir": "bench_runs/agents/pen_writing_grasp/layered",
+   "task": "pen_writing_grasp",
+   "level": "layered",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    12.1,
+    29.2,
+    241.8,
+    273.4
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     6
+    ],
+    "0.5": [
+     0,
+     6
+    ],
+    "1": [
+     0,
+     6
+    ]
+   },
+   "layers_last_iter": {
+    "contacts": 3,
+    "fingertips": 2366,
+    "arm": 9,
+    "force": 771
+   },
+   "workdir": "bench_runs/agents/pen_writing_grasp/skills",
+   "task": "pen_writing_grasp",
+   "level": "skills",
+   "iters_used": 6,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    1.1,
+    6.9,
+    12.7,
+    20.0,
+    27.3,
+    32.4
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/pen_writing_grasp/synergies",
+   "task": "pen_writing_grasp",
+   "level": "synergies",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    17.8,
+    42.6,
+    60.9,
+    245.7
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "1",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/scissors/contacts",
+   "task": "scissors",
+   "level": "contacts",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    89.3,
+    285.3,
+    306.2,
+    308.0
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "5",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "1": [
+     0,
+     4
+    ],
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {
+    "contacts": 3,
+    "fingertips": 39,
+    "arm": 15,
+    "force": 54
+   },
+   "workdir": "bench_runs/agents/scissors/force",
+   "task": "scissors",
+   "level": "force",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    25.5,
+    78.1,
+    102.6,
+    112.1
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "3",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/scissors/joints",
+   "task": "scissors",
+   "level": "joints",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    13.9,
+    34.1,
+    45.2,
+    75.7
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {
+    "joints": 3,
+    "contacts": 105,
+    "fingertips": 9,
+    "arm": 15
+   },
+   "workdir": "bench_runs/agents/scissors/layered",
+   "task": "scissors",
+   "level": "layered",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    19.6,
+    44.0,
+    63.8,
+    255.0
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     6
+    ],
+    "0.5": [
+     0,
+     6
+    ],
+    "1": [
+     1,
+     6
+    ]
+   },
+   "layers_last_iter": {
+    "joints": 3,
+    "fingertips": 20,
+    "arm": 21,
+    "force": 4
+   },
+   "workdir": "bench_runs/agents/scissors/skills",
+   "task": "scissors",
+   "level": "skills",
+   "iters_used": 6,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.3333333333333333,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.3333333333333333,
+    0.0
+   ],
+   "minutes": [
+    2.0,
+    6.2,
+    10.5,
+    14.5,
+    21.5,
+    25.7
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "5",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  },
+  {
+   "dev_by_severity": {
+    "0": [
+     0,
+     4
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     4
+    ]
+   },
+   "layers_last_iter": {},
+   "workdir": "bench_runs/agents/scissors/synergies",
+   "task": "scissors",
+   "level": "synergies",
+   "iters_used": 4,
+   "dev_rate": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "dev_curve": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "minutes": [
+    27.3,
+    263.2,
+    273.1,
+    284.5
+   ],
+   "first_2of3": null,
+   "first_3of3": null,
+   "final": "4",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "done": true
+  }
+ ],
+ "levels": {
+  "joints": {
+   "cells": 12,
+   "dev_by_severity": {
+    "0": 0.2,
+    "0.5": 0.222,
+    "1": 0.244
+   },
+   "dev_curve_mean": [
+    0.083,
+    0.194,
+    0.389,
+    0.417
+   ],
+   "dev_auc": 0.271,
+   "test_rate": 0.486,
+   "test_by_severity": {
+    "0": 0.417,
+    "0.5": 0.458,
+    "1": 0.528
+   },
+   "tasks_solved_test_80pct": 6,
+   "median_iters_to_2of3": 5.0,
+   "never_2of3": 6
+  },
+  "fingertips": {
+   "cells": 1,
+   "dev_by_severity": {
+    "0": 1.0,
+    "0.5": 1.0,
+    "1": 1.0
+   },
+   "dev_curve_mean": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "dev_auc": 1.0,
+   "test_rate": 1.0,
+   "test_by_severity": {
+    "0": 1.0,
+    "0.5": 1.0,
+    "1": 1.0
+   },
+   "tasks_solved_test_80pct": 1,
+   "median_iters_to_2of3": 1.0,
+   "never_2of3": 0
+  },
+  "synergies": {
+   "cells": 12,
+   "dev_by_severity": {
+    "0": 0.227,
+    "0.5": 0.182,
+    "1": 0.227
+   },
+   "dev_curve_mean": [
+    0.139,
+    0.25,
+    0.333,
+    0.389
+   ],
+   "dev_auc": 0.278,
+   "test_rate": 0.347,
+   "test_by_severity": {
+    "0": 0.5,
+    "0.5": 0.333,
+    "1": 0.306
+   },
+   "tasks_solved_test_80pct": 4,
+   "median_iters_to_2of3": 5.0,
+   "never_2of3": 8
+  },
+  "contacts": {
+   "cells": 12,
+   "dev_by_severity": {
+    "0": 0.244,
+    "0.5": 0.268,
+    "1": 0.195
+   },
+   "dev_curve_mean": [
+    0.167,
+    0.278,
+    0.306,
+    0.389
+   ],
+   "dev_auc": 0.285,
+   "test_rate": 0.375,
+   "test_by_severity": {
+    "0": 0.333,
+    "0.5": 0.375,
+    "1": 0.389
+   },
+   "tasks_solved_test_80pct": 4,
+   "median_iters_to_2of3": 5.0,
+   "never_2of3": 7
+  },
+  "layered": {
+   "cells": 12,
+   "dev_by_severity": {
+    "0": 0.279,
+    "0.5": 0.233,
+    "1": 0.279
+   },
+   "dev_curve_mean": [
+    0.167,
+    0.444,
+    0.389,
+    0.361
+   ],
+   "dev_auc": 0.34,
+   "test_rate": 0.431,
+   "test_by_severity": {
+    "0": 0.417,
+    "0.5": 0.417,
+    "1": 0.444
+   },
+   "tasks_solved_test_80pct": 4,
+   "median_iters_to_2of3": 4.0,
+   "never_2of3": 6
+  },
+  "force": {
+   "cells": 12,
+   "dev_by_severity": {
+    "0": 0.256,
+    "0.5": 0.256,
+    "1": 0.256
+   },
+   "dev_curve_mean": [
+    0.333,
+    0.417,
+    0.417,
+    0.417
+   ],
+   "dev_auc": 0.396,
+   "test_rate": 0.361,
+   "test_by_severity": {
+    "0": 0.417,
+    "0.5": 0.375,
+    "1": 0.333
+   },
+   "tasks_solved_test_80pct": 4,
+   "median_iters_to_2of3": 5.0,
+   "never_2of3": 7
+  },
+  "skills": {
+   "cells": 6,
+   "dev_by_severity": {
+    "0": 0.188,
+    "0.5": 0.125,
+    "1": 0.219
+   },
+   "dev_curve_mean": [
+    0.167,
+    0.167,
+    0.333,
+    0.278,
+    0.333,
+    0.333
+   ],
+   "dev_auc": 0.269,
+   "test_rate": 0.278,
+   "test_by_severity": {
+    "0": 0.333,
+    "0.5": 0.25,
+    "1": 0.278
+   },
+   "tasks_solved_test_80pct": 1,
+   "median_iters_to_2of3": 7.0,
+   "never_2of3": 4
+  }
+ },
+ "expert": {
+  "baoding": {
+   "n": 10,
+   "successes": 0,
+   "by_severity": {
+    "0": [
+     0,
+     1
+    ],
+    "0.5": [
+     0,
+     4
+    ],
+    "1": [
+     0,
+     5
+    ]
+   }
+  },
+  "cap_twist": {
+   "n": 10,
+   "successes": 10,
+   "by_severity": {
+    "0": [
+     1,
+     1
+    ],
+    "0.5": [
+     4,
+     4
+    ],
+    "1": [
+     5,
+     5
+    ]
+   }
+  },
+  "card_pickup": {
+   "n": 10,
+   "successes": 10,
+   "by_severity": {
+    "0": [
+     1,
+     1
+    ],
+    "0.5": [
+     4,
+     4
+    ],
+    "1": [
+     5,
+     5
+    ]
+   }
+  },
+  "cube_palm": {
+   "n": 10,
+   "successes": 7,
+   "by_severity": {
+    "0": [
+     1,
+     1
+    ],
+    "0.5": [
+     3,
+     4
+    ],
+    "1": [
+     3,
+     5
+    ]
+   }
+  },
+  "cube_pinch": {
+   "n": 10,
+   "successes": 10,
+   "by_severity": {
+    "0": [
+     1,
+     1
+    ],
+    "0.5": [
+     4,
+     4
+    ],
+    "1": [
+     5,
+     5
+    ]
+   }
+  },
+  "cube_reorient": {
+   "n": 10,
+   "successes": 4,
+   "by_severity": {
+    "0": [
+     1,
+     1
+    ],
+    "0.5": [
+     2,
+     4
+    ],
+    "1": [
+     1,
+     5
+    ]
+   }
+  },
+  "pen_finger_roll": {
+   "n": 10,
+   "successes": 10,
+   "by_severity": {
+    "0": [
+     1,
+     1
+    ],
+    "0.5": [
+     4,
+     4
+    ],
+    "1": [
+     5,
+     5
+    ]
+   }
+  },
+  "pen_gravity_pivot": {
+   "n": 10,
+   "successes": 8,
+   "by_severity": {
+    "0": [
+     1,
+     1
+    ],
+    "0.5": [
+     4,
+     4
+    ],
+    "1": [
+     3,
+     5
+    ]
+   }
+  },
+  "pen_pickup_pivot": {
+   "n": 10,
+   "successes": 4,
+   "by_severity": {
+    "0": [
+     1,
+     1
+    ],
+    "0.5": [
+     1,
+     4
+    ],
+    "1": [
+     2,
+     5
+    ]
+   }
+  },
+  "pen_table_slide": {
+   "n": 10,
+   "successes": 10,
+   "by_severity": {
+    "0": [
+     1,
+     1
+    ],
+    "0.5": [
+     4,
+     4
+    ],
+    "1": [
+     5,
+     5
+    ]
+   }
+  },
+  "pen_writing_grasp": {
+   "n": 10,
+   "successes": 7,
+   "by_severity": {
+    "0": [
+     1,
+     1
+    ],
+    "0.5": [
+     2,
+     4
+    ],
+    "1": [
+     4,
+     5
+    ]
+   }
+  },
+  "scissors": {
+   "n": 10,
+   "successes": 7,
+   "by_severity": {
+    "0": [
+     1,
+     1
+    ],
+    "0.5": [
+     3,
+     4
+    ],
+    "1": [
+     3,
+     5
+    ]
+   }
+  }
+ },
+ "best": {
+  "baoding": {
+   "level": "contacts",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "policy": "bench_runs/agents/baoding/contacts/iter_2/policy.py"
+  },
+  "cap_twist": {
+   "level": "force",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "policy": "bench_runs/agents/cap_twist/force/iter_2/policy.py"
+  },
+  "card_pickup": {
+   "level": "force",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "policy": "bench_runs/agents/card_pickup/force/iter_2/policy.py"
+  },
+  "cube_palm": {
+   "level": "force",
+   "test": {
+    "n": 6,
+    "successes": 5,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      2,
+      3
+     ]
+    }
+   },
+   "policy": "bench_runs/agents/cube_palm/force/iter_2/policy.py"
+  },
+  "cube_pinch": {
+   "level": "contacts",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "policy": "bench_runs/agents/cube_pinch/contacts/iter_2/policy.py"
+  },
+  "cube_reorient": {
+   "level": "joints",
+   "test": {
+    "n": 6,
+    "successes": 5,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      1,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "policy": "bench_runs/agents/cube_reorient/joints/iter_5/policy.py"
+  },
+  "pen_finger_roll": {
+   "level": "skills",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "policy": "bench_runs/agents/pen_finger_roll/skills/iter_2/policy.py"
+  },
+  "pen_gravity_pivot": {
+   "level": "skills",
+   "test": {
+    "n": 6,
+    "successes": 4,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      1,
+      2
+     ],
+     "1": [
+      2,
+      3
+     ]
+    }
+   },
+   "policy": "bench_runs/agents/pen_gravity_pivot/skills/iter_6/policy.py"
+  },
+  "pen_pickup_pivot": {
+   "level": "contacts",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "policy": "bench_runs/agents/pen_pickup_pivot/contacts/iter_2/policy.py"
+  },
+  "pen_table_slide": {
+   "level": "layered",
+   "test": {
+    "n": 6,
+    "successes": 6,
+    "by_severity": {
+     "0": [
+      1,
+      1
+     ],
+     "0.5": [
+      2,
+      2
+     ],
+     "1": [
+      3,
+      3
+     ]
+    }
+   },
+   "policy": "bench_runs/agents/pen_table_slide/layered/iter_3/policy.py"
+  },
+  "pen_writing_grasp": {
+   "level": "contacts",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "policy": "bench_runs/agents/pen_writing_grasp/contacts/iter_1/policy.py"
+  },
+  "scissors": {
+   "level": "skills",
+   "test": {
+    "n": 6,
+    "successes": 0,
+    "by_severity": {
+     "0": [
+      0,
+      1
+     ],
+     "0.5": [
+      0,
+      2
+     ],
+     "1": [
+      0,
+      3
+     ]
+    }
+   },
+   "policy": "bench_runs/agents/scissors/skills/iter_5/policy.py"
+  }
+ }
+}

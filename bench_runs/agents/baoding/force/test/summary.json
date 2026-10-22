@@ -1,0 +1,234 @@
+{
+ "task": "baoding",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/baoding/force/iter_4/policy.py",
+ "level": "force",
+ "label": "test/baoding/force/iter4",
+ "n": 6,
+ "successes": 0,
+ "wall_s": 1076.1,
+ "time": "2026-10-22T06:49:31",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": false,
+   "metrics": {
+    "swap_deg": 7.2,
+    "max_swap_deg": 93.6,
+    "both_in_hand_end": true,
+    "ever_dropped": false,
+    "final_palm_tilt_deg": 0.6,
+    "max_palm_tilt_deg": 14.5,
+    "ball_centre_dist_end_mm": 40.3
+   },
+   "error": null,
+   "sim_s": 49.0,
+   "perturbation": {
+    "ball_b_dy": 0.0,
+    "ball_b_dz": 0.0,
+    "pair_rot": -0.0,
+    "radius": 1.0,
+    "mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 6,
+     "layer": "fingertips"
+    },
+    "grip": {
+     "calls": 1,
+     "layer": "force"
+    },
+    "carry": {
+     "calls": 457,
+     "layer": "arm"
+    }
+   }
+  },
+  {
+   "case": "1001:0.5",
+   "success": false,
+   "metrics": {
+    "swap_deg": 10.0,
+    "max_swap_deg": 10.0,
+    "both_in_hand_end": true,
+    "ever_dropped": false,
+    "final_palm_tilt_deg": 0.6,
+    "max_palm_tilt_deg": 19.8,
+    "ball_centre_dist_end_mm": 59.7
+   },
+   "error": null,
+   "sim_s": 49.0,
+   "perturbation": {
+    "ball_b_dy": 0.00045,
+    "ball_b_dz": -0.00194,
+    "pair_rot": -0.13627,
+    "radius": 1.03579,
+    "mass": 0.7881
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 6,
+     "layer": "fingertips"
+    },
+    "grip": {
+     "calls": 1,
+     "layer": "force"
+    },
+    "carry": {
+     "calls": 457,
+     "layer": "arm"
+    }
+   }
+  },
+  {
+   "case": "1002:0.5",
+   "success": false,
+   "metrics": {
+    "swap_deg": 9.5,
+    "max_swap_deg": 15.0,
+    "both_in_hand_end": true,
+    "ever_dropped": false,
+    "final_palm_tilt_deg": 0.6,
+    "max_palm_tilt_deg": 24.0,
+    "ball_centre_dist_end_mm": 50.1
+   },
+   "error": null,
+   "sim_s": 49.0,
+   "perturbation": {
+    "ball_b_dy": -0.00048,
+    "ball_b_dz": -0.00057,
+    "pair_rot": 0.10804,
+    "radius": 0.98895,
+    "mass": 0.91857
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 6,
+     "layer": "fingertips"
+    },
+    "grip": {
+     "calls": 1,
+     "layer": "force"
+    },
+    "carry": {
+     "calls": 457,
+     "layer": "arm"
+    }
+   }
+  },
+  {
+   "case": "1005:1",
+   "success": false,
+   "metrics": {
+    "swap_deg": 70.5,
+    "max_swap_deg": 80.8,
+    "both_in_hand_end": true,
+    "ever_dropped": false,
+    "final_palm_tilt_deg": 0.6,
+    "max_palm_tilt_deg": 16.1,
+    "ball_centre_dist_end_mm": 43.4
+   },
+   "error": null,
+   "sim_s": 49.0,
+   "perturbation": {
+    "ball_b_dy": -0.00334,
+    "ball_b_dz": 0.00344,
+    "pair_rot": -0.18563,
+    "radius": 1.02771,
+    "mass": 1.33479
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 6,
+     "layer": "fingertips"
+    },
+    "grip": {
+     "calls": 1,
+     "layer": "force"
+    },
+    "carry": {
+     "calls": 457,
+     "layer": "arm"
+    }
+   }
+  },
+  {
+   "case": "1006:1",
+   "success": false,
+   "metrics": {
+    "swap_deg": 13.5,
+    "max_swap_deg": 15.9,
+    "both_in_hand_end": true,
+    "ever_dropped": false,
+    "final_palm_tilt_deg": 0.6,
+    "max_palm_tilt_deg": 23.9,
+    "ball_centre_dist_end_mm": 36.0
+   },
+   "error": null,
+   "sim_s": 49.0,
+   "perturbation": {
+    "ball_b_dy": -0.0013,
+    "ball_b_dz": 0.00081,
+    "pair_rot": -0.17643,
+    "radius": 0.94751,
+    "mass": 1.29977
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 6,
+     "layer": "fingertips"
+    },
+    "grip": {
+     "calls": 1,
+     "layer": "force"
+    },
+    "carry": {
+     "calls": 457,
+     "layer": "arm"
+    }
+   }
+  },
+  {
+   "case": "1007:1",
+   "success": false,
+   "metrics": {
+    "swap_deg": 7.4,
+    "max_swap_deg": 18.5,
+    "both_in_hand_end": true,
+    "ever_dropped": false,
+    "final_palm_tilt_deg": 0.6,
+    "max_palm_tilt_deg": 24.0,
+    "ball_centre_dist_end_mm": 41.5
+   },
+   "error": null,
+   "sim_s": 49.0,
+   "perturbation": {
+    "ball_b_dy": -0.00343,
+    "ball_b_dz": 0.00253,
+    "pair_rot": 0.12473,
+    "radius": 0.93932,
+    "mass": 1.08882
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 6,
+     "layer": "fingertips"
+    },
+    "grip": {
+     "calls": 1,
+     "layer": "force"
+    },
+    "carry": {
+     "calls": 457,
+     "layer": "arm"
+    }
+   }
+  }
+ ]
+}

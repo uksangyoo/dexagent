@@ -1,0 +1,12 @@
+{
+ "task": "tasks/hand_demos/scissors",
+ "level": "force",
+ "max_iters": 6,
+ "cameras": [
+  "closeup",
+  "loops",
+  "overview",
+  "reference"
+ ],
+ "seed_tag": "skills"
+}

@@ -1,0 +1,180 @@
+{
+ "task": "scissors",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/scissors/joints/iter_4/policy.py",
+ "level": "joints",
+ "label": "test/scissors/joints/iter4",
+ "n": 6,
+ "successes": 0,
+ "wall_s": 741.9,
+ "time": "2026-10-22T06:19:29",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": false,
+   "metrics": {
+    "max_pivot_lift_mm": 226.2,
+    "max_clearance_mm": 187.9,
+    "time_in_air_s": 14.68,
+    "max_open_in_air_deg": 0.0,
+    "cycles_in_air": 0,
+    "cycle_peaks_deg": [],
+    "final_hinge_deg": 0.1,
+    "rest_height_mm": 4.6,
+    "resting_flat": true,
+    "final_offset_mm": 147.0
+   },
+   "error": null,
+   "sim_s": 34.08,
+   "perturbation": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "dyaw": -0.0,
+    "size": 1.0,
+    "mass": 1.0,
+    "pivot_friction": 1.0
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1001:0.5",
+   "success": false,
+   "metrics": {
+    "max_pivot_lift_mm": 225.1,
+    "max_clearance_mm": 190.8,
+    "time_in_air_s": 3.46,
+    "max_open_in_air_deg": 0.0,
+    "cycles_in_air": 0,
+    "cycle_peaks_deg": [],
+    "final_hinge_deg": 0.5,
+    "rest_height_mm": 4.8,
+    "resting_flat": true,
+    "final_offset_mm": 89.8
+   },
+   "error": null,
+   "sim_s": 34.08,
+   "perturbation": {
+    "dx": 0.00225,
+    "dy": -0.00969,
+    "dyaw": -0.13627,
+    "size": 1.03579,
+    "mass": 0.7881,
+    "pivot_friction": 0.85055
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1002:0.5",
+   "success": false,
+   "metrics": {
+    "max_pivot_lift_mm": 231.8,
+    "max_clearance_mm": 197.1,
+    "time_in_air_s": 23.2,
+    "max_open_in_air_deg": 4.3,
+    "cycles_in_air": 0,
+    "cycle_peaks_deg": [],
+    "final_hinge_deg": 0.0,
+    "rest_height_mm": 5.3,
+    "resting_flat": true,
+    "final_offset_mm": 206.9
+   },
+   "error": null,
+   "sim_s": 40.62,
+   "perturbation": {
+    "dx": -0.00238,
+    "dy": -0.00286,
+    "dyaw": 0.10804,
+    "size": 0.98895,
+    "mass": 0.91857,
+    "pivot_friction": 1.02745
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1005:1",
+   "success": false,
+   "metrics": {
+    "max_pivot_lift_mm": 216.0,
+    "max_clearance_mm": 167.8,
+    "time_in_air_s": 3.08,
+    "max_open_in_air_deg": 0.0,
+    "cycles_in_air": 0,
+    "cycle_peaks_deg": [],
+    "final_hinge_deg": 0.1,
+    "rest_height_mm": 4.8,
+    "resting_flat": true,
+    "final_offset_mm": 110.3
+   },
+   "error": null,
+   "sim_s": 34.08,
+   "perturbation": {
+    "dx": -0.01671,
+    "dy": 0.01722,
+    "dyaw": -0.18563,
+    "size": 1.02771,
+    "mass": 1.33479,
+    "pivot_friction": 1.47672
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1006:1",
+   "success": false,
+   "metrics": {
+    "max_pivot_lift_mm": 226.1,
+    "max_clearance_mm": 182.8,
+    "time_in_air_s": 14.68,
+    "max_open_in_air_deg": 0.0,
+    "cycles_in_air": 0,
+    "cycle_peaks_deg": [],
+    "final_hinge_deg": 0.0,
+    "rest_height_mm": 4.4,
+    "resting_flat": true,
+    "final_offset_mm": 131.0
+   },
+   "error": null,
+   "sim_s": 34.08,
+   "perturbation": {
+    "dx": -0.00652,
+    "dy": 0.00403,
+    "dyaw": -0.17643,
+    "size": 0.94751,
+    "mass": 1.29977,
+    "pivot_friction": 0.83505
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1007:1",
+   "success": false,
+   "metrics": {
+    "max_pivot_lift_mm": 227.2,
+    "max_clearance_mm": 185.9,
+    "time_in_air_s": 16.68,
+    "max_open_in_air_deg": 3.2,
+    "cycles_in_air": 0,
+    "cycle_peaks_deg": [],
+    "final_hinge_deg": 4.6,
+    "rest_height_mm": 5.1,
+    "resting_flat": true,
+    "final_offset_mm": 120.4
+   },
+   "error": null,
+   "sim_s": 34.38,
+   "perturbation": {
+    "dx": -0.01715,
+    "dy": 0.01264,
+    "dyaw": 0.12473,
+    "size": 0.93932,
+    "mass": 1.08882,
+    "pivot_friction": 1.39534
+   },
+   "sheet": null,
+   "api_usage": null
+  }
+ ]
+}

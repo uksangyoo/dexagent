@@ -1,0 +1,162 @@
+{
+ "task": "card_pickup",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/card_pickup/joints/iter_3/policy.py",
+ "level": "joints",
+ "label": "test/card_pickup/joints/iter3",
+ "n": 6,
+ "successes": 6,
+ "wall_s": 994.2,
+ "time": "2026-10-22T04:01:35",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": true,
+   "metrics": {
+    "max_slide_on_book_mm": 86.0,
+    "max_tilt_deg": 32.9,
+    "max_lift_mm": 136.0,
+    "final_lift_mm": 133.1,
+    "tile_to_pinch_mm": 25.0
+   },
+   "error": null,
+   "sim_s": 22.86,
+   "perturbation": {
+    "book_dx": 0.0,
+    "book_dy": 0.0,
+    "book_thickness": 1.0,
+    "tile_dx": -0.0,
+    "tile_dy": 0.0,
+    "tile_yaw": -0.0,
+    "tile_size": 1.0,
+    "tile_mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1001:0.5",
+   "success": true,
+   "metrics": {
+    "max_slide_on_book_mm": 77.6,
+    "max_tilt_deg": 30.1,
+    "max_lift_mm": 137.4,
+    "final_lift_mm": 134.4,
+    "tile_to_pinch_mm": 24.9
+   },
+   "error": null,
+   "sim_s": 22.68,
+   "perturbation": {
+    "book_dx": 0.00225,
+    "book_dy": -0.00969,
+    "book_thickness": 0.96877,
+    "tile_dx": 0.00537,
+    "tile_dy": -0.00848,
+    "tile_yaw": -0.13042,
+    "tile_size": 1.01561,
+    "tile_mass": 0.79928
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1002:0.5",
+   "success": true,
+   "metrics": {
+    "max_slide_on_book_mm": 82.6,
+    "max_tilt_deg": 57.4,
+    "max_lift_mm": 125.8,
+    "final_lift_mm": 123.5,
+    "tile_to_pinch_mm": 28.8
+   },
+   "error": null,
+   "sim_s": 23.22,
+   "perturbation": {
+    "book_dx": -0.00238,
+    "book_dy": -0.00286,
+    "book_thickness": 1.02476,
+    "tile_dx": -0.00166,
+    "tile_dy": -0.00326,
+    "tile_yaw": 0.02395,
+    "tile_size": 0.96247,
+    "tile_mass": 0.80983
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1005:1",
+   "success": true,
+   "metrics": {
+    "max_slide_on_book_mm": 99.4,
+    "max_tilt_deg": 32.4,
+    "max_lift_mm": 136.2,
+    "final_lift_mm": 133.6,
+    "tile_to_pinch_mm": 24.8
+   },
+   "error": null,
+   "sim_s": 23.24,
+   "perturbation": {
+    "book_dx": -0.01671,
+    "book_dy": 0.01722,
+    "book_thickness": 0.95746,
+    "tile_dx": 0.00416,
+    "tile_dy": 0.01339,
+    "tile_yaw": 0.41602,
+    "tile_size": 0.91894,
+    "tile_mass": 0.9968
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1006:1",
+   "success": true,
+   "metrics": {
+    "max_slide_on_book_mm": 98.1,
+    "max_tilt_deg": 29.8,
+    "max_lift_mm": 137.4,
+    "final_lift_mm": 134.4,
+    "tile_to_pinch_mm": 24.9
+   },
+   "error": null,
+   "sim_s": 23.2,
+   "perturbation": {
+    "book_dx": -0.00652,
+    "book_dy": 0.00403,
+    "book_thickness": 0.95957,
+    "tile_dx": -0.00787,
+    "tile_dy": 0.01199,
+    "tile_yaw": -0.14395,
+    "tile_size": 0.97739,
+    "tile_mass": 0.85644
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1007:1",
+   "success": true,
+   "metrics": {
+    "max_slide_on_book_mm": 89.6,
+    "max_tilt_deg": 29.6,
+    "max_lift_mm": 137.7,
+    "final_lift_mm": 134.9,
+    "tile_to_pinch_mm": 25.0
+   },
+   "error": null,
+   "sim_s": 23.0,
+   "perturbation": {
+    "book_dx": -0.01715,
+    "book_dy": 0.01264,
+    "book_thickness": 1.02859,
+    "tile_dx": -0.0091,
+    "tile_dy": 0.00355,
+    "tile_yaw": 0.345,
+    "tile_size": 0.98828,
+    "tile_mass": 0.69762
+   },
+   "sheet": null,
+   "api_usage": null
+  }
+ ]
+}

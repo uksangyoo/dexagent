@@ -1,0 +1,258 @@
+{
+ "task": "cap_twist",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/cap_twist/layered/iter_4/policy.py",
+ "level": "layered",
+ "label": "test/cap_twist/layered/iter4",
+ "n": 6,
+ "successes": 6,
+ "wall_s": 3198.2,
+ "time": "2026-10-22T05:09:27",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": true,
+   "metrics": {
+    "lid_turn_deg": 384.1,
+    "max_lid_turn_deg": 385.7,
+    "min_lid_turn_deg": -3.4,
+    "turning_s": 15.54,
+    "palm_yaw_range_while_turning_deg": 0.58,
+    "palm_spread_while_turning_mm": 13.0,
+    "palm_still": true
+   },
+   "error": null,
+   "sim_s": 38.78,
+   "perturbation": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "lid_radius": 1.0,
+    "lid_mass": 1.0,
+    "thread_friction": 1.0
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 6,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 58,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 1,
+     "layer": "arm"
+    },
+    "rotate": {
+     "calls": 700,
+     "layer": "contacts"
+    }
+   }
+  },
+  {
+   "case": "1001:0.5",
+   "success": true,
+   "metrics": {
+    "lid_turn_deg": 384.2,
+    "max_lid_turn_deg": 386.0,
+    "min_lid_turn_deg": -3.4,
+    "turning_s": 15.58,
+    "palm_yaw_range_while_turning_deg": 0.6,
+    "palm_spread_while_turning_mm": 13.4,
+    "palm_still": true
+   },
+   "error": null,
+   "sim_s": 38.78,
+   "perturbation": {
+    "dx": 0.00225,
+    "dy": -0.00969,
+    "lid_radius": 0.96877,
+    "lid_mass": 1.17895,
+    "thread_friction": 0.7881
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 6,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 58,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 1,
+     "layer": "arm"
+    },
+    "rotate": {
+     "calls": 700,
+     "layer": "contacts"
+    }
+   }
+  },
+  {
+   "case": "1002:0.5",
+   "success": true,
+   "metrics": {
+    "lid_turn_deg": 382.4,
+    "max_lid_turn_deg": 384.4,
+    "min_lid_turn_deg": -3.4,
+    "turning_s": 16.0,
+    "palm_yaw_range_while_turning_deg": 0.6,
+    "palm_spread_while_turning_mm": 12.4,
+    "palm_still": true
+   },
+   "error": null,
+   "sim_s": 38.78,
+   "perturbation": {
+    "dx": -0.00238,
+    "dy": -0.00286,
+    "lid_radius": 1.02476,
+    "lid_mass": 0.94475,
+    "thread_friction": 0.91857
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 6,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 58,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 1,
+     "layer": "arm"
+    },
+    "rotate": {
+     "calls": 700,
+     "layer": "contacts"
+    }
+   }
+  },
+  {
+   "case": "1005:1",
+   "success": true,
+   "metrics": {
+    "lid_turn_deg": 386.6,
+    "max_lid_turn_deg": 386.7,
+    "min_lid_turn_deg": -3.4,
+    "turning_s": 14.14,
+    "palm_yaw_range_while_turning_deg": 0.55,
+    "palm_spread_while_turning_mm": 13.4,
+    "palm_still": true
+   },
+   "error": null,
+   "sim_s": 35.68,
+   "perturbation": {
+    "dx": -0.01671,
+    "dy": 0.01722,
+    "lid_radius": 0.95746,
+    "lid_mass": 1.13856,
+    "thread_friction": 1.33479
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 6,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 54,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 1,
+     "layer": "arm"
+    },
+    "rotate": {
+     "calls": 630,
+     "layer": "contacts"
+    }
+   }
+  },
+  {
+   "case": "1006:1",
+   "success": true,
+   "metrics": {
+    "lid_turn_deg": 384.8,
+    "max_lid_turn_deg": 387.2,
+    "min_lid_turn_deg": -3.4,
+    "turning_s": 15.38,
+    "palm_yaw_range_while_turning_deg": 0.61,
+    "palm_spread_while_turning_mm": 13.5,
+    "palm_still": true
+   },
+   "error": null,
+   "sim_s": 38.78,
+   "perturbation": {
+    "dx": -0.00652,
+    "dy": 0.00403,
+    "lid_radius": 0.95957,
+    "lid_mass": 0.73757,
+    "thread_friction": 1.29977
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 6,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 58,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 1,
+     "layer": "arm"
+    },
+    "rotate": {
+     "calls": 700,
+     "layer": "contacts"
+    }
+   }
+  },
+  {
+   "case": "1007:1",
+   "success": true,
+   "metrics": {
+    "lid_turn_deg": 383.7,
+    "max_lid_turn_deg": 385.1,
+    "min_lid_turn_deg": -3.4,
+    "turning_s": 15.7,
+    "palm_yaw_range_while_turning_deg": 0.58,
+    "palm_spread_while_turning_mm": 12.5,
+    "palm_still": true
+   },
+   "error": null,
+   "sim_s": 38.78,
+   "perturbation": {
+    "dx": -0.01715,
+    "dy": 0.01264,
+    "lid_radius": 1.02859,
+    "lid_mass": 0.6966,
+    "thread_friction": 1.08882
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 6,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 58,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 1,
+     "layer": "arm"
+    },
+    "rotate": {
+     "calls": 700,
+     "layer": "contacts"
+    }
+   }
+  }
+ ]
+}

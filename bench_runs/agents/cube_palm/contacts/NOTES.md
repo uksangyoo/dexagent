@@ -1,0 +1,35 @@
+# cube_palm at level contacts
+
+
+## iter 1 (only 1 of 3 cases ran: my `timeout 890` wrapper killed the bench; sev-1 case scored, fail)
+- Plan: yaw palm square to cube, pre-shape thumb (-z face) vs index+middle (+z face) via approach() with object-frame points computed from palm-frame targets, descend, grasp (squeeze 4 mm), lift, roll 180 deg about finger axis in two 90-deg moves (palm origin fixed), translate cube toward palm (-x) in 4 mm steps, release, carry, regrasp, roll back, place, release.
+- Result: pick/lift/roll/regrasp/place all worked (final offset 5.5 mm, flat, released). Fail only on palm carry: cube rested at palm-frame (45, 22, 121) mm on index/middle proximal links (0.07+0.05 N), palm force 0. Palm link region must be further toward the wrist (z < ~0.10).
+- Learned: index IK saturates (4 mm residual) once pads go below palm-x ~56 mm; support surface at z~0.12 is at palm x ~26 mm. Regrasp on the palm works despite 13 mm index residual (finger presses with its side). Never wrap iterate in `timeout`; run it in background.
+
+## restart 2026-10-22 (iter_1 and iter_2 folders above were killed mid-run: neither counts; next run is iter_3 = budget 1 of 4)
+- iter_2 (partial, sev-0 only, not counted): shifting the pinched cube 27 mm toward the wrist then lowering wedged it (thumb 17 N, palm 9.8 N); thumb could not retract at z<~80 mm (IK residual 11 mm) so release left it gripped (palm 0 N) -> 0 s on palm; regrasp dropped the cube in the roll but it landed 54 mm away, flat.
+- Palm geometry (from the palm collision mesh bbox, a datasheet-style lookup, no kinematics): palm face at palm-x ~20-25 mm over palm-z 0..0.10, y -30..41 mm; finger knuckles start at z~0.10. So the cube centre must sit at z <~0.10 for the palm link to carry it.
+- New plan (iter_3): palm up with tilt 0.3; probe pad reachability at runtime with api.reach() (a public fingertips-level IK query, no motion; noted as self-built tooling) to choose the deepest reachable rigid pad path that moves the pinched cube toward the wrist and down to just above the palm; seek palm contact in 3 mm steps; loosen the pinch (squeeze -4 mm x<=3, then lift busy pads); carry; regrasp with the same pinch, back out along the path, roll back, place as iter_1 (5.5 mm offset). Fallbacks: index/middle push with thumb parked high; pour-off over the start.
+- Skills: plan_transfer(api,h,p_up) = reach-grid map + feasible straight/L-shaped pad path search; path_res() = worst pad IK residual along a rigid pad shift; on_palm_ok() = local copy of the success rule. Run summary is buffered and emitted at the end (bench keeps only the last 60 log lines).
+
+## iter 3 (budget 1/4): 1/3 (sev 0.5 pass; sev 0 and 1 fail on placement only)
+- Result: palm carry now works in all 3 cases (2.1-3.8 s on open palm). Reach grid: rigid pad shifts reachable to dz -10 mm at dx 0..-20 mm, then residual grows (dz -20: 3-6 mm; dz -30: 9-16 mm); chosen plans dz -14..-18, dx -25. Transfer pressed the cube onto the palm (5-12 N), loosening (radial squeeze -4 mm x3) dropped finger force to <0.2 N and in 2/3 the cube settled on the palm at z~108 mm; sev 0 settled on the knuckles (palm 0 N) and the index/middle push (thumb parked) moved it to z 96 -> on palm.
+- Failures: sev 1 regrasp with pads at x_off -6 mm left index/middle 14-18 mm short of their targets (pads cannot reach palm-x <~50 mm), weak pinch, cube dropped in the roll back (130 mm away); sev 0 skipped regrasp after the push and the pour-off landed 161 mm away. sev 0.5 placed at 5.9 mm.
+- Next: regrasp pad height chosen by api.reach() (lowest x_off with residual <2 mm), then translate the cube back to the pick-pinch pose (p_up) before rolling; regrasp also after the push fallback; slower roll back (1.5 s); NEW recovery skill: if the cube ends on the table >50 mm away, re-pick (same pick() routine) and place_down() over the start.
+- Skills: pick(api,h,tag) palm-down pinch of a table cube; place_down(api,p0,h,Rd) set held cube at start and release.
+
+## iter 4 (budget 2/4): 1/3 (sev 0.5 pass; sev 0 and 1 fail on the palm carry, both placed within 3 mm by the recovery)
+- Recovery pick-and-place worked twice (final offsets 2.6, 3.1 mm). Reach-chosen regrasp (x_off +12 mm, residual 1.6) gave a 6 N pinch, but translating back to the pick pose with pads high on the faces weakened it (2.6/1.6/1.5 N) and the cube dropped in the roll (landed 36 mm away -> pass by luck).
+- New failure: the transfer over-commands toward the palm (support is met at cube x ~50 mm, not 22+h: flexed knuckles at z~105), wedging the cube at 8-12 N; radial loosen in 4 mm steps then flung it off the palm (sev 1, 36 mm cube) or left it gripped and the push lost it (sev 0). Same nominal start gave different outcomes in iter 3 vs 4: the release of a wedged cube is chaotic.
+- Next: transfer stops at cube x 60 mm, seek in 2 mm steps until palm force >0.03 N; loosen in 2 mm steps (<=6) until fingers <0.2 N; after carrying back, re-seat pads at the pick-pinch points before rolling; whole palm cycle retried once from the table if the cube falls and t<26 s; recovery threshold 30 mm.
+- Skills: palm_cycle() (pick -> palm up -> transfer -> carry -> regrasp -> place, early exit on fall); fallen(), resting(), reset_hand().
+
+## iter 5 (budget 3/4): 2/3 (sev 0 and sev 1 pass; sev 0.5 fail)
+- sev 0: loosen ok, cube on the knuckles -> push put it on the palm (4.2 s on palm); regrasp+roll lost it, recovery re-picked and placed at 2.7 mm. sev 1: first cycle lost the cube (loosen left 1.7/1.4 N grip and lifted the cube to x 61 mm, then the push fallback flung it), the full-cycle retry from the table succeeded (1.94 s on palm, placed 6.5 mm). sev 0.5: same loosen failure, the cube fell out of arm reach (IK residual 4.5 mm) so neither retry nor recovery could pick it.
+- Learned: the remaining failure is the radial loosen from a wedged pinch (chaotic: sometimes lifts/flings the cube). Retry and recovery skills pay off when the cube lands within reach.
+- Next (iter 6, last): sequential loosen: thumb first (-z 4 mm, then +x 4/-z 2 mm), so index+middle press the cube toward the wrist/palm while releasing; then index+middle +z 3 mm steps; radial back-off only as a last resort.
+
+## iter 6 (budget 4/4): 1/3 (sev 0 pass; sev 0.5, 1 fail on the final release)
+- Sequential loosen (thumb first) worked in 4/4 tries: fingers <0.1 N, no flinging; the cube then sat on the knuckles (palm 0 N, z~105) and the index/middle push moved it onto the palm -> palm carry 3.8-4.4 s in all 3 cases (first time 3/3 on the carry).
+- Failure: after the push the cube sits deep (z 83-94 mm); the regrasp becomes a thumb-vs-palm wedge (thumb 12 N, palm 15 N, index/middle ~0), survives the roll, but release() cannot free it -> cube still in the hand at the end (sev 0.5, sev 1). sev 0 lost the first cycle, retry succeeded, placed 57 mm away.
+- FINAL = 5 (best dev result 2/3). Lesson for a next step: after a push, regrasp should first push the cube back out with the thumb (+z) to the pick-pinch depth, or place by tilting the palm-down hand and opening with the thumb lifted off along +x.

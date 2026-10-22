@@ -1,0 +1,11 @@
+{
+ "task": "tasks/inhand/card_pickup",
+ "level": "contacts",
+ "max_iters": 4,
+ "cameras": [
+  "closeup",
+  "edge",
+  "overview",
+  "reference"
+ ]
+}

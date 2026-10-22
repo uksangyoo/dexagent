@@ -1,0 +1,202 @@
+{
+ "task": "baoding",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/baoding/skills/iter_2/policy.py",
+ "level": "force",
+ "label": "test/baoding/skills/iter2",
+ "n": 6,
+ "successes": 0,
+ "wall_s": 200.5,
+ "time": "2026-10-22T07:59:48",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": false,
+   "metrics": {
+    "swap_deg": 103.0,
+    "max_swap_deg": 107.3,
+    "both_in_hand_end": true,
+    "ever_dropped": false,
+    "final_palm_tilt_deg": 0.9,
+    "max_palm_tilt_deg": 7.6,
+    "ball_centre_dist_end_mm": 47.0
+   },
+   "error": null,
+   "sim_s": 17.42,
+   "perturbation": {
+    "ball_b_dy": 0.0,
+    "ball_b_dz": 0.0,
+    "pair_rot": -0.0,
+    "radius": 1.0,
+    "mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 263,
+     "layer": "fingertips"
+    },
+    "grip": {
+     "calls": 8,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1001:0.5",
+   "success": false,
+   "metrics": {
+    "swap_deg": 32.2,
+    "max_swap_deg": 32.2,
+    "both_in_hand_end": false,
+    "ever_dropped": true,
+    "final_palm_tilt_deg": 13.4,
+    "max_palm_tilt_deg": 14.2,
+    "ball_centre_dist_end_mm": 1728.8
+   },
+   "error": null,
+   "sim_s": 5.62,
+   "perturbation": {
+    "ball_b_dy": 0.00045,
+    "ball_b_dz": -0.00194,
+    "pair_rot": -0.13627,
+    "radius": 1.03579,
+    "mass": 0.7881
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 77,
+     "layer": "fingertips"
+    }
+   }
+  },
+  {
+   "case": "1002:0.5",
+   "success": false,
+   "metrics": {
+    "swap_deg": 82.6,
+    "max_swap_deg": 89.8,
+    "both_in_hand_end": true,
+    "ever_dropped": false,
+    "final_palm_tilt_deg": 1.0,
+    "max_palm_tilt_deg": 7.6,
+    "ball_centre_dist_end_mm": 39.1
+   },
+   "error": null,
+   "sim_s": 17.24,
+   "perturbation": {
+    "ball_b_dy": -0.00048,
+    "ball_b_dz": -0.00057,
+    "pair_rot": 0.10804,
+    "radius": 0.98895,
+    "mass": 0.91857
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 260,
+     "layer": "fingertips"
+    },
+    "grip": {
+     "calls": 8,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1005:1",
+   "success": false,
+   "metrics": {
+    "swap_deg": 86.7,
+    "max_swap_deg": 86.8,
+    "both_in_hand_end": true,
+    "ever_dropped": false,
+    "final_palm_tilt_deg": 0.9,
+    "max_palm_tilt_deg": 7.5,
+    "ball_centre_dist_end_mm": 45.4
+   },
+   "error": null,
+   "sim_s": 16.64,
+   "perturbation": {
+    "ball_b_dy": -0.00334,
+    "ball_b_dz": 0.00344,
+    "pair_rot": -0.18563,
+    "radius": 1.02771,
+    "mass": 1.33479
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 250,
+     "layer": "fingertips"
+    },
+    "grip": {
+     "calls": 8,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1006:1",
+   "success": false,
+   "metrics": {
+    "swap_deg": 93.2,
+    "max_swap_deg": 93.2,
+    "both_in_hand_end": true,
+    "ever_dropped": false,
+    "final_palm_tilt_deg": 0.9,
+    "max_palm_tilt_deg": 7.8,
+    "ball_centre_dist_end_mm": 49.4
+   },
+   "error": null,
+   "sim_s": 17.48,
+   "perturbation": {
+    "ball_b_dy": -0.0013,
+    "ball_b_dz": 0.00081,
+    "pair_rot": -0.17643,
+    "radius": 0.94751,
+    "mass": 1.29977
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 264,
+     "layer": "fingertips"
+    },
+    "grip": {
+     "calls": 8,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1007:1",
+   "success": false,
+   "metrics": {
+    "swap_deg": 63.4,
+    "max_swap_deg": 66.0,
+    "both_in_hand_end": true,
+    "ever_dropped": false,
+    "final_palm_tilt_deg": 1.9,
+    "max_palm_tilt_deg": 7.5,
+    "ball_centre_dist_end_mm": 35.7
+   },
+   "error": null,
+   "sim_s": 8.14,
+   "perturbation": {
+    "ball_b_dy": -0.00343,
+    "ball_b_dz": 0.00253,
+    "pair_rot": 0.12473,
+    "radius": 0.93932,
+    "mass": 1.08882
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_tips": {
+     "calls": 119,
+     "layer": "fingertips"
+    }
+   }
+  }
+ ]
+}

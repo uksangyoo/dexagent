@@ -1,0 +1,12 @@
+{
+ "task": "tasks/inhand/cap_twist",
+ "level": "contacts",
+ "max_iters": 4,
+ "cameras": [
+  "closeup",
+  "jar_view",
+  "overview",
+  "reference",
+  "top"
+ ]
+}

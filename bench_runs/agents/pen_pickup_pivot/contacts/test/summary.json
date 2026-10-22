@@ -1,0 +1,168 @@
+{
+ "task": "pen_pickup_pivot",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/pen_pickup_pivot/contacts/iter_2/policy.py",
+ "level": "contacts",
+ "label": "test/pen_pickup_pivot/contacts/iter2",
+ "n": 6,
+ "successes": 0,
+ "wall_s": 1644.1,
+ "time": "2026-10-22T05:42:06",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": false,
+   "metrics": {
+    "max_pivot_deg": 15.7,
+    "min_tilt_standing_on_table_deg": 74.3,
+    "stood_on_end": false,
+    "max_lower_end_height_mm": 0.0,
+    "min_tilt_while_clear_deg": 90.0,
+    "final_lower_end_height_mm": -0.0,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_pivot_deg": 2.2
+   },
+   "error": null,
+   "sim_s": 20.78,
+   "perturbation": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "dyaw": -0.0,
+    "radius": 1.0,
+    "length": 1.0,
+    "mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1001:0.5",
+   "success": false,
+   "metrics": {
+    "max_pivot_deg": 14.1,
+    "min_tilt_standing_on_table_deg": 75.9,
+    "stood_on_end": false,
+    "max_lower_end_height_mm": 0.2,
+    "min_tilt_while_clear_deg": 90.0,
+    "final_lower_end_height_mm": -0.0,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_pivot_deg": 5.9
+   },
+   "error": null,
+   "sim_s": 21.28,
+   "perturbation": {
+    "dx": 0.00225,
+    "dy": -0.00969,
+    "dyaw": -0.13627,
+    "radius": 1.03579,
+    "length": 0.94914,
+    "mass": 0.85055
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1002:0.5",
+   "success": false,
+   "metrics": {
+    "max_pivot_deg": 15.7,
+    "min_tilt_standing_on_table_deg": 74.3,
+    "stood_on_end": false,
+    "max_lower_end_height_mm": 0.0,
+    "min_tilt_while_clear_deg": 90.0,
+    "final_lower_end_height_mm": -0.0,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_pivot_deg": 0.5
+   },
+   "error": null,
+   "sim_s": 20.78,
+   "perturbation": {
+    "dx": -0.00238,
+    "dy": -0.00286,
+    "dyaw": 0.10804,
+    "radius": 0.98895,
+    "length": 0.98046,
+    "mass": 1.02745
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1005:1",
+   "success": false,
+   "metrics": {
+    "max_pivot_deg": 15.2,
+    "min_tilt_standing_on_table_deg": 74.9,
+    "stood_on_end": false,
+    "max_lower_end_height_mm": 0.0,
+    "min_tilt_while_clear_deg": 90.0,
+    "final_lower_end_height_mm": -0.0,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_pivot_deg": 0.1
+   },
+   "error": null,
+   "sim_s": 20.78,
+   "perturbation": {
+    "dx": -0.01671,
+    "dy": 0.01722,
+    "dyaw": -0.18563,
+    "radius": 1.02771,
+    "length": 1.08035,
+    "mass": 1.47672
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1006:1",
+   "success": false,
+   "metrics": {
+    "max_pivot_deg": 16.0,
+    "min_tilt_standing_on_table_deg": 74.0,
+    "stood_on_end": false,
+    "max_lower_end_height_mm": 0.0,
+    "min_tilt_while_clear_deg": 90.0,
+    "final_lower_end_height_mm": -0.0,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_pivot_deg": 0.2
+   },
+   "error": null,
+   "sim_s": 20.78,
+   "perturbation": {
+    "dx": -0.00652,
+    "dy": 0.00403,
+    "dyaw": -0.17643,
+    "radius": 0.94751,
+    "length": 1.07194,
+    "mass": 0.83505
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1007:1",
+   "success": false,
+   "metrics": {
+    "max_pivot_deg": 15.0,
+    "min_tilt_standing_on_table_deg": 75.0,
+    "stood_on_end": false,
+    "max_lower_end_height_mm": 0.0,
+    "min_tilt_while_clear_deg": 90.0,
+    "final_lower_end_height_mm": -0.0,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_pivot_deg": 0.0
+   },
+   "error": null,
+   "sim_s": 20.78,
+   "perturbation": {
+    "dx": -0.01715,
+    "dy": 0.01264,
+    "dyaw": 0.12473,
+    "radius": 0.93932,
+    "length": 1.02132,
+    "mass": 1.39534
+   },
+   "sheet": null,
+   "api_usage": null
+  }
+ ]
+}

@@ -1,0 +1,198 @@
+{
+ "task": "pen_writing_grasp",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/pen_writing_grasp/contacts/iter_1/policy.py",
+ "level": "contacts",
+ "label": "test/pen_writing_grasp/contacts/iter1",
+ "n": 6,
+ "successes": 0,
+ "wall_s": 513.5,
+ "time": "2026-10-22T06:07:07",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": false,
+   "metrics": {
+    "max_tip_height_mm": 110.8,
+    "left_cup": true,
+    "ink_steps": 236,
+    "strokes": 1,
+    "best_stroke_path_mm": 13.5,
+    "best_stroke_extent_mm": 6.8,
+    "best_stroke_contact_fraction": 0.992,
+    "best_stroke_mean_lean_deg": 32.5,
+    "final_tip_height_mm": 3.7,
+    "final_free_of_table_and_cup": false,
+    "final_motion_0p5s_mm": 0.7,
+    "held_at_end": false
+   },
+   "error": null,
+   "sim_s": 21.68,
+   "perturbation": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "lean_x": -0.0,
+    "lean_y": -0.0,
+    "diameter": 1.0,
+    "length": 1.0,
+    "mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1001:0.5",
+   "success": false,
+   "metrics": {
+    "max_tip_height_mm": 109.0,
+    "left_cup": true,
+    "ink_steps": 183,
+    "strokes": 1,
+    "best_stroke_path_mm": 5.9,
+    "best_stroke_extent_mm": 3.0,
+    "best_stroke_contact_fraction": 0.989,
+    "best_stroke_mean_lean_deg": 34.0,
+    "final_tip_height_mm": 3.6,
+    "final_free_of_table_and_cup": false,
+    "final_motion_0p5s_mm": 0.6,
+    "held_at_end": false
+   },
+   "error": null,
+   "sim_s": 21.06,
+   "perturbation": {
+    "dx": 0.00225,
+    "dy": -0.00969,
+    "lean_x": -0.01635,
+    "lean_y": 0.01874,
+    "diameter": 0.95762,
+    "length": 0.97011,
+    "mass": 1.06505
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1002:0.5",
+   "success": false,
+   "metrics": {
+    "max_tip_height_mm": 106.7,
+    "left_cup": true,
+    "ink_steps": 0,
+    "strokes": 0,
+    "best_stroke_path_mm": 0.0,
+    "best_stroke_extent_mm": 0.0,
+    "best_stroke_contact_fraction": 0.0,
+    "best_stroke_mean_lean_deg": null,
+    "final_tip_height_mm": 3.7,
+    "final_free_of_table_and_cup": false,
+    "final_motion_0p5s_mm": 43.3,
+    "held_at_end": false
+   },
+   "error": "Traceback (most recent call last):\n  File \"/home/uyoo/Projects/dexagent/dexagent/bench.py\", line 108, in run_one\n    for _ in gen:\n             ^^^\n  File \"/home/uyoo/Projects/dexagent/bench_runs/agents/pen_writing_grasp/contacts/iter_1/policy.py\", line 41, in run\n    yield from _run(api, diag)\n  File \"/home/uyoo/Projects/dexagent/bench_runs/agents/pen_writing_grasp/contacts/iter_1/policy.py\", line 150, in _run\n    yield from api.carry(Pc + err, Rcmd, seconds=0.4)\n  File \"/home/uyoo/Projects/dexagent/dexagent/levels.py\", line 410, in carry\n    yield from self._go(xyz, R, None, seconds, \"carry\")\n  File \"/home/uyoo/Projects/dexagent/dexagent/levels.py\", line 131, in _go\n    yield from self._c.move(xyz, R, hand, seconds)\n  File \"/home/uyoo/Projects/dexagent/dexagent/hand.py\", line 148, in move\n    self.arm = self.kin.solve_arm(self.xyz, self.R, self.arm, tol=0.004)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: arm IK position residual 18.1 mm for [0.42804165 0.37622356 0.73163719]\n",
+   "sim_s": 14.44,
+   "perturbation": {
+    "dx": -0.00238,
+    "dy": -0.00286,
+    "lean_x": 0.01296,
+    "lean_y": -0.00579,
+    "diameter": 0.98371,
+    "length": 1.00549,
+    "mass": 0.84361
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1005:1",
+   "success": false,
+   "metrics": {
+    "max_tip_height_mm": 110.7,
+    "left_cup": true,
+    "ink_steps": 7,
+    "strokes": 1,
+    "best_stroke_path_mm": 2.4,
+    "best_stroke_extent_mm": 2.3,
+    "best_stroke_contact_fraction": 0.778,
+    "best_stroke_mean_lean_deg": 25.2,
+    "final_tip_height_mm": 4.0,
+    "final_free_of_table_and_cup": false,
+    "final_motion_0p5s_mm": 0.4,
+    "held_at_end": false
+   },
+   "error": null,
+   "sim_s": 16.92,
+   "perturbation": {
+    "dx": -0.01671,
+    "dy": 0.01722,
+    "lean_x": -0.02228,
+    "lean_y": 0.01451,
+    "diameter": 1.06696,
+    "length": 1.09534,
+    "mass": 0.66223
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1006:1",
+   "success": false,
+   "metrics": {
+    "max_tip_height_mm": 110.4,
+    "left_cup": true,
+    "ink_steps": 222,
+    "strokes": 1,
+    "best_stroke_path_mm": 5.1,
+    "best_stroke_extent_mm": 2.1,
+    "best_stroke_contact_fraction": 1.0,
+    "best_stroke_mean_lean_deg": 32.2,
+    "final_tip_height_mm": 4.0,
+    "final_free_of_table_and_cup": false,
+    "final_motion_0p5s_mm": 0.5,
+    "held_at_end": false
+   },
+   "error": null,
+   "sim_s": 20.94,
+   "perturbation": {
+    "dx": -0.00652,
+    "dy": 0.00403,
+    "lean_x": -0.02117,
+    "lean_y": -0.02748,
+    "diameter": 1.05995,
+    "length": 0.96701,
+    "mass": 0.90577
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1007:1",
+   "success": false,
+   "metrics": {
+    "max_tip_height_mm": 107.4,
+    "left_cup": true,
+    "ink_steps": 266,
+    "strokes": 1,
+    "best_stroke_path_mm": 10.1,
+    "best_stroke_extent_mm": 5.0,
+    "best_stroke_contact_fraction": 0.989,
+    "best_stroke_mean_lean_deg": 32.2,
+    "final_tip_height_mm": 3.8,
+    "final_free_of_table_and_cup": false,
+    "final_motion_0p5s_mm": 5.5,
+    "held_at_end": false
+   },
+   "error": null,
+   "sim_s": 22.22,
+   "perturbation": {
+    "dx": -0.01715,
+    "dy": 0.01264,
+    "lean_x": 0.01497,
+    "lean_y": -0.03177,
+    "diameter": 1.01776,
+    "length": 1.07907,
+    "mass": 0.95118
+   },
+   "sheet": null,
+   "api_usage": null
+  }
+ ]
+}

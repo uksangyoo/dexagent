@@ -1,0 +1,10 @@
+{
+ "task": "tasks/hand_demos/pen_gravity_pivot",
+ "level": "synergies",
+ "max_iters": 4,
+ "cameras": [
+  "closeup",
+  "overview",
+  "reference"
+ ]
+}

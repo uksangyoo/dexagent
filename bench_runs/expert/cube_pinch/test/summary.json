@@ -1,0 +1,222 @@
+{
+ "task": "cube_pinch",
+ "policy": "expert",
+ "level": "expert",
+ "label": "expert/test",
+ "n": 10,
+ "successes": 10,
+ "wall_s": 145.8,
+ "time": "2026-10-21T22:19:18",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 125.8,
+    "max_turn_while_lifted_deg": 34.4,
+    "final_offset_mm": 1.0,
+    "resting_flat": true,
+    "on_table": true
+   },
+   "error": null,
+   "sim_s": 11.4,
+   "perturbation": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "dyaw": -0.0,
+    "edge": 1.0,
+    "mass": 1.0
+   },
+   "sheet": null
+  },
+  {
+   "case": "1001:0.5",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 125.5,
+    "max_turn_while_lifted_deg": 38.5,
+    "final_offset_mm": 1.0,
+    "resting_flat": true,
+    "on_table": true
+   },
+   "error": null,
+   "sim_s": 11.4,
+   "perturbation": {
+    "dx": 0.00281,
+    "dy": -0.01211,
+    "dyaw": -0.16353,
+    "edge": 1.05368,
+    "mass": 0.7881
+   },
+   "sheet": null
+  },
+  {
+   "case": "1002:0.5",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 126.2,
+    "max_turn_while_lifted_deg": 30.4,
+    "final_offset_mm": 1.4,
+    "resting_flat": true,
+    "on_table": true
+   },
+   "error": null,
+   "sim_s": 11.4,
+   "perturbation": {
+    "dx": -0.00298,
+    "dy": -0.00357,
+    "dyaw": 0.12965,
+    "edge": 0.98342,
+    "mass": 0.91857
+   },
+   "sheet": null
+  },
+  {
+   "case": "1003:0.5",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 125.4,
+    "max_turn_while_lifted_deg": 34.0,
+    "final_offset_mm": 1.2,
+    "resting_flat": true,
+    "on_table": true
+   },
+   "error": null,
+   "sim_s": 11.4,
+   "perturbation": {
+    "dx": -0.00781,
+    "dy": -0.00608,
+    "dyaw": -0.00279,
+    "edge": 1.02412,
+    "mass": 1.12606
+   },
+   "sheet": null
+  },
+  {
+   "case": "1004:0.5",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 126.5,
+    "max_turn_while_lifted_deg": 43.4,
+    "final_offset_mm": 1.4,
+    "resting_flat": true,
+    "on_table": true
+   },
+   "error": null,
+   "sim_s": 11.4,
+   "perturbation": {
+    "dx": -0.01248,
+    "dy": -0.00925,
+    "dyaw": -0.18929,
+    "edge": 0.9821,
+    "mass": 1.06034
+   },
+   "sheet": null
+  },
+  {
+   "case": "1005:1",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 125.6,
+    "max_turn_while_lifted_deg": 39.1,
+    "final_offset_mm": 0.4,
+    "resting_flat": true,
+    "on_table": true
+   },
+   "error": null,
+   "sim_s": 11.4,
+   "perturbation": {
+    "dx": -0.02089,
+    "dy": 0.02153,
+    "dyaw": -0.22276,
+    "edge": 1.04157,
+    "mass": 1.33479
+   },
+   "sheet": null
+  },
+  {
+   "case": "1006:1",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 127.3,
+    "max_turn_while_lifted_deg": 44.9,
+    "final_offset_mm": 2.1,
+    "resting_flat": true,
+    "on_table": true
+   },
+   "error": null,
+   "sim_s": 11.4,
+   "perturbation": {
+    "dx": -0.00815,
+    "dy": 0.00504,
+    "dyaw": -0.21171,
+    "edge": 0.92127,
+    "mass": 1.29977
+   },
+   "sheet": null
+  },
+  {
+   "case": "1007:1",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 127.7,
+    "max_turn_while_lifted_deg": 35.2,
+    "final_offset_mm": 1.9,
+    "resting_flat": true,
+    "on_table": true
+   },
+   "error": null,
+   "sim_s": 11.4,
+   "perturbation": {
+    "dx": -0.02144,
+    "dy": 0.0158,
+    "dyaw": 0.14967,
+    "edge": 0.90898,
+    "mass": 1.08882
+   },
+   "sheet": null
+  },
+  {
+   "case": "1008:1",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 126.8,
+    "max_turn_while_lifted_deg": 41.2,
+    "final_offset_mm": 1.2,
+    "resting_flat": true,
+    "on_table": true
+   },
+   "error": null,
+   "sim_s": 11.4,
+   "perturbation": {
+    "dx": -0.01664,
+    "dy": 0.01565,
+    "dyaw": -0.2959,
+    "edge": 1.14513,
+    "mass": 1.48319
+   },
+   "sheet": null
+  },
+  {
+   "case": "1009:1",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 127.2,
+    "max_turn_while_lifted_deg": 44.8,
+    "final_offset_mm": 0.8,
+    "resting_flat": true,
+    "on_table": true
+   },
+   "error": null,
+   "sim_s": 11.4,
+   "perturbation": {
+    "dx": -0.02217,
+    "dy": -0.00865,
+    "dyaw": -0.47139,
+    "edge": 0.9344,
+    "mass": 1.32585
+   },
+   "sheet": null
+  }
+ ]
+}

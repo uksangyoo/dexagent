@@ -1,0 +1,4 @@
+{"iter": 1, "time": "2026-10-21T23:08:25", "wall_s": 432.0, "successes": 0, "n": 3, "by_severity": {"0": false, "0.5": false, "1": false}}
+{"iter": 2, "time": "2026-10-21T23:31:00", "wall_s": 1262.6, "successes": 0, "n": 3, "by_severity": {"1": false, "0": false, "0.5": false}}
+{"iter": 4, "time": "2026-10-21T23:53:27", "wall_s": 532.8, "successes": 0, "n": 3, "by_severity": {"1": false, "0": false, "0.5": false}}
+{"iter": 6, "time": "2026-10-22T04:11:33", "wall_s": 1914.7, "successes": 3, "n": 3, "by_severity": {"1": true, "0": true, "0.5": true}}

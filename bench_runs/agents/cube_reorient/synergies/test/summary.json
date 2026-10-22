@@ -1,0 +1,222 @@
+{
+ "task": "cube_reorient",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/cube_reorient/synergies/iter_5/policy.py",
+ "level": "synergies",
+ "label": "test/cube_reorient/synergies/iter5",
+ "n": 6,
+ "successes": 1,
+ "wall_s": 649.4,
+ "time": "2026-10-22T06:59:51",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": true,
+   "metrics": {
+    "yaw_deg": -83.8,
+    "yaw_error_deg": 6.2,
+    "max_abs_yaw_deg": 83.8,
+    "flat": 1.0,
+    "min_flat": 0.746,
+    "height_change_mm": 1.9,
+    "drift_mm": 40.8,
+    "cube_in_palm_mm": [
+     45.4,
+     -14.6,
+     27.7
+    ],
+    "finger_force_N": 0.05,
+    "palm_force_N": 0.07,
+    "resting_on_palm": true,
+    "left_palm": false,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 38.36,
+   "perturbation": {
+    "dy_palm": 0.0,
+    "dz_palm": 0.0,
+    "dyaw": -0.0,
+    "edge": 1.0,
+    "mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1001:0.5",
+   "success": false,
+   "metrics": {
+    "yaw_deg": -61.7,
+    "yaw_error_deg": 28.3,
+    "max_abs_yaw_deg": 62.1,
+    "flat": 0.997,
+    "min_flat": 0.637,
+    "height_change_mm": -249.0,
+    "drift_mm": 147.1,
+    "cube_in_palm_mm": [
+     -205.1,
+     -136.1,
+     5.5
+    ],
+    "finger_force_N": 0.0,
+    "palm_force_N": 0.0,
+    "resting_on_palm": false,
+    "left_palm": true,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 49.34,
+   "perturbation": {
+    "dy_palm": 0.00113,
+    "dz_palm": -0.00726,
+    "dyaw": -0.13627,
+    "edge": 1.04295,
+    "mass": 0.7881
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1002:0.5",
+   "success": false,
+   "metrics": {
+    "yaw_deg": -1.9,
+    "yaw_error_deg": 88.1,
+    "max_abs_yaw_deg": 32.2,
+    "flat": 0.998,
+    "min_flat": 0.85,
+    "height_change_mm": 0.1,
+    "drift_mm": 3.8,
+    "cube_in_palm_mm": [
+     43.4,
+     -4.7,
+     62.5
+    ],
+    "finger_force_N": 0.0,
+    "palm_force_N": 0.11,
+    "resting_on_palm": true,
+    "left_palm": false,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 24.14,
+   "perturbation": {
+    "dy_palm": -0.00119,
+    "dz_palm": -0.00214,
+    "dyaw": 0.10804,
+    "edge": 0.98674,
+    "mass": 0.91857
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1005:1",
+   "success": false,
+   "metrics": {
+    "yaw_deg": 14.4,
+    "yaw_error_deg": 75.6,
+    "max_abs_yaw_deg": 24.0,
+    "flat": 1.0,
+    "min_flat": 0.739,
+    "height_change_mm": 1.9,
+    "drift_mm": 46.6,
+    "cube_in_palm_mm": [
+     46.0,
+     -23.9,
+     34.8
+    ],
+    "finger_force_N": 0.08,
+    "palm_force_N": 0.08,
+    "resting_on_palm": true,
+    "left_palm": false,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 33.84,
+   "perturbation": {
+    "dy_palm": -0.00836,
+    "dz_palm": 0.01292,
+    "dyaw": -0.18563,
+    "edge": 1.03325,
+    "mass": 1.33479
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1006:1",
+   "success": false,
+   "metrics": {
+    "yaw_deg": 4.1,
+    "yaw_error_deg": 85.9,
+    "max_abs_yaw_deg": 4.3,
+    "flat": 0.998,
+    "min_flat": 0.722,
+    "height_change_mm": 1.6,
+    "drift_mm": 34.3,
+    "cube_in_palm_mm": [
+     43.7,
+     -10.6,
+     35.3
+    ],
+    "finger_force_N": 0.06,
+    "palm_force_N": 0.1,
+    "resting_on_palm": true,
+    "left_palm": false,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 33.98,
+   "perturbation": {
+    "dy_palm": -0.00326,
+    "dz_palm": 0.00303,
+    "dyaw": -0.17643,
+    "edge": 0.93702,
+    "mass": 1.29977
+   },
+   "sheet": null,
+   "api_usage": null
+  },
+  {
+   "case": "1007:1",
+   "success": false,
+   "metrics": {
+    "yaw_deg": 10.6,
+    "yaw_error_deg": 79.4,
+    "max_abs_yaw_deg": 18.9,
+    "flat": 0.998,
+    "min_flat": 0.721,
+    "height_change_mm": 2.2,
+    "drift_mm": 41.7,
+    "cube_in_palm_mm": [
+     43.5,
+     -10.4,
+     33.6
+    ],
+    "finger_force_N": 0.0,
+    "palm_force_N": 0.13,
+    "resting_on_palm": true,
+    "left_palm": false,
+    "palm_move_mm": 10.8,
+    "palm_turn_deg": 1.4
+   },
+   "error": null,
+   "sim_s": 37.36,
+   "perturbation": {
+    "dy_palm": -0.00858,
+    "dz_palm": 0.00948,
+    "dyaw": 0.12473,
+    "edge": 0.92718,
+    "mass": 1.08882
+   },
+   "sheet": null,
+   "api_usage": null
+  }
+ ]
+}

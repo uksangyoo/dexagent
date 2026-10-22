@@ -1,0 +1,264 @@
+{
+ "task": "pen_gravity_pivot",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/pen_gravity_pivot/layered/iter_3/policy.py",
+ "level": "layered",
+ "label": "test/pen_gravity_pivot/layered/iter3",
+ "n": 6,
+ "successes": 3,
+ "wall_s": 518.1,
+ "time": "2026-10-22T05:56:07",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 115.6,
+    "level_hold_s": 2.58,
+    "held_level": true,
+    "max_pivot_in_palm_deg": 89.9,
+    "max_swept_world_deg": 89.9,
+    "max_turn_rate_dps": 728.0,
+    "final_pivot_in_palm_deg": 13.4,
+    "final_tilt_from_vertical_deg": 89.3,
+    "final_tilt_max_last_1s_deg": 89.3,
+    "final_lift_min_last_1s_mm": -31.6,
+    "pads_on_pen_min_last_1s": 0
+   },
+   "error": null,
+   "sim_s": 21.08,
+   "perturbation": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "dyaw": -0.0,
+    "radius": 1.0,
+    "length": 1.0,
+    "mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 2,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 5,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 28,
+     "layer": "arm"
+    }
+   }
+  },
+  {
+   "case": "1001:0.5",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 117.2,
+    "level_hold_s": 2.64,
+    "held_level": true,
+    "max_pivot_in_palm_deg": 89.9,
+    "max_swept_world_deg": 89.9,
+    "max_turn_rate_dps": 708.0,
+    "final_pivot_in_palm_deg": 13.3,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_tilt_max_last_1s_deg": 90.0,
+    "final_lift_min_last_1s_mm": -30.5,
+    "pads_on_pen_min_last_1s": 0
+   },
+   "error": null,
+   "sim_s": 21.08,
+   "perturbation": {
+    "dx": 0.00225,
+    "dy": -0.00969,
+    "dyaw": -0.13627,
+    "radius": 1.03579,
+    "length": 0.95762,
+    "mass": 0.85055
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 2,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 5,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 28,
+     "layer": "arm"
+    }
+   }
+  },
+  {
+   "case": "1002:0.5",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 115.1,
+    "level_hold_s": 2.58,
+    "held_level": true,
+    "max_pivot_in_palm_deg": 89.9,
+    "max_swept_world_deg": 90.0,
+    "max_turn_rate_dps": 181.0,
+    "final_pivot_in_palm_deg": 85.4,
+    "final_tilt_from_vertical_deg": 0.6,
+    "final_tilt_max_last_1s_deg": 10.5,
+    "final_lift_min_last_1s_mm": 67.4,
+    "pads_on_pen_min_last_1s": 2
+   },
+   "error": null,
+   "sim_s": 21.08,
+   "perturbation": {
+    "dx": -0.00238,
+    "dy": -0.00286,
+    "dyaw": 0.10804,
+    "radius": 0.98895,
+    "length": 0.98371,
+    "mass": 1.02745
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 2,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 5,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 28,
+     "layer": "arm"
+    }
+   }
+  },
+  {
+   "case": "1005:1",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 114.7,
+    "level_hold_s": 2.58,
+    "held_level": true,
+    "max_pivot_in_palm_deg": 90.0,
+    "max_swept_world_deg": 90.0,
+    "max_turn_rate_dps": 139.0,
+    "final_pivot_in_palm_deg": 75.0,
+    "final_tilt_from_vertical_deg": 11.5,
+    "final_tilt_max_last_1s_deg": 11.5,
+    "final_lift_min_last_1s_mm": 67.3,
+    "pads_on_pen_min_last_1s": 2
+   },
+   "error": null,
+   "sim_s": 21.08,
+   "perturbation": {
+    "dx": -0.01671,
+    "dy": 0.01722,
+    "dyaw": -0.18563,
+    "radius": 1.02771,
+    "length": 1.06696,
+    "mass": 1.47672
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 2,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 5,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 28,
+     "layer": "arm"
+    }
+   }
+  },
+  {
+   "case": "1006:1",
+   "success": false,
+   "metrics": {
+    "max_lift_mm": 115.3,
+    "level_hold_s": 2.58,
+    "held_level": true,
+    "max_pivot_in_palm_deg": 90.0,
+    "max_swept_world_deg": 89.9,
+    "max_turn_rate_dps": 708.0,
+    "final_pivot_in_palm_deg": 11.2,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_tilt_max_last_1s_deg": 90.0,
+    "final_lift_min_last_1s_mm": -31.4,
+    "pads_on_pen_min_last_1s": 0
+   },
+   "error": null,
+   "sim_s": 21.08,
+   "perturbation": {
+    "dx": -0.00652,
+    "dy": 0.00403,
+    "dyaw": -0.17643,
+    "radius": 0.94751,
+    "length": 1.05995,
+    "mass": 0.83505
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 2,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 5,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 28,
+     "layer": "arm"
+    }
+   }
+  },
+  {
+   "case": "1007:1",
+   "success": true,
+   "metrics": {
+    "max_lift_mm": 114.0,
+    "level_hold_s": 2.56,
+    "held_level": true,
+    "max_pivot_in_palm_deg": 90.0,
+    "max_swept_world_deg": 90.0,
+    "max_turn_rate_dps": 100.0,
+    "final_pivot_in_palm_deg": 84.2,
+    "final_tilt_from_vertical_deg": 4.3,
+    "final_tilt_max_last_1s_deg": 10.9,
+    "final_lift_min_last_1s_mm": 67.2,
+    "pads_on_pen_min_last_1s": 2
+   },
+   "error": null,
+   "sim_s": 21.08,
+   "perturbation": {
+    "dx": -0.01715,
+    "dy": 0.01264,
+    "dyaw": 0.12473,
+    "radius": 0.93932,
+    "length": 1.01776,
+    "mass": 1.39534
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 2,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 5,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 28,
+     "layer": "arm"
+    }
+   }
+  }
+ ]
+}

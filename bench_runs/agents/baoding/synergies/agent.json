@@ -1,0 +1,11 @@
+{
+ "task": "tasks/inhand/baoding",
+ "level": "synergies",
+ "max_iters": 4,
+ "cameras": [
+  "closeup",
+  "overview",
+  "palm",
+  "reference"
+ ]
+}

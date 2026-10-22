@@ -1,0 +1,12 @@
+{
+ "task": "tasks/inhand/baoding",
+ "level": "force",
+ "max_iters": 6,
+ "cameras": [
+  "closeup",
+  "overview",
+  "palm",
+  "reference"
+ ],
+ "seed_tag": "skills"
+}

@@ -1,0 +1,294 @@
+{
+ "task": "pen_pickup_pivot",
+ "policy": "/home/uyoo/Projects/dexagent/bench_runs/agents/pen_pickup_pivot/force/iter_4/policy.py",
+ "level": "force",
+ "label": "test/pen_pickup_pivot/force/iter4",
+ "n": 6,
+ "successes": 0,
+ "wall_s": 628.0,
+ "time": "2026-10-22T07:04:38",
+ "cases": [
+  {
+   "case": "1000:0",
+   "success": false,
+   "metrics": {
+    "max_pivot_deg": 3.5,
+    "min_tilt_standing_on_table_deg": 86.7,
+    "stood_on_end": false,
+    "max_lower_end_height_mm": 0.0,
+    "min_tilt_while_clear_deg": 90.0,
+    "final_lower_end_height_mm": -0.0,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_pivot_deg": 0.8
+   },
+   "error": null,
+   "sim_s": 45.0,
+   "perturbation": {
+    "dx": 0.0,
+    "dy": 0.0,
+    "dyaw": -0.0,
+    "radius": 1.0,
+    "length": 1.0,
+    "mass": 1.0
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 1,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 15,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 81,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 5,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 7,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1001:0.5",
+   "success": false,
+   "metrics": {
+    "max_pivot_deg": 2.5,
+    "min_tilt_standing_on_table_deg": 88.1,
+    "stood_on_end": false,
+    "max_lower_end_height_mm": 0.0,
+    "min_tilt_while_clear_deg": 90.0,
+    "final_lower_end_height_mm": -0.0,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_pivot_deg": 0.6
+   },
+   "error": null,
+   "sim_s": 45.06,
+   "perturbation": {
+    "dx": 0.00225,
+    "dy": -0.00969,
+    "dyaw": -0.13627,
+    "radius": 1.03579,
+    "length": 0.94914,
+    "mass": 0.85055
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 1,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 15,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 81,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 5,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 7,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1002:0.5",
+   "success": false,
+   "metrics": {
+    "max_pivot_deg": 3.6,
+    "min_tilt_standing_on_table_deg": 86.4,
+    "stood_on_end": false,
+    "max_lower_end_height_mm": 0.0,
+    "min_tilt_while_clear_deg": 90.0,
+    "final_lower_end_height_mm": -0.0,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_pivot_deg": 0.3
+   },
+   "error": "Traceback (most recent call last):\n  File \"/home/uyoo/Projects/dexagent/dexagent/bench.py\", line 108, in run_one\n    for _ in gen:\n             ^^^\n  File \"/home/uyoo/Projects/dexagent/bench_runs/agents/pen_pickup_pivot/force/iter_4/policy.py\", line 196, in run\n    X, Rp, u = yield from grasp(e)\n               ^^^^^^^^^^^^^^^^^^^\n  File \"/home/uyoo/Projects/dexagent/bench_runs/agents/pen_pickup_pivot/force/iter_4/policy.py\", line 116, in grasp\n    res = yield from api.move_tips(xyz=X + [0, 0, 0.045], R=Rp, tips=pads, seconds=1.4)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/uyoo/Projects/dexagent/dexagent/levels.py\", line 460, in call\n    return (yield from fn(self, *a, **k))\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/uyoo/Projects/dexagent/dexagent/levels.py\", line 218, in move\n    yield from self._go(xyz, R, hand, seconds, f\"move tips={sorted(tips) if tips else '-'} {seconds}s\" + (f\" IK_RESIDUAL_MM={bad}\" if bad else \"\"))\n  File \"/home/uyoo/Projects/dexagent/dexagent/levels.py\", line 131, in _go\n    yield from self._c.move(xyz, R, hand, seconds)\nValueError: arm IK position residual 4.1 mm for [0.7463499  0.22661833 0.91901691]\n",
+   "sim_s": 29.94,
+   "perturbation": {
+    "dx": -0.00238,
+    "dy": -0.00286,
+    "dyaw": 0.10804,
+    "radius": 0.98895,
+    "length": 0.98046,
+    "mass": 1.02745
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 1,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 10,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 54,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 3,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 4,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1005:1",
+   "success": false,
+   "metrics": {
+    "max_pivot_deg": 1.2,
+    "min_tilt_standing_on_table_deg": 89.3,
+    "stood_on_end": false,
+    "max_lower_end_height_mm": 0.0,
+    "min_tilt_while_clear_deg": 90.0,
+    "final_lower_end_height_mm": -0.0,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_pivot_deg": 0.7
+   },
+   "error": null,
+   "sim_s": 40.8,
+   "perturbation": {
+    "dx": -0.01671,
+    "dy": 0.01722,
+    "dyaw": -0.18563,
+    "radius": 1.02771,
+    "length": 1.08035,
+    "mass": 1.47672
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 1,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 12,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 81,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 4,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 5,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1006:1",
+   "success": false,
+   "metrics": {
+    "max_pivot_deg": 1.8,
+    "min_tilt_standing_on_table_deg": 88.4,
+    "stood_on_end": false,
+    "max_lower_end_height_mm": 0.0,
+    "min_tilt_while_clear_deg": 90.0,
+    "final_lower_end_height_mm": -0.0,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_pivot_deg": 0.7
+   },
+   "error": "Traceback (most recent call last):\n  File \"/home/uyoo/Projects/dexagent/dexagent/bench.py\", line 108, in run_one\n    for _ in gen:\n             ^^^\n  File \"/home/uyoo/Projects/dexagent/bench_runs/agents/pen_pickup_pivot/force/iter_4/policy.py\", line 196, in run\n    X, Rp, u = yield from grasp(e)\n               ^^^^^^^^^^^^^^^^^^^\n  File \"/home/uyoo/Projects/dexagent/bench_runs/agents/pen_pickup_pivot/force/iter_4/policy.py\", line 116, in grasp\n    res = yield from api.move_tips(xyz=X + [0, 0, 0.045], R=Rp, tips=pads, seconds=1.4)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/uyoo/Projects/dexagent/dexagent/levels.py\", line 460, in call\n    return (yield from fn(self, *a, **k))\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/uyoo/Projects/dexagent/dexagent/levels.py\", line 218, in move\n    yield from self._go(xyz, R, hand, seconds, f\"move tips={sorted(tips) if tips else '-'} {seconds}s\" + (f\" IK_RESIDUAL_MM={bad}\" if bad else \"\"))\n  File \"/home/uyoo/Projects/dexagent/dexagent/levels.py\", line 131, in _go\n    yield from self._c.move(xyz, R, hand, seconds)\nValueError: arm IK position residual 8.1 mm for [0.78768113 0.19609087 0.97336628]\n",
+   "sim_s": 29.64,
+   "perturbation": {
+    "dx": -0.00652,
+    "dy": 0.00403,
+    "dyaw": -0.17643,
+    "radius": 0.94751,
+    "length": 1.07194,
+    "mass": 0.83505
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 1,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 10,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 54,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 3,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 4,
+     "layer": "force"
+    }
+   }
+  },
+  {
+   "case": "1007:1",
+   "success": false,
+   "metrics": {
+    "max_pivot_deg": 3.4,
+    "min_tilt_standing_on_table_deg": 86.6,
+    "stood_on_end": false,
+    "max_lower_end_height_mm": 0.0,
+    "min_tilt_while_clear_deg": 90.0,
+    "final_lower_end_height_mm": -0.0,
+    "final_tilt_from_vertical_deg": 90.0,
+    "final_pivot_deg": 0.2
+   },
+   "error": "Traceback (most recent call last):\n  File \"/home/uyoo/Projects/dexagent/dexagent/bench.py\", line 108, in run_one\n    for _ in gen:\n             ^^^\n  File \"/home/uyoo/Projects/dexagent/bench_runs/agents/pen_pickup_pivot/force/iter_4/policy.py\", line 196, in run\n    X, Rp, u = yield from grasp(e)\n               ^^^^^^^^^^^^^^^^^^^\n  File \"/home/uyoo/Projects/dexagent/bench_runs/agents/pen_pickup_pivot/force/iter_4/policy.py\", line 116, in grasp\n    res = yield from api.move_tips(xyz=X + [0, 0, 0.045], R=Rp, tips=pads, seconds=1.4)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/uyoo/Projects/dexagent/dexagent/levels.py\", line 460, in call\n    return (yield from fn(self, *a, **k))\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/uyoo/Projects/dexagent/dexagent/levels.py\", line 218, in move\n    yield from self._go(xyz, R, hand, seconds, f\"move tips={sorted(tips) if tips else '-'} {seconds}s\" + (f\" IK_RESIDUAL_MM={bad}\" if bad else \"\"))\n  File \"/home/uyoo/Projects/dexagent/dexagent/levels.py\", line 131, in _go\n    yield from self._c.move(xyz, R, hand, seconds)\nValueError: arm IK position residual 5.9 mm for [0.72620339 0.24042454 0.91441885]\n",
+   "sim_s": 29.96,
+   "perturbation": {
+    "dx": -0.01715,
+    "dy": 0.01264,
+    "dyaw": 0.12473,
+    "radius": 0.93932,
+    "length": 1.02132,
+    "mass": 1.39534
+   },
+   "sheet": null,
+   "api_usage": {
+    "move_joints": {
+     "calls": 1,
+     "layer": "joints"
+    },
+    "move_tips": {
+     "calls": 10,
+     "layer": "fingertips"
+    },
+    "carry": {
+     "calls": 54,
+     "layer": "arm"
+    },
+    "grip": {
+     "calls": 3,
+     "layer": "force"
+    },
+    "ungrip": {
+     "calls": 4,
+     "layer": "force"
+    }
+   }
+  }
+ ]
+}
