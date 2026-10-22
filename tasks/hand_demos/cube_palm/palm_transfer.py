@@ -18,6 +18,7 @@ AXIS = np.array([0.0, 0.0, -1.0])
 # far-face fingers overpower the thumb, which slides down the near face to its
 # edge, and the cube spins out mid-turn; 0.016-0.022 all hold.
 SQUEEZE = 0.019
+EDGE0, SQUEEZE0 = EDGE, SQUEEZE  # nominal; scene.py sets EDGE and SQUEEZE for a perturbed cube
 FIST = np.array([0, 2.0, 1.5, 1.2])
 CRADLE = np.array([0, 0.35, 0.3, 0.2])
 LITTLE = np.zeros(4)                # little finger straight throughout

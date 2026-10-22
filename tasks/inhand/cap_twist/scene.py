@@ -14,18 +14,50 @@ from robosimstudio.specs import AssetSpec, CameraSpec, StaticSpec
 from dexagent.scene import table_scene, WORK
 from dexagent.workcell import hand_down
 from dexagent.hand import OPEN
+from dexagent.cases import current
 from twist import CapController, CENTRE, PHI, rim_targets
 
 HERE = Path(__file__).resolve().parent
-JAR = WORK + np.array([0.0, 0.0, 0.0])
+# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# jar position +-20 mm, lid radius 35 mm +-10 % (jar body follows), lid mass 18 g +-50 %,
+# thread friction 0.02 N m +-50 %.
+CASE = current()
+_DX, _DY = CASE.u(0.020, "dx"), CASE.u(0.020, "dy")
+RADIUS = 0.035 * CASE.scale(0.10, "lid_radius")
+LID_MASS = 0.018 * CASE.scale(0.5, "lid_mass")
+THREAD = 0.02 * CASE.scale(0.5, "thread_friction")
+JAR = WORK + np.array([_DX, _DY, 0.0])
 LID_Z = 0.1155            # lid centre above the table
-RADIUS = 0.035
 GOAL = 360.0              # degrees, counter-clockwise from above
 CLEAR, LIFT = 0.018, 0.008  # released pads: this far outside the rim and above mid-height
 STROKE = 30.0             # each twist runs the pads from -STROKE to +STROKE around the rim
 
+
+
+def _jar_xml():
+    """jar.xml at nominal; otherwise a copy with the perturbed lid radius, mass and thread friction."""
+    if CASE.severity == 0:
+        return HERE / "jar.xml"
+    import os, tempfile
+    text = (HERE / "jar.xml").read_text()
+    for old, new in [('size="0.04 0.05"', f'size="{RADIUS + 0.005:.5f} 0.05"'),
+                     ('size="0.036 0.0035"', f'size="{RADIUS + 0.001:.5f} 0.0035"'),
+                     ('size="0.035 0.0075"', f'size="{RADIUS:.5f} 0.0075"'),
+                     ('frictionloss="0.02"', f'frictionloss="{THREAD:.5f}"'),
+                     ('mass="0.018"', f'mass="{LID_MASS:.5f}"'),
+                     ('size="0.028 0.004 0.0005"', f'size="{0.8 * RADIUS:.5f} 0.004 0.0005"'),
+                     ('pos="0.022 0 0.0084"', f'pos="{0.63 * RADIUS:.5f} 0 0.0084"')]:
+        assert text.count(old) == 1, old
+        text = text.replace(old, new)
+    d = Path(tempfile.gettempdir()) / "dexagent_cap_twist"
+    d.mkdir(exist_ok=True)
+    path = d / f"jar_{CASE.seed}_{CASE.severity}_{os.getpid()}.xml"
+    path.write_text(text)
+    return path
+
+
 scene = table_scene("cap_twist")
-scene.add(StaticSpec(name="jar", asset=AssetSpec(path=str(HERE / "jar.xml")), xform=(*JAR, 0, 0, 0, 1)))
+scene.add(StaticSpec(name="jar", asset=AssetSpec(path=str(_jar_xml())), xform=(*JAR, 0, 0, 0, 1)))
 scene.add(CameraSpec(name="jar_view", width=1280, height=720, fov_y=40,
                      eye=(JAR[0] + 0.30, JAR[1] + 0.26, JAR[2] + 0.33), look_at=(JAR[0], JAR[1], JAR[2] + 0.10)))
 scene.add(CameraSpec(name="top", width=1280, height=720, fov_y=45,

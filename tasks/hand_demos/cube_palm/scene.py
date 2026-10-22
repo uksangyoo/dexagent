@@ -13,20 +13,31 @@ from robosimstudio.specs import CameraSpec
 from dexagent.scene import table_scene, WORK
 from dexagent.workcell import TABLE_Z, YAW
 from dexagent.hand import Controller
-from palm_transfer import EDGE, to_palm, open_palm, resting_on_palm, return_to_table, note
+from dexagent.cases import current
+import palm_transfer
+from palm_transfer import to_palm, open_palm, resting_on_palm, return_to_table, note
 
 HERE = Path(__file__).resolve().parent
 CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4782_cube_palm_roll.mov"
 # Where the clip's cube sits in the phone view. The cube starts turned to the
 # palm's yaw (40 deg, close to the clip's), so the pads close square on its faces;
 # square to the table, the closing pads twist it 20 deg and it slips off the far fingers.
-START = WORK + np.array([-0.01, -0.024, EDGE / 2])
+# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# position +-20 mm, yaw +-25 deg, edge 40 mm +-12 %, mass 12 g +-50 %.
+CASE = current()
+_DX, _DY, _DYAW = CASE.u(0.020, "dx"), CASE.u(0.020, "dy"), CASE.u(np.radians(25), "dyaw")
+EDGE = palm_transfer.EDGE0 * CASE.scale(0.12, "edge")
+MASS = 0.012 * CASE.scale(0.5, "mass")
+# The grip's pad squeeze is stated relative to the cube's half-width; it follows the edge.
+palm_transfer.SQUEEZE = palm_transfer.SQUEEZE0 + (EDGE - palm_transfer.EDGE0) / 2
+palm_transfer.EDGE = EDGE
+START = WORK + np.array([-0.01 + _DX, -0.024 + _DY, EDGE / 2])
 
 scene = table_scene("cube_palm")
 # A side view of the turn-over (the hand turns 200 mm above the table, inside the phone view).
 scene.add(CameraSpec(name="side", width=1280, height=720, fov_y=40,
                      eye=(0.42, 0.42, TABLE_Z + 0.52), look_at=(0.55, 0.0, TABLE_Z + 0.30)))
-scene.add(rss.box(name="cube", half=(EDGE / 2,) * 3, at=tuple(START), quat=(0, 0, np.sin(YAW / 2), np.cos(YAW / 2)), mass=0.012, friction=0.9, color=(0.42, 0.28, 0.72)))
+scene.add(rss.box(name="cube", half=(EDGE / 2,) * 3, at=tuple(START), quat=(0, 0, np.sin((YAW + _DYAW) / 2), np.cos((YAW + _DYAW) / 2)), mass=MASS, friction=0.9, color=(0.42, 0.28, 0.72)))
 
 
 def palm_roll(sim, session=None):

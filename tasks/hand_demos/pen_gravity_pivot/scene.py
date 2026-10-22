@@ -25,7 +25,8 @@ import robosimstudio as rss
 from dexagent.scene import table_scene, WORK
 from dexagent.workcell import hand_down
 from dexagent.hand import Controller
-from dexagent.objects import pen, PEN_RADIUS
+from dexagent.objects import quat_from_axis, PEN_RADIUS, PEN_HALF, PEN_MASS, PEN_GREY
+from dexagent.cases import current
 import grip as fingers
 
 HERE = Path(__file__).resolve().parent
@@ -34,8 +35,18 @@ GRASP_YAW = 0.15                                      # fingers point almost str
 ACROSS = np.array([-np.sin(GRASP_YAW), np.cos(GRASP_YAW), 0.0])   # the pen lies across the fingers
 OFFSET = 0.045                                        # thumb to pen centre, along the pen [m]
 REST_H = 0.03
-START = WORK + np.array([0.0, 0.0, REST_H + PEN_RADIUS + 0.0005])
-REST_AT = WORK + 0.012 * ACROSS + np.array([0, 0, REST_H / 2])
+# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1): pen and
+# rest together +-20 mm in x and y and +-25 deg in yaw; pen radius and length +-10 %,
+# mass 5 g +-50 %. The hand's grasp yaw stays GRASP_YAW; the routine reads the pen pose.
+CASE = current()
+_DX, _DY, _DYAW = CASE.u(0.02, "dx"), CASE.u(0.02, "dy"), CASE.u(np.radians(25), "dyaw")
+RADIUS = PEN_RADIUS * CASE.scale(0.10, "radius")
+HALF = PEN_HALF * CASE.scale(0.10, "length")
+MASS = PEN_MASS * CASE.scale(0.5, "mass")
+PEN_DIR = np.array([-np.sin(GRASP_YAW + _DYAW), np.cos(GRASP_YAW + _DYAW), 0.0])
+BASE = WORK + np.array([_DX, _DY, 0.0])
+START = BASE + np.array([0.0, 0.0, REST_H + RADIUS + 0.0005])
+REST_AT = BASE + 0.012 * PEN_DIR + np.array([0, 0, REST_H / 2])
 PITCH, BETA = 0.5, np.radians(50)
 CENTRE = np.array([0.10, 0.02, 0.10])                 # thumb-index-middle grasp centre, palm frame
 SPREAD = 0.0125                                       # index and middle either side of the thumb, along the pen
@@ -43,10 +54,16 @@ TIGHT, OPEN_W = -0.001, 0.025
 STOP_Y, DROP, PARK_BACK = -0.004, 0.015, -0.006        # parked middle fingertip: across, below, ahead of the pinch
 
 scene = table_scene("pen_gravity_pivot")
-_yaw = GRASP_YAW + np.pi / 2
+_yaw = GRASP_YAW + _DYAW + np.pi / 2
 scene.add(rss.slab(name="pen_rest", half=(0.022, 0.010, REST_H / 2),
                    at=(*REST_AT, 0.0, 0.0, np.sin(_yaw / 2), np.cos(_yaw / 2)), color=(0.45, 0.33, 0.22)))
-scene.add(pen(at=tuple(START), direction=ACROSS, friction=0.9))   # the pad friction: the pen pair uses the pen's own
+# dexagent.objects.pen at the perturbed size and mass. Friction 0.9, the pad friction: the pen pair uses the pen's own.
+scene.add(rss.capsule(name="pen", radius=RADIUS, half_height=HALF, at=tuple(START), quat=quat_from_axis(PEN_DIR),
+                      mass=MASS, friction=0.9, color=PEN_GREY))
+# Built here so the pen's contact material (no torsional friction, grip.smooth_pen) is
+# part of the scene for every policy, not only for the expert routine, which sets it again.
+sim = scene.build(control_mode="joint_position")
+fingers.smooth_pen(sim)
 
 
 def tilt_from_vertical(axis):

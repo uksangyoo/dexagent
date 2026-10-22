@@ -30,7 +30,9 @@ from scipy.spatial.transform import Rotation
 from dexagent.scene import table_scene, WORK
 from dexagent.workcell import hand_down, YAW
 from dexagent.hand import Controller
-from dexagent.objects import pen, PEN_RADIUS, PEN_HALF
+from dexagent.objects import quat_from_axis, PEN_RADIUS as _R0, PEN_HALF as _H0, PEN_MASS as _M0, PEN_GREY
+from dexagent.cases import current
+import robosimstudio as rss
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "pen_gravity_pivot"))
@@ -38,16 +40,34 @@ import grip as fingers  # noqa: E402  (fingertip IK helpers shared with pen_grav
 
 CLIPS = [HERE.parents[2] / f"reference/hand_demos/IMG_{n}.mov" for n in ("4773_pen_pickup_pivot", "4780_pen_pickup_stand")]
 ACROSS = np.array([-np.sin(YAW), np.cos(YAW), 0.0])   # across the fingers
+# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# position +-20 mm, yaw about the vertical +-25 deg, barrel radius 3.75 mm +-10 %,
+# length 140 mm +-12 %, mass 5 g +-50 %.
+CASE = current()
+_DX, _DY, _DYAW = CASE.u(0.02, "dx"), CASE.u(0.02, "dy"), CASE.u(np.radians(25), "dyaw")
+PEN_RADIUS = _R0 * CASE.scale(0.10, "radius")
+# Cylinder half-length, so that the total length 2 * (PEN_HALF + PEN_RADIUS) scales (exactly nominal at severity 0).
+PEN_HALF = _H0 + (_H0 + _R0) * (CASE.scale(0.12, "length") - 1) - (PEN_RADIUS - _R0)
+PEN_MASS = _M0 * CASE.scale(0.5, "mass")
+_c, _s = np.cos(_DYAW), np.sin(_DYAW)
+DIRECTION = np.array([_c * ACROSS[0] - _s * ACROSS[1], _s * ACROSS[0] + _c * ACROSS[1], 0.0])
 OFFSET = 0.03
 # Placed where the pen lies in IMG_4780; its direction is turned to lie across the fingers.
-START = WORK + np.array([-0.035, -0.07, PEN_RADIUS + 0.0005])
+START = WORK + np.array([-0.035 + _DX, -0.07 + _DY, PEN_RADIUS + 0.0005])
 PITCH, BETA = 0.3, np.radians(50)
 CENTRE = np.array([0.11, 0.03, 0.10])
 TIGHT, OPEN_W = PEN_RADIUS - 0.00425, 0.025
 STOP = 0.015      # middle-finger stop beside the index, across the fingers [m]
 
 scene = table_scene("pen_pickup_pivot")
-scene.add(pen(at=tuple(START), direction=ACROSS, friction=0.9))   # the pad friction: the pen pair uses the pen's own
+# The pen as a capsule along its own z (dexagent.objects.pen, with the perturbed size and mass).
+scene.add(rss.capsule(name="pen", radius=PEN_RADIUS, half_height=PEN_HALF, at=tuple(START),
+                      quat=quat_from_axis(DIRECTION), mass=PEN_MASS, friction=0.9,
+                      color=PEN_GREY))   # the pad friction: the pen pair uses the pen's own
+# Built here so the pen's contact material (no torsional friction, grip.smooth_pen) is
+# part of the scene for every policy, not only for the expert routine, which sets it again.
+sim = scene.build(control_mode="joint_position")
+fingers.smooth_pen(sim)
 
 
 def tilt_from_vertical(axis):

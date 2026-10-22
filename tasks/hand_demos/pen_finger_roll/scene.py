@@ -32,6 +32,8 @@ from scipy.spatial.transform import Rotation
 from dexagent.scene import table_scene, WORK
 from dexagent.workcell import TABLE_Z
 from dexagent.hand import Controller, PINCH_CENTRE
+from dexagent.objects import PEN_RADIUS, PEN_HALF, PEN_MASS
+from dexagent.cases import current
 from pen_cup import add_cup_and_pen, pick_from_cup
 
 HERE = Path(__file__).resolve().parent
@@ -42,8 +44,22 @@ SWING_SHIFT = 0.008                            # opposite thumb/index slide alon
 ROLL_STROKE = 0.008                            # thumb stroke along the barrel tangent for the roll
 SHOW = np.array([-0.04, 0.07, -0.02])          # where the in-hand motions are shown, from the lifted grip
 
+# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# cup and pen position +-20 mm, cup yaw +-30 deg, pen diameter 7.5 mm +-12 %,
+# pen length 140 mm +-10 %, pen mass 5 g +-50 %.
+CASE = current()
+_DX, _DY, _DYAW = CASE.u(0.020, "dx"), CASE.u(0.020, "dy"), CASE.u(np.radians(30), "cup_yaw")
+_R = PEN_RADIUS * CASE.scale(0.12, "pen_diameter")
+_L = (PEN_HALF + PEN_RADIUS) * CASE.scale(0.10, "pen_length")   # centre to tip
+_M = PEN_MASS * CASE.scale(0.5, "pen_mass")
+PEN_TOP = _L if CASE.severity else PEN_HALF + PEN_RADIUS
+CUP_AT = WORK + np.array([_DX, _DY, 0.0])
+
 scene = table_scene("pen_finger_roll")
-add_cup_and_pen(scene, WORK)
+if CASE.severity:
+    add_cup_and_pen(scene, CUP_AT, yaw=_DYAW, radius=_R, half=_L - _R, mass=_M)
+else:
+    add_cup_and_pen(scene, WORK)
 
 
 def twist_about_axis(R0, R):
@@ -74,7 +90,7 @@ def roll_and_swing(sim, session=None):
     try:
         yield from c.hold(0.5, "settle")
         p0, _ = c.pose("pen")
-        held = yield from pick_from_cup(c, lift=0.10, show=SHOW, centre=GRIP_CENTRE)
+        held = yield from pick_from_cup(c, lift=0.10, show=SHOW, centre=GRIP_CENTRE, top=PEN_TOP)
         p, R_pen = c.pose("pen")
         metrics["lift_mm"] = round(1000 * (p[2] - p0[2]), 1)
         if p[2] - p0[2] < .06:

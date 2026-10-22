@@ -5,20 +5,26 @@ import robosimstudio as rss
 from dexagent.scene import table_scene, WORK
 from dexagent.workcell import hand_down, TABLE_Z, YAW
 from dexagent.hand import Controller, OPEN
+from dexagent.cases import current
 
 HERE = Path(__file__).resolve().parent
 CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4772_cube_pinch_lift.mov"
-EDGE = 0.04
-START = WORK + np.array([0.0, 0.0, EDGE / 2])
+# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# position +-25 mm, yaw +-30 deg, edge 40 mm +-15 %, mass 12 g +-50 %.
+CASE = current()
+_DX, _DY, _DYAW = CASE.u(0.025, "dx"), CASE.u(0.025, "dy"), CASE.u(np.radians(30), "dyaw")
+EDGE = 0.04 * CASE.scale(0.15, "edge")
+MASS = 0.012 * CASE.scale(0.5, "mass")
+START = WORK + np.array([_DX, _DY, EDGE / 2])
 # The cube starts square to the default palm yaw, so the thumb and index close on opposite faces.
-QUAT = (0.0, 0.0, np.sin(YAW / 2), np.cos(YAW / 2))
+QUAT = (0.0, 0.0, np.sin((YAW + _DYAW) / 2), np.cos((YAW + _DYAW) / 2))
 HELPERS, TUCK = (), (2, 3, 4)
 # Pads 36 mm apart on the 40 mm cube: about 8 N each side. A harder squeeze lets the
 # stronger thumb push the index back, and the offset pads tip the cube about the pinch axis.
 SQUEEZE = 0.018
 
 scene = table_scene("cube_pinch")
-scene.add(rss.box(name="cube", half=(EDGE / 2,) * 3, at=tuple(START), quat=QUAT, mass=0.012, friction=0.9, color=(0.42, 0.28, 0.72)))
+scene.add(rss.box(name="cube", half=(EDGE / 2,) * 3, at=tuple(START), quat=QUAT, mass=MASS, friction=0.9, color=(0.42, 0.28, 0.72)))
 
 
 def yaw_of(R):

@@ -52,10 +52,42 @@ from robosimstudio.specs import AssetSpec, CameraSpec, StaticSpec, ObjectSpec
 from dexagent.scene import table_scene, WORK
 from dexagent.workcell import hand_down, TABLE_Z, YAW
 from dexagent.hand import Controller, CURL, OPEN, smooth
+from dexagent.cases import current
 
 HERE = Path(__file__).resolve().parent
 CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4778_scissors_open_close_a.mov"
-HAND = hand_down(YAW)
+# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# position +-20 mm, yaw +-25 deg, size 190 mm +-10 % (uniform), mass 65 g +-50 %,
+# pivot friction 0.04 N m +-50 %. The palm yaw the routine works in follows the scissors' yaw.
+CASE = current()
+_DX, _DY, _DYAW = CASE.u(0.020, "dx"), CASE.u(0.020, "dy"), CASE.u(np.radians(25), "dyaw")
+SIZE = CASE.scale(0.10, "size")
+MASS_SCALE = CASE.scale(0.50, "mass")
+PIVOT_FRICTION = 0.04 * CASE.scale(0.50, "pivot_friction")
+
+
+def _scissors_xml():
+    """scissors.xml, or at a perturbed case a copy scaled by SIZE with densities and pivot friction perturbed."""
+    src = HERE / "scissors.xml"
+    if CASE.severity == 0:
+        return src
+    import tempfile
+    import xml.etree.ElementTree as ET
+    tree = ET.parse(src)
+    for el in tree.iter():
+        for key in ("pos", "size", "fromto"):
+            if key in el.attrib:
+                el.set(key, " ".join(f"{float(v) * SIZE:.7g}" for v in el.get(key).split()))
+        if "density" in el.attrib:  # mass scales as SIZE^3 * density
+            el.set("density", f"{float(el.get('density')) * MASS_SCALE / SIZE ** 3:.7g}")
+        if el.tag == "joint" and el.get("name") == "scissors_hinge":
+            el.set("frictionloss", f"{PIVOT_FRICTION:.7g}")
+    out = Path(tempfile.mkdtemp(prefix="dexagent_scissors_")) / "scissors.xml"
+    tree.write(out)
+    return out
+
+
+HAND = hand_down(YAW + _DYAW)
 SPREAD_AXIS = np.array([0.0, 1.0, 0.0])            # palm frame: middle -> index
 # Index and middle pads either side of this palm-frame point along SPREAD_AXIS,
 # 4-38 mm either side with the distal links within 15 deg of straight down
@@ -66,13 +98,13 @@ LOCAL_X = np.cross(LOCAL_Y, [0, 0, 1.0])           # blades: along the fingers
 QUAT = tuple(Rotation.from_matrix(np.column_stack([LOCAL_X, LOCAL_Y, [0, 0, 1.0]])).as_quat())
 # Nearer the arm than the clip's scissors: standing them up carries the palm about
 # 0.3 m further out and up, past the arm's reach from the clip's position.
-PIVOT = WORK + np.array([-0.10, -0.20, 0.0068])
-LOOPS = np.array([-0.065, 0.0, 0.0])               # midpoint between the loop holes (scissors frame)
-LOOP_HALF = 0.024                                  # loop-hole centres either side of LOOPS, closed
+PIVOT = WORK + np.array([-0.10 + _DX, -0.20 + _DY, 0.0068 * SIZE])
+LOOPS = np.array([-0.065, 0.0, 0.0]) * SIZE             # midpoint between the loop holes (scissors frame)
+LOOP_HALF = 0.024 * SIZE                                # loop-hole centres either side of LOOPS, closed
 PAD_HEIGHT = 0.0105    # pad centres over the table: the finger ends reach 9.4 mm below the pads
 HOLD_HALF = 0.004      # commanded half-separation to squeeze shut: the walls stop the pads at about 20 mm
 OPEN_HALF = 0.050      # spread: the middle abduction joint at its 42 deg limit, the index at -39 deg
-BLADE_TIP = np.array([0.096, 0.0, 0.0])           # scissors frame
+BLADE_TIP = np.array([0.096, 0.0, 0.0]) * SIZE         # scissors frame
 PITCH = np.radians(100)  # stand-up angle: fingers down, the scissors leaning 10 deg past vertical
 STAND_S = 3.0          # stand-up time: the loops creep off the middle finger if slower; faster, the palm trails
                        # its path and the fingers lever the blade tips off the table
@@ -81,7 +113,7 @@ OVERSHOOT = np.radians(10)
 RAISE = 0.06           # straight lift once vertical: the blade tips leave the table
 
 scene = table_scene("scissors")
-scene.add(StaticSpec(name="scissors_asset", asset=AssetSpec(path=str(HERE / "scissors.xml"))))
+scene.add(StaticSpec(name="scissors_asset", asset=AssetSpec(path=str(_scissors_xml()))))
 scene.add(ObjectSpec(name="scissors", body_name="scissors", joint_name="scissors_free", pose=tuple(PIVOT), quat=QUAT,
                      obb_grasp=False))
 # A low camera across the table from the arm, for the fingers in the loops.

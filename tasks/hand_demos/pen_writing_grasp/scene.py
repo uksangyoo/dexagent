@@ -24,11 +24,64 @@ from scipy.spatial.transform import Rotation
 from dexagent.scene import table_scene, WORK
 from dexagent.workcell import TABLE_Z
 from dexagent.hand import Controller
-from dexagent.objects import PEN_RADIUS, PEN_HALF
+from dexagent.workcell import hand_down
+from dexagent.hand import PINCH_CENTRE
+from dexagent.objects import quat_from_axis, PEN_RADIUS as _R0, PEN_HALF as _H0, PEN_MASS as _M0, PEN_GREY
+from dexagent.cases import current
 
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE.parent / "pen_finger_roll"))
-from pen_cup import add_cup_and_pen, pick_from_cup  # noqa: E402
+
+# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# cup and pen position +-20 mm, pen lean in the cup +-3 deg about x and y
+# (the pen then settles against the bore), barrel diameter 7.5 mm +-10 %,
+# length 140 mm +-10 %, mass 5 g +-50 %.
+CASE = current()
+_DX, _DY = CASE.u(0.020, "dx"), CASE.u(0.020, "dy")
+_TX, _TY = CASE.u(np.radians(3), "lean_x"), CASE.u(np.radians(3), "lean_y")
+PEN_RADIUS = _R0 * CASE.scale(0.10, "diameter")
+_SLEN = CASE.scale(0.10, "length")
+PEN_HALF = _H0 + ((_H0 + _R0) * (_SLEN - 1) - (PEN_RADIUS - _R0))   # exact at nominal
+PEN_MASS = _M0 * CASE.scale(0.5, "mass")
+CUP_AT = WORK + np.array([0.0, 0.10, 0.0]) + np.array([_DX, _DY, 0.0])
+
+# The cup and the three-finger pick from ../pen_finger_roll/pen_cup.py, copied
+# here so the pen's perturbed size reaches the pick (same logic).
+CUP_BORE, CUP_WALL, CUP_HEIGHT = 0.010, 0.003, 0.06   # half bore 10 mm, 60 mm tall (assumed)
+GRIP_BELOW_TOP = 0.030
+PINCH_HALF = 0.003                                     # pad sites 3 mm either side of the pinch centre: ~2 N each
+MIDDLE_HOLD = np.array([0.010, -0.006, 0.0])          # middle pad 10 mm down the barrel, palm -y side (at its abduction limit)
+
+
+def add_cup_and_pen(scene, at):
+    import robosimstudio as rss
+    at = np.asarray(at, float)
+    for k, (dx, dy, hx, hy) in enumerate([(1, 0, CUP_WALL, CUP_BORE + 2 * CUP_WALL), (-1, 0, CUP_WALL, CUP_BORE + 2 * CUP_WALL),
+                                          (0, 1, CUP_BORE, CUP_WALL), (0, -1, CUP_BORE, CUP_WALL)]):
+        off = (CUP_BORE + CUP_WALL) * np.array([dx, dy])
+        scene.add(rss.slab(name=f"cup_wall_{k}", half=(hx, hy, CUP_HEIGHT / 2),
+                           at=(at[0] + off[0], at[1] + off[1], TABLE_Z + CUP_HEIGHT / 2), color=(0.15, 0.32, 0.55)))
+    # Lower end 1 mm above the table at the bore centre, leaning by the drawn angles.
+    axis = Rotation.from_euler("xy", [_TX, _TY]).apply([0, 0, 1.0])
+    centre = at + [0, 0, PEN_HALF + PEN_RADIUS + 0.001] + (axis - [0, 0, 1.0]) * PEN_HALF
+    scene.add(rss.capsule(name="pen", radius=PEN_RADIUS, half_height=PEN_HALF, at=tuple(centre),
+                          quat=quat_from_axis(axis), mass=PEN_MASS, friction=0.8, color=PEN_GREY))
+
+
+def pick_from_cup(c, lift=0.10, show=(0, 0, 0), centre=PINCH_CENTRE, middle=MIDDLE_HOLD):
+    """Generator: pinch the pen 30 mm below its top and lift it out. Returns the held hand pose."""
+    p0, R0 = c.pose("pen")
+    grip = p0 + R0[:, 2] * (PEN_HALF + PEN_RADIUS) - np.array([0, 0, GRIP_BELOW_TOP])
+    R = hand_down()
+    yield from c.move(c.palm_for(grip + [0, 0, .08], centre, R), R, c.pinch(0.026, centre), 1.5, "approach")
+    yield from c.move(c.palm_for(grip, centre, R), R, seconds=1.0, phase="descend")
+    held = c.fingertips({2: centre + middle}, c.pinch(PINCH_HALF, centre, tuck=(3, 4)))
+    yield from c.move(hand=held, seconds=0.8, phase="pinch")
+    yield from c.hold(0.3)
+    out = grip + [0, 0, lift]
+    yield from c.move(c.palm_for(out, centre, R), R, seconds=2.5, phase="lift_out")
+    yield from c.move(c.palm_for(out + np.asarray(show), centre, R), R, seconds=1.2, phase="present")
+    yield from c.hold(0.5, "steady")
+    return held
 
 CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4783_pen_writing_grasp.mov"
 TILT = np.radians(30)          # pen lean from vertical while writing
@@ -37,7 +90,7 @@ STROKE_MM = 40.0
 SHOW = np.array([-0.02, -0.12, -0.02])  # write well clear of the cup
 
 scene = table_scene("pen_writing_grasp")
-add_cup_and_pen(scene, WORK + [0.0, 0.10, 0.0])
+add_cup_and_pen(scene, CUP_AT)
 
 
 def pen_tip(c):

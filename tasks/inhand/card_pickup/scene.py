@@ -19,20 +19,33 @@ from robosimstudio.specs import CameraSpec
 from dexagent.scene import table_scene, WORK
 from dexagent.workcell import hand_down, TABLE_Z
 from dexagent.hand import Controller, OPEN, CURL, PINCH_CENTRE, PINCH_AXIS
+from dexagent.cases import current
 
 HERE = Path(__file__).resolve().parent
-BOOK_HALF = np.array([0.08, 0.11, 0.0225])
-BOOK = WORK + np.array([0.0, 0.0, BOOK_HALF[2]])
+# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# book position +-20 mm, book thickness 45 mm +-10 %; tile on the book +-15 mm (x),
+# +-20 mm (y, toward/away from the edge), yaw +-25 deg, length and width +-12 %
+# (thickness fixed), mass 17 g +-50 %.
+CASE = current()
+_BDX, _BDY = CASE.u(0.02, "book_dx"), CASE.u(0.02, "book_dy")
+_BTHICK = CASE.scale(0.10, "book_thickness")
+_TDX, _TDY = CASE.u(0.015, "tile_dx"), CASE.u(0.02, "tile_dy")
+_TYAW = CASE.u(np.radians(25), "tile_yaw")
+_TSIZE = CASE.scale(0.12, "tile_size")
+TILE_MASS = 0.017 * CASE.scale(0.5, "tile_mass")
+BOOK_HALF = np.array([0.08, 0.11, 0.0225 * _BTHICK])
+BOOK = WORK + np.array([_BDX, _BDY, BOOK_HALF[2]])
 EDGE_Y = BOOK[1] - BOOK_HALF[1]                  # the near (robot-side) edge the tile is dragged over
-TILE_HALF = np.array([0.03, 0.045, 0.0015])   # long side along the drag
-TILE = np.array([BOOK[0], -0.02, BOOK[2] + BOOK_HALF[2] + TILE_HALF[2]])
+TILE_HALF = np.array([0.03 * _TSIZE, 0.045 * _TSIZE, 0.0015])   # long side along the drag
+TILE = np.array([BOOK[0] + _TDX, BOOK[1] - 0.02 + _TDY, BOOK[2] + BOOK_HALF[2] + TILE_HALF[2]])
+TILE_QUAT = (0.0, 0.0, np.sin(_TYAW / 2), np.cos(_TYAW / 2))
 # Fingers pointing down, palm facing +y (toward the book): the pinch axis is vertical,
 # index below (distal), thumb above.
 FINGERS_DOWN = np.column_stack([[0, 1, 0], [1, 0, 0], [0, 0, -1]]).astype(float)
 
 scene = table_scene("card_pickup")
 scene.add(rss.slab(name="book", half=tuple(BOOK_HALF), at=tuple(BOOK), color=(0.55, 0.12, 0.1), friction=0.3))
-scene.add(rss.box(name="tile", half=tuple(TILE_HALF), at=tuple(TILE), mass=0.017, friction=0.3, color=(0.9, 0.85, 0.3)))
+scene.add(rss.box(name="tile", half=tuple(TILE_HALF), at=tuple(TILE), quat=TILE_QUAT, mass=TILE_MASS, friction=0.3, color=(0.9, 0.85, 0.3)))
 scene.add(CameraSpec(name="edge", width=1280, height=720, fov_y=40,
                      eye=(BOOK[0] + 0.32, EDGE_Y - 0.28, BOOK[2] + 0.22), look_at=(BOOK[0], EDGE_Y + 0.02, BOOK[2])))
 

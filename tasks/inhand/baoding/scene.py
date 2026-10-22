@@ -37,10 +37,20 @@ import robosimstudio as rss
 from robosimstudio.specs import CameraSpec
 from dexagent.workcell import Kinematics, TABLE_Z
 from dexagent.hand import Controller
+from dexagent.cases import current
 from rig import NAME, palm_up, palm_up_scene
 
 HERE = Path(__file__).resolve().parent
-RADIUS, MASS = 0.019, 0.05
+# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# the distal ball shifts +-4 mm in palm y and z (the cup's stable basin is small:
+# from ~9 mm off nominal it rolls out under the thumb or off the finger wall before
+# anything moves), the pair turns +-25 deg about the palm normal around the distal
+# ball, radius 19 mm +-10 % (the gap between the balls is kept), mass 50 g +-50 %.
+CASE = current()
+_DY, _DZ = CASE.u(0.004, "ball_b_dy"), CASE.u(0.004, "ball_b_dz")
+_DROT = CASE.u(np.radians(25), "pair_rot")
+RADIUS = 0.019 * CASE.scale(0.10, "radius")
+MASS = 0.05 * CASE.scale(0.5, "mass")
 PALM_XYZ = np.array([0.5, -0.1, TABLE_Z + 0.25])
 # Cupped hand: fingers curl up into a wall at the distal end, thumb and little finger raise the sides.
 # Middle, ring and index stand up from the knuckles as the distal wall (index spread
@@ -51,7 +61,14 @@ CUP = np.array([-0.028, -0.948, 0.812, 1.006,  -0.6, 1.1, 0.4, 0.3,  0.0, 1.1, 0
 BOWL = np.array([0.0, 0.068])     # bowl centre (palm y, z)
 # Ball centres in the palm frame (+x out of the palm face at x = .026, +z toward the fingers).
 SPOTS = (np.array([0.026 + RADIUS + 0.003, -0.006, 0.062]), np.array([0.026 + RADIUS + 0.003, 0.01, 0.102]))
-
+# Perturb the pair: shift ball_b, turn ball_a about it, stretch the spacing with the radius.
+# Every term is exactly zero at severity 0, so the nominal spots are unchanged.
+_d = SPOTS[1] - SPOTS[0]
+_k = 1 + 2 * (RADIUS - 0.019) / np.linalg.norm(_d)
+_c, _s = np.cos(_DROT), np.sin(_DROT)
+_dd = _k * np.array([0.0, _c * _d[1] - _s * _d[2], _s * _d[1] + _c * _d[2]]) - np.array([0.0, _d[1], _d[2]])
+_shift = np.array([0.0, _DY, _DZ])
+SPOTS = (SPOTS[0] + _shift - _dd, SPOTS[1] + _shift)
 scene = palm_up_scene("baoding", PALM_XYZ, CUP)
 _kin = Kinematics()
 _arm = np.array([j for j in __import__("robosimstudio").robots.registry.EMBODIMENTS.get(NAME).arms[0].home_q])

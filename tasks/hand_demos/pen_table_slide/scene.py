@@ -38,13 +38,25 @@ import robosimstudio as rss
 from dexagent.scene import table_scene, WORK
 from dexagent.workcell import hand_down, TABLE_Z, YAW
 from dexagent.hand import Controller, PINCH_CENTRE
-from dexagent.objects import pen, PEN_RADIUS, PEN_HALF
+from dexagent.objects import PEN_RADIUS, PEN_HALF, PEN_MASS, PEN_GREY, quat_from_axis
+from dexagent.cases import current
 
 HERE = Path(__file__).resolve().parent
 CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4781_pen_table_slide.mov"
-END = PEN_HALF + PEN_RADIUS
 DOWN = hand_down(YAW)        # palm down, fingers forward: the pinch axis is horizontal
-HOLDER = WORK + np.array([0.06, 0.13, 0.0])
+# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# guide block (with the pen in it) position +-20 mm, block yaw +-30 deg,
+# pen length 147.5 mm +-10 %, pen radius 3.75 mm +-10 %, pen mass 5 g +-50 %.
+CASE = current()
+_DX, _DY, _DYAW = CASE.u(0.020, "dx"), CASE.u(0.020, "dy"), CASE.u(np.radians(30), "block_yaw")
+_LEN = CASE.scale(0.10, "pen_length")
+_R0 = PEN_RADIUS
+PEN_RADIUS = PEN_RADIUS * CASE.scale(0.10, "pen_radius")
+# The capsule's cylinder half-height, so that the overall length scales by _LEN (exact at nominal).
+PEN_HALF = PEN_HALF + (PEN_HALF + _R0) * (_LEN - 1) - (PEN_RADIUS - _R0)
+PEN_MASS = PEN_MASS * CASE.scale(0.5, "pen_mass")
+HOLDER = WORK + np.array([0.06 + _DX, 0.13 + _DY, 0.0])
+END = PEN_HALF + PEN_RADIUS
 # A guide block on the table: a 14 mm square through-bore, 60 mm tall, in a 40 mm block.
 BORE, BLOCK, HEIGHT = 0.0070, 0.020, 0.060
 GRIP_BELOW_TOP = 0.030      # pinch this far below the upper cap centre
@@ -67,8 +79,17 @@ for name, offset, half in [
         ("block_w", (-BORE - wall, 0, HEIGHT / 2), (wall, BLOCK, HEIGHT / 2)),
         ("block_n", (0, BORE + wall, HEIGHT / 2), (BORE, wall, HEIGHT / 2)),
         ("block_s", (0, -BORE - wall, HEIGHT / 2), (BORE, wall, HEIGHT / 2))]:
-    scene.add(rss.slab(name=name, half=half, at=tuple(HOLDER + offset), color=(0.55, 0.42, 0.28)))
-scene.add(pen(at=tuple(HOLDER + [0, 0, PEN_RADIUS + PEN_HALF + 0.0005]), direction=(0, 0, 1)))
+    if _DYAW == 0.0:
+        at = tuple(HOLDER + offset)
+    else:
+        c_, s_ = np.cos(_DYAW), np.sin(_DYAW)
+        o = np.array([c_ * offset[0] - s_ * offset[1], s_ * offset[0] + c_ * offset[1], offset[2]])
+        at = tuple(HOLDER + o) + (0.0, 0.0, float(np.sin(_DYAW / 2)), float(np.cos(_DYAW / 2)))
+    scene.add(rss.slab(name=name, half=half, at=at, color=(0.55, 0.42, 0.28)))
+# The pen (dexagent.objects.pen, at the drawn size and mass), standing on its tip in the bore.
+scene.add(rss.capsule(name="pen", radius=PEN_RADIUS, half_height=PEN_HALF,
+                      at=tuple(HOLDER + [0, 0, PEN_RADIUS + PEN_HALF + 0.0005]), quat=quat_from_axis((0, 0, 1)),
+                      mass=PEN_MASS, friction=0.8, color=PEN_GREY))
 from robosimstudio.specs import CameraSpec
 # Close side view of the block and the touch point (inspection only).
 scene.add(CameraSpec(name="side", width=1280, height=720, fov_y=40,

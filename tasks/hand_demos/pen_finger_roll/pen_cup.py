@@ -7,7 +7,7 @@ scenes start from a cup the clips do not show.
 import numpy as np
 from dexagent.workcell import hand_down, TABLE_Z
 from dexagent.hand import PINCH_CENTRE
-from dexagent.objects import pen, PEN_RADIUS, PEN_HALF
+from dexagent.objects import pen, PEN_RADIUS, PEN_HALF, PEN_MASS, PEN_GREY
 
 CUP_BORE, CUP_WALL, CUP_HEIGHT = 0.010, 0.003, 0.06   # half bore 10 mm, 60 mm tall (assumed)
 GRIP_BELOW_TOP = 0.030
@@ -15,27 +15,38 @@ PINCH_HALF = 0.003                                     # pad sites 3 mm either s
 MIDDLE_HOLD = np.array([0.010, -0.006, 0.0])          # middle pad 10 mm down the barrel, palm -y side (at its abduction limit)
 
 
-def add_cup_and_pen(scene, at):
+def add_cup_and_pen(scene, at, yaw=0.0, radius=PEN_RADIUS, half=PEN_HALF, mass=PEN_MASS):
+    """The cup at `at` (turned `yaw` about vertical) with the pen standing in its centre.
+    The defaults are the nominal scene (pen_writing_grasp uses them unchanged)."""
     import robosimstudio as rss
     at = np.asarray(at, float)
+    c, s = np.cos(yaw), np.sin(yaw)
     for k, (dx, dy, hx, hy) in enumerate([(1, 0, CUP_WALL, CUP_BORE + 2 * CUP_WALL), (-1, 0, CUP_WALL, CUP_BORE + 2 * CUP_WALL),
                                           (0, 1, CUP_BORE, CUP_WALL), (0, -1, CUP_BORE, CUP_WALL)]):
         off = (CUP_BORE + CUP_WALL) * np.array([dx, dy])
-        scene.add(rss.slab(name=f"cup_wall_{k}", half=(hx, hy, CUP_HEIGHT / 2),
-                           at=(at[0] + off[0], at[1] + off[1], TABLE_Z + CUP_HEIGHT / 2), color=(0.15, 0.32, 0.55)))
-    scene.add(pen(at=tuple(at + [0, 0, PEN_HALF + PEN_RADIUS + 0.001]), direction=(0, 0, 1)))
+        xyz = (at[0] + off[0], at[1] + off[1], TABLE_Z + CUP_HEIGHT / 2)
+        if yaw:
+            off = np.array([c * off[0] - s * off[1], s * off[0] + c * off[1]])
+            xyz = (at[0] + off[0], at[1] + off[1], TABLE_Z + CUP_HEIGHT / 2, 0.0, 0.0, np.sin(yaw / 2), np.cos(yaw / 2))
+        scene.add(rss.slab(name=f"cup_wall_{k}", half=(hx, hy, CUP_HEIGHT / 2), at=xyz, color=(0.15, 0.32, 0.55)))
+    if (radius, half, mass) == (PEN_RADIUS, PEN_HALF, PEN_MASS):
+        scene.add(pen(at=tuple(at + [0, 0, PEN_HALF + PEN_RADIUS + 0.001]), direction=(0, 0, 1)))
+    else:
+        scene.add(rss.capsule(name="pen", radius=radius, half_height=half, at=tuple(at + [0, 0, half + radius + 0.001]),
+                              quat=(0., 0., 0., 1.), mass=mass, friction=0.8, color=PEN_GREY))
 
 
-def pick_from_cup(c, lift=0.10, show=(0, 0, 0), centre=PINCH_CENTRE, middle=MIDDLE_HOLD):
+def pick_from_cup(c, lift=0.10, show=(0, 0, 0), centre=PINCH_CENTRE, middle=MIDDLE_HOLD, top=PEN_HALF + PEN_RADIUS):
     """Generator: pinch the pen 30 mm below its top and lift it out. Returns the held hand pose.
 
     Thumb and index pinch across the barrel; the middle finger closes the third
     side. Two rounded pads alone squeeze a 7.5 mm barrel out sideways (toward
     palm -y) as soon as the cup stops holding it. `centre` is the palm-frame
-    point put on the pen axis; `middle` is the middle pad's offset from it.
+    point put on the pen axis; `middle` is the middle pad's offset from it;
+    `top` is the pen's centre-to-tip length.
     """
     p0, R0 = c.pose("pen")
-    grip = p0 + R0[:, 2] * (PEN_HALF + PEN_RADIUS) - np.array([0, 0, GRIP_BELOW_TOP])
+    grip = p0 + R0[:, 2] * top - np.array([0, 0, GRIP_BELOW_TOP])
     R = hand_down()
     yield from c.move(c.palm_for(grip + [0, 0, .08], centre, R), R, c.pinch(0.026, centre), 1.5, "approach")
     yield from c.move(c.palm_for(grip, centre, R), R, seconds=1.0, phase="descend")

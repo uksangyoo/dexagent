@@ -24,10 +24,19 @@ from robosimstudio.specs import CameraSpec
 from dexagent.scene import table_scene
 from dexagent.workcell import TABLE_Z
 from dexagent.hand import Controller
+from dexagent.cases import current
 from palm_up import register_palm_up
 
 HERE = Path(__file__).resolve().parent
-EDGE = 0.04
+# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# cube position on the palm +-10 mm across (palm y) and +-15 mm along the fingers
+# (palm z), yaw about the palm normal +-25 deg, edge 40 mm +-12 %, mass 12 g +-50 %.
+CASE = current()
+_DY, _DZ = CASE.u(0.010, "dy_palm"), CASE.u(0.015, "dz_palm")
+_DYAW = CASE.u(np.radians(25), "dyaw")
+EDGE = 0.04 * CASE.scale(0.12, "edge")
+MASS = 0.012 * CASE.scale(0.5, "mass")
+_S = EDGE / 0.04          # contact offsets below follow the cube's size
 GOAL = np.radians(90)
 TURN = np.radians(20)     # contact swing per gait
 PRESS = 0.002             # contacts commanded this far inside the faces during the swing
@@ -38,20 +47,21 @@ RAISED = 0.05             # how far the tips lift between gaits (palm x)
 # cube: (palm-frame height offset from the cube centre, pad-site distance from
 # the centre along the face normal, offset along the face toward the fingertips,
 # a joint seed on the right IK branch).
-THUMB = dict(dx=-0.011, gap=0.028, along=0.014, seed=np.array([0.16, -0.13, 1.14, 1.55]))
-LITTLE = dict(dx=0.004, gap=0.034, along=-0.007, seed=np.array([0.0, 0.6, 1.57, 1.57]))
-CENTRE = np.array([0.041, 0.0, 0.065])  # cube centre resting on the flat of the palm (palm face at x = .020 for z = 45-85 mm)
+THUMB = dict(dx=-0.011 * _S, gap=0.028 + (EDGE - 0.04) / 2, along=0.014 * _S, seed=np.array([0.16, -0.13, 1.14, 1.55]))
+LITTLE = dict(dx=0.004 * _S, gap=0.034 + (EDGE - 0.04) / 2, along=-0.007 * _S, seed=np.array([0.0, 0.6, 1.57, 1.57]))
+CENTRE = np.array([0.041 + (EDGE - 0.04) / 2, 0.0, 0.065])  # cube centre resting on the flat of the palm (palm face at x = .020 for z = 45-85 mm)
 PALM = np.array([0.48, -0.06, TABLE_Z + 0.23])
 TILT = np.radians(5)
 
 ROBOT, R_PALM = register_palm_up(PALM, TILT)
 scene = table_scene("cube_reorient", robot=ROBOT)
-CUBE_AT = PALM + R_PALM @ (CENTRE + [0.0005, 0, 0])
+CUBE_AT = PALM + R_PALM @ (CENTRE + [0.0005, _DY, _DZ])
+CUBE_R = R_PALM @ Rotation.from_rotvec([_DYAW, 0, 0]).as_matrix()   # yaw about the palm normal (palm x)
 # Looking down into the upturned palm, fingers pointing up the frame.
 scene.add(CameraSpec(name="palm", width=1280, height=720, fov_y=38,
                      eye=(0.40, -0.16, TABLE_Z + 0.62), look_at=(0.52, -0.03, TABLE_Z + 0.26)))
-scene.add(rss.box(name="cube", half=(EDGE / 2,) * 3, at=tuple(CUBE_AT), quat=tuple(Rotation.from_matrix(R_PALM).as_quat()),
-                  mass=0.012, friction=0.9, color=(0.42, 0.28, 0.72)))
+scene.add(rss.box(name="cube", half=(EDGE / 2,) * 3, at=tuple(CUBE_AT), quat=tuple(Rotation.from_matrix(CUBE_R).as_quat()),
+                  mass=MASS, friction=0.9, color=(0.42, 0.28, 0.72)))
 
 
 def yaw_of(R):
