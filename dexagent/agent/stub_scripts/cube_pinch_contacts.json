@@ -1,0 +1,334 @@
+[
+ [
+  {
+   "name": "note",
+   "arguments": {
+    "text": "stub: scripted cube_pinch at the contacts level"
+   }
+  },
+  {
+   "name": "tuck",
+   "arguments": {
+    "fingers": [
+     "middle",
+     "ring",
+     "little"
+    ],
+    "seconds": 0.6
+   }
+  },
+  {
+   "name": "carry",
+   "arguments": {
+    "palm_xyz": [
+     0.4855,
+     -0.1066,
+     0.905
+    ],
+    "palm_orientation": {
+     "preset": "down",
+     "yaw": 0.7
+    },
+    "seconds": 2.0
+   }
+  },
+  {
+   "name": "hold",
+   "arguments": {
+    "seconds": 0.2
+   }
+  },
+  {
+   "name": "approach",
+   "arguments": {
+    "obj": "cube",
+    "points": {
+     "index": [
+      0.02,
+      0,
+      0.055
+     ],
+     "thumb": [
+      -0.02,
+      0,
+      0.055
+     ]
+    },
+    "normals": {
+     "index": [
+      1,
+      0,
+      0
+     ],
+     "thumb": [
+      -1,
+      0,
+      0
+     ]
+    },
+    "standoff": 0.008,
+    "seconds": 1.0
+   }
+  }
+ ],
+ [
+  {
+   "name": "carry",
+   "arguments": {
+    "palm_xyz": [
+     0.4855,
+     -0.1066,
+     0.855
+    ],
+    "palm_orientation": {
+     "preset": "down",
+     "yaw": 0.7
+    },
+    "seconds": 1.5
+   }
+  },
+  {
+   "name": "hold",
+   "arguments": {
+    "seconds": 0.3
+   }
+  },
+  {
+   "name": "grasp",
+   "arguments": {
+    "obj": "cube",
+    "points": {
+     "index": [
+      0.02,
+      0,
+      0.005
+     ],
+     "thumb": [
+      -0.02,
+      0,
+      0.005
+     ]
+    },
+    "normals": {
+     "index": [
+      1,
+      0,
+      0
+     ],
+     "thumb": [
+      -1,
+      0,
+      0
+     ]
+    },
+    "squeeze": 0.004,
+    "seconds": 0.8
+   }
+  },
+  {
+   "name": "hold",
+   "arguments": {
+    "seconds": 0.3
+   }
+  }
+ ],
+ [
+  {
+   "name": "carry",
+   "arguments": {
+    "palm_xyz": [
+     0.4855,
+     -0.1066,
+     0.97
+    ],
+    "palm_orientation": {
+     "preset": "down",
+     "yaw": 0.7
+    },
+    "seconds": 2.0
+   }
+  },
+  {
+   "name": "hold",
+   "arguments": {
+    "seconds": 0.3
+   }
+  }
+ ],
+ [
+  {
+   "name": "carry",
+   "arguments": {
+    "palm_xyz": [
+     0.499,
+     -0.1137,
+     0.97
+    ],
+    "palm_orientation": {
+     "preset": "down",
+     "yaw": 0.8222
+    },
+    "seconds": 0.5
+   }
+  },
+  {
+   "name": "carry",
+   "arguments": {
+    "palm_xyz": [
+     0.5132,
+     -0.119,
+     0.97
+    ],
+    "palm_orientation": {
+     "preset": "down",
+     "yaw": 0.9443
+    },
+    "seconds": 0.5
+   }
+  },
+  {
+   "name": "carry",
+   "arguments": {
+    "palm_xyz": [
+     0.528,
+     -0.1226,
+     0.97
+    ],
+    "palm_orientation": {
+     "preset": "down",
+     "yaw": 1.0665
+    },
+    "seconds": 0.5
+   }
+  },
+  {
+   "name": "carry",
+   "arguments": {
+    "palm_xyz": [
+     0.5431,
+     -0.1244,
+     0.97
+    ],
+    "palm_orientation": {
+     "preset": "down",
+     "yaw": 1.1887
+    },
+    "seconds": 0.5
+   }
+  },
+  {
+   "name": "carry",
+   "arguments": {
+    "palm_xyz": [
+     0.5583,
+     -0.1243,
+     0.97
+    ],
+    "palm_orientation": {
+     "preset": "down",
+     "yaw": 1.3109
+    },
+    "seconds": 0.5
+   }
+  },
+  {
+   "name": "hold",
+   "arguments": {
+    "seconds": 0.4
+   }
+  }
+ ],
+ [
+  {
+   "name": "carry",
+   "arguments": {
+    "palm_xyz": [
+     0.5583,
+     -0.1243,
+     0.875
+    ],
+    "palm_orientation": {
+     "preset": "down",
+     "yaw": 1.3109
+    },
+    "seconds": 2.0
+   }
+  },
+  {
+   "name": "hold",
+   "arguments": {
+    "seconds": 0.3
+   }
+  }
+ ],
+ [
+  {
+   "name": "carry",
+   "arguments": {
+    "palm_xyz": [
+     0.5583,
+     -0.1243,
+     0.857
+    ],
+    "palm_orientation": {
+     "preset": "down",
+     "yaw": 1.3109
+    },
+    "seconds": 1.2
+   }
+  },
+  {
+   "name": "hold",
+   "arguments": {
+    "seconds": 0.3
+   }
+  }
+ ],
+ [
+  {
+   "name": "release",
+   "arguments": {
+    "fingers": [
+     "thumb",
+     "index"
+    ],
+    "obj": "cube",
+    "clear": 0.02,
+    "seconds": 0.6
+   }
+  },
+  {
+   "name": "hold",
+   "arguments": {
+    "seconds": 0.3
+   }
+  },
+  {
+   "name": "carry",
+   "arguments": {
+    "palm_xyz": [
+     0.5583,
+     -0.1243,
+     0.937
+    ],
+    "palm_orientation": {
+     "preset": "down",
+     "yaw": 1.3109
+    },
+    "seconds": 1.0
+   }
+  },
+  {
+   "name": "hold",
+   "arguments": {
+    "seconds": 0.3
+   }
+  },
+  {
+   "name": "finish",
+   "arguments": {
+    "reason": "scripted sequence complete"
+   }
+  }
+ ]
+]

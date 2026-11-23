@@ -1,0 +1,16 @@
+[
+  [
+    {
+      "name": "append_notes",
+      "arguments": {
+        "text": "## stub\nFinish-only cell to exercise parallel workdir setup without scoring."
+      }
+    },
+    {
+      "name": "finish",
+      "arguments": {
+        "reason": "stub finish-only"
+      }
+    }
+  ]
+]

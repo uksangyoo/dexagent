@@ -104,11 +104,22 @@ def run_one(task_dir, policy, level, case_text, out, film=None, max_sim_s=60.0):
             pspec.loader.exec_module(pmod)
             gen = pmod.run(api)
         k = 0
+        # --film accepts a single camera or a comma-separated list; multiple views are
+        # concatenated left-to-right into one frame (same layout as the agent dual view).
+        film_cams = [c.strip() for c in str(film).split(",") if c.strip()] if film else []
+
+        def _snap():
+            rgbs = [np.asarray(sim.render(c)["rgb"]) for c in film_cams]
+            if len(rgbs) == 1:
+                return rgbs[0]
+            from dexagent.agent.observe import side_by_side
+            return side_by_side(rgbs)
+
         try:
             for _ in gen:
                 monitor.step()
-                if film and k % 5 == 0:
-                    frames.append(sim.render(film)["rgb"])
+                if film_cams and k % 5 == 0:
+                    frames.append(_snap())
                 k += 1
                 if sim.time > max_sim_s:
                     rec["events"] = [f"stopped at the {max_sim_s:.0f} s sim limit"]
@@ -122,8 +133,8 @@ def run_one(task_dir, policy, level, case_text, out, film=None, max_sim_s=60.0):
             else:
                 sim.run(1).sync()
             monitor.step()
-            if film and (k + j) % 5 == 0:
-                frames.append(sim.render(film)["rgb"])
+            if film_cams and (k + j) % 5 == 0:
+                frames.append(_snap())
         res = monitor.result()
         rec["success"] = bool(res.get("success")) and rec["error"] is None
         rec["metrics"] = res.get("metrics", {})
@@ -131,6 +142,8 @@ def run_one(task_dir, policy, level, case_text, out, film=None, max_sim_s=60.0):
         if api is not None:
             rec["api_log"] = api._log[-60:]
             rec["api_usage"] = getattr(api, "_usage", None)
+            # LLM-driven policies (dexagent.agent.llm_policy) keep agent-call counters on the api, at every level.
+            rec["llm_usage"] = getattr(api, "_llm", None)
     except Exception:
         rec["error"] = traceback.format_exc(limit=8)
     rec["wall_s"] = round(time.time() - t0, 1)
@@ -184,7 +197,7 @@ def bench(task_dir, policy, level, cases, out, film=None, label="", max_sim_s=60
     summary = {"task": Path(task_dir).resolve().name, "policy": str(policy), "level": level, "label": label,
                "n": len(recs), "successes": sum(r["success"] for r in recs),
                "wall_s": round(time.time() - t0, 1), "time": time.strftime("%Y-%m-%dT%H:%M:%S"),
-               "cases": [{k: r.get(k) for k in ("case", "success", "metrics", "error", "sim_s", "perturbation", "sheet", "api_usage")}
+               "cases": [{k: r.get(k) for k in ("case", "success", "metrics", "error", "sim_s", "perturbation", "sheet", "api_usage", "llm_usage")}
                          for r in recs]}
     (out / "summary.json").write_text(json.dumps(summary, indent=1, default=str))
     RUNS.mkdir(exist_ok=True)
@@ -207,7 +220,7 @@ def main(argv=None):
     ap.add_argument("--level", default="expert")
     ap.add_argument("--cases", default="0:0", help="comma-separated seed:severity")
     ap.add_argument("--out")
-    ap.add_argument("--film", help="camera to film on the first case (tiled renderer)")
+    ap.add_argument("--film", help="camera name, or comma-separated cameras concatenated left-to-right (tiled renderer)")
     ap.add_argument("--label", default="")
     ap.add_argument("--max-sim-s", type=float, default=60.0)
     a = ap.parse_args(argv[1:] if one else argv)
