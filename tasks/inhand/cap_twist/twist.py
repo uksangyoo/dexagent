@@ -1,6 +1,6 @@
 """Rim-gait helpers for the cap-twist scene: lid readings and fingertip rim targets."""
 import numpy as np
-from dexagent.hand import Controller
+from dexagent.sim.hand import Controller
 
 # Disk grasp measured on this hand (palm frame, metres and radians): the pads sit on a
 # circle about CENTRE in the palm's y-z plane, at these angles from the finger axis
@@ -22,7 +22,7 @@ def rim_targets(c, lid, R, palm, twist, radius, lift=0.0):
 
 
 def _tucked(c):
-    from dexagent.hand import OPEN, CURL
+    from dexagent.sim.hand import OPEN, CURL
     q = OPEN.copy()
     q[12:16] = CURL
     q[16:20] = [0.3, CURL[1] - .2, CURL[2], CURL[3]]

@@ -49,14 +49,14 @@ from pathlib import Path
 import numpy as np
 from scipy.spatial.transform import Rotation
 from robosimstudio.specs import AssetSpec, CameraSpec, StaticSpec, ObjectSpec
-from dexagent.scene import table_scene, WORK
-from dexagent.workcell import hand_down, TABLE_Z, YAW
-from dexagent.hand import Controller, CURL, OPEN, smooth
-from dexagent.cases import current
+from dexagent.sim.scene import table_scene, WORK
+from dexagent.sim.workcell import hand_down, TABLE_Z, YAW
+from dexagent.sim.hand import Controller, CURL, OPEN, smooth
+from dexagent.sim.cases import current
 
 HERE = Path(__file__).resolve().parent
 CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4778_scissors_open_close_a.mov"
-# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# Initial conditions (dexagent.sim.cases; nominal at severity 0, full range at 1):
 # position +-20 mm, yaw +-25 deg, size 190 mm +-10 % (uniform), mass 65 g +-50 %,
 # pivot friction 0.04 N m +-50 %. The palm yaw the routine works in follows the scissors' yaw.
 CASE = current()

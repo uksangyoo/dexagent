@@ -13,7 +13,7 @@ LIFT_MIN = 0.060      # final lower end at least 60 mm above the table (clear of
 
 class Monitor:
     def __init__(self, sim):
-        from dexagent.workcell import Kinematics
+        from dexagent.sim.workcell import Kinematics
         self.sim = sim
         self.kin = Kinematics()
         h = sim.scene.handles.arms["right"]

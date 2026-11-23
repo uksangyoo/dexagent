@@ -22,11 +22,11 @@ from pathlib import Path
 import numpy as np
 from scipy.spatial.transform import Rotation
 import robosimstudio as rss
-from dexagent.scene import table_scene, WORK
-from dexagent.workcell import hand_down
-from dexagent.hand import Controller
-from dexagent.objects import quat_from_axis, PEN_RADIUS, PEN_HALF, PEN_MASS, PEN_GREY
-from dexagent.cases import current
+from dexagent.sim.scene import table_scene, WORK
+from dexagent.sim.workcell import hand_down
+from dexagent.sim.hand import Controller
+from dexagent.sim.objects import quat_from_axis, PEN_RADIUS, PEN_HALF, PEN_MASS, PEN_GREY
+from dexagent.sim.cases import current
 import grip as fingers
 
 HERE = Path(__file__).resolve().parent
@@ -35,7 +35,7 @@ GRASP_YAW = 0.15                                      # fingers point almost str
 ACROSS = np.array([-np.sin(GRASP_YAW), np.cos(GRASP_YAW), 0.0])   # the pen lies across the fingers
 OFFSET = 0.045                                        # thumb to pen centre, along the pen [m]
 REST_H = 0.03
-# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1): pen and
+# Initial conditions (dexagent.sim.cases; nominal at severity 0, full range at 1): pen and
 # rest together +-20 mm in x and y and +-25 deg in yaw; pen radius and length +-10 %,
 # mass 5 g +-50 %. The hand's grasp yaw stays GRASP_YAW; the routine reads the pen pose.
 CASE = current()
@@ -57,7 +57,7 @@ scene = table_scene("pen_gravity_pivot")
 _yaw = GRASP_YAW + _DYAW + np.pi / 2
 scene.add(rss.slab(name="pen_rest", half=(0.022, 0.010, REST_H / 2),
                    at=(*REST_AT, 0.0, 0.0, np.sin(_yaw / 2), np.cos(_yaw / 2)), color=(0.45, 0.33, 0.22)))
-# dexagent.objects.pen at the perturbed size and mass. Friction 0.9, the pad friction: the pen pair uses the pen's own.
+# dexagent.sim.objects.pen at the perturbed size and mass. Friction 0.9, the pad friction: the pen pair uses the pen's own.
 scene.add(rss.capsule(name="pen", radius=RADIUS, half_height=HALF, at=tuple(START), quat=quat_from_axis(PEN_DIR),
                       mass=MASS, friction=0.9, color=PEN_GREY))
 # Built here so the pen's contact material (no torsional friction, grip.smooth_pen) is

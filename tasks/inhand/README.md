@@ -4,8 +4,8 @@ In-hand manipulation scenes for the UR5e + DG5F-S right hand that have no human 
 
 ```bash
 export CUDA_VISIBLE_DEVICES=1
-PYTHONPATH=. .venv/bin/python -m dexagent.run tasks/inhand/<scene> --camera <camera>   # RTX film in artifacts/rss/<scene>/
-tasks/live tasks/inhand/<scene> up
+PYTHONPATH=. .venv/bin/python -m dexagent.sim.run tasks/inhand/<scene> --camera <camera>   # RTX film in artifacts/rss/<scene>/
+scripts/live tasks/inhand/<scene> up
 ```
 
 | Scene | Camera | Task | Result (Newton 1.7, October 21) |

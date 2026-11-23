@@ -2,7 +2,7 @@
 the cube pose, the arm joint angles (for the palm frame) and contact forces."""
 import numpy as np
 from scipy.spatial.transform import Rotation
-from dexagent.workcell import Kinematics
+from dexagent.sim.workcell import Kinematics
 
 OBJECTS = ("cube",)
 DT = 0.02

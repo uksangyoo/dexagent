@@ -29,22 +29,22 @@ workcell default), so a two-point pinch is not a free hinge about the
 pinch axis.
 
 Assumed numbers (not measured): pen 7.5 mm x 140 mm, 5 g, friction 0.8
-(dexagent.objects); fingertip friction 0.9 (workcell default).
+(dexagent.sim.objects); fingertip friction 0.9 (workcell default).
 Only robot joint targets are written.
 """
 from pathlib import Path
 import numpy as np
 import robosimstudio as rss
-from dexagent.scene import table_scene, WORK
-from dexagent.workcell import hand_down, TABLE_Z, YAW
-from dexagent.hand import Controller, PINCH_CENTRE
-from dexagent.objects import PEN_RADIUS, PEN_HALF, PEN_MASS, PEN_GREY, quat_from_axis
-from dexagent.cases import current
+from dexagent.sim.scene import table_scene, WORK
+from dexagent.sim.workcell import hand_down, TABLE_Z, YAW
+from dexagent.sim.hand import Controller, PINCH_CENTRE
+from dexagent.sim.objects import PEN_RADIUS, PEN_HALF, PEN_MASS, PEN_GREY, quat_from_axis
+from dexagent.sim.cases import current
 
 HERE = Path(__file__).resolve().parent
 CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4781_pen_table_slide.mov"
 DOWN = hand_down(YAW)        # palm down, fingers forward: the pinch axis is horizontal
-# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# Initial conditions (dexagent.sim.cases; nominal at severity 0, full range at 1):
 # guide block (with the pen in it) position +-20 mm, block yaw +-30 deg,
 # pen length 147.5 mm +-10 %, pen radius 3.75 mm +-10 %, pen mass 5 g +-50 %.
 CASE = current()
@@ -86,7 +86,7 @@ for name, offset, half in [
         o = np.array([c_ * offset[0] - s_ * offset[1], s_ * offset[0] + c_ * offset[1], offset[2]])
         at = tuple(HOLDER + o) + (0.0, 0.0, float(np.sin(_DYAW / 2)), float(np.cos(_DYAW / 2)))
     scene.add(rss.slab(name=name, half=half, at=at, color=(0.55, 0.42, 0.28)))
-# The pen (dexagent.objects.pen, at the drawn size and mass), standing on its tip in the bore.
+# The pen (dexagent.sim.objects.pen, at the drawn size and mass), standing on its tip in the bore.
 scene.add(rss.capsule(name="pen", radius=PEN_RADIUS, half_height=PEN_HALF,
                       at=tuple(HOLDER + [0, 0, PEN_RADIUS + PEN_HALF + 0.0005]), quat=quat_from_axis((0, 0, 1)),
                       mass=PEN_MASS, friction=0.8, color=PEN_GREY))
@@ -105,7 +105,7 @@ def grip_q(c, half):
     between them on the other side, so the table's push on a slightly tilted
     tip cannot rotate the pen about a single thumb-index contact.
     """
-    from dexagent.hand import PINCH_CENTRE as C, PINCH_AXIS as A, CURL
+    from dexagent.sim.hand import PINCH_CENTRE as C, PINCH_AXIS as A, CURL
     q = c.hand.copy()
     q[12:16] = CURL
     q[16:20] = [0.3, CURL[1] - .2, CURL[2], CURL[3]]

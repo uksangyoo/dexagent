@@ -2,7 +2,7 @@
 (tile and book poses, robot joint positions)."""
 import numpy as np
 from scipy.spatial.transform import Rotation
-from dexagent.workcell import Kinematics
+from dexagent.sim.workcell import Kinematics
 
 OBJECTS = ("tile",)
 

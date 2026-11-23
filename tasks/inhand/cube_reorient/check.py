@@ -6,7 +6,7 @@ face, +y toward the thumb, +z along the fingers), relative to the cube's own sta
 """
 import numpy as np
 from scipy.spatial.transform import Rotation
-from dexagent.hand import Controller
+from dexagent.sim.hand import Controller
 
 OBJECTS = ("cube",)
 GOAL = np.radians(90)

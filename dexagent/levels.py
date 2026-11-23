@@ -37,10 +37,22 @@ Common API (all levels)
 import os
 import numpy as np
 from scipy.spatial.transform import Rotation
-from .hand import Controller, OPEN, CURL, smooth
-from .workcell import hand_down, hand_up, YAW
+from .sim.hand import Controller, OPEN, CURL
+from .sim.workcell import hand_down, hand_up, YAW
 
-LEVELS = ("joints", "fingertips", "synergies", "contacts", "layered")
+LEVELS = ("joints", "fingertips", "synergies", "contacts", "layered", "force")  # RQ2 axis
+# Levels whose API needs the per-task synergy basis in dexagent/assets/synergies/<task>.npz.
+NEEDS_SYNERGY = ("synergies", "layered", "force")
+
+# One-line style hint per level, shown to the coding agent in its first message.
+HINTS = {
+    "joints": "On joints, set palm pose and 20 finger joint targets (or a per-finger dict).",
+    "fingertips": "On fingertips, command palm-frame pad centres via tips={finger: xyz}.",
+    "synergies": "On synergies, command s (length api.k) in units of one standard deviation.",
+    "contacts": "On contacts, prefer approach/grasp/carry/release over inventing joint angles.",
+    "layered": "On layered, mix any lower-level commands; higher layers are a prior, not required.",
+    "force": "On force, layered commands plus a grip-force servo (api.grip) are available.",
+}
 FINGER_NAMES = ("thumb", "index", "middle", "ring", "little")
 
 
@@ -413,11 +425,6 @@ class Contacts(Fingertips):
         raise AttributeError("the contacts level has no direct finger move; use carry() for the palm and the contact primitives for fingers")
 
 
-def make_api(level, sim, objects=()):
-    cls = {"joints": Joints, "fingertips": Fingertips, "synergies": Synergies, "contacts": Contacts}[level]
-    return cls(sim, objects)
-
-
 class Layered(Contacts):
     """Every layer at once: the agentic analogue of EigenDExplore's joint actions
     with a synergy prior. Nothing is taken away; the higher layers are offered,
@@ -627,10 +634,8 @@ class Force(Layered):
     del _w
 
 
-LEVELS = LEVELS + ("force",)
-
-
-def make_api(level, sim, objects=()):  # noqa: F811
+def make_api(level, sim, objects=()):
+    """Build the forced action-representation API for `level` on a running sim."""
     cls = {"joints": Joints, "fingertips": Fingertips, "synergies": Synergies, "contacts": Contacts,
            "layered": Layered, "force": Force}[level]
     return cls(sim, objects)

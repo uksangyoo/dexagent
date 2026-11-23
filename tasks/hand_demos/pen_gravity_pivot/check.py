@@ -6,7 +6,7 @@ Reads simulator state only: the pen's pose, and the measured robot joints
 from collections import deque
 import numpy as np
 from scipy.spatial.transform import Rotation
-from dexagent.workcell import Kinematics
+from dexagent.sim.workcell import Kinematics
 
 OBJECTS = ("pen",)
 DT = 0.02

@@ -4,8 +4,8 @@ Each scene reproduces one or two phone clips from `reference/hand_demos` with th
 
 ```bash
 export CUDA_VISIBLE_DEVICES=1
-PYTHONPATH=. .venv/bin/python -m dexagent.run tasks/hand_demos/<scene> --camera reference   # RTX film in artifacts/rss/<scene>/
-tasks/live tasks/hand_demos/<scene> up                                                      # live page
+PYTHONPATH=. .venv/bin/python -m dexagent.sim.run tasks/hand_demos/<scene> --camera reference   # RTX film in artifacts/rss/<scene>/
+scripts/live tasks/hand_demos/<scene> up                                                      # live page
 ```
 
 A routine prints `HAND_RESULT <task> <outcome> <metrics>` and writes the full trace to `<scene>/results/`. Routines write only the 26 robot joint targets. They read object poses for planning and scoring, so they are privileged-state scripts.

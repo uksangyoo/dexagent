@@ -21,7 +21,7 @@ Picking the pen off the table, as in IMG_4773, is not used: with these
 16 x 20 mm fingertip shells the best synthesized pinch (pen_grasp.py) lifts
 it 2-9 cm before the contacts ride over the top of the 7.5 mm barrel.
 
-Assumed: pen 7.5 mm x 140 mm, 5 g, friction 0.8 (dexagent.objects); hand
+Assumed: pen 7.5 mm x 140 mm, 5 g, friction 0.8 (dexagent.sim.objects); hand
 pads 0.9 with torsional friction (condim 4, workcell default); cup 60 mm
 tall with a 20 mm square bore. The capsule is symmetric, so roll is read off
 the body's orientation (twist about its own axis), unwrapped step by step.
@@ -29,11 +29,11 @@ the body's orientation (twist about its own axis), unwrapped step by step.
 from pathlib import Path
 import numpy as np
 from scipy.spatial.transform import Rotation
-from dexagent.scene import table_scene, WORK
-from dexagent.workcell import TABLE_Z
-from dexagent.hand import Controller, PINCH_CENTRE
-from dexagent.objects import PEN_RADIUS, PEN_HALF, PEN_MASS
-from dexagent.cases import current
+from dexagent.sim.scene import table_scene, WORK
+from dexagent.sim.workcell import TABLE_Z
+from dexagent.sim.hand import Controller, PINCH_CENTRE
+from dexagent.sim.objects import PEN_RADIUS, PEN_HALF, PEN_MASS
+from dexagent.sim.cases import current
 from pen_cup import add_cup_and_pen, pick_from_cup
 
 HERE = Path(__file__).resolve().parent
@@ -44,7 +44,7 @@ SWING_SHIFT = 0.008                            # opposite thumb/index slide alon
 ROLL_STROKE = 0.008                            # thumb stroke along the barrel tangent for the roll
 SHOW = np.array([-0.04, 0.07, -0.02])          # where the in-hand motions are shown, from the lifted grip
 
-# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# Initial conditions (dexagent.sim.cases; nominal at severity 0, full range at 1):
 # cup and pen position +-20 mm, cup yaw +-30 deg, pen diameter 7.5 mm +-12 %,
 # pen length 140 mm +-10 %, pen mass 5 g +-50 %.
 CASE = current()

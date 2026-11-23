@@ -7,7 +7,7 @@ pen_gravity_pivot and pen_pickup_pivot.
 """
 import numpy as np
 from scipy.optimize import least_squares
-from dexagent.hand import CURL, OPEN
+from dexagent.sim.hand import CURL, OPEN
 
 
 def smooth_pen(sim, name="pen"):

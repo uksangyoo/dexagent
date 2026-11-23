@@ -1,347 +1,321 @@
-"""Per-level tool schemas and the dispatcher from a model tool call to a `levels` api method.
+"""Editor tools for the coding-agent loop: edit policy.py, run dexagent.score iterate, finish.
 
-Each level offers the model exactly the commands that level has, nothing from another:
-
-  joints       move (20 finger joint targets)
-  fingertips   move (palm-frame pad targets, solved by IK), open
-  synergies    move (k posture coefficients)
-  contacts     approach, grasp, squeeze, rotate, translate, release, relocate, tuck, open, carry
-  layered      move_joints, move_tips, move_synergy + the contacts tools
-  force        layered + grip, ungrip
-
-Every level also gets `hold`, `note` and `finish`. Palm orientation is given as a
-named preset plus angles (`palm_orientation`), never a raw 3x3 matrix.
+The model may only touch files inside its workdir. `write_policy` compiles the source and
+scans for `api.<name>` calls against the forced level's public surface; failures are returned
+as tool errors and do not consume an iteration. `run_iterate` shells out to
+`python -m dexagent.score iterate` so budget and seed uniqueness stay in that module.
 """
+from __future__ import annotations
+
+import ast
+import base64
 import inspect
 import json
+import os
+import subprocess
+from pathlib import Path
 
-import numpy as np
-from scipy.spatial.transform import Rotation
+from dexagent import levels as L
 
-from ..workcell import hand_down, hand_up
+ROOT = Path(__file__).resolve().parents[2]
+PY = str(ROOT / ".venv/bin/python")
 
-FINGERS = ["thumb", "index", "middle", "ring", "little"]
-MAX_SECONDS = 8.0
-MIN_SECONDS = 0.1
-
-# ------------------------------------------------------------------ argument schemas
-_XYZ = {"type": "array", "items": {"type": "number"}, "minItems": 3, "maxItems": 3}
-_FINGER = {"type": "string", "enum": FINGERS}
-_FINGER_LIST = {"type": "array", "items": _FINGER, "minItems": 1}
-
-
-def _finger_map(item, desc):
-    return {"type": "object", "description": desc, "properties": {f: item for f in FINGERS}, "additionalProperties": False}
-
-
-_SECONDS = {"type": "number", "description": f"Duration of this motion [s], {MIN_SECONDS}-{MAX_SECONDS}."}
-_PALM_XYZ = dict(_XYZ, description="Target palm origin in the WORLD frame [m] (z up, table top z = 0.75). Omit to keep the palm where it is.")
-_PALM_ORI = {
-    "type": "object",
-    "description": ("Target palm orientation. preset 'down': palm faces down, fingers forward; 'up': palm faces up. "
-                    "yaw [rad]: fingers point this far from world +x about vertical (default 0.7). tilt [rad], 'up' only: "
-                    "raises the palm toward the fingers. pitch [rad]: extra rotation about the palm's thumb-side axis. "
-                    "Omit to keep the current orientation."),
-    "properties": {"preset": {"type": "string", "enum": ["down", "up"]}, "yaw": {"type": "number"},
-                   "tilt": {"type": "number"}, "pitch": {"type": "number"}},
-    "required": ["preset"], "additionalProperties": False,
+_CLASSES = {
+    "joints": L.Joints,
+    "fingertips": L.Fingertips,
+    "synergies": L.Synergies,
+    "contacts": L.Contacts,
+    "layered": L.Layered,
+    "force": L.Force,
 }
-_OBJ = {"type": "string", "description": "Name of the scene object (one of the scored objects listed in the task)."}
-_FRAME = {"type": "string", "enum": ["palm", "world"], "description": "Frame the axis/delta is given in (default palm)."}
 
-
-def _tool(name, description, properties=None, required=()):
-    return {"type": "function", "function": {
-        "name": name, "description": description,
-        "parameters": {"type": "object", "properties": properties or {}, "required": list(required), "additionalProperties": False}}}
-
-
-def _palm(extra=None, required=()):
-    p = {"palm_xyz": _PALM_XYZ, "palm_orientation": _PALM_ORI}
-    p.update(extra or {})
-    p["seconds"] = _SECONDS
-    return p, required
-
-
-T = {}
-
-T["hold"] = _tool("hold", "Keep every target as it is for `seconds` (the physics keeps running).", {"seconds": _SECONDS}, ["seconds"])
-T["note"] = _tool("note", "Write a short note to the run log. No time passes.", {"text": {"type": "string"}}, ["text"])
-T["finish"] = _tool("finish", "Declare the task complete (or hopeless) and stop. The scorer then runs on the final scene.",
-                    {"reason": {"type": "string"}})
-
-p, r = _palm({"finger_joints": {
-    "description": ("Finger joint targets [rad]: either 20 numbers (finger i owns entries 4i..4i+3: abduction, then three flexion "
-                    "joints, base to tip; fingers in order thumb, index, middle, ring, little) or an object {finger: 4 angles}; "
-                    "named fingers change and the rest keep their targets. Omit to keep the fingers."),
-    "anyOf": [{"type": "array", "items": {"type": "number"}, "minItems": 20, "maxItems": 20},
-              _finger_map({"type": "array", "items": {"type": "number"}, "minItems": 4, "maxItems": 4}, "per-finger angles")]}})
-T["joints.move"] = _tool("move", "Move the palm and set finger joint targets together, interpolated in joint space.", p, r)
-
-_TIPS = _finger_map(dict(_XYZ), "{finger: [x, y, z]} pad-centre targets in the PALM frame [m] (+z along the fingers, +x out of the palm face, +y toward the thumb). Fingers not named keep their targets.")
-p, r = _palm({"tips": _TIPS,
-              "straight": {"type": "boolean", "description": "Move the pads along straight palm-frame lines (IK every step) instead of joint interpolation."},
-              "directions": _finger_map(dict(_XYZ), "Optional {finger: unit vector} palm-frame direction to point the distal link along.")})
-T["fingertips.move"] = _tool("move", "Move the palm and place finger pad centres at palm-frame targets (per-finger IK; residual over 4 mm is reported).", p, r)
-T["open"] = _tool("open", "Return all fingers to an open posture.", {"seconds": _SECONDS})
-
-p, r = _palm({"s": {"type": "array", "items": {"type": "number"}, "description": "Synergy coefficients, in standard deviations (length k, see the task prompt). Omit to keep the fingers."}})
-T["synergies.move"] = _tool("move", "Move the palm and set the hand posture to mean + basis @ s (whole-hand synergies), interpolated in joint space.", p, r)
-
-# contacts primitives
-_POINTS = _finger_map(dict(_XYZ), "{finger: [x, y, z]} contact points in the OBJECT frame [m] (object origin = its pose position).")
-_NORMALS = _finger_map(dict(_XYZ), "Optional {finger: outward surface normal in the OBJECT frame}; default is away from the object origin.")
-T["approach"] = _tool("approach", "Place pads `standoff` m outside the given object-frame points (pre-contact), optionally moving the palm too.",
-                      {"obj": _OBJ, "points": _POINTS, "standoff": {"type": "number"}, "seconds": _SECONDS, "normals": _NORMALS,
-                       "palm_xyz": _PALM_XYZ, "palm_orientation": _PALM_ORI}, ["obj", "points"])
-T["grasp"] = _tool("grasp", "Put pads on the object-frame points, pressed `squeeze` m into the surface: an opposition grasp of any finger set. The named fingers become the held contacts.",
-                   {"obj": _OBJ, "points": _POINTS, "squeeze": {"type": "number"}, "seconds": _SECONDS, "normals": _NORMALS}, ["obj", "points"])
-T["squeeze"] = _tool("squeeze", "Press held pads `delta` m further in (negative loosens).",
-                     {"fingers": _FINGER_LIST, "obj": _OBJ, "delta": {"type": "number"}, "seconds": _SECONDS}, ["fingers", "obj", "delta"])
-_AXIS = dict(_XYZ, description="Rotation axis (need not be unit).")
-T["rotate"] = _tool("rotate", "Move the named fingers' pads rigidly as if fixed to the object turning by `angle` rad about `axis` through `centre`; other fingers hold.",
-                    {"obj": _OBJ, "axis": _AXIS, "angle": {"type": "number", "description": "rad"}, "fingers": _FINGER_LIST,
-                     "seconds": _SECONDS, "frame": _FRAME,
-                     "centre": dict(_XYZ, description="Pivot in the OBJECT frame [m]; default the object origin.")},
-                    ["obj", "axis", "angle", "fingers"])
-T["translate"] = _tool("translate", "Move the named fingers' pads rigidly by `delta` m.",
-                       {"obj": _OBJ, "delta": dict(_XYZ, description="m"), "fingers": _FINGER_LIST, "seconds": _SECONDS, "frame": _FRAME},
-                       ["obj", "delta", "fingers"])
-T["release"] = _tool("release", "Back pads off `clear` m away from the object origin, then optionally lift them by a palm-frame vector.",
-                     {"fingers": _FINGER_LIST, "obj": _OBJ, "clear": {"type": "number"},
-                      "lift": dict(_XYZ, description="Optional palm-frame lift vector [m] after backing off."), "seconds": _SECONDS},
-                     ["fingers", "obj"])
-T["relocate"] = _tool("relocate", "Release one finger, carry it over and place it on a new object-frame point while the others hold.",
-                      {"finger": _FINGER, "obj": _OBJ, "point": dict(_XYZ, description="New contact point in the OBJECT frame [m]."),
-                       "clear": {"type": "number"}, "lift": dict(_XYZ), "squeeze": {"type": "number"}, "seconds": _SECONDS,
-                       "normal": dict(_XYZ, description="Optional outward normal at the new point (object frame).")},
-                      ["finger", "obj", "point"])
-T["tuck"] = _tool("tuck", "Curl the named fingers out of the way.", {"fingers": _FINGER_LIST, "seconds": _SECONDS}, ["fingers"])
-p, r = _palm()
-T["carry"] = _tool("carry", "Move the palm only; the fingers keep their targets.", p, r)
-
-# move_* on the layered level (same arguments as the single-layer moves)
-p, r = T["joints.move"]["function"]["parameters"]["properties"], []
-T["move_joints"] = _tool("move_joints", "Joints layer: move the palm and set finger joint targets together, interpolated in joint space.", p)
-T["move_tips"] = _tool("move_tips", "Fingertips layer: move the palm and place pad centres at palm-frame targets (per-finger IK).",
-                       T["fingertips.move"]["function"]["parameters"]["properties"])
-T["move_synergy"] = _tool("move_synergy", "Synergies layer: move the palm and set the whole-hand posture to mean + basis @ s.",
-                          T["synergies.move"]["function"]["parameters"]["properties"])
-
-# force servo
-T["grip"] = _tool("grip", ("Engage a per-step force servo: each named pad moves along its closing direction to hold the target contact force [N] "
-                           "with `obj`. It keeps running through later motions until ungrip. Waits up to `seconds` for the forces to settle."),
-                  {"obj": _OBJ, "forces": _finger_map({"type": "number"}, "{finger: target newtons}"),
-                   "directions": _finger_map(dict(_XYZ), "Optional {finger: unit vector in the OBJECT frame pointing into the object}."),
-                   "seconds": _SECONDS, "max_travel": {"type": "number", "description": "m of pad travel allowed past the commanded target"}},
-                  ["obj", "forces"])
-T["ungrip"] = _tool("ungrip", "Stop the force servo (all fingers if `fingers` omitted); pads stay where the servo left them.",
-                    {"fingers": _FINGER_LIST})
-
-_CONTACTS = ["approach", "grasp", "squeeze", "rotate", "translate", "release", "relocate", "tuck", "open", "carry"]
-# (tool key, api method name) per level
-_LEVEL_TOOLS = {
-    "joints": [("joints.move", "move")],
-    "fingertips": [("fingertips.move", "move"), ("open", "open")],
-    "synergies": [("synergies.move", "move")],
-    "contacts": [(n, n) for n in _CONTACTS],
-    "layered": [("move_joints", "move_joints"), ("move_tips", "move_tips"), ("move_synergy", "move_synergy")] + [(n, n) for n in _CONTACTS],
+# Instance attributes that are not methods but that policies legitimately read.
+_EXTRA_ATTRS = {
+    "objects", "t", "level", "k", "open_coeffs", "pad_offset", "joint_limits",
+    "OPEN", "DEFAULT_YAW", "GAIN",
 }
-_LEVEL_TOOLS["force"] = _LEVEL_TOOLS["layered"] + [("grip", "grip"), ("ungrip", "ungrip")]
-_COMMON = ["hold", "note", "finish"]
-LEVELS = tuple(_LEVEL_TOOLS)
 
 
-def tool_specs(level):
-    """The OpenAI-style tool list for a level."""
-    return [T[k] for k, _ in _LEVEL_TOOLS[level]] + [T[k] for k in _COMMON]
-
-
-def method_for(level, tool):
-    """api method name for a model-visible tool name at `level`, or None."""
-    for key, method in _LEVEL_TOOLS[level]:
-        if T[key]["function"]["name"] == tool:
-            return method
-    return {"hold": "hold", "note": "note", "finish": None}.get(tool) if tool in _COMMON else None
-
-
-# ------------------------------------------------------------------ validation
-def _check(value, schema, path):
-    """Minimal JSON-schema subset: type, enum, items, min/maxItems, properties, required, anyOf."""
-    if "anyOf" in schema:
-        errs = [_check(value, s, path) for s in schema["anyOf"]]
-        if all(errs):
-            return f"{path}: matches none of the allowed forms ({'; '.join(e for e in errs if e)[:200]})"
-        return None
-    t = schema.get("type")
-    if t == "number":
-        if isinstance(value, bool) or not isinstance(value, (int, float)) or not np.isfinite(value):
-            return f"{path}: expected a finite number, got {value!r}"
-    elif t == "boolean":
-        if not isinstance(value, bool):
-            return f"{path}: expected a boolean"
-    elif t == "string":
-        if not isinstance(value, str):
-            return f"{path}: expected a string"
-        if "enum" in schema and value not in schema["enum"]:
-            return f"{path}: must be one of {schema['enum']}, got {value!r}"
-    elif t == "array":
-        if not isinstance(value, list):
-            return f"{path}: expected an array"
-        if len(value) < schema.get("minItems", 0) or len(value) > schema.get("maxItems", 10 ** 9):
-            return f"{path}: expected {schema.get('minItems', 0)}-{schema.get('maxItems', 'any')} items, got {len(value)}"
-        for i, v in enumerate(value):
-            e = _check(v, schema.get("items", {}), f"{path}[{i}]")
-            if e:
-                return e
-    elif t == "object":
-        if not isinstance(value, dict):
-            return f"{path}: expected an object"
-        props = schema.get("properties", {})
-        for k in schema.get("required", []):
-            if k not in value:
-                return f"{path}: missing required '{k}'"
-        for k, v in value.items():
-            if k not in props:
-                return f"{path}: unknown key '{k}' (allowed: {sorted(props)})"
-            e = _check(v, props[k], f"{path}.{k}")
-            if e:
-                return e
-    return None
-
-
-def coerce_args(args):
-    """Parse values that models often double-encode as JSON strings (e.g. finger_joints: "[0,1,...]").
-
-    Walks the tree once: any string that starts with `[` or `{` and `json.loads` successfully is replaced
-    by the parsed value. Non-JSON strings are left alone. Returns the coerced object and how many
-    strings were parsed (so the caller can log it).
-    """
-    n = 0
-
-    def walk(x):
-        nonlocal n
-        if isinstance(x, dict):
-            return {k: walk(v) for k, v in x.items()}
-        if isinstance(x, list):
-            return [walk(v) for v in x]
-        if isinstance(x, str):
-            s = x.strip()
-            if s[:1] in "[{":
-                try:
-                    parsed = json.loads(s)
-                except json.JSONDecodeError:
-                    return x
-                n += 1
-                return walk(parsed)  # in case of double-double encoding
-            return x
-        return x
-
-    return walk(args), n
-
-
-def validate(level, tool, args):
-    """None if the call is well formed for this level, else an error string for the model."""
-    if tool not in [T[k]["function"]["name"] for k, _ in _LEVEL_TOOLS[level]] + _COMMON:
-        offered = [T[k]["function"]["name"] for k, _ in _LEVEL_TOOLS[level]] + _COMMON
-        return f"unknown tool '{tool}' at level '{level}'; available: {offered}"
-    spec = next((T[k] for k, _ in _LEVEL_TOOLS[level] if T[k]["function"]["name"] == tool), T.get(tool))
-    if not isinstance(args, dict):
-        return "arguments must be a JSON object"
-    return _check(args, spec["function"]["parameters"], tool)
-
-
-def count_dims(args):
-    """Number of continuous scalars in a call's arguments (the cognitive cost of a command)."""
-    if isinstance(args, bool) or args is None or isinstance(args, str):
-        return 0
-    if isinstance(args, (int, float)):
-        return 1
-    if isinstance(args, dict):
-        return sum(count_dims(v) for k, v in args.items() if k != "seconds")
-    if isinstance(args, (list, tuple)):
-        return sum(count_dims(v) for v in args)
-    return 0
-
-
-# ------------------------------------------------------------------ dispatch
-def orientation(spec):
-    """Rotation matrix from a `palm_orientation` object."""
-    yaw = float(spec.get("yaw", 0.7))
-    if spec["preset"] == "up":
-        R = hand_up(yaw, float(spec.get("tilt", 0.0)))
-    else:
-        R = hand_down(yaw)
-    pitch = float(spec.get("pitch", 0.0))
-    if pitch:
-        R = R @ Rotation.from_rotvec([0, pitch, 0]).as_matrix()
-    return R
-
-
-_RENAME = {"palm_xyz": "xyz", "finger_joints": "q", "forces": "forces"}
-
-
-def to_kwargs(args):
-    kw = {}
-    for k, v in args.items():
-        if k == "palm_orientation":
-            kw["R"] = orientation(v)
-        elif k == "seconds":
-            kw["seconds"] = float(np.clip(v, MIN_SECONDS, MAX_SECONDS))
-        else:
-            kw[_RENAME.get(k, k)] = v
-    return kw
-
-
-def jsonable(x):
-    if isinstance(x, dict):
-        return {str(k): jsonable(v) for k, v in x.items()}
-    if isinstance(x, (list, tuple)):
-        return [jsonable(v) for v in x]
-    if isinstance(x, np.ndarray):
-        return np.round(x, 4).tolist()
-    if isinstance(x, (np.floating, float)):
-        return round(float(x), 4)
-    if isinstance(x, np.integer):
-        return int(x)
-    return x
-
-
-def execute(api, level, tool, args):
-    """Generator: run one tool call on `api`; yields once per control step and returns a JSON-able result dict."""
-    method = method_for(level, tool)
-    kw = to_kwargs(args)
-    if tool == "note":
-        api.note(args["text"][:300])
-        return {"ok": True}
-    fn = getattr(api, method)
-    if tool == "hold":
-        yield from fn(kw["seconds"])
-        return {"ok": True}
-    res = yield from fn(**kw)
-    return jsonable(res) if isinstance(res, dict) else {"ok": True}
-
-
-def check_against_api(level, cls):
-    """Every offered tool's arguments must exist in the api method's signature (guards schema drift)."""
-    from .. import levels as L
-    problems = []
-    rename = {"palm_xyz": "xyz", "palm_orientation": "R", "finger_joints": "q"}
-    # The layered wrappers take (*a, **k) and forward to these single-layer methods.
-    underlying = {"move_joints": L.Joints.move, "move_tips": L.Fingertips.move, "move_synergy": L.Synergies.move,
-                  "approach": L.Contacts.approach, "grasp": L.Contacts.grasp, "squeeze": L.Contacts.squeeze,
-                  "rotate": L.Contacts.rotate, "translate": L.Contacts.translate, "release": L.Contacts.release,
-                  "relocate": L.Contacts.relocate, "tuck": L.Contacts.tuck, "open": L.Contacts.open, "carry": L.Contacts.carry,
-                  "grip": L.Force._grip_impl, "ungrip": L.Force._ungrip_impl}
-    for key, method in _LEVEL_TOOLS[level]:
-        fn = getattr(cls, method, None)
-        if fn is None:
-            problems.append(f"{level}.{method}: missing on {cls.__name__}")
+def allowed_api_names(level: str, extra=()) -> set[str]:
+    cls = _CLASSES[level]
+    names = set(_EXTRA_ATTRS) | set(extra)
+    for n, v in inspect.getmembers(cls):
+        if n.startswith("_"):
             continue
-        if level in ("layered", "force"):
-            fn = underlying[method]
-        params = set(inspect.signature(fn).parameters) - {"self"}
-        for a in T[key]["function"]["parameters"]["properties"]:
-            if rename.get(a, a) not in params:
-                problems.append(f"{level}.{method}: argument '{a}' not in signature {sorted(params)}")
+        names.add(n)
+    # Contacts.move exists only to raise AttributeError; policies must use carry + primitives.
+    if level == "contacts":
+        names.discard("move")
+    return names
+
+
+def api_doc(level: str) -> str:
+    """Human-readable allowed surface for prompts: common API + level-specific methods with docs."""
+    cls = _CLASSES[level]
+    common = inspect.getdoc(L) or ""
+    # Keep the module docstring header up through Common API.
+    lines = [f"Forced representation: '{level}'.", "", common.strip(), "", f"## Level-specific API (`{cls.__name__}`)"]
+    # Prefer the class docstring, then each public method's signature + first paragraph.
+    if inspect.getdoc(cls):
+        lines += ["", inspect.getdoc(cls).strip()]
+    lines.append("")
+    for name in sorted(allowed_api_names(level)):
+        if name in _EXTRA_ATTRS and not hasattr(cls, name):
+            continue
+        attr = getattr(cls, name, None)
+        if attr is None or name in ("level",):
+            continue
+        if callable(attr) and not isinstance(attr, type):
+            try:
+                sig = str(inspect.signature(attr)).replace("(self, ", "(").replace("(self)", "()")
+            except (TypeError, ValueError):
+                sig = "(...)"
+            doc = (inspect.getdoc(attr) or "").strip().split("\n\n")[0].replace("\n", " ")
+            lines.append(f"- api.{name}{sig}" + (f"  — {doc}" if doc else ""))
+        elif isinstance(attr, property):
+            doc = (inspect.getdoc(attr) or "").strip().split("\n\n")[0].replace("\n", " ")
+            lines.append(f"- api.{name}" + (f"  — {doc}" if doc else "  — property"))
+    if level == "contacts":
+        lines.append("\nDo not call api.move on the contacts level; use carry() for the palm and the contact primitives for fingers.")
+    return "\n".join(lines)
+
+
+def scan_policy(source: str, level: str, extra=()) -> list[str]:
+    """Return a list of problems (empty if the policy looks usable)."""
+    problems = []
+    try:
+        tree = ast.parse(source)
+    except SyntaxError as e:
+        return [f"syntax error: {e}"]
+    has_run = any(isinstance(n, ast.FunctionDef) and n.name == "run" for n in tree.body)
+    if not has_run:
+        problems.append("policy must define a top-level function run(api)")
+    # Ban importing level classes or the live agent tools.
+    for n in ast.walk(tree):
+        if isinstance(n, (ast.Import, ast.ImportFrom)):
+            mod = getattr(n, "module", None) or ""
+            names = [a.name for a in getattr(n, "names", [])]
+            joined = ".".join([mod] + names)
+            if "dexagent.levels" in (mod or "") or any(x in names for x in _CLASSES):
+                problems.append(f"do not import dexagent.levels classes; use only the api argument ({joined})")
+            if "dexagent.agent" in (mod or ""):
+                problems.append("do not import dexagent.agent from a policy")
+    allowed = allowed_api_names(level, extra)
+    used = set()
+    for n in ast.walk(tree):
+        if isinstance(n, ast.Attribute) and isinstance(n.value, ast.Name) and n.value.id == "api":
+            used.add(n.attr)
+            if n.attr.startswith("_"):
+                problems.append(f"api.{n.attr} is private; do not use it")
+            elif n.attr not in allowed:
+                problems.append(f"api.{n.attr} is not available at level '{level}'; "
+                                f"allowed: {sorted(allowed)}")
     return problems
+
+
+def compile_policy(source: str, level: str, extra=()) -> list[str]:
+    problems = scan_policy(source, level, extra)
+    if problems:
+        return problems
+    try:
+        compile(source, "policy.py", "exec")
+    except SyntaxError as e:
+        return [f"syntax error: {e}"]
+    return []
+
+
+TOOL_SPECS = [
+    {"type": "function", "function": {
+        "name": "read_file",
+        "description": "Read a text file inside the workdir (policy.py, NOTES.md, TASK.md, progress.jsonl, or an iter_*/case_*.json).",
+        "parameters": {"type": "object", "properties": {
+            "path": {"type": "string", "description": "Relative path inside the workdir, e.g. policy.py or iter_1/case_20000_0.json"},
+        }, "required": ["path"], "additionalProperties": False}}},
+    {"type": "function", "function": {
+        "name": "write_policy",
+        "description": "Replace policy.py with a complete Python source that defines run(api). Compiled and API-scanned before saving; errors do not consume an iteration.",
+        "parameters": {"type": "object", "properties": {
+            "content": {"type": "string", "description": "Full contents of policy.py"},
+        }, "required": ["content"], "additionalProperties": False}}},
+    {"type": "function", "function": {
+        "name": "append_notes",
+        "description": "Append a short lab-notebook entry to NOTES.md (what you tried, what failed, what you learned).",
+        "parameters": {"type": "object", "properties": {
+            "text": {"type": "string"},
+        }, "required": ["text"], "additionalProperties": False}}},
+    {"type": "function", "function": {
+        "name": "run_iterate",
+        "description": ("Snapshot the current policy.py and score it on 3 fresh cases (severity 0, 0.5, 1). "
+                        "Returns successes/3, per-case metrics, api_log tails, errors, and a contact-sheet image. "
+                        "This consumes one iteration of the budget."),
+        "parameters": {"type": "object", "properties": {}, "additionalProperties": False}}},
+    {"type": "function", "function": {
+        "name": "finish",
+        "description": "End the editing loop. Prefer the best-performing iteration; omit final_iter to let the harness pick the best.",
+        "parameters": {"type": "object", "properties": {
+            "final_iter": {"type": "integer", "description": "Iteration number to submit (optional)"},
+            "reason": {"type": "string"},
+        }, "additionalProperties": False}}},
+]
+
+
+class Workbench:
+    """Stateful tool host for one (task, level) cell."""
+
+    def __init__(self, workdir: Path, level: str, film: str = "closeup,overview", timeout_s: int = 3600,
+                 extra_api=()):
+        self.workdir = Path(workdir).resolve()
+        self.level = level
+        self.extra_api = tuple(extra_api)  # e.g. ('run_skill',) when composing
+        self.film = film
+        self.timeout_s = timeout_s
+        self.finished = False
+        self.final_iter = None
+        self.finish_reason = None
+        self.stats = {"write_rejects": 0, "writes": 0, "iterates": 0, "notes": 0}
+        self.last_sheet: Path | None = None
+        self.last_result_text: str | None = None
+
+    def _resolve(self, path: str) -> Path:
+        p = (self.workdir / path).resolve()
+        if not str(p).startswith(str(self.workdir)):
+            raise ValueError(f"path escapes workdir: {path}")
+        return p
+
+    def read_file(self, path: str) -> dict:
+        p = self._resolve(path)
+        if not p.exists():
+            return {"error": f"not found: {path}"}
+        if p.stat().st_size > 400_000:
+            return {"error": f"file too large ({p.stat().st_size} bytes); read a smaller one"}
+        if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".mp4", ".npy"}:
+            return {"error": f"binary file {path}; use the sheet attached to run_iterate results instead"}
+        text = p.read_text(errors="replace")
+        if len(text) > 80_000:
+            text = text[:80_000] + "\n... [truncated]"
+        return {"path": path, "content": text}
+
+    def write_policy(self, content: str) -> dict:
+        problems = compile_policy(content, self.level, self.extra_api)
+        if problems:
+            self.stats["write_rejects"] += 1
+            return {"error": "policy rejected", "problems": problems}
+        (self.workdir / "policy.py").write_text(content if content.endswith("\n") else content + "\n")
+        self.stats["writes"] += 1
+        return {"ok": True, "bytes": len(content), "lines": content.count("\n") + 1}
+
+    def append_notes(self, text: str) -> dict:
+        notes = self.workdir / "NOTES.md"
+        with open(notes, "a") as f:
+            if notes.stat().st_size and not text.startswith("\n"):
+                f.write("\n")
+            f.write(text.rstrip() + "\n")
+        self.stats["notes"] += 1
+        return {"ok": True}
+
+    def run_iterate(self) -> tuple[dict, Path | None]:
+        """Returns (result_dict, sheet_path_or_None)."""
+        cmd = [PY, "-m", "dexagent.score", "iterate", "--workdir", str(self.workdir)]
+        if self.film:
+            cmd += ["--film", self.film]
+        env = dict(os.environ, PYTHONPATH=str(ROOT), CUDA_VISIBLE_DEVICES=os.environ.get("CUDA_VISIBLE_DEVICES", "1"))
+        try:
+            proc = subprocess.run(cmd, cwd=str(ROOT), env=env, capture_output=True, text=True, timeout=self.timeout_s)
+        except subprocess.TimeoutExpired:
+            return {"error": f"iterate timed out after {self.timeout_s}s"}, None
+        out = (proc.stdout or "") + ("\n" + proc.stderr if proc.stderr else "")
+        if proc.returncode == 3 or "BUDGET EXHAUSTED" in out:
+            return {"budget_exhausted": True, "stdout_tail": out[-2000:]}, None
+
+        prog_path = self.workdir / "progress.jsonl"
+        if not prog_path.exists():
+            return {"error": "iterate produced no progress.jsonl", "returncode": proc.returncode,
+                    "stdout_tail": out[-3000:]}, None
+        rows = [json.loads(l) for l in prog_path.read_text().splitlines() if l.strip()]
+        row = rows[-1]
+        k = int(row["iter"])
+        it = self.workdir / f"iter_{k}"
+        cases = []
+        sheet = None
+        for cf in sorted(it.glob("case_*.json")):
+            c = json.loads(cf.read_text())
+            err = (c.get("error") or "").strip()
+            cases.append({
+                "case": c.get("case"),
+                "success": bool(c.get("success")),
+                "metrics": c.get("metrics"),
+                "perturbation": c.get("perturbation"),
+                "sim_s": c.get("sim_s"),
+                "error_tail": "\n".join(err.splitlines()[-12:]) if err else None,
+                "api_log_tail": (c.get("api_log") or [])[-20:],
+            })
+            if c.get("sheet") and Path(c["sheet"]).exists():
+                sheet = Path(c["sheet"])
+        # Prefer the filmed case's sheet; else any sheet_*.jpg in the iter dir.
+        if sheet is None:
+            sheets = sorted(it.glob("sheet_*.jpg"))
+            sheet = sheets[0] if sheets else None
+        self.last_sheet = sheet
+        self.stats["iterates"] += 1
+        result = {
+            "iter": k,
+            "successes": row["successes"],
+            "n": row["n"],
+            "by_severity": row.get("by_severity"),
+            "wall_s": row.get("wall_s"),
+            "cases": cases,
+            "stdout_tail": "\n".join(out.strip().splitlines()[-40:]),
+            "sheet": str(sheet) if sheet else None,
+        }
+        self.last_result_text = json.dumps({k: v for k, v in result.items() if k != "cases"}, indent=1)  # compact cache
+        return result, sheet
+
+    def finish(self, final_iter=None, reason: str = "") -> dict:
+        self.finished = True
+        self.final_iter = final_iter
+        self.finish_reason = reason or "model called finish"
+        return {"ok": True, "final_iter": final_iter, "reason": self.finish_reason}
+
+    def dispatch(self, name: str, args: dict) -> tuple[dict, Path | None]:
+        """Run one tool. Returns (jsonable_result, optional_image_path to attach)."""
+        try:
+            if name == "read_file":
+                return self.read_file(args["path"]), None
+            if name == "write_policy":
+                return self.write_policy(args["content"]), None
+            if name == "append_notes":
+                return self.append_notes(args["text"]), None
+            if name == "run_iterate":
+                return self.run_iterate()
+            if name == "finish":
+                return self.finish(args.get("final_iter"), args.get("reason", "")), None
+            return {"error": f"unknown tool {name}"}, None
+        except Exception as e:  # noqa: BLE001
+            return {"error": f"{type(e).__name__}: {e}"}, None
+
+
+def sheet_data_url(path: Path, max_side: int = 1024) -> str:
+    """JPEG data URL for a contact sheet, optionally downscaled for the prompt."""
+    import numpy as np
+    import imageio.v3 as iio
+    img = np.asarray(iio.imread(path))
+    h, w = img.shape[:2]
+    scale = min(1.0, max_side / max(h, w))
+    if scale < 1.0:
+        # crude integer downsample
+        step = max(1, int(round(1 / scale)))
+        img = img[::step, ::step]
+    import io
+    buf = io.BytesIO()
+    iio.imwrite(buf, img, extension=".jpg", quality=80)
+    return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
+
+
+def used_api_names(source: str) -> list[str]:
+    try:
+        tree = ast.parse(source)
+    except SyntaxError:
+        return []
+    names = sorted({n.attr for n in ast.walk(tree)
+                    if isinstance(n, ast.Attribute) and isinstance(n.value, ast.Name) and n.value.id == "api"})
+    return names

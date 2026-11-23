@@ -35,13 +35,13 @@ from pathlib import Path
 import numpy as np
 import robosimstudio as rss
 from robosimstudio.specs import CameraSpec
-from dexagent.workcell import Kinematics, TABLE_Z
-from dexagent.hand import Controller
-from dexagent.cases import current
+from dexagent.sim.workcell import Kinematics, TABLE_Z
+from dexagent.sim.hand import Controller
+from dexagent.sim.cases import current
 from rig import NAME, palm_up, palm_up_scene
 
 HERE = Path(__file__).resolve().parent
-# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# Initial conditions (dexagent.sim.cases; nominal at severity 0, full range at 1):
 # the distal ball shifts +-4 mm in palm y and z (the cup's stable basin is small:
 # from ~9 mm off nominal it rolls out under the thumb or off the finger wall before
 # anything moves), the pair turns +-25 deg about the palm normal around the distal

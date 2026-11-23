@@ -27,11 +27,11 @@ import sys
 from pathlib import Path
 import numpy as np
 from scipy.spatial.transform import Rotation
-from dexagent.scene import table_scene, WORK
-from dexagent.workcell import hand_down, YAW
-from dexagent.hand import Controller
-from dexagent.objects import quat_from_axis, PEN_RADIUS as _R0, PEN_HALF as _H0, PEN_MASS as _M0, PEN_GREY
-from dexagent.cases import current
+from dexagent.sim.scene import table_scene, WORK
+from dexagent.sim.workcell import hand_down, YAW
+from dexagent.sim.hand import Controller
+from dexagent.sim.objects import quat_from_axis, PEN_RADIUS as _R0, PEN_HALF as _H0, PEN_MASS as _M0, PEN_GREY
+from dexagent.sim.cases import current
 import robosimstudio as rss
 
 HERE = Path(__file__).resolve().parent
@@ -40,7 +40,7 @@ import grip as fingers  # noqa: E402  (fingertip IK helpers shared with pen_grav
 
 CLIPS = [HERE.parents[2] / f"reference/hand_demos/IMG_{n}.mov" for n in ("4773_pen_pickup_pivot", "4780_pen_pickup_stand")]
 ACROSS = np.array([-np.sin(YAW), np.cos(YAW), 0.0])   # across the fingers
-# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# Initial conditions (dexagent.sim.cases; nominal at severity 0, full range at 1):
 # position +-20 mm, yaw about the vertical +-25 deg, barrel radius 3.75 mm +-10 %,
 # length 140 mm +-12 %, mass 5 g +-50 %.
 CASE = current()
@@ -60,7 +60,7 @@ TIGHT, OPEN_W = PEN_RADIUS - 0.00425, 0.025
 STOP = 0.015      # middle-finger stop beside the index, across the fingers [m]
 
 scene = table_scene("pen_pickup_pivot")
-# The pen as a capsule along its own z (dexagent.objects.pen, with the perturbed size and mass).
+# The pen as a capsule along its own z (dexagent.sim.objects.pen, with the perturbed size and mass).
 scene.add(rss.capsule(name="pen", radius=PEN_RADIUS, half_height=PEN_HALF, at=tuple(START),
                       quat=quat_from_axis(DIRECTION), mass=PEN_MASS, friction=0.9,
                       color=PEN_GREY))   # the pad friction: the pen pair uses the pen's own

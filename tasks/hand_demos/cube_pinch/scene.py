@@ -2,14 +2,14 @@
 from pathlib import Path
 import numpy as np
 import robosimstudio as rss
-from dexagent.scene import table_scene, WORK
-from dexagent.workcell import hand_down, TABLE_Z, YAW
-from dexagent.hand import Controller, OPEN
-from dexagent.cases import current
+from dexagent.sim.scene import table_scene, WORK
+from dexagent.sim.workcell import hand_down, TABLE_Z, YAW
+from dexagent.sim.hand import Controller, OPEN
+from dexagent.sim.cases import current
 
 HERE = Path(__file__).resolve().parent
 CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4772_cube_pinch_lift.mov"
-# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# Initial conditions (dexagent.sim.cases; nominal at severity 0, full range at 1):
 # position +-25 mm, yaw +-30 deg, edge 40 mm +-15 %, mass 12 g +-50 %.
 CASE = current()
 _DX, _DY, _DYAW = CASE.u(0.025, "dx"), CASE.u(0.025, "dy"), CASE.u(np.radians(30), "dyaw")

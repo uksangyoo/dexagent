@@ -1,7 +1,7 @@
 """Scorer for baoding, independent of the policy. Reads simulator state only:
 the two ball poses and the arm joint state (the palm frame by forward kinematics)."""
 import numpy as np
-from dexagent.workcell import Kinematics
+from dexagent.sim.workcell import Kinematics
 
 OBJECTS = ("ball_a", "ball_b")
 GOAL_DEG = 180.0          # the balls have exchanged places

@@ -10,10 +10,10 @@ from pathlib import Path
 import numpy as np
 import robosimstudio as rss
 from robosimstudio.specs import CameraSpec
-from dexagent.scene import table_scene, WORK
-from dexagent.workcell import TABLE_Z, YAW
-from dexagent.hand import Controller
-from dexagent.cases import current
+from dexagent.sim.scene import table_scene, WORK
+from dexagent.sim.workcell import TABLE_Z, YAW
+from dexagent.sim.hand import Controller
+from dexagent.sim.cases import current
 import palm_transfer
 from palm_transfer import to_palm, open_palm, resting_on_palm, return_to_table, note
 
@@ -22,7 +22,7 @@ CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4782_cube_palm_roll.mov"
 # Where the clip's cube sits in the phone view. The cube starts turned to the
 # palm's yaw (40 deg, close to the clip's), so the pads close square on its faces;
 # square to the table, the closing pads twist it 20 deg and it slips off the far fingers.
-# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# Initial conditions (dexagent.sim.cases; nominal at severity 0, full range at 1):
 # position +-20 mm, yaw +-25 deg, edge 40 mm +-12 %, mass 12 g +-50 %.
 CASE = current()
 _DX, _DY, _DYAW = CASE.u(0.020, "dx"), CASE.u(0.020, "dy"), CASE.u(np.radians(25), "dyaw")

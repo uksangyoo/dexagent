@@ -19,11 +19,11 @@ MUJOCO_LOG.TXT
 /build/
 /dist/
 
-# Generated outputs (films, results)
+# Generated outputs: films, experiment runs, skill libraries, old untracked data
 /artifacts/
-
-# Published site (separate git repository)
-/screwdriver_site/
+/results/
+/skill_library/
+/legacy_untracked/
 
 # Live RoboSimStudio pages (snapshots, takes, logs) and routine results
 /tasks/**/run/

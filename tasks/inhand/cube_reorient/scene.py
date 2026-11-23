@@ -21,14 +21,14 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 import robosimstudio as rss
 from robosimstudio.specs import CameraSpec
-from dexagent.scene import table_scene
-from dexagent.workcell import TABLE_Z
-from dexagent.hand import Controller
-from dexagent.cases import current
+from dexagent.sim.scene import table_scene
+from dexagent.sim.workcell import TABLE_Z
+from dexagent.sim.hand import Controller
+from dexagent.sim.cases import current
 from palm_up import register_palm_up
 
 HERE = Path(__file__).resolve().parent
-# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# Initial conditions (dexagent.sim.cases; nominal at severity 0, full range at 1):
 # cube position on the palm +-10 mm across (palm y) and +-15 mm along the fingers
 # (palm z), yaw about the palm normal +-25 deg, edge 40 mm +-12 %, mass 12 g +-50 %.
 CASE = current()

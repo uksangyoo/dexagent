@@ -2,7 +2,7 @@
 the pen pose and the arm joint angles (for the palm frame, by forward kinematics)."""
 import numpy as np
 from scipy.spatial.transform import Rotation
-from dexagent.workcell import Kinematics
+from dexagent.sim.workcell import Kinematics
 
 OBJECTS = ("pen",)
 TABLE_Z = 0.75

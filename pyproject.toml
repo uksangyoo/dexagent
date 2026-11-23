@@ -21,7 +21,7 @@ dependencies = [
 include = ["dexagent*"]
 
 [tool.setuptools.package-data]
-dexagent = ["assets/*.xml"]
+dexagent = ["assets/*.xml", "assets/synergies/*.npz"]
 
 [tool.ruff]
 line-length = 100
@@ -29,3 +29,6 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

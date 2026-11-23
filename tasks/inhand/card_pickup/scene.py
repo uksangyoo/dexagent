@@ -16,13 +16,13 @@ from pathlib import Path
 import numpy as np
 import robosimstudio as rss
 from robosimstudio.specs import CameraSpec
-from dexagent.scene import table_scene, WORK
-from dexagent.workcell import hand_down, TABLE_Z
-from dexagent.hand import Controller, OPEN, CURL, PINCH_CENTRE, PINCH_AXIS
-from dexagent.cases import current
+from dexagent.sim.scene import table_scene, WORK
+from dexagent.sim.workcell import hand_down, TABLE_Z
+from dexagent.sim.hand import Controller, OPEN, CURL, PINCH_CENTRE, PINCH_AXIS
+from dexagent.sim.cases import current
 
 HERE = Path(__file__).resolve().parent
-# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# Initial conditions (dexagent.sim.cases; nominal at severity 0, full range at 1):
 # book position +-20 mm, book thickness 45 mm +-10 %; tile on the book +-15 mm (x),
 # +-20 mm (y, toward/away from the edge), yaw +-25 deg, length and width +-12 %
 # (thickness fixed), mass 17 g +-50 %.

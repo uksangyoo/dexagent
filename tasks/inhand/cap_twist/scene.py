@@ -11,14 +11,14 @@ from pathlib import Path
 import numpy as np
 import robosimstudio as rss
 from robosimstudio.specs import AssetSpec, CameraSpec, StaticSpec
-from dexagent.scene import table_scene, WORK
-from dexagent.workcell import hand_down
-from dexagent.hand import OPEN
-from dexagent.cases import current
+from dexagent.sim.scene import table_scene, WORK
+from dexagent.sim.workcell import hand_down
+from dexagent.sim.hand import OPEN
+from dexagent.sim.cases import current
 from twist import CapController, CENTRE, PHI, rim_targets
 
 HERE = Path(__file__).resolve().parent
-# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# Initial conditions (dexagent.sim.cases; nominal at severity 0, full range at 1):
 # jar position +-20 mm, lid radius 35 mm +-10 % (jar body follows), lid mass 18 g +-50 %,
 # thread friction 0.02 N m +-50 %.
 CASE = current()

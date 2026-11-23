@@ -21,17 +21,17 @@ import sys
 from pathlib import Path
 import numpy as np
 from scipy.spatial.transform import Rotation
-from dexagent.scene import table_scene, WORK
-from dexagent.workcell import TABLE_Z
-from dexagent.hand import Controller
-from dexagent.workcell import hand_down
-from dexagent.hand import PINCH_CENTRE
-from dexagent.objects import quat_from_axis, PEN_RADIUS as _R0, PEN_HALF as _H0, PEN_MASS as _M0, PEN_GREY
-from dexagent.cases import current
+from dexagent.sim.scene import table_scene, WORK
+from dexagent.sim.workcell import TABLE_Z
+from dexagent.sim.hand import Controller
+from dexagent.sim.workcell import hand_down
+from dexagent.sim.hand import PINCH_CENTRE
+from dexagent.sim.objects import quat_from_axis, PEN_RADIUS as _R0, PEN_HALF as _H0, PEN_MASS as _M0, PEN_GREY
+from dexagent.sim.cases import current
 
 HERE = Path(__file__).resolve().parent
 
-# Initial conditions (dexagent.cases; nominal at severity 0, full range at 1):
+# Initial conditions (dexagent.sim.cases; nominal at severity 0, full range at 1):
 # cup and pen position +-20 mm, pen lean in the cup +-3 deg about x and y
 # (the pen then settles against the bore), barrel diameter 7.5 mm +-10 %,
 # length 140 mm +-10 %, mass 5 g +-50 %.

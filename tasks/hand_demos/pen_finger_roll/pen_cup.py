@@ -5,9 +5,9 @@ the table; on this hand that is not reliable (see pen_grasp.py), so both
 scenes start from a cup the clips do not show.
 """
 import numpy as np
-from dexagent.workcell import hand_down, TABLE_Z
-from dexagent.hand import PINCH_CENTRE
-from dexagent.objects import pen, PEN_RADIUS, PEN_HALF, PEN_MASS, PEN_GREY
+from dexagent.sim.workcell import hand_down, TABLE_Z
+from dexagent.sim.hand import PINCH_CENTRE
+from dexagent.sim.objects import pen, PEN_RADIUS, PEN_HALF, PEN_MASS, PEN_GREY
 
 CUP_BORE, CUP_WALL, CUP_HEIGHT = 0.010, 0.003, 0.06   # half bore 10 mm, 60 mm tall (assumed)
 GRIP_BELOW_TOP = 0.030
