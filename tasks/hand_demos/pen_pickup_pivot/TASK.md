@@ -18,6 +18,6 @@ Progress metrics reported: largest pivot from the starting axis, smallest tilt f
 The bench holds the final targets for 1 s before scoring. Sim time limit 60 s.
 
 **Physical facts.**
-- Every contact involving the pen uses the pen's own contact parameters: sliding friction 0.9 (against the fingers and the table alike) and no torsional friction, so a pen held between two contact points can turn freely about the line joining them. (The hand's own contacts elsewhere have torsional friction.)
+- Every contact involving the pen uses the pen's own contact parameters: sliding friction 1.2 (against the fingers and the table alike; a modest bump over the default 0.9 pad value, still rubber-on-plastic) and no torsional friction, so a pen held between two contact points can turn freely about the line joining them. (The hand's own contacts elsewhere have torsional friction.)
 - The fingertips are rounded shells 16-20 mm thick, much thicker than the pen.
 - The pen is light: gravity on it is about 0.05 N, so small contact forces dominate its motion.

@@ -8,7 +8,7 @@ tip stands on the table, and lifted clear again.
 The DG5F-S fingertips are 16-20 mm thick and the pen is 7.5 mm across, so the
 pads cannot reach the pen's equator on a flat table. The pinch is a tweezer:
 the rounded fingertip ends, tilted 50 deg inward on a palm pitched 0.3 rad,
-meet the pen about 25 deg above its equator, inside the friction cone (0.9).
+meet the pen about 25 deg above its equator, inside the friction cone (1.2).
 The pen's contacts have no torsional friction (`grip.smooth_pen`: its geom
 takes priority over the hand's condim 4), so a two-pad pinch cannot stop the
 pen turning about the pinch axis: that freedom is what lets it pivot upright.
@@ -21,7 +21,8 @@ index-middle clamp (about 4.5 N each), not by the thumb. A stub short enough
 for the middle to clear (OFFSET 0.055) leaves nothing holding the pen, and it
 topples. Squeezing harder (TIGHT 0.5 mm tighter) stops the pen pivoting at all.
 
-Assumed numbers (not measured): pen 5 g, 7.5 mm x 140 mm; pad friction 0.9.
+Assumed numbers (not measured): pen 5 g, 7.5 mm x 140 mm; sliding friction 1.2
+(slightly grippier than the default 0.9 pad value; still in a rubber-on-plastic range).
 """
 import sys
 from pathlib import Path
@@ -62,8 +63,8 @@ STOP = 0.015      # middle-finger stop beside the index, across the fingers [m]
 scene = table_scene("pen_pickup_pivot")
 # The pen as a capsule along its own z (dexagent.sim.objects.pen, with the perturbed size and mass).
 scene.add(rss.capsule(name="pen", radius=PEN_RADIUS, half_height=PEN_HALF, at=tuple(START),
-                      quat=quat_from_axis(DIRECTION), mass=PEN_MASS, friction=0.9,
-                      color=PEN_GREY))   # the pad friction: the pen pair uses the pen's own
+                      quat=quat_from_axis(DIRECTION), mass=PEN_MASS, friction=1.2,
+                      color=PEN_GREY))   # pen geom priority (smooth_pen): this mu vs fingers and table
 # Built here so the pen's contact material (no torsional friction, grip.smooth_pen) is
 # part of the scene for every policy, not only for the expert routine, which sets it again.
 sim = scene.build(control_mode="joint_position")

@@ -123,9 +123,30 @@ def cell_summary(workdir: Path, meta: dict, test: dict | None) -> dict:
     }
 
 
+def short_finish_reason(reason: str | None, max_len: int = 72) -> str:
+    """Compact finish_reason for the run table (full text stays in cell_summary.json)."""
+    if not reason:
+        return "-"
+    s = " ".join(str(reason).split())
+    # Prefer the human message inside OpenRouter JSON blobs.
+    for key in ('"message":"', "message':"):
+        i = s.find(key)
+        if i >= 0:
+            rest = s[i + len(key):]
+            end = rest.find('"') if '"' in rest[:400] else -1
+            if end > 0:
+                s = rest[:end]
+                break
+    if s.startswith("error: "):
+        s = s[len("error: "):]
+    if len(s) > max_len:
+        s = s[: max_len - 1] + "…"
+    return s
+
+
 def print_table(rows: list[dict]) -> None:
     cols = ("level", "dev_iters", "iters_to_2", "iters_to_3", "test", "tokens_in", "tokens_out",
-            "llm_cost_usd", "llm_wall_s", "write_rejects")
+            "llm_cost_usd", "llm_wall_s", "write_rejects", "finish_reason")
     display = []
     for r in rows:
         d = dict(r)
@@ -135,6 +156,7 @@ def print_table(rows: list[dict]) -> None:
             d["test"] = "-"
         if d.get("llm_cost_usd") is not None:
             d["llm_cost_usd"] = f"{d['llm_cost_usd']:.4f}"
+        d["finish_reason"] = short_finish_reason(r.get("finish_reason"))
         display.append(d)
     w = {c: max(len(c), *(len(str(d.get(c, "-"))) for d in display)) for c in cols}
     line = lambda d: "  ".join(str(d.get(c, "-")).ljust(w[c]) for c in cols)  # noqa: E731
