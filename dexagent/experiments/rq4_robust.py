@@ -62,6 +62,8 @@ def main(argv=None):
     ap.add_argument("--expert", action="store_true", help="also evaluate each task's expert routine")
     ap.add_argument("--out")
     a = ap.parse_args(argv)
+    from dexagent.score import require_cuda
+    require_cuda()
     import time
     root = Path(a.out) if a.out else RUNS / f"rq4_robust-{time.strftime('%Y%m%d-%H%M%S')}"
     root.mkdir(parents=True, exist_ok=True)

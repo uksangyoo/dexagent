@@ -1,8 +1,8 @@
 """Scorer for pinch_then_palm: both component scorers must pass on the same rollout.
 
-The pinch monitor needs a lift, a turn while lifted, and the cube back within 15 mm of its start;
-the palm monitor needs >= 1 s of open-palm carry, a release and a flat rest. A policy that runs the
-pinch skill and then the palm skill satisfies both; neither alone does.
+The pinch monitor needs a held lift, a turn while held clear of the table, and a released flat rest
+near the start; the palm monitor needs >= 1 s of open-palm carry, a release and a flat rest. A
+policy that runs the pinch skill and then the palm skill satisfies both; neither alone does.
 """
 import importlib.util
 from pathlib import Path

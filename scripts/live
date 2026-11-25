@@ -9,8 +9,9 @@ target="$1"; shift
 [ -d "$target" ] && target="$target/scene.py"
 scene="$(cd "$(dirname "$target")" && pwd)/$(basename "$target")"
 run="$(dirname "$scene")/run"
-export CUDA_VISIBLE_DEVICES=1 OPENBLAS_NUM_THREADS=1
-# Physics (Warp) and the OVRTX path tracer both run on physical GPU 1 only.
+: "${CUDA_VISIBLE_DEVICES:?export CUDA_VISIBLE_DEVICES first, e.g. export CUDA_VISIBLE_DEVICES=0}"
+export OPENBLAS_NUM_THREADS=1
+# Physics (Warp) and the OVRTX path tracer must share the same visible GPU.
 export ROBOSIMSTUDIO_RENDERER="${ROBOSIMSTUDIO_RENDERER:-rtx}"
 export VK_ICD_FILENAMES=/etc/vulkan/icd.d/nvidia_icd.json
 export PYTHONPATH="$root${PYTHONPATH:+:$PYTHONPATH}"

@@ -49,7 +49,14 @@ uv pip install --python .venv/bin/python "warp-lang @ https://github.com/NVIDIA/
 uv pip install --python .venv/bin/python pytest ruff      # for the tests
 ```
 
-Run everything with `export PYTHONPATH=.` and pick the GPU with `CUDA_VISIBLE_DEVICES` (physics and the OVRTX renderer must share it). The agent needs `OPENROUTER_API_KEY`; `--stub dexagent/agent/stub_scripts/*.json` replaces the model with scripted tool calls for offline checks. `pytest` runs the CPU-only tests.
+Always set the GPU explicitly — there is no default:
+
+```bash
+export CUDA_VISIBLE_DEVICES=0   # this workstation: one RTX 5090
+export PYTHONPATH=.
+```
+
+Physics and the OVRTX renderer must share that GPU. The agent needs `OPENROUTER_API_KEY`; `--stub dexagent/agent/stub_scripts/*.json` replaces the model with scripted tool calls for offline checks. `pytest` runs the CPU-only tests.
 
 ## Core commands
 
@@ -60,9 +67,13 @@ python -m dexagent.sim.run tasks/hand_demos/cube_pinch --camera reference
 python -m dexagent.score cases tasks/hand_demos/cube_pinch --policy expert --cases 1:0,2:0.5,3:1
 # one coding-agent cell: write policy.py at a forced level, self-improve, held-out test, save the skill
 python -m dexagent.agent.loop tasks/hand_demos/cube_pinch --model <slug> --levels contacts --max-iters 4 --library skill_library
+# privileged object/contact reads + full iterate traces are on by default; turn them off with:
+python -m dexagent.agent.loop tasks/hand_demos/cube_pinch --model <slug> --levels contacts --no-privileged
+# human demo keyframes (even samples from the task CLIP) are attached by default; disable with:
+python -m dexagent.agent.loop tasks/hand_demos/cube_pinch --model <slug> --levels contacts --no-demo
 ```
 
-A cell writes `results/<run>/<task>/<level>/` with `policy.py`, `NOTES.md`, `progress.jsonl`, `usage.jsonl`, `iter_k/` (policy, per-case JSON, contact sheet), `FINAL`, `test/` (held-out, seeds 1000-1007) and `cell_summary.json` (iterations, tokens, cost and wall time to first solve, held-out pass rate).
+A cell writes `results/<run>/<task>/<level>/` with `policy.py`, `NOTES.md`, `progress.jsonl`, `usage.jsonl`, `iter_k/` (policy, per-case JSON, contact sheet), `FINAL`, `test/` (held-out, seeds 1000-1007) and `cell_summary.json` (iterations, tokens, cost and wall time to first solve, held-out pass rate). With `--demo` (default) it also writes `demo_sheet.jpg` from the scene `CLIP`.
 
 ## Research questions
 
@@ -77,7 +88,7 @@ A cell writes `results/<run>/<task>/<level>/` with `policy.py`, `NOTES.md`, `pro
 
 ## Physical contract
 
-A routine or policy writes only the 26 robot joint targets (6 arm, 20 finger). Object poses, velocities and forces are read for planning and scoring and never written. Policies are privileged-state scripts, not perception policies.
+A routine or policy writes only the 26 robot joint targets (6 arm, 20 finger). Object poses, velocities and forces are never written. With `--privileged` (default), policies may read them (`object_pose`, `contact_forces`, …) and `run_iterate` returns full `api_log` plus tip/object/contact traces. With `--no-privileged`, those reads are rejected at `write_policy` time and iterate feedback stays lean (metrics, sheet, short log); proprioception (`measured_palm`, `tips`) remains available.
 
 ## Notes
 

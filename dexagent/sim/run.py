@@ -27,6 +27,8 @@ def main(argv=None):
     ap.add_argument("--out", default=str(ROOT / "artifacts/rss"))
     ap.add_argument("--max-steps", type=int, default=5000)
     a = ap.parse_args(argv)
+    from dexagent.score import require_cuda
+    require_cuda()
     os.environ["ROBOSIMSTUDIO_RENDERER"] = a.renderer
     # OVRTX reports every GPU twice when several Vulkan ICDs are installed; use NVIDIA's.
     if Path(NVIDIA_ICD).exists():

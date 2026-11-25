@@ -35,8 +35,13 @@ _EXTRA_ATTRS = {
     "OPEN", "DEFAULT_YAW", "GAIN",
 }
 
+# Sim object/contact observations. Allowed when privileged=True (default); banned otherwise.
+PRIVILEGED_API = frozenset({
+    "object_pose", "object_in_palm", "object_velocity", "object_joint", "contact_forces",
+})
 
-def allowed_api_names(level: str, extra=()) -> set[str]:
+
+def allowed_api_names(level: str, extra=(), privileged: bool = True) -> set[str]:
     cls = _CLASSES[level]
     names = set(_EXTRA_ATTRS) | set(extra)
     for n, v in inspect.getmembers(cls):
@@ -46,20 +51,42 @@ def allowed_api_names(level: str, extra=()) -> set[str]:
     # Contacts.move exists only to raise AttributeError; policies must use carry + primitives.
     if level == "contacts":
         names.discard("move")
+    if not privileged:
+        names -= PRIVILEGED_API
     return names
 
 
-def api_doc(level: str) -> str:
+def _common_api_doc(privileged: bool) -> str:
+    """Module Common API blurb, with privileged observation lines stripped when off."""
+    common = (inspect.getdoc(L) or "").strip()
+    if privileged:
+        return common
+    out = []
+    for line in common.splitlines():
+        if any(f"api.{name}" in line for name in PRIVILEGED_API):
+            continue
+        if "`contact_forces`" in line and "returns 6 values" in line:
+            continue
+        out.append(line)
+    return "\n".join(out).strip()
+
+
+def api_doc(level: str, privileged: bool = True) -> str:
     """Human-readable allowed surface for prompts: common API + level-specific methods with docs."""
     cls = _CLASSES[level]
-    common = inspect.getdoc(L) or ""
-    # Keep the module docstring header up through Common API.
-    lines = [f"Forced representation: '{level}'.", "", common.strip(), "", f"## Level-specific API (`{cls.__name__}`)"]
+    priv = "on" if privileged else "off"
+    lines = [
+        f"Forced representation: '{level}'. Privileged observations: {priv}.",
+        "",
+        _common_api_doc(privileged),
+        "",
+        f"## Level-specific API (`{cls.__name__}`)",
+    ]
     # Prefer the class docstring, then each public method's signature + first paragraph.
     if inspect.getdoc(cls):
         lines += ["", inspect.getdoc(cls).strip()]
     lines.append("")
-    for name in sorted(allowed_api_names(level)):
+    for name in sorted(allowed_api_names(level, privileged=privileged)):
         if name in _EXTRA_ATTRS and not hasattr(cls, name):
             continue
         attr = getattr(cls, name, None)
@@ -75,12 +102,18 @@ def api_doc(level: str) -> str:
         elif isinstance(attr, property):
             doc = (inspect.getdoc(attr) or "").strip().split("\n\n")[0].replace("\n", " ")
             lines.append(f"- api.{name}" + (f"  — {doc}" if doc else "  — property"))
+    if not privileged:
+        lines.append(
+            "\nPrivileged observations are disabled: do not call "
+            + ", ".join(f"api.{n}" for n in sorted(PRIVILEGED_API))
+            + ". Use proprioception (palm/tips), contact sheets, and check metrics instead."
+        )
     if level == "contacts":
         lines.append("\nDo not call api.move on the contacts level; use carry() for the palm and the contact primitives for fingers.")
     return "\n".join(lines)
 
 
-def scan_policy(source: str, level: str, extra=()) -> list[str]:
+def scan_policy(source: str, level: str, extra=(), privileged: bool = True) -> list[str]:
     """Return a list of problems (empty if the policy looks usable)."""
     problems = []
     try:
@@ -100,21 +133,25 @@ def scan_policy(source: str, level: str, extra=()) -> list[str]:
                 problems.append(f"do not import dexagent.levels classes; use only the api argument ({joined})")
             if "dexagent.agent" in (mod or ""):
                 problems.append("do not import dexagent.agent from a policy")
-    allowed = allowed_api_names(level, extra)
-    used = set()
+    allowed = allowed_api_names(level, extra, privileged=privileged)
     for n in ast.walk(tree):
         if isinstance(n, ast.Attribute) and isinstance(n.value, ast.Name) and n.value.id == "api":
-            used.add(n.attr)
             if n.attr.startswith("_"):
                 problems.append(f"api.{n.attr} is private; do not use it")
             elif n.attr not in allowed:
-                problems.append(f"api.{n.attr} is not available at level '{level}'; "
-                                f"allowed: {sorted(allowed)}")
+                if n.attr in PRIVILEGED_API and not privileged:
+                    problems.append(
+                        f"api.{n.attr} is a privileged observation and --no-privileged is set; "
+                        f"allowed: {sorted(allowed)}"
+                    )
+                else:
+                    problems.append(f"api.{n.attr} is not available at level '{level}'; "
+                                    f"allowed: {sorted(allowed)}")
     return problems
 
 
-def compile_policy(source: str, level: str, extra=()) -> list[str]:
-    problems = scan_policy(source, level, extra)
+def compile_policy(source: str, level: str, extra=(), privileged: bool = True) -> list[str]:
+    problems = scan_policy(source, level, extra, privileged=privileged)
     if problems:
         return problems
     try:
@@ -146,8 +183,8 @@ TOOL_SPECS = [
     {"type": "function", "function": {
         "name": "run_iterate",
         "description": ("Snapshot the current policy.py and score it on 3 fresh cases (severity 0, 0.5, 1). "
-                        "Returns successes/3, per-case metrics, api_log tails, errors, and a contact-sheet image. "
-                        "This consumes one iteration of the budget."),
+                        "Returns successes/3, per-case metrics, api_log (full when privileged), optional traces, "
+                        "errors, and a contact-sheet image. This consumes one iteration of the budget."),
         "parameters": {"type": "object", "properties": {}, "additionalProperties": False}}},
     {"type": "function", "function": {
         "name": "finish",
@@ -162,11 +199,12 @@ TOOL_SPECS = [
 class Workbench:
     """Stateful tool host for one (task, level) cell."""
 
-    def __init__(self, workdir: Path, level: str, film: str = "closeup,overview", timeout_s: int = 3600,
-                 extra_api=()):
+    def __init__(self, workdir: Path, level: str, film: str = "closeup,wrist", timeout_s: int = 3600,
+                 extra_api=(), privileged: bool = True):
         self.workdir = Path(workdir).resolve()
         self.level = level
         self.extra_api = tuple(extra_api)  # e.g. ('run_skill',) when composing
+        self.privileged = bool(privileged)
         self.film = film
         self.timeout_s = timeout_s
         self.finished = False
@@ -196,7 +234,7 @@ class Workbench:
         return {"path": path, "content": text}
 
     def write_policy(self, content: str) -> dict:
-        problems = compile_policy(content, self.level, self.extra_api)
+        problems = compile_policy(content, self.level, self.extra_api, privileged=self.privileged)
         if problems:
             self.stats["write_rejects"] += 1
             return {"error": "policy rejected", "problems": problems}
@@ -218,7 +256,9 @@ class Workbench:
         cmd = [PY, "-m", "dexagent.score", "iterate", "--workdir", str(self.workdir)]
         if self.film:
             cmd += ["--film", self.film]
-        env = dict(os.environ, PYTHONPATH=str(ROOT), CUDA_VISIBLE_DEVICES=os.environ.get("CUDA_VISIBLE_DEVICES", "1"))
+        from dexagent.score import require_cuda
+        require_cuda()
+        env = dict(os.environ, PYTHONPATH=str(ROOT))
         try:
             proc = subprocess.run(cmd, cwd=str(ROOT), env=env, capture_output=True, text=True, timeout=self.timeout_s)
         except subprocess.TimeoutExpired:
@@ -240,15 +280,22 @@ class Workbench:
         for cf in sorted(it.glob("case_*.json")):
             c = json.loads(cf.read_text())
             err = (c.get("error") or "").strip()
-            cases.append({
+            log = c.get("api_log") or []
+            entry = {
                 "case": c.get("case"),
                 "success": bool(c.get("success")),
                 "metrics": c.get("metrics"),
                 "perturbation": c.get("perturbation"),
                 "sim_s": c.get("sim_s"),
                 "error_tail": "\n".join(err.splitlines()[-12:]) if err else None,
-                "api_log_tail": (c.get("api_log") or [])[-20:],
-            })
+            }
+            if self.privileged:
+                entry["api_log"] = log
+                if c.get("trace") is not None:
+                    entry["trace"] = c["trace"]
+            else:
+                entry["api_log_tail"] = log[-20:]
+            cases.append(entry)
             if c.get("sheet") and Path(c["sheet"]).exists():
                 sheet = Path(c["sheet"])
         # Prefer the filmed case's sheet; else any sheet_*.jpg in the iter dir.
@@ -263,6 +310,7 @@ class Workbench:
             "n": row["n"],
             "by_severity": row.get("by_severity"),
             "wall_s": row.get("wall_s"),
+            "privileged": self.privileged,
             "cases": cases,
             "stdout_tail": "\n".join(out.strip().splitlines()[-40:]),
             "sheet": str(sheet) if sheet else None,

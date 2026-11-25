@@ -12,7 +12,8 @@ Two entry points, one module:
 
 Each case runs in its own process (scenes draw their perturbations at import),
 in parallel, behind a machine-wide pool of GPU slots so concurrent benches do
-not oversubscribe GPU 1. The task folder supplies:
+not oversubscribe the GPU. Requires an explicit `CUDA_VISIBLE_DEVICES` (no default).
+The task folder supplies:
 
   scene.py   the scene, perturbed from `dexagent.sim.cases.current()`, and the expert `routines`
   check.py   `Monitor(sim)`: `.step()` once per control step, `.result()` -> {"success": bool, "metrics": {...}}
@@ -48,6 +49,15 @@ SETTLE_S = 1.0
 NVIDIA_ICD = "/etc/vulkan/icd.d/nvidia_icd.json"
 
 
+def require_cuda():
+    """Exit unless CUDA_VISIBLE_DEVICES is set. Never default a GPU index."""
+    if not os.environ.get("CUDA_VISIBLE_DEVICES", "").strip():
+        sys.exit(
+            "CUDA_VISIBLE_DEVICES is not set. Export it explicitly, e.g. "
+            "`export CUDA_VISIBLE_DEVICES=0` (this machine) before running."
+        )
+
+
 def _slot():
     d = RUNS / ".slots"
     d.mkdir(parents=True, exist_ok=True)
@@ -74,7 +84,29 @@ def side_by_side(rgbs):
     return np.concatenate(out, axis=1)
 
 
-def run_one(task_dir, policy, level, case_text, out, film=None, max_sim_s=60.0):
+TRACE_EVERY = 25  # subsample privilege traces (~0.5 s at 50 Hz)
+TRACE_MAX = 120
+
+
+def _sample_trace(api, np):
+    """One compact privileged-state sample for the coding agent (poses, tips, contacts)."""
+    P, _ = api.measured_palm()
+    tips = api.tips_world()
+    objs, forces = {}, {}
+    for name in api.objects:
+        p, _ = api.object_pose(name)
+        objs[name] = np.round(np.asarray(p, float), 4).tolist()
+        forces[name] = np.round(api.contact_forces(name), 2).tolist()
+    return {
+        "t": round(float(api.t), 2),
+        "palm": np.round(np.asarray(P, float), 4).tolist(),
+        "tips": np.round(np.asarray(tips, float), 4).tolist(),
+        "objects": objs,
+        "forces": forces,
+    }
+
+
+def run_one(task_dir, policy, level, case_text, out, film=None, max_sim_s=60.0, privileged=True):
     """In this process: build the perturbed scene, run the policy, score it."""
     os.environ["DEXAGENT_CASE"] = case_text
     os.environ.setdefault("ROBOSIMSTUDIO_RENDERER", "tiled")
@@ -98,10 +130,12 @@ def run_one(task_dir, policy, level, case_text, out, film=None, max_sim_s=60.0):
         return _record(self)
     hand_mod.Controller.record = record
 
+    privileged = bool(privileged)
     rec = {"task": task_dir.name, "policy": str(policy), "level": level, "case": case_text,
-           "success": False, "metrics": {}, "error": None}
+           "success": False, "metrics": {}, "error": None, "privileged": privileged}
     t0 = time.time()
     frames = []
+    trace = []
     try:
         loaded = run_scene_file(task_dir / "scene.py")
         sim, ns = loaded.sim, loaded.ns
@@ -140,6 +174,11 @@ def run_one(task_dir, policy, level, case_text, out, film=None, max_sim_s=60.0):
         try:
             for _ in gen:
                 monitor.step()
+                if privileged and api is not None and k % TRACE_EVERY == 0 and len(trace) < TRACE_MAX:
+                    try:
+                        trace.append(_sample_trace(api, np))
+                    except Exception:
+                        pass
                 if film_cams and k % 5 == 0:
                     frames.append(_snap())
                 k += 1
@@ -162,8 +201,10 @@ def run_one(task_dir, policy, level, case_text, out, film=None, max_sim_s=60.0):
         rec["metrics"] = res.get("metrics", {})
         rec["sim_s"] = round(float(sim.time), 2)
         if api is not None:
-            rec["api_log"] = api._log[-60:]
+            rec["api_log"] = list(api._log) if privileged else api._log[-60:]
             rec["api_usage"] = getattr(api, "_usage", None)
+            if privileged and trace:
+                rec["trace"] = {"every_steps": TRACE_EVERY, "samples": trace}
     except Exception:
         rec["error"] = traceback.format_exc(limit=8)
     rec["wall_s"] = round(time.time() - t0, 1)
@@ -184,26 +225,27 @@ def run_one(task_dir, policy, level, case_text, out, film=None, max_sim_s=60.0):
 
 
 def score(task_dir, policy, level, cases, out, film=None, label="", max_sim_s=60.0, timeout_s=900,
-          robust=None, skills_root=None):
+          robust=None, skills_root=None, privileged=True):
     """Run `cases` (list of 'seed:severity') in parallel subprocesses; return the summary dict.
 
     `robust` is an optional dict of execution perturbations (see dexagent.sim.cases.robust)."""
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
-    env = dict(os.environ, CUDA_VISIBLE_DEVICES=os.environ.get("CUDA_VISIBLE_DEVICES", "1"),
-               PYTHONPATH=str(ROOT))
+    require_cuda()
+    env = dict(os.environ, PYTHONPATH=str(ROOT))
     if robust:
         env["DEXAGENT_ROBUST"] = json.dumps(robust)
     if skills_root:
         env["DEXAGENT_SKILLS"] = str(skills_root)  # exposes api.run_skill (dexagent.skills.compose)
     py = str(ROOT / ".venv/bin/python")
+    priv_flag = "--privileged" if privileged else "--no-privileged"
 
     def one(i_case):
         i, c = i_case
         lock = _slot()
         try:
             cmd = [py, "-m", "dexagent.score", "_one", str(task_dir), "--policy", str(policy), "--level", level,
-                   "--cases", c, "--out", str(out), "--max-sim-s", str(max_sim_s)]
+                   "--cases", c, "--out", str(out), "--max-sim-s", str(max_sim_s), priv_flag]
             if film and i == 0:
                 cmd += ["--film", film]
             log = open(out / f"log_{c.replace(':', '_')}.txt", "w")
@@ -258,12 +300,13 @@ def iterate(workdir, film=None, film_case=1.0):
     """Snapshot workdir/policy.py into iter_<k>/, score it on three fresh dev cases, log progress.
 
     The workdir holds `policy.py` and `agent.json` ({"task": "tasks/...", "level": ..., "max_iters": N,
-    optional "seed_tag"}). The iteration counter only goes up, so a case can never be re-run to
+    optional "seed_tag", "privileged"}). The iteration counter only goes up, so a case can never be re-run to
     cherry-pick. Returns the progress row, or None when the budget is exhausted.
     """
     w = Path(workdir).resolve()
     cfg = json.loads((w / "agent.json").read_text())
     task, level, cap = cfg["task"], cfg["level"], int(cfg.get("max_iters", 8))
+    privileged = bool(cfg.get("privileged", True))
     done = sorted(int(p.name.split("_")[1]) for p in w.glob("iter_*") if p.is_dir() and p.name.split("_")[1].isdigit())
     k = (done[-1] + 1) if done else 1
     # Budget = completed iterations; one killed by a timeout while queued for the GPU does not count.
@@ -284,7 +327,7 @@ def iterate(workdir, film=None, film_case=1.0):
     t0 = time.time()
     s = score(ROOT / task, str(it / "policy.py"), level, cases, it, film=film,
               label=f"{w.parent.parent.name}/{Path(task).name}/{level}/iter{k}",
-              skills_root=cfg.get("skills_root"))
+              skills_root=cfg.get("skills_root"), privileged=privileged)
     row = {"iter": k, "time": time.strftime("%Y-%m-%dT%H:%M:%S"), "wall_s": round(time.time() - t0, 1),
            "successes": s["successes"], "n": s["n"],
            "by_severity": {c["case"].split(":")[1]: c["success"] for c in s["cases"]}}
@@ -319,6 +362,8 @@ def main(argv=None):
         p.add_argument("--out")
         p.add_argument("--film", help="camera, or comma-separated cameras concatenated left-to-right")
         p.add_argument("--max-sim-s", type=float, default=60.0)
+        p.add_argument("--privileged", action=argparse.BooleanOptionalAction, default=True,
+                       help="record full api_log and tip/object/contact traces (default: on)")
 
     c = sub.add_parser("cases", help="score a policy on explicit cases")
     c.add_argument("task")
@@ -334,13 +379,14 @@ def main(argv=None):
     a = ap.parse_args(argv)
 
     if a.cmd == "_one":
-        run_one(a.task, a.policy, a.level, a.cases, a.out, a.film, a.max_sim_s)
+        run_one(a.task, a.policy, a.level, a.cases, a.out, a.film, a.max_sim_s, privileged=a.privileged)
     elif a.cmd == "iterate":
         sys.exit(0 if iterate(a.workdir, a.film, a.film_case) else 3)
     else:
         out = a.out or str(RUNS / "adhoc" / f"{Path(a.task).resolve().name}-{time.strftime('%H%M%S')}")
         policy = a.policy if a.policy == "expert" else str(Path(a.policy).resolve())
-        s = score(a.task, policy, a.level, a.cases.split(","), out, a.film, a.label, a.max_sim_s)
+        s = score(a.task, policy, a.level, a.cases.split(","), out, a.film, a.label, a.max_sim_s,
+                  privileged=a.privileged)
         for r in s["cases"]:
             err = (r.get("error") or "").strip().splitlines()
             print(f"  {r['case']:>8}  {'PASS' if r['success'] else 'fail'}  {json.dumps(r.get('metrics'))}"

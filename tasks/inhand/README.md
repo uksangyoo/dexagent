@@ -3,7 +3,7 @@
 In-hand manipulation scenes for the UR5e + DG5F-S right hand that have no human clip. They are built on the same table workcell as `tasks/hand_demos`, follow the same physical contract, and are run the same way:
 
 ```bash
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=0
 PYTHONPATH=. .venv/bin/python -m dexagent.sim.run tasks/inhand/<scene> --camera <camera>   # RTX film in artifacts/rss/<scene>/
 scripts/live tasks/inhand/<scene> up
 ```

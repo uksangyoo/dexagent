@@ -96,6 +96,7 @@ def cell_summary(workdir: Path, meta: dict, test: dict | None) -> dict:
         "task": meta.get("task"),
         "level": meta.get("level"),
         "model": meta.get("model"),
+        "privileged": meta.get("privileged", True),
         "workdir": str(workdir),
         "dev_iters": len(prog),
         "dev_curve": [r["successes"] / r["n"] for r in prog],

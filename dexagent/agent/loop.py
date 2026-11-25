@@ -1,15 +1,16 @@
 """The coding-agent planner: an LLM writes policy.py in a forced action representation and
 self-improves it from simulated rollouts (dexagent.score iterate).
 
-    export OPENROUTER_API_KEY=...  CUDA_VISIBLE_DEVICES=1
+    export OPENROUTER_API_KEY=...  CUDA_VISIBLE_DEVICES=0
     PYTHONPATH=. .venv/bin/python -m dexagent.agent.loop tasks/hand_demos/cube_pinch \
         --model anthropic/claude-haiku-5.5 --levels contacts --max-iters 4
 
 Fresh workdirs are created under results/<run-id>/<task>/<level>/ so prior policies never leak
 in, except through `--skills-from` (RQ1: read-only access to a skill library, see dexagent.skills).
 Each cell: edit loop -> FINAL -> held-out test (dexagent.score.HELD_OUT) -> optional library save.
-Privileged object state is allowed inside the authored policy; the forced `level` is the only
-action language.
+Privileged object/contact observations default on (`--privileged`); `--no-privileged` bans them
+in the authored policy and keeps lean iterate feedback. Human demo keyframes from the task CLIP
+default on (`--demo`); `--no-demo` skips them. The forced `level` is the action language.
 
 `--stub script.json` replaces the model with scripted tool calls (see dexagent.agent.stub) for
 offline validation.
@@ -32,16 +33,26 @@ STUB_POLICY = "import numpy as np\n\n\ndef run(api):\n    yield from api.hold(0.
 
 
 def make_workdir(run_root: Path, task_dir: Path, level: str, max_iters: int, skills: list | None = None,
-                 cfg_skills_root: str | None = None) -> Path:
+                 cfg_skills_root: str | None = None, privileged: bool = True,
+                 demo: bool = True) -> Path:
     w = run_root / task_dir.name / level
     w.mkdir(parents=True, exist_ok=False)
     shutil.copy(task_dir / "TASK.md", w / "TASK.md")
     scene = (task_dir / "scene.py").read_text()
-    cams = ["reference", "overview", "closeup"] + re.findall(r'CameraSpec\(\s*name="([^"]+)"', scene)
+    cams = ["reference", "overview", "closeup", "wrist"] + re.findall(r'CameraSpec\(\s*name="([^"]+)"', scene)
+    demo_clip = None
+    if demo:
+        from dexagent.agent.demo import prepare_demo_sheet
+        sheet, clip = prepare_demo_sheet(task_dir, w)
+        demo_clip = str(clip.relative_to(ROOT)) if clip.is_relative_to(ROOT) else str(clip)
+        print(f"[demo] {task_dir.name}/{level}: {sheet.name} from {demo_clip}", flush=True)
     (w / "agent.json").write_text(json.dumps({
         "task": str(task_dir.relative_to(ROOT)),
         "level": level,
         "max_iters": max_iters,
+        "privileged": bool(privileged),
+        "demo": bool(demo),
+        **({"demo_clip": demo_clip, "demo_sheet": "demo_sheet.jpg"} if demo else {}),
         "cameras": sorted(set(cams)),
         **({"skills_root": cfg_skills_root, "compose": True} if cfg_skills_root else {}),
     }, indent=1))
@@ -71,19 +82,27 @@ def run_cell(task_dir: Path, level: str, run_root: Path, cfg: dict) -> dict:
     max_iters = int(cfg["max_iters"])
     skills = cfg.get("skills")  # list of library entries visible to the agent (RQ1)
     compose = bool(cfg.get("compose"))  # RQ3: policy may call api.run_skill on library skills
-    w = make_workdir(run_root, task_dir, level, max_iters, skills, cfg.get("library") if compose else None)
-    film = cfg.get("film") or "closeup,overview"
+    privileged = bool(cfg.get("privileged", True))
+    demo = bool(cfg.get("demo", True))
+    w = make_workdir(run_root, task_dir, level, max_iters, skills,
+                     cfg.get("library") if compose else None, privileged=privileged, demo=demo)
+    film = cfg.get("film") or "closeup,wrist"
     wb = T.Workbench(w, level, film=film, timeout_s=int(cfg.get("timeout_s", 3600)),
-                     extra_api=("run_skill",) if compose else ())
+                     extra_api=("run_skill",) if compose else (), privileged=privileged)
     client = make_client(cfg, w / "llm_iter.jsonl")
 
     meta = {"task": str(task_dir.relative_to(ROOT)), "level": level, "model": cfg.get("model") or "stub",
+            "privileged": privileged, "demo": demo,
             "llm_calls": 0, "tokens_in": 0, "tokens_out": 0, "llm_cost_usd": 0.0, "llm_wall_s": 0.0,
             "write_rejects": 0, "finish_reason": None, "skills": skills}
+    demo_url = T.sheet_data_url(w / "demo_sheet.jpg") if demo and (w / "demo_sheet.jpg").exists() else None
     messages = [
-        {"role": "system", "content": P.system_prompt(level, max_iters, task_dir.name, compose)},
-        {"role": "user", "content": P.first_user_message(
-            (w / "TASK.md").read_text(), (w / "policy.py").read_text(), level, skills)},
+        {"role": "system", "content": P.system_prompt(
+            level, max_iters, task_dir.name, compose, privileged=privileged)},
+        P.user_with_demo(
+            P.first_user_message(
+                (w / "TASK.md").read_text(), (w / "policy.py").read_text(), level, skills),
+            demo_url),
     ]
     tools = T.TOOL_SPECS
     max_llm_turns = int(cfg.get("max_llm_turns", max_iters * 8 + 10))
@@ -204,7 +223,7 @@ def main(argv=None):
     ap.add_argument("--levels", default=",".join(ALL_LEVELS),
                     help="comma-separated subset of: " + ", ".join(ALL_LEVELS))
     ap.add_argument("--max-iters", type=int, default=4, help="scoring iterations per level (passed to agent.json)")
-    ap.add_argument("--film", default="closeup,overview",
+    ap.add_argument("--film", default="closeup,wrist",
                     help="cameras for iterate's filmed case (side-by-side contact sheet)")
     ap.add_argument("--parallel", type=int, default=1, help="how many levels to drive at once")
     ap.add_argument("--temperature", type=float, default=0.2)
@@ -219,6 +238,10 @@ def main(argv=None):
     ap.add_argument("--compose", action="store_true",
                     help="RQ3: task is a long-horizon task; the policy may call api.run_skill on --skills-from entries")
     ap.add_argument("--solve-threshold", type=float, default=0.5, help="held-out pass rate that counts as solved")
+    ap.add_argument("--privileged", action=argparse.BooleanOptionalAction, default=True,
+                    help="allow privileged object/contact reads and full iterate diagnostics (default: on)")
+    ap.add_argument("--demo", action=argparse.BooleanOptionalAction, default=True,
+                    help="attach auto-sampled keyframes from the task CLIP on the first turn (default: on)")
     a = ap.parse_args(argv)
 
     task_dir = Path(a.task).resolve()
@@ -229,6 +252,8 @@ def main(argv=None):
     bad = [x for x in levels if x not in ALL_LEVELS]
     if bad:
         sys.exit(f"unknown level(s) {bad}; choose from {ALL_LEVELS}")
+    from dexagent.score import require_cuda
+    require_cuda()
     if not a.stub:
         if not a.model:
             sys.exit("--model is required (or --stub)")
@@ -264,7 +289,7 @@ def main(argv=None):
            "max_tokens": a.max_tokens, "timeout_s": a.timeout_s,
            "library": str(Path(a.library).resolve()) if a.library else None,
            "solve_threshold": a.solve_threshold,
-           "skills": skills, "compose": a.compose,
+           "skills": skills, "compose": a.compose, "privileged": a.privileged, "demo": a.demo,
            "stub": str(Path(a.stub).resolve()) if a.stub else None}
     (run_root / "config.json").write_text(json.dumps({**cfg, "task": str(task_dir.relative_to(ROOT)),
                                                       "levels": levels}, indent=1))

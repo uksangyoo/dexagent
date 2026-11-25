@@ -37,6 +37,9 @@ def test_every_level_has_surface_and_hint():
         names = tools.allowed_api_names(lv)
         assert {"hold", "object_pose", "note"} <= names
         assert "run_skill" not in names and "run_skill" in tools.allowed_api_names(lv, ("run_skill",))
+        no_priv = tools.allowed_api_names(lv, privileged=False)
+        assert tools.PRIVILEGED_API.isdisjoint(no_priv)
+        assert {"hold", "tips", "note"} <= no_priv
     assert set(NEEDS_SYNERGY) <= set(LEVELS)
 
 
@@ -47,6 +50,18 @@ def test_scan_policy_rules():
     comp = "def run(api):\n    yield from api.run_skill('cube_pinch')\n"
     assert tools.scan_policy(comp, "layered")
     assert tools.scan_policy(comp, "layered", ("run_skill",)) == []
+
+
+def test_privileged_scan_and_api_doc():
+    priv = "def run(api):\n    api.object_pose('cube')\n    api.contact_forces('cube')\n    yield from api.hold(0.1)\n"
+    proprio = "def run(api):\n    api.tips()\n    yield from api.hold(0.1)\n"
+    assert tools.scan_policy(priv, "joints", privileged=True) == []
+    assert tools.scan_policy(proprio, "joints", privileged=False) == []
+    problems = tools.scan_policy(priv, "joints", privileged=False)
+    assert any("privileged" in p for p in problems)
+    assert "- api.object_pose" in tools.api_doc("joints", privileged=True)
+    doc_off = tools.api_doc("joints", privileged=False)
+    assert "- api.object_pose" not in doc_off and "Privileged observations: off" in doc_off
 
 
 def test_dev_seeds_disjoint_from_held_out():
@@ -109,6 +124,16 @@ def test_prompt_lists_visible_skills():
     msg = prompt.first_user_message("TASK", "pass", "contacts", sk)
     assert "skills_lib/cube_pinch__layered" in msg and HINTS["contacts"] in msg
     assert "run_skill" in prompt.system_prompt("layered", 4, "t", compose=True)
+
+
+def test_prompt_privileged_modes():
+    on = prompt.system_prompt("joints", 4, "t", privileged=True)
+    off = prompt.system_prompt("joints", 4, "t", privileged=False)
+    assert "are allowed and expected" in on
+    assert "Privileged sim observations are OFF" in off
+    assert "- api.object_pose" not in tools.api_doc("joints", privileged=False)
+    compose_off = prompt.system_prompt("layered", 4, "t", compose=True, privileged=False)
+    assert "no privileged object reads" in compose_off
 
 
 def test_rq2_aggregate():

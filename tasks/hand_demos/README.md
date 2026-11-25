@@ -3,7 +3,7 @@
 Each scene reproduces one or two phone clips from `reference/hand_demos` with the UR5e + DG5F-S right hand at the wood table. The `reference` camera matches the phone: about 350 mm over the table, pitched 35° down, with a 42° vertical field of view. Each folder's `ref/` holds stills from its clip.
 
 ```bash
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=0
 PYTHONPATH=. .venv/bin/python -m dexagent.sim.run tasks/hand_demos/<scene> --camera reference   # RTX film in artifacts/rss/<scene>/
 scripts/live tasks/hand_demos/<scene> up                                                      # live page
 ```
@@ -14,7 +14,7 @@ A routine prints `HAND_RESULT <task> <outcome> <metrics>` and writes the full tr
 
 | Scene | Clip | Result | Runs | Key numbers |
 | --- | --- | --- | --- | --- |
-| `cube_pinch` | 4772 | success | 3/3 | lift 126 mm, turn while held 36°, placed within 1 mm |
+| `cube_pinch` | 4772 | success | 3/3 | held lift 126 mm, turn while held 36°, placed within 1 mm |
 | `cube_palm` | 4782 | success | 3/3 | 1.5 s on the open palm, placed at about 40° as in the clip, 8 mm offset |
 | `pen_gravity_pivot` | 4774, 4775 | success | 3/3 | swing 90°, pivot 81° in the pinch, caught upright |
 | `pen_pickup_pivot` | 4773, 4780 | success | 5/5 | pivot 88°, stands on its tip at 15° tilt, lifted 156 mm |

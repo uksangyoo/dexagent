@@ -9,7 +9,7 @@ The two skills were learned in isolation and can be run with `yield from api.run
 **Start.** As cube_pinch. **Variation (severity 1).** As cube_pinch: position +-25 mm, yaw +-30 deg, edge +-15 %, mass +-50 %.
 
 **Success (check.py).** Both component checks pass on the same rollout:
-- cube_pinch: lift > 80 mm; yaw change > 25 deg while > 60 mm up; at the end resting flat and within 15 mm (xy) of the start;
+- cube_pinch: held clear (>= 0.4 s with opposition fingertip grasp and lift > 40 mm); lift while held > 60 mm; yaw change while held clear > 20 deg; at the end resting flat within 40 mm (xy) of the start with hand released;
 - cube_palm: carried on the open palm for >= 1.0 s in total (palm up, > 100 mm above start, palm force > 0.02 N, fingers < 0.5 N); at the end resting on a face within 5 mm of start height, within 80 mm (xy) of the start, with total hand force on the cube < 0.05 N.
 
 Sim time limit 60 s; the bench holds the final targets for 1 s before scoring.

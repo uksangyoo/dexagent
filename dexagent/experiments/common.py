@@ -31,22 +31,29 @@ def add_agent_args(ap: argparse.ArgumentParser) -> None:
     ap.add_argument("--model", help="OpenRouter model slug (or use --stub)")
     ap.add_argument("--stub", help="scripted tool calls JSON instead of a model (offline validation)")
     ap.add_argument("--max-iters", type=int, default=4, help="scoring iterations per cell")
-    ap.add_argument("--film", default="closeup,overview")
+    ap.add_argument("--film", default="closeup,wrist")
     ap.add_argument("--temperature", type=float, default=0.2)
     ap.add_argument("--max-tokens", type=int, default=8192)
     ap.add_argument("--timeout-s", type=int, default=3600)
     ap.add_argument("--parallel", type=int, default=1, help="cells to drive at once")
     ap.add_argument("--out", help="run root (default results/<experiment>-<timestamp>)")
+    ap.add_argument("--privileged", action=argparse.BooleanOptionalAction, default=True,
+                    help="allow privileged object/contact reads and full iterate diagnostics (default: on)")
+    ap.add_argument("--demo", action=argparse.BooleanOptionalAction, default=True,
+                    help="attach auto-sampled keyframes from the task CLIP on the first turn (default: on)")
 
 
 def agent_cfg(a, **extra) -> dict:
+    from dexagent.score import require_cuda
+    require_cuda()
     if not a.stub:
         if not a.model:
             sys.exit("--model is required (or --stub)")
         if not os.environ.get("OPENROUTER_API_KEY"):
             sys.exit("OPENROUTER_API_KEY is not set")
     return {"model": a.model, "max_iters": a.max_iters, "film": a.film, "temperature": a.temperature,
-            "max_tokens": a.max_tokens, "timeout_s": a.timeout_s,
+            "max_tokens": a.max_tokens, "timeout_s": a.timeout_s, "privileged": a.privileged,
+            "demo": a.demo,
             "stub": str(Path(a.stub).resolve()) if a.stub else None, **extra}
 
 
