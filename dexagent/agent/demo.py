@@ -42,9 +42,9 @@ def _clips_from_scene(scene: Path, _seen: set | None = None) -> list[Path]:
         if other.exists():
             out.extend(_clips_from_scene(other, _seen))
 
-    # Literal reference/...mov|mp4 paths
+    # Literal reference/...mov|mp4 paths (prefer sibling .mp4 when present)
     for rel in re.findall(r'["\'](reference/[^"\']+\.(?:mov|mp4))["\']', text):
-        p = (ROOT / rel).resolve()
+        p = _prefer_mp4((ROOT / rel).resolve())
         if p not in out:
             out.append(p)
 
@@ -55,7 +55,7 @@ def _clips_from_scene(scene: Path, _seen: set | None = None) -> list[Path]:
     ):
         ext, body = m.group(1), m.group(2)
         for name in re.findall(r'["\']([^"\']+)["\']', body):
-            p = (ROOT / f"reference/hand_demos/IMG_{name}.{ext}").resolve()
+            p = _prefer_mp4((ROOT / f"reference/hand_demos/IMG_{name}.{ext}").resolve())
             if p not in out:
                 out.append(p)
 
@@ -63,6 +63,22 @@ def _clips_from_scene(scene: Path, _seen: set | None = None) -> list[Path]:
     if missing and not any(p.is_file() for p in out):
         raise DemoError(f"demo clip(s) missing: {missing}")
     return [p for p in out if p.is_file()]
+
+
+def _prefer_mp4(path: Path) -> Path:
+    """Use the .mp4 sibling when a clip is declared as .mov (or either exists)."""
+    path = Path(path)
+    if path.suffix.lower() == ".mov":
+        mp4 = path.with_suffix(".mp4")
+        if mp4.is_file():
+            return mp4
+    if path.suffix.lower() == ".mp4" and path.is_file():
+        return path
+    if not path.is_file():
+        alt = path.with_suffix(".mp4" if path.suffix.lower() == ".mov" else ".mov")
+        if alt.is_file():
+            return alt
+    return path
 
 
 def extract_demo_sheet(clip: Path, out_jpg: Path, n: int = N_FRAMES, max_side: int = MAX_SIDE) -> Path:

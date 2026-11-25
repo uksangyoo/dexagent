@@ -55,7 +55,7 @@ from dexagent.sim.hand import Controller, CURL, OPEN, smooth
 from dexagent.sim.cases import current
 
 HERE = Path(__file__).resolve().parent
-CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4778_scissors_open_close_a.mov"
+CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4778_scissors_open_close_a.mp4"
 # Initial conditions (dexagent.sim.cases; nominal at severity 0, full range at 1):
 # position +-20 mm, yaw +-25 deg, size 190 mm +-10 % (uniform), mass 65 g +-50 %,
 # pivot friction 0.04 N m +-50 %. The palm yaw the routine works in follows the scissors' yaw.

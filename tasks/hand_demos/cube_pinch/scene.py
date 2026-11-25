@@ -8,7 +8,7 @@ from dexagent.sim.hand import Controller, OPEN
 from dexagent.sim.cases import current
 
 HERE = Path(__file__).resolve().parent
-CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4772_cube_pinch_lift.mov"
+CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4772_cube_pinch_lift.mp4"
 # Initial conditions (dexagent.sim.cases; nominal at severity 0, full range at 1):
 # position +-25 mm, yaw +-30 deg, edge 40 mm +-15 %, mass 12 g +-50 %.
 CASE = current()

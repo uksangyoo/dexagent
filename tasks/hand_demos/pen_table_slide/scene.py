@@ -42,7 +42,7 @@ from dexagent.sim.objects import PEN_RADIUS, PEN_HALF, PEN_MASS, PEN_GREY, quat_
 from dexagent.sim.cases import current
 
 HERE = Path(__file__).resolve().parent
-CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4781_pen_table_slide.mov"
+CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4781_pen_table_slide.mp4"
 DOWN = hand_down(YAW)        # palm down, fingers forward: the pinch axis is horizontal
 # Initial conditions (dexagent.sim.cases; nominal at severity 0, full range at 1):
 # guide block (with the pen in it) position +-20 mm, block yaw +-30 deg,

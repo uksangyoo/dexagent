@@ -83,7 +83,7 @@ def pick_from_cup(c, lift=0.10, show=(0, 0, 0), centre=PINCH_CENTRE, middle=MIDD
     yield from c.hold(0.5, "steady")
     return held
 
-CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4783_pen_writing_grasp.mov"
+CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4783_pen_writing_grasp.mp4"
 TILT = np.radians(30)          # pen lean from vertical while writing
 PRESS = 0.0008                 # palm lowered this far past first tip contact
 STROKE_MM = 40.0

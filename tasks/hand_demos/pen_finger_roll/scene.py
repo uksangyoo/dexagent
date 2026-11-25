@@ -37,8 +37,8 @@ from dexagent.sim.cases import current
 from pen_cup import add_cup_and_pen, pick_from_cup
 
 HERE = Path(__file__).resolve().parent
-CLIPS = [HERE.parents[2] / "reference/hand_demos/IMG_4776_pen_finger_roll.mov",
-         HERE.parents[2] / "reference/hand_demos/IMG_4777_pen_swing.mov"]
+CLIPS = [HERE.parents[2] / "reference/hand_demos/IMG_4776_pen_finger_roll.mp4",
+         HERE.parents[2] / "reference/hand_demos/IMG_4777_pen_swing.mp4"]
 GRIP_CENTRE = PINCH_CENTRE + np.array([0, -0.012, 0])   # palm-frame point put on the pen axis
 SWING_SHIFT = 0.008                            # opposite thumb/index slide along the barrel for the swing
 ROLL_STROKE = 0.008                            # thumb stroke along the barrel tangent for the roll

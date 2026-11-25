@@ -38,7 +38,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "pen_gravity_pivot"))
 import grip as fingers  # noqa: E402  (fingertip IK helpers shared with pen_gravity_pivot)
 
-CLIPS = [HERE.parents[2] / f"reference/hand_demos/IMG_{n}.mov" for n in ("4773_pen_pickup_pivot", "4780_pen_pickup_stand")]
+CLIPS = [HERE.parents[2] / f"reference/hand_demos/IMG_{n}.mp4" for n in ("4773_pen_pickup_pivot", "4780_pen_pickup_stand")]
 ACROSS = np.array([-np.sin(YAW), np.cos(YAW), 0.0])   # across the fingers
 # Initial conditions (dexagent.sim.cases; nominal at severity 0, full range at 1):
 # position +-20 mm, yaw about the vertical +-25 deg, barrel radius 3.75 mm +-10 %,

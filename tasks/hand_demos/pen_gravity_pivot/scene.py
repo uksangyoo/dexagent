@@ -30,7 +30,7 @@ from dexagent.sim.cases import current
 import grip as fingers
 
 HERE = Path(__file__).resolve().parent
-CLIPS = [HERE.parents[2] / f"reference/hand_demos/IMG_{n}.mov" for n in ("4774_pen_gravity_pivot_a", "4775_pen_gravity_pivot_b")]
+CLIPS = [HERE.parents[2] / f"reference/hand_demos/IMG_{n}.mp4" for n in ("4774_pen_gravity_pivot_a", "4775_pen_gravity_pivot_b")]
 GRASP_YAW = 0.15                                      # fingers point almost straight away, as in IMG_4774
 ACROSS = np.array([-np.sin(GRASP_YAW), np.cos(GRASP_YAW), 0.0])   # the pen lies across the fingers
 OFFSET = 0.045                                        # thumb to pen centre, along the pen [m]

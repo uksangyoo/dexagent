@@ -18,7 +18,7 @@ import palm_transfer
 from palm_transfer import to_palm, open_palm, resting_on_palm, return_to_table, note
 
 HERE = Path(__file__).resolve().parent
-CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4782_cube_palm_roll.mov"
+CLIP = HERE.parents[2] / "reference/hand_demos/IMG_4782_cube_palm_roll.mp4"
 # Where the clip's cube sits in the phone view. The cube starts turned to the
 # palm's yaw (40 deg, close to the clip's), so the pads close square on its faces;
 # square to the table, the closing pads twist it 20 deg and it slips off the far fingers.
