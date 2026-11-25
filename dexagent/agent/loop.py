@@ -107,14 +107,22 @@ def run_cell(task_dir: Path, level: str, run_root: Path, cfg: dict) -> dict:
     tools = T.TOOL_SPECS
     max_llm_turns = int(cfg.get("max_llm_turns", max_iters * 8 + 10))
     keep_sheets = int(cfg.get("keep_sheets", 2))
+    # Per-cell LLM spend cap (USD). 0 or negative disables. Default comes from CLI (2.0).
+    max_cost_usd = float(cfg.get("max_cost_usd") or 0.0)
 
     def budget_left() -> int:
         done = len(E.load_progress(w))
         return max(0, max_iters - done)
 
+    def cost_exhausted() -> bool:
+        return max_cost_usd > 0 and meta["llm_cost_usd"] >= max_cost_usd - 1e-9
+
     try:
         for _ in range(max_llm_turns):
             if wb.finished:
+                break
+            if cost_exhausted():
+                wb.finish(reason=f"llm cost cap reached (${meta['llm_cost_usd']:.4f} >= ${max_cost_usd:.2f})")
                 break
             if budget_left() == 0 and not wb.finished:
                 # No scoring left; nudge the model to finish, or finish ourselves after one more turn.
@@ -151,6 +159,11 @@ def run_cell(task_dir: Path, level: str, run_root: Path, cfg: dict) -> dict:
                     if name == "run_iterate" and budget_left() == 0:
                         result, sheet = {"budget_exhausted": True,
                                          "error": "scoring budget exhausted; call finish"}, None
+                    elif name == "run_iterate" and cost_exhausted():
+                        result, sheet = {"budget_exhausted": True,
+                                         "error": (f"llm cost cap reached "
+                                                   f"(${meta['llm_cost_usd']:.4f} >= ${max_cost_usd:.2f}); "
+                                                   f"call finish")}, None
                     else:
                         result, sheet = wb.dispatch(name, args)
                 meta["write_rejects"] = wb.stats["write_rejects"]
@@ -170,6 +183,9 @@ def run_cell(task_dir: Path, level: str, run_root: Path, cfg: dict) -> dict:
                 if wb.finished:
                     break
             if wb.finished:
+                break
+            if cost_exhausted():
+                wb.finish(reason=f"llm cost cap reached (${meta['llm_cost_usd']:.4f} >= ${max_cost_usd:.2f})")
                 break
             # If budget is gone and model didn't finish, stop after this turn.
             if budget_left() == 0 and not any(tc["function"]["name"] == "finish" for tc in calls):
@@ -195,7 +211,8 @@ def run_cell(task_dir: Path, level: str, run_root: Path, cfg: dict) -> dict:
         try:
             test = E.run_held_out(w, str(task_dir.relative_to(ROOT)), level, final,
                                   label=f"{run_root.name}/{task_dir.name}/{level}/iter{final}",
-                                  skills_root=cfg.get("library") if compose else None)
+                                  skills_root=cfg.get("library") if compose else None,
+                                  film=film)
         except Exception as e:  # noqa: BLE001
             test = {"successes": 0, "n": 0, "error": f"{type(e).__name__}: {e}", "cases": []}
     else:
@@ -242,6 +259,8 @@ def main(argv=None):
                     help="allow privileged object/contact reads and full iterate diagnostics (default: on)")
     ap.add_argument("--demo", action=argparse.BooleanOptionalAction, default=True,
                     help="attach auto-sampled keyframes from the task CLIP on the first turn (default: on)")
+    ap.add_argument("--max-cost-usd", type=float, default=2.0,
+                    help="stop a cell once cumulative LLM spend reaches this USD (default: 2; 0 disables)")
     a = ap.parse_args(argv)
 
     task_dir = Path(a.task).resolve()
@@ -290,10 +309,12 @@ def main(argv=None):
            "library": str(Path(a.library).resolve()) if a.library else None,
            "solve_threshold": a.solve_threshold,
            "skills": skills, "compose": a.compose, "privileged": a.privileged, "demo": a.demo,
+           "max_cost_usd": a.max_cost_usd,
            "stub": str(Path(a.stub).resolve()) if a.stub else None}
     (run_root / "config.json").write_text(json.dumps({**cfg, "task": str(task_dir.relative_to(ROOT)),
                                                       "levels": levels}, indent=1))
-    print(f"[run] root={run_root} model={a.model or 'stub'} levels={levels}", flush=True)
+    cap = f" max_cost=${a.max_cost_usd:.2f}" if a.max_cost_usd > 0 else " max_cost=off"
+    print(f"[run] root={run_root} model={a.model or 'stub'} levels={levels}{cap}", flush=True)
 
     rows = []
     if a.parallel <= 1 or len(levels) == 1:

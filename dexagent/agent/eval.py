@@ -67,11 +67,13 @@ def consecutive_full(prog: list[dict], n: int = 3) -> bool:
 
 
 def run_held_out(workdir: Path, task_rel: str, level: str, final_iter: int, label: str = "",
-                 skills_root: str | None = None) -> dict:
+                 skills_root: str | None = None, film: str | None = "closeup,wrist") -> dict:
+    """Score the FINAL policy on HELD_OUT. Always films every case when `film` is set."""
     policy = workdir / f"iter_{final_iter}" / "policy.py"
     out = workdir / "test"
     out.mkdir(parents=True, exist_ok=True)
     s = score(ROOT / task_rel, str(policy), level, HELD_OUT, out,
+              film=film, film_all=bool(film),
               label=label or f"{workdir.parent.name}/{workdir.name}/iter{final_iter}",
               skills_root=skills_root)
     return s

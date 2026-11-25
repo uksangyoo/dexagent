@@ -41,6 +41,8 @@ def add_agent_args(ap: argparse.ArgumentParser) -> None:
                     help="allow privileged object/contact reads and full iterate diagnostics (default: on)")
     ap.add_argument("--demo", action=argparse.BooleanOptionalAction, default=True,
                     help="attach auto-sampled keyframes from the task CLIP on the first turn (default: on)")
+    ap.add_argument("--max-cost-usd", type=float, default=2.0,
+                    help="stop each cell once cumulative LLM spend reaches this USD (default: 2; 0 disables)")
 
 
 def agent_cfg(a, **extra) -> dict:
@@ -53,7 +55,7 @@ def agent_cfg(a, **extra) -> dict:
             sys.exit("OPENROUTER_API_KEY is not set")
     return {"model": a.model, "max_iters": a.max_iters, "film": a.film, "temperature": a.temperature,
             "max_tokens": a.max_tokens, "timeout_s": a.timeout_s, "privileged": a.privileged,
-            "demo": a.demo,
+            "demo": a.demo, "max_cost_usd": a.max_cost_usd,
             "stub": str(Path(a.stub).resolve()) if a.stub else None, **extra}
 
 

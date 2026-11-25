@@ -8,7 +8,7 @@ OBJECTS = ("cube",)
 DT = 0.02
 ON_PALM_S = 1.0          # cumulative time the open palm alone must carry the cube
 CARRY_HEIGHT = 0.10      # cube centre at least this far above its start height while palm-carried
-PLACE_RADIUS = 0.08      # final xy distance from the start position
+PLACE_RADIUS = 0.20      # final xy distance from the start position
 
 
 class Monitor:

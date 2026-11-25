@@ -71,9 +71,11 @@ python -m dexagent.agent.loop tasks/hand_demos/cube_pinch --model <slug> --level
 python -m dexagent.agent.loop tasks/hand_demos/cube_pinch --model <slug> --levels contacts --no-privileged
 # human demo keyframes (even samples from the task CLIP) are attached by default; disable with:
 python -m dexagent.agent.loop tasks/hand_demos/cube_pinch --model <slug> --levels contacts --no-demo
+# each (task, level) cell stops once LLM spend hits --max-cost-usd (default 2; 0 disables):
+python -m dexagent.agent.loop tasks/hand_demos/cube_pinch --model <slug> --levels contacts --max-cost-usd 2
 ```
 
-A cell writes `results/<run>/<task>/<level>/` with `policy.py`, `NOTES.md`, `progress.jsonl`, `usage.jsonl`, `iter_k/` (policy, per-case JSON, contact sheet), `FINAL`, `test/` (held-out, seeds 1000-1007) and `cell_summary.json` (iterations, tokens, cost and wall time to first solve, held-out pass rate). With `--demo` (default) it also writes `demo_sheet.jpg` from the scene `CLIP`.
+A cell writes `results/<run>/<task>/<level>/` with `policy.py`, `NOTES.md`, `progress.jsonl`, `usage.jsonl`, `iter_k/` (policy, per-case JSON, contact sheet), `FINAL`, `test/` (held-out, seeds 1000-1007, each case filmed) and `cell_summary.json` (iterations, tokens, cost and wall time to first solve, held-out pass rate). With `--demo` (default) it also writes `demo_sheet.jpg` from the scene `CLIP`.
 
 ## Research questions
 

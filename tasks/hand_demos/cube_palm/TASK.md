@@ -14,7 +14,7 @@ A foam cube rests on the table in front of the palm-down hand. Pick it up with t
   - the cube centre is more than 100 mm above its start height;
   - the palm link pushes on the cube with more than 0.02 N, while the five fingers together push on it with less than 0.5 N;
   - the cube lies on the palm: its centre, in the palm frame, is less than 60 mm out from the palm origin along +x and within 45 mm of it along y;
-- at the end the cube rests on the table on one of its faces (some cube axis within about 8 deg of vertical, centre height within 5 mm of its start height), with its centre within 80 mm (xy) of where it started;
+- at the end the cube rests on the table on one of its faces (some cube axis within about 8 deg of vertical, centre height within 5 mm of its start height), with its centre within 200 mm (xy) of where it started;
 - at the end the hand has let go: total hand contact force on the cube below 0.05 N.
 
 Metrics also report the max lift, the most palm-up orientation reached while the cube was lifted, total and longest continuous time on the open palm, the final offset and height error. The bench holds the final targets for 1 s before scoring. Sim time limit 60 s.

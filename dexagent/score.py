@@ -225,10 +225,11 @@ def run_one(task_dir, policy, level, case_text, out, film=None, max_sim_s=60.0, 
 
 
 def score(task_dir, policy, level, cases, out, film=None, label="", max_sim_s=60.0, timeout_s=900,
-          robust=None, skills_root=None, privileged=True):
+          robust=None, skills_root=None, privileged=True, film_all=False):
     """Run `cases` (list of 'seed:severity') in parallel subprocesses; return the summary dict.
 
-    `robust` is an optional dict of execution perturbations (see dexagent.sim.cases.robust)."""
+    `robust` is an optional dict of execution perturbations (see dexagent.sim.cases.robust).
+    With `film` set, only the first case is filmed unless `film_all` is True (held-out tests)."""
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     require_cuda()
@@ -246,7 +247,7 @@ def score(task_dir, policy, level, cases, out, film=None, label="", max_sim_s=60
         try:
             cmd = [py, "-m", "dexagent.score", "_one", str(task_dir), "--policy", str(policy), "--level", level,
                    "--cases", c, "--out", str(out), "--max-sim-s", str(max_sim_s), priv_flag]
-            if film and i == 0:
+            if film and (film_all or i == 0):
                 cmd += ["--film", film]
             log = open(out / f"log_{c.replace(':', '_')}.txt", "w")
             try:
@@ -369,6 +370,8 @@ def main(argv=None):
     c.add_argument("task")
     common(c)
     c.add_argument("--label", default="")
+    c.add_argument("--film-all", action="store_true",
+                   help="with --film, record a video for every case (default: first case only)")
     o = sub.add_parser("_one", help="internal: one case in this process")
     o.add_argument("task")
     common(o)
@@ -386,7 +389,7 @@ def main(argv=None):
         out = a.out or str(RUNS / "adhoc" / f"{Path(a.task).resolve().name}-{time.strftime('%H%M%S')}")
         policy = a.policy if a.policy == "expert" else str(Path(a.policy).resolve())
         s = score(a.task, policy, a.level, a.cases.split(","), out, a.film, a.label, a.max_sim_s,
-                  privileged=a.privileged)
+                  privileged=a.privileged, film_all=bool(getattr(a, "film_all", False)))
         for r in s["cases"]:
             err = (r.get("error") or "").strip().splitlines()
             print(f"  {r['case']:>8}  {'PASS' if r['success'] else 'fail'}  {json.dumps(r.get('metrics'))}"
